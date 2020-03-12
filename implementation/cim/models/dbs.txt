@@ -1,0 +1,8 @@
+$ brew install postgresql      
+$ brew services restart postgresql 
+$ initdb -D /usr/local/var/postgres   
+$ psql -h localhost cim_operating_systems    
+
+postgres=# CREATE DATABASE cim_operating_systems   
+
+
