@@ -18,6 +18,7 @@ cmdb_atrs = {
     "File" : ["Title", "Description"]
 }
 
+#utilizar lexical database do domínio das TI para melhores resultados
 def semantic_similarity(word1,word2):
     w1 = word1.lower()
     w2 = word2.lower()
@@ -45,6 +46,7 @@ def calc_similars(cmdb, cim):
         res[c1] = l_sort
     return res
 
+#considerar também o tipo de dados dos atributos
 def calc_atr_similarity(matches, cmdb_atr, cim_atr):
     res = {}
     for cmdb_elm in matches:
@@ -120,3 +122,4 @@ def final(cmdbcl, cmdbat, cimcl, cimat):
     return result
 
 print(final(cmdb_classes, cmdb_atrs, cim_classes, cim_atrs))
+
