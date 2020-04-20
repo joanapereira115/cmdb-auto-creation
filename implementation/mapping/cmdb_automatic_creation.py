@@ -12,6 +12,7 @@ from colored import fg, bg, attr
 
 import discovery
 import mapping
+import population
 
 blue = fg('#46B1C9')
 red = fg('#B54653')
@@ -31,9 +32,12 @@ def creation():
         for c in discovery_answers['categories']:
             print("\t" + blue + c + reset)
         mapping_result = mapping.run_mapping()
-        print("Mapping: " + str(mapping_result))
+        print("\nMapping results:\n" + str(mapping_result))
 
-    else: 
+        if(len(mapping_result) > 0):
+            population.run_population()
+
+    else:
         print(red + "\n>>> " + reset + "You must choose at least one category.\n")
         creation()
 
