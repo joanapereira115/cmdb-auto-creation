@@ -9,7 +9,7 @@ from PyInquirer import style_from_dict, Token, prompt
 from PyInquirer import Validator, ValidationError
 
 import model_parser
-#import automatic_model_mapper
+import mapper
 
 
 class HostValidator(Validator):
@@ -95,4 +95,7 @@ def run_mapping():
 
     mapper_answers = prompt(mapper_questions, style=style)
     cmdb_process = model_parser.final(mapper_answers)
-    # automatic_model_mapper.final(cmdb_process)
+
+    mapping_result = mapper.final(cmdb_process)
+
+    return mapping_result

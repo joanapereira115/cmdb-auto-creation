@@ -10,6 +10,11 @@ from colored import fg, bg, attr
 
 #cmdb = {"name": "idoit_data", "engine": "mysql", "user": "root", "password": "", "host": "localhost", "port": 3306}
 
+# TODO: considerar a existência de hierarquias
+# TODO: considerar que as tabelas possuem os atributos das tabelas a que as chaves estrangeiras se referem
+# TODO: implementar para diferentes tipos de ferramentas de gestão de bds
+# TODO: questionar sobre características da cim database
+
 cim = {
     "name": "cim_operating_systems",
     "engine": "postgresql",

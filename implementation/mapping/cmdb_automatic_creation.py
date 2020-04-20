@@ -30,9 +30,10 @@ def creation():
         print(blue + "\n>>> " + reset + "Discovering:")
         for c in discovery_answers['categories']:
             print("\t" + blue + c + reset)
-        mapping.run_mapping()
+        mapping_result = mapping.run_mapping()
+        print("Mapping: " + str(mapping_result))
 
-    else:
+    else: 
         print(red + "\n>>> " + reset + "You must choose at least one category.\n")
         creation()
 
