@@ -7,7 +7,6 @@ from nltk.corpus import wordnet as wn
 import regex
 from pprint import pprint
 from colored import fg, bg, attr
-import lexical_db
 from django.apps import apps
 #from .models import *
 
@@ -19,157 +18,290 @@ reset = attr('reset')
 acronyms_db = {
     'OS': 'operating_system',
     'IP': 'internet_protocol',
-    'MAC': 'media_access_control'}
-
-synonyms_db = {
-    'up': ['normal', 'running', 'on', 'power on', 'operating']
+    'MAC': 'media_access_control',
+    'TCP': 'transmission_control_protocol',
+    'ITIL': 'information technology infrastructure library',
+    'CMDB': 'configuration management database',
+    'CI': 'configuration item',
+    'ISO': 'international organization for standardization',
+    'ICMP': 'internet control message protocol',
+    'SNMP': 'simple network management protocol',
+    'LAN': 'local area network',
+    'WAN': 'wide area netwok',
+    'VPN': 'virtual private network',
+    'FDB': 'forwarding database',
+    'ARP': 'address resolution protocol',
+    'LLDP': 'link layer discovery protocol',
+    'MIB': 'management information base',
+    'UDP': 'user datagram protocol',
+    'STP': 'spanning tree protocol',
+    'SPAN': 'switched port analyzer',
+    'RDP': 'remote desktop protocol',
+    'API': 'application programming interface',
+    'REST': 'representational state transfer',
+    'TI': 'tecnologias da informação',
+    'ITSM': 'it service management',
+    'OSI': 'open system interconnection',
+    'SSH': 'secure_shell',
+    'WMI': 'windows management instrumentation',
+    'WinRM': 'windows remote management',
+    'CDP': 'cisco discovery protocol',
+    'JMX': 'java management extensions',
+    'SQL': 'structured query language',
+    'DNS': 'domain name system',
+    'NFS': 'network file system',
+    'LDAP': 'lightweight directory access protocol',
+    'TADDM': 'tivoli application dependency discovery manager',
+    'SSD': 'solid-state drive',
+    'DAS': 'direct attached storage',
+    'NAS': 'network attached storage',
+    'SAN': 'storage area network',
+    'CPU': 'central processing unit',
+    'BIOS': 'basic input/output system',
+    'JSON': 'javascript object notation',
+    'HTTP': 'hypertext_transfer_protocol',
+    'HTTPS': 'hypertext transfer protocol secure',
+    'XML': 'extensible markup language',
+    'CIM': 'common information model',
+    'SVS': 'service value system',
+    'DMTF': 'distributed management task force',
+    'UML': 'unified modeling language',
+    'RPC': 'remote procedure call',
+    'CMS': 'configuration management system',
+    'CIDR': 'classless inter-domain routing',
+    'TTL': 'time to live',
+    'CSV': 'comma-separated values',
+    'PHP': 'hypertext preprocessor',
+    'XDP': 'express data path',
+    'FDP': 'foundry discovery protocol',
+    'OSPF': 'open shortest path first',
+    'BGP': 'border gateway protocol',
+    'NDP': 'neighbor discovery protocol',
+    'UPS': 'uninterruptible power source',
+    'MAN': 'metropolitan area network',
+    'BAN': 'body area network',
+    'PAN': 'personal area network',
+    'AP': 'access point',
+    'HDD': 'hard disk drive',
+    'SGBD': 'sistemas de gestão de base de dados',
+    'BD': 'bases de dados',
+    'HTML': 'hypertext markup language',
+    'URL': 'uniform resource locator',
+    'SSL': 'secure sockets layer',
+    'VLAN': 'virtual local area network',
+    'UCS': 'unified computing system',
+    'ACI': 'application centric infrastructure',
+    'SDN': 'software defined network',
+    'IPMI': 'intelligent platform management interface',
+    'BMC': 'baseboard management controller',
+    'SCCM': 'system center configuration manager',
+    'FTP': 'file transfer protocol',
+    'UUID': 'universally unique identifier',
+    'CDM': 'common data model',
+    'TPL': 'template file',
+    'IS-IS': 'intermediate system-intermediate system',
+    'RIP': 'routing information protocol'
 }
+
+"""
+synonyms_db = {
+    'up': ['normal', 'running', 'on', 'power on', 'operating'],
+    'port': ['communication endpoint']
+}
+"""
+
+
+def notations(word):
+    # check for snake_case
+    word = re.sub(r"_", " ", word, re.DOTALL)
+    # check for kebab-case
+    word = re.sub(r"-", " ", word, re.DOTALL)
+    # check for camelCase and PascalCase
+    word = re.sub(r"([a-z])([A-Z])", r"\1 \2", word, re.DOTALL)
+    # separate numbers from units
+    word = re.sub(r"([0-9]+\.?|,?[0-9]+?)([a-zA-Z]+)[^:]",
+                  r"\1 \2", word, re.DOTALL)
+    # trim spaces at the begin and end
+    word = re.sub(r"^\s+", "", word)
+    # trim multiple spaces
+    word = re.sub(r"\s+", " ", word)
+    return word
 
 
 def acronyms(word):
-    return acronyms_db[word.upper()]
+    acs = list(acronyms_db.keys())
+    for a in acs:
+        exists = re.search(r'(^|\s)' + a + r'($|\s)', word, re.I)
+        if exists != None:
+            word = re.sub(r'(^|\s)' + a + r'($|\s)',
+                          r'\1' + acronyms_db[a] + r'\2', word, flags=re.I)
+    return word
 
 
+"""
 def synonyms(word):
     return synonyms_db[word.lower()]
+"""
+
+
+def unit_formatter(txt):
+    # TODO: adicionar as restantes unidades
+    # TODO: verificar a existência de valores na notação E (elevado a 10)
+
+    # time units replacement
+    txt = re.sub("yoctosecond(s)?", "ys", txt)
+    txt = re.sub("zeptosecond(s)?", "zs", txt)
+    txt = re.sub("attosecond(s)?", "as", txt)
+    txt = re.sub("femtosecond(s)?", "fs", txt)
+    txt = re.sub("picosecond(s)?", "ps", txt)
+    txt = re.sub("nanosecond(s)?", "ns", txt)
+    txt = re.sub("microsecond(s)?", "µs", txt)
+    txt = re.sub("millisecond(s)?", "ms", txt)
+    txt = re.sub("second(s)?", "s", txt)
+    txt = re.sub("minute(s)?", "min", txt)
+    txt = re.sub("hour(s)?", "h", txt)
+    # measurement units replacement
+    txt = re.sub("yoctometer(s)?", "ym", txt)
+    txt = re.sub("zeptometer(s)?", "zm", txt)
+    txt = re.sub("attometer(s)?", "am", txt)
+    txt = re.sub("femtometer(s)?", "fm", txt)
+    txt = re.sub("picometer(s)?", "pm", txt)
+    txt = re.sub("nanometer(s)?", "nm", txt)
+    txt = re.sub("micrometer(s)?", "µm", txt)
+    txt = re.sub("millimeter(s)?", "mm", txt)
+    txt = re.sub("centimeter(s)?", "cm", txt)
+    txt = re.sub("decimeter(s)?", "dm", txt)
+    txt = re.sub("decameter(s)?", "dam", txt)
+    txt = re.sub("hectometer(s)?", "hm", txt)
+    txt = re.sub("kilometer(s)?", "km", txt)
+    txt = re.sub("megameter(s)?", "Mm", txt)
+    txt = re.sub("gigameter(s)?", "Gm", txt)
+    txt = re.sub("terameter(s)?", "Tm", txt)
+    txt = re.sub("petameter(s)?", "Pm", txt)
+    txt = re.sub("exameter(s)?", "Em", txt)
+    txt = re.sub("zettameter(s)?", "Zm", txt)
+    txt = re.sub("yottameter(s)?", "Ym", txt)
+    txt = re.sub(" th$", "thou", txt)
+    txt = re.sub(" in$", "inch", txt)
+    txt = re.sub(" ft$", "foot", txt)
+    txt = re.sub(" yd$", "yard", txt)
+    txt = re.sub(" ch$", "chain", txt)
+    txt = re.sub(" fur$", "furlong", txt)
+    txt = re.sub(" ml$", "mile", txt)
+    txt = re.sub(" lea$", "league", txt)
+    txt = re.sub("meter(s)?", "m", txt)
+    # mass units replacement
+    txt = re.sub("yoctogram(s)?", "yg", txt)
+    txt = re.sub("zeptogram(s)?", "zg", txt)
+    txt = re.sub("attogram(s)?", "ag", txt)
+    txt = re.sub("femtogram(s)?", "fg", txt)
+    txt = re.sub("picogram(s)?", "pg", txt)
+    txt = re.sub("nanogram(s)?", "ng", txt)
+    txt = re.sub("microgram(s)?", "µg", txt)
+    txt = re.sub("milligram(s)?", "mg", txt)
+    txt = re.sub("centigram(s)?", "cg", txt)
+    txt = re.sub("decigram(s)?", "dg", txt)
+    txt = re.sub("decagram(s)?", "dag", txt)
+    txt = re.sub("hectogram(s)?", "hg", txt)
+    txt = re.sub("kilogram(s)?", "kg", txt)
+    txt = re.sub("megagram(s)?", "Mg", txt)
+    txt = re.sub("gigagram(s)?", "Gg", txt)
+    txt = re.sub("teragram(s)?", "Tg", txt)
+    txt = re.sub("petagram(s)?", "Pg", txt)
+    txt = re.sub("exagram(s)?", "Eg", txt)
+    txt = re.sub("zettagram(s)?", "Zg", txt)
+    txt = re.sub("yottagram(s)?", "Yg", txt)
+    txt = re.sub("gram(s)?", "g", txt)
+    # speed units replacement
+    txt = re.sub("yoctohertz(s)?", "yHz", txt)
+    txt = re.sub("zeptohertz(s)?", "zHz", txt)
+    txt = re.sub("attohertz(s)?", "aHz", txt)
+    txt = re.sub("femtohertz(s)?", "fHz", txt)
+    txt = re.sub("picohertz(s)?", "pHz", txt)
+    txt = re.sub("nanohertz(s)?", "nHz", txt)
+    txt = re.sub("microhertz(s)?", "µHz", txt)
+    txt = re.sub("millihertz(s)?", "mHz", txt)
+    txt = re.sub("centihertz(s)?", "cHz", txt)
+    txt = re.sub("decihertz(s)?", "dHz", txt)
+    txt = re.sub("decahertz(s)?", "daHz", txt)
+    txt = re.sub("hectohertz(s)?", "hHz", txt)
+    txt = re.sub("kilohertz(s)?", "kHz", txt)
+    txt = re.sub("megahertz(s)?", "MHz", txt)
+    txt = re.sub("gigahertz(s)?", "GHz", txt)
+    txt = re.sub("terahertz(s)?", "THz", txt)
+    txt = re.sub("petahertz(s)?", "PHz", txt)
+    txt = re.sub("exahertz(s)?", "EHz", txt)
+    txt = re.sub("zettahertz(s)?", "ZHz", txt)
+    txt = re.sub("yottahertz(s)?", "YHz", txt)
+    txt = re.sub("hertz(s)?", "Hz", txt)
+    # thermodynamic temperature units replacement
+    txt = re.sub("kelvin(s)?", "K", txt)
+    txt = re.sub("celsius(s)?", "°C", txt)
+    txt = re.sub("fahrenheit(s)?", "°F", txt)
+    # other units replacement
+    txt = re.sub("milliampere(s)?", "mA", txt)
+    txt = re.sub("centiampere(s)?", "cA", txt)
+    txt = re.sub("deciampere(s)?", "dA", txt)
+    txt = re.sub("decampere(s)?", "daA", txt)
+    txt = re.sub("hectoampere(s)?", "hA", txt)
+    txt = re.sub("kiloampere(s)?", "kA", txt)
+    txt = re.sub("megampere(s)?", "MA", txt)
+    txt = re.sub("gigampere(s)?", "GA", txt)
+    txt = re.sub("ampere(s)?", "A", txt)
+
+    txt = re.sub(" us$", " µs", txt)
+
+    return txt
+
+
+def convert_time_func(matchobj):
+    m = matchobj.group(0)
+    return str(converts(m, 's')) + ' s'
+
+
+def convert_speed_func(matchobj):
+    m = matchobj.group(0)
+    return str(converts(m, 'Hz')) + ' Hz'
 
 
 def conversion(txt):
-    # time units replacement
-    re.sub("yoctosecond(s)?", "ys", txt)
-    re.sub("zeptosecond(s)?", "zs", txt)
-    re.sub("attosecond(s)?", "as", txt)
-    re.sub("femtosecond(s)?", "fs", txt)
-    re.sub("picosecond(s)?", "ps", txt)
-    re.sub("nanosecond(s)?", "ns", txt)
-    re.sub("microsecond(s)?", "µs", txt)
-    re.sub("millisecond(s)?", "ms", txt)
-    re.sub("second(s)?", "s", txt)
-    re.sub("minute(s)?", "min", txt)
-    re.sub("hour(s)?", "h", txt)
-    # measurement units replacement
-    re.sub("yoctometer(s)?", "ym", txt)
-    re.sub("zeptometer(s)?", "zm", txt)
-    re.sub("attometer(s)?", "am", txt)
-    re.sub("femtometer(s)?", "fm", txt)
-    re.sub("picometer(s)?", "pm", txt)
-    re.sub("nanometer(s)?", "nm", txt)
-    re.sub("micrometer(s)?", "µm", txt)
-    re.sub("millimeter(s)?", "mm", txt)
-    re.sub("centimeter(s)?", "cm", txt)
-    re.sub("decimeter(s)?", "dm", txt)
-    re.sub("meter(s)?", "m", txt)
-    re.sub("decameter(s)?", "dam", txt)
-    re.sub("hectometer(s)?", "hm", txt)
-    re.sub("kilometer(s)?", "km", txt)
-    re.sub("megameter(s)?", "Mm", txt)
-    re.sub("gigameter(s)?", "Gm", txt)
-    re.sub("terameter(s)?", "Tm", txt)
-    re.sub("petameter(s)?", "Pm", txt)
-    re.sub("exameter(s)?", "Em", txt)
-    re.sub("zettameter(s)?", "Zm", txt)
-    re.sub("yottameter(s)?", "Ym", txt)
-    re.sub(" th$", "thou", txt)
-    re.sub(" in$", "inch", txt)
-    re.sub(" ft$", "foot", txt)
-    re.sub(" yd$", "yard", txt)
-    re.sub(" ch$", "chain", txt)
-    re.sub(" fur$", "furlong", txt)
-    re.sub(" ml$", "mile", txt)
-    re.sub(" lea$", "league", txt)
-    # mass units replacement
-    re.sub("yoctogram(s)?", "yg", txt)
-    re.sub("zeptogram(s)?", "zg", txt)
-    re.sub("attogram(s)?", "ag", txt)
-    re.sub("femtogram(s)?", "fg", txt)
-    re.sub("picogram(s)?", "pg", txt)
-    re.sub("nanogram(s)?", "ng", txt)
-    re.sub("microgram(s)?", "µg", txt)
-    re.sub("milligram(s)?", "mg", txt)
-    re.sub("centigram(s)?", "cg", txt)
-    re.sub("decigram(s)?", "dg", txt)
-    re.sub("gram(s)?", "g", txt)
-    re.sub("decagram(s)?", "dag", txt)
-    re.sub("hectogram(s)?", "hg", txt)
-    re.sub("kilogram(s)?", "kg", txt)
-    re.sub("megagram(s)?", "Mg", txt)
-    re.sub("gigagram(s)?", "Gg", txt)
-    re.sub("teragram(s)?", "Tg", txt)
-    re.sub("petagram(s)?", "Pg", txt)
-    re.sub("exagram(s)?", "Eg", txt)
-    re.sub("zettagram(s)?", "Zg", txt)
-    re.sub("yottagram(s)?", "Yg", txt)
-    # speed units replacement
-    re.sub("yoctohertz(s)?", "yHz", txt)
-    re.sub("zeptohertz(s)?", "zHz", txt)
-    re.sub("attohertz(s)?", "aHz", txt)
-    re.sub("femtohertz(s)?", "fHz", txt)
-    re.sub("picohertz(s)?", "pHz", txt)
-    re.sub("nanohertz(s)?", "nHz", txt)
-    re.sub("microhertz(s)?", "µHz", txt)
-    re.sub("millihertz(s)?", "mHz", txt)
-    re.sub("centihertz(s)?", "cHz", txt)
-    re.sub("decihertz(s)?", "dHz", txt)
-    re.sub("hertz(s)?", "Hz", txt)
-    re.sub("decahertz(s)?", "daHz", txt)
-    re.sub("hectohertz(s)?", "hHz", txt)
-    re.sub("kilohertz(s)?", "kHz", txt)
-    re.sub("megahertz(s)?", "MHz", txt)
-    re.sub("gigahertz(s)?", "GHz", txt)
-    re.sub("terahertz(s)?", "THz", txt)
-    re.sub("petahertz(s)?", "PHz", txt)
-    re.sub("exahertz(s)?", "EHz", txt)
-    re.sub("zettahertz(s)?", "ZHz", txt)
-    re.sub("yottahertz(s)?", "YHz", txt)
-    # thermodynamic temperature units replacement
-    re.sub("kelvin(s)?", "K", txt)
-    re.sub("celsius(s)?", "°C", txt)
-    re.sub("fahrenheit(s)?", "°F", txt)
-    # other units replacement
-    re.sub("milliampere(s)?", "mA", txt)
-    re.sub("centiampere(s)?", "cA", txt)
-    re.sub("deciampere(s)?", "dA", txt)
-    re.sub("ampere(s)?", "A", txt)
-    re.sub("decampere(s)?", "daA", txt)
-    re.sub("hectoampere(s)?", "hA", txt)
-    re.sub("kiloampere(s)?", "kA", txt)
-    re.sub("megampere(s)?", "MA", txt)
-    re.sub("gigampere(s)?", "GA", txt)
+    # TODO: mudar as outras unidades
 
-    re.sub(" us$", " µs", txt)
+    measurement = re.search(r"[0-9]+(.|,[0-9]+)?( )?ym", txt) or re.search(r"[0-9]+(.|,[0-9]+)?( )?zm", txt) or re.search(r"[0-9]+(.|,[0-9]+)?( )?am", txt) or re.search(r"[0-9]+(.|,[0-9]+)?( )?fm", txt) or re.search("pm", txt) or re.search(r"[0-9]+(.|,[0-9]+)?( )?nm", txt) or re.search(r"[0-9]+(.|,[0-9]+)?( )?µm", txt) or re.search(r"[0-9]+(.|,[0-9]+)?( )?mm", txt) or re.search(r"[0-9]+(.|,[0-9]+)?( )?cm", txt) or re.search(r"[0-9]+(.|,[0-9]+)?( )?dm", txt) or re.search(r"[0-9]+(.|,[0-9]+)?( )?m", txt) or re.search(r"[0-9]+(.|,[0-9]+)?( )?dam", txt) or re.search(r"[0-9]+(.|,[0-9]+)?( )?hm", txt) or re.search(r"[0-9]+(.|,[0-9]+)?( )?km", txt) or re.search(
+        r"[0-9]+(.|,[0-9]+)?( )?Mm", txt) or re.search(r"[0-9]+(.|,[0-9]+)?( )?Gm", txt) or re.search(r"[0-9]+(.|,[0-9]+)?( )?Tm", txt) or re.search(r"[0-9]+(.|,[0-9]+)?( )?Pm", txt) or re.search(r"[0-9]+(.|,[0-9]+)?( )?Em", txt) or re.search(r"[0-9]+(.|,[0-9]+)?( )?Zm", txt) or re.search(r"[0-9]+(.|,[0-9]+)?( )?Ym", txt) or re.search(r"[0-9]+(.|,[0-9]+)?( )?thou", txt) or re.search(r"[0-9]+(.|,[0-9]+)?( )?inch", txt) or re.search(r"[0-9]+(.|,[0-9]+)?( )?foot", txt) or re.search(r"[0-9]+(.|,[0-9]+)?( )?yard", txt) or re.search(r"[0-9]+(.|,[0-9]+)?( )?chain", txt) or re.search(r"[0-9]+(.|,[0-9]+)?( )?furlong", txt) or re.search(r"[0-9]+(.|,[0-9]+)?( )?mile", txt) or re.search(r"[0-9]+(.|,[0-9]+)?( )?league", txt)
 
-    time = re.search("min", txt) or re.search(
-        "s", txt) or re.search("h", txt) or re.search("ms", txt) or re.search("µs", txt) or re.search("ns", txt) or re.search("ps", txt)
+    temperature = re.search(r"[0-9]+(.|,[0-9]+)?( )?K", txt) or re.search(
+        r"[0-9]+(.|,[0-9]+)?( )?°C", txt) or re.search(r"[0-9]+(.|,[0-9]+)?( )?°F", txt)
 
-    speed = re.search("yHz", txt) or re.search(
-        "zHz", txt) or re.search("aHz", txt) or re.search("fHz", txt) or re.search("pHz", txt) or re.search("nHz", txt) or re.search("µHz", txt) or re.search("mHz", txt) or re.search("cHz", txt) or re.search("dHz", txt) or re.search("Hz", txt) or re.search("daHz", txt) or re.search("hHz", txt) or re.search("kHz", txt) or re.search("MHz", txt) or re.search("GHz", txt) or re.search("THz", txt) or re.search("PHz", txt) or re.search("EHz", txt) or re.search("ZHz", txt) or re.search("YHz", txt)
+    txt = re.sub(r"[0-9]+(\.|,[0-9]+)?( )?(min|s|h|ms|µs|ns|ps)",
+                 convert_time_func, txt)
 
-    measurement = re.search("ym", txt) or re.search("zm", txt) or re.search("am", txt) or re.search("fm", txt) or re.search("pm", txt) or re.search("nm", txt) or re.search("µm", txt) or re.search("mm", txt) or re.search("cm", txt) or re.search("dm", txt) or re.search("m", txt) or re.search("dam", txt) or re.search("hm", txt) or re.search("km", txt) or re.search(
-        "Mm", txt) or re.search("Gm", txt) or re.search("Tm", txt) or re.search("Pm", txt) or re.search("Em", txt) or re.search("Zm", txt) or re.search("Ym", txt) or re.search("thou", txt) or re.search("inch", txt) or re.search("foot", txt) or re.search("yard", txt) or re.search("chain", txt) or re.search("furlong", txt) or re.search("mile", txt) or re.search("league", txt)
-
-    temperature = re.search("K", txt) or re.search(
-        "°C", txt) or re.search("°F", txt)
-
-    if time:
-        return str(converts(txt, 's')) + ' s'
-
-    elif measurement:
+    txt = re.sub(r"[0-9]+(\.|,[0-9]+)?( )?(yHz|zHz|aHz|fHz|pHz|nHz|µHz|mHz|cHz|dHz|Hz|daHz|hHz|kHz|MHz|GHz|THz|PHz|EHz|ZHz|YHz)",
+                 convert_speed_func, txt)
+    """
+    elif measurement != None:
         return str(converts(txt, 'm')) + ' m'
 
-    elif temperature:
+    elif temperature != None:
         return str(converts(txt, 'K')) + ' K'
-
-    elif speed:
-        return str(converts(txt, 'Hz')) + ' Hz'
-
+    """
+    return txt
 
 
+def normalize(data):
+    # print(blue + ">>> " + reset + "Normalizing data...")
+    #print(blue + "\t>>> " + reset + "Before: " + str(data))
+    data = notations(data)
+    data = acronyms(data)
+    data = unit_formatter(data)
+    data = conversion(data)
+    #data = synonyms(data)
+    #data = conversion(data)
+    #print(blue + "\t>>> " + reset + "After: " + str(data))
+    return data
 
-def normalize(collected_data, source):
-    print(blue + ">>> " + reset +
-          "Normalizing collected data from " + source + "...")
-    # TODO: como normalizar?
-    return(collected_data)
+
+# normalize(' ola   20minutes  3,3 megahertz  tcp_ciencia ci      ')
 
 """
 def get_tables_names():

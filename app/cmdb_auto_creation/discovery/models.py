@@ -2,12 +2,14 @@
 # -*- coding: utf-8 -*-
 
 import json
+from objects import objects
+import itertools
 
 ########################################################## CLASSES ##########################################################
 
 
 class Element:
-    id = 0
+    id_iter = itertools.count()
     ci_type = ""
     name = ""
     value = ""
@@ -63,10 +65,18 @@ class Element:
     path = ""
     provider = ""
 
+    def __init__(self):
+        self.id = next(self.id_iter)
+
+    def get_id(self):
+        return self.id
+
     def element_print(self):
-        print(self.ci_type + "\n")
+        print("--------------")
+        print(self.ci_type)
         print("\tId: " + str(self.id))
         print("\tName: " + self.name)
+        print("--------------")
 
     def toJSON(self):
         return json.dumps(self, default=lambda o: o.__dict__, sort_keys=True, indent=4)
@@ -84,6 +94,8 @@ ci_types = [
 ]
 
 ########################################################## RELATIONSHIPS ##########################################################
+
+# TODO: atributos nos relacionamentos
 
 
 class Relation:
@@ -106,3 +118,27 @@ relation_types = [
     "has_component", "is_component", "located_on", "has_location", "hosts", "installed_on", "has_address", "address_of", "assigned_to",
     "assigned_of", "connected_to", "mounted_in", "has_mount", "of_type", "has_instance"
 ]
+
+
+def exist_element(ci_type, name):
+    for o in objects:
+        if type(o) is Element:
+            if o.ci_type == ci_type and o.name == name:
+                return o
+    return None
+
+
+def exist_relation(rel_type, source_id, target_id):
+    for o in objects:
+        if type(o) is Relation:
+            if o.rel_type == rel_type and o.source_id == source_id and o.target_id == target_id:
+                return True
+    return False
+
+
+def get_name_from_id(id):
+    for o in objects:
+        if type(o) is Element:
+            if o.id == id:
+                return o.name
+    return ""

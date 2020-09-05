@@ -9,7 +9,7 @@ import getpass
 import os
 from colored import fg, bg, attr
 
-from nmap_discovery import run_nmap
+from nmap_discovery import run_nmap, parse_nmap_results  # , test_nmap
 from passwd_vault import vault
 from objects import objects
 
@@ -105,7 +105,10 @@ def handle_range(request):
 
 def basic_discovery(request):
     addresses = request.session['range']
-    run_nmap(addresses)
+    # TODO: descomentar isto
+    # run_nmap(addresses)
+    # test_nmap()
+    parse_nmap_results()
     result = objects
     res = []
     for o in result:

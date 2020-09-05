@@ -20,4 +20,5 @@ from . import views
 urlpatterns = [
     path('', views.index, name='index'),
     path('discovery/', include('discovery.urls')),
+    path('mapping/', include('mapping.urls')),
 ]
