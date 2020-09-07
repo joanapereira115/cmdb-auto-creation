@@ -43,9 +43,27 @@
                 </label>
             </div>
             <div class="form-check">
-                <input class="form-check-input" type="radio" name="connection" id="connection2" value="database">
+                <input class="form-check-input" type="radio" name="connection" id="connection2" value="database"
+                    disabled>
                 <label class="form-check-label" for="connection2">
                     Database
+                </label>
+            </div>
+
+            <p>
+                What is your CMDB software?
+            </p>
+
+            <div class="form-check">
+                <input class="form-check-input" type="radio" name="cmdbtype" id="idoit" value="i-doit">
+                <label class="form-check-label" for="idoit">
+                    i-doit
+                </label>
+            </div>
+            <div class="form-check">
+                <input class="form-check-input" type="radio" name="cmdbtype" id="other" value="other" disabled>
+                <label class="form-check-label" for="other">
+                    Other
                 </label>
             </div>
 
@@ -53,6 +71,16 @@
 
         </form>
 
+        <div style="margin-top: 10%; opacity: 0.6;">
+            <p>How will the data model process go:</p>
+            <ol>
+                <li>Get the name of the types of CI's;</li>
+                <li>For each CI type, obtain its attributes;</li>
+                <li>Get the name of the types of relations;</li>
+                <li>For each relation type, obtain its attributes;</li>
+                <li>For each relation type, obtain the CI types involved.</li>
+            </ol>
+        </div>
 
         <!-- 
         <div class="text-center" id="loading" style="margin-top: 10%;">
