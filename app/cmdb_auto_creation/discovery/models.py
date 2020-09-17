@@ -1,144 +1,245 @@
-#!/usr/bin/env python3
-# -*- coding: utf-8 -*-
-
 import json
 from objects import objects
 import itertools
 
-########################################################## CLASSES ##########################################################
+"""
+=============
+FOUND OBJECTS
+=============
+"""
+
+objects = {
+    "configuration_items": [],
+    "relationships": [],
+    "configuration_item_types": [],
+    "relationship_types": [],
+    "attributes": []
+}
+
+"""
+==============
+OBJECT CLASSES
+==============
+"""
 
 
-class Element:
+class ConfigurationItem:
+    """Represents an organization's infrastructure component.
+
+    Attributes:
+        id_iter         The iterator used to generate the item identifier.
+        type_id         The identifier of the item type.
+        attributes      The list of identifiers of the item attributes.
+    """
+
     id_iter = itertools.count()
-    ci_type = ""
-    name = ""
-    value = ""
-    status = ""
-    description = ""
-    generation = ""
-    install_date = ""
-    availability = ""
-    serial_number = ""
-    version = ""
-    model = ""
-    manufacturer = ""
-    number = ""
-    hostname = ""
-    management_address = ""
-    connectivity_status = ""
-    net_mask = ""
-    net_number = ""
-    type_ = ""
-    size = ""
-    layout = ""
-    bandwidth = ""
-    height = ""
-    width = ""
-    speed = ""
-    resolution = ""
-    business_category = ""
-    email = ""
-    fax = ""
-    mobile_phone = ""
-    department = ""
-    title = ""
-    webpage = ""
-    core_number = ""
-    architecture = ""
-    family = ""
-    power = ""
-    ip_range = ""
-    capacity = ""
-    removable = ""
-    block_size = ""
-    number_of_blocks = ""
-    compression_method = ""
-    transfer_rate = ""
-    address = ""
-    city = ""
-    price = ""
-    available_space = ""
-    max_number_of_processes = ""
-    author = ""
-    filename = ""
-    date = ""
-    path = ""
-    provider = ""
+    type_id = 0
+    attributes = []
 
     def __init__(self):
-        self.id = next(self.id_iter)
+        """Initialize the configuration item with a generated identifier."""
+        self.id = next(self.id_iter) + 1
 
     def get_id(self):
+        """Get the configuration item identifier."""
         return self.id
 
-    def element_print(self):
-        print("--------------")
-        print(self.ci_type)
-        print("\tId: " + str(self.id))
-        print("\tName: " + self.name)
-        print("--------------")
+    def get_type(self):
+        """Get the configuration item type identifier."""
+        return self.type_id
 
+    def get_attributes(self):
+        """Get the list of attributes identifiers of the configuration item."""
+        return self.attributes
+
+    def add_attribute(self, attribute_id):
+        """Adds a new attribute identifier to the list of configuration item attributes."""
+        self.attributes.append(attribute_id)
+
+    # TODO: não é necessário
     def toJSON(self):
         return json.dumps(self, default=lambda o: o.__dict__, sort_keys=True, indent=4)
 
 
-ci_types = [
-    "Access_Point", "Protocol_Endpoint", "Communication_Endpoint", "IP_Endpoint", "LAN_Endpoint", "Organization", "Person", "LAN", "WAN", "DBMS",
-    "DB_Schema", "DB_Instance", "Hardware_Component", "Keyboard", "Mouse", "Monitor", "Network_Port", "Motherboard", "CPU", "GPU", "UPS", "Chassis",
-    "Card", "Rack", "Server", "Rack_Server", "Blade_Server", "Tower_Server", "Cluster", "Memory", "DRAM", "SRAM", "ROM", "HDD", "SSD", "RAID",
-    "Disk_Partition", "CD_ROM", "Floppy_Drive", "Tape_Drive", "DVD_ROM", "BD_ROM", "Disk_Drive", "Building", "Service", "Business_Service", "Account",
-    "Filesystem", "Software", "Patch", "Product", "Package", "BIOS_Element", "Operating_System", "Application", "Virtual_Server", "Virtual_Host",
-    "Document", "Contract", "Licence", "File", "Cloud_Instance", "Workstation", "IPv4", "IPv6", "MAC_address", "Network", "Subnet", "Host",
-    "NIC", "Hub", "Bridge", "Switch", "Router", "Firewall", "Load_Balancer", "SAN", "Mainframe", "Desktop", "Laptop", "Battery", "Printer",
-    "Scanner", "Tablet", "Phone", "Container"
-]
+class Relationship:
+    """Represents the relationship between two organization's infrastructure components.
 
-########################################################## RELATIONSHIPS ##########################################################
+    Attributes:
+        id_iter         The iterator used to generate the relationship identifier.
+        type_id         The identifier of the relationship type.
+        source_id       The identifier of the configuration item that plays yhe role of source/master in the relationship.
+        target_id       The identifier of the configuration item that plays yhe role of target/slave in the relationship.
+        attributes      The list of identifiers of the relationship attributes.
+    """
 
-# TODO: atributos nos relacionamentos
-
-
-class Relation:
-    rel_type = ""
+    id_iter = itertools.count()
+    type_id = 0
     source_id = 0
-    source_type = ""
     target_id = 0
-    target_type = ""
+    attributes = []
 
-    def relation_print(self):
-        print(self.rel_type + "\n")
-        print("\tSource: " + self.source_type)
-        print("\tTarget: " + self.target_type)
+    def __init__(self):
+        """Initialize the relationship with a generated identifier."""
+        self.id = next(self.id_iter) + 1
 
+    def get_id(self):
+        """Get the relationship identifier."""
+        return self.id
+
+    def get_type(self):
+        """Get the relationship type identifier."""
+        return self.type_id
+
+    def get_source_id(self):
+        """Get the source configuration item identifier."""
+        return self.id
+
+    def get_target_id(self):
+        """Get the target configuration item identifier."""
+        return self.id
+
+    def get_attributes(self):
+        """Get the list of attributes identifiers of the relationship."""
+        return self.attributes
+
+    def add_attribute(self, attribute_id):
+        """Adds a new attribute identifier to the list of the relationship attributes."""
+        self.attributes.append(attribute_id)
+
+    # TODO: não é necessário
     def toJSON(self):
         return json.dumps(self, default=lambda o: o.__dict__, sort_keys=True, indent=4)
 
 
-relation_types = [
-    "has_component", "is_component", "located_on", "has_location", "hosts", "installed_on", "has_address", "address_of", "assigned_to",
-    "assigned_of", "connected_to", "mounted_in", "has_mount", "of_type", "has_instance"
-]
+class ConfigurationItemType:
+    """Represents the type of a configuration item.
+
+    Attributes:
+        id_iter         The iterator used to generate the configuration item type identifier.
+        name            The name of the type of the configuration item.
+    """
+
+    id_iter = itertools.count()
+    name = ""
+
+    def __init__(self):
+        """Initialize the configuration item type with a generated identifier."""
+        self.id = next(self.id_iter) + 1
+
+    def get_id(self):
+        """Get the configuration item type identifier."""
+        return self.id
+
+    def get_name(self):
+        """Get the configuration item type name."""
+        return self.name
 
 
-def exist_element(ci_type, name):
-    for o in objects:
-        if type(o) is Element:
-            if o.ci_type == ci_type and o.name == name:
-                return o
-    return None
+class RelationshipType:
+    """Represents the type of a relationship.
+
+    Attributes:
+        id_iter         The iterator used to generate the relationship identifier.
+        name            The name of the type of the relationship.
+    """
+
+    id_iter = itertools.count()
+    name = ""
+
+    def __init__(self):
+        """Initialize the relationship type with a generated identifier."""
+        self.id = next(self.id_iter) + 1
+
+    def get_id(self):
+        """Get the relationship type identifier."""
+        return self.id
+
+    def get_name(self):
+        """Get the relationship type name."""
+        return self.name
 
 
-def exist_relation(rel_type, source_id, target_id):
-    for o in objects:
-        if type(o) is Relation:
-            if o.rel_type == rel_type and o.source_id == source_id and o.target_id == target_id:
-                return True
-    return False
+class Attribute:
+    """Represents an attribute of a configuration item or relationship.
+
+    Attributes:
+        id_iter         The iterator used to generate the attribute identifier.
+        name            The name of the attribute.
+        value           The value of the attribute.
+    """
+
+    id_iter = itertools.count()
+    name = ""
+    value = ""
+
+    def __init__(self):
+        """Initialize the attribute with a generated identifier."""
+        self.id = next(self.id_iter) + 1
+
+    def get_id(self):
+        """Get the attribute identifier."""
+        return self.id
+
+    def get_name(self):
+        """Get the attribute name."""
+        return self.name
+
+    def get_value(self):
+        """Get the attribute value."""
+        return self.value
 
 
-def get_name_from_id(id):
-    for o in objects:
-        if type(o) is Element:
-            if o.id == id:
-                return o.name
-    return ""
+"""
+==============
+OBJECT METHODS
+==============
+"""
+
+
+# TODO: desenvolver algoritmos
+
+
+def already_exists():
+    """"""
+    pass
+
+
+def get_ci_type_name_from_id(id):
+    pass
+
+
+def get_relationship_type_name_from_id(id):
+    pass
+
+
+def get_attribute_name_from_id(id):
+    pass
+
+
+def get_attribute_value_from_id(id):
+    pass
+
+
+def delete_object(obj):
+    pass
+    # objects.remove(obj)
+
+
+"""
+    Summary line.
+
+    Extended description of function.
+
+    Parameters
+    ----------
+    arg1 : int
+        Description of arg1
+    arg2 : str
+        Description of arg2
+
+    Returns
+    -------
+    int
+        Description of return value
+
+    """

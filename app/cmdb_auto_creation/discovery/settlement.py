@@ -317,7 +317,10 @@ def create_element(object):
     res = ""
     if object.id != "" and object.ci_type != "":
         res += ":" + str(object.id) + str(object.ci_type) + \
-            " rdf:type :Element .\n"
+            " rdf:type :Element .\n:" + \
+            str(object.id) + str(object.ci_type) + \
+            " :ci_type \"" + str(object.ci_type) + "\".\n:" + str(object.id) + \
+            str(object.ci_type) + " :name \"" + str(object.name) + "\".\n"
     f.write(res)
     f.close()
 
@@ -329,6 +332,10 @@ def create_relation(obj):
         res += ":" + str(obj.rel_type) + \
             str(obj.source_id) + str(obj.target_id) + \
             " rdf:type :Relationship .\n"
+
+        res += ":" + str(obj.rel_type) + \
+            str(obj.source_id) + str(obj.target_id) + \
+            " :rel_type \"" + str(obj.rel_type) + "\" .\n"
 
         res += ":" + str(obj.rel_type) + str(obj.source_id) + str(obj.target_id) + \
             " :source :" + str(obj.source_id) + str(obj.source_type) + " .\n"
@@ -365,14 +372,14 @@ def upload_to_graphdb(repository_id):
 
     # file import to graphdb
     response = requests.post(
-        'http://localhost:7200/rest/data/import/server/' + str(repository_id), headers=headers, data=data)
+        'http://192.168.1.72:7200/rest/data/import/server/' + str(repository_id), headers=headers, data=data)
     print(response.json())
 
 
-# create_file()
-# parse_nmap_results()
-# create_structure()
-# parse_discovered()
+create_file()
+parse_nmap_results()
+create_structure()
+parse_discovered()
 upload_to_graphdb('cmdb_creation')
 
 

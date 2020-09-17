@@ -5,6 +5,12 @@ import operator
 import spacy
 import difflib
 from colored import fg, bg, attr
+import os
+
+import sys
+sys.setrecursionlimit(1000000)
+
+os.environ["SPACY_WARNING_IGNORE"] = "W008"
 
 blue = fg('#46B1C9')
 red = fg('#B54653')
@@ -68,6 +74,7 @@ def calc_atr_similarity(matches, cmdb_atr, cim_atr):
 def select_most_similar(calculated_matches):
     m = []
     v = {}
+    # {'System Service': {'Service': 0.7958800017463593, 'Operating System': 0.6879912871822835, 'media access control': 0.5440860997165468}}
     for key in calculated_matches:
         values = calculated_matches.get(key)
         if len(values) > 0:
@@ -83,6 +90,15 @@ def select_most_similar(calculated_matches):
                     del k[ky]
                     return select_most_similar(calculated_matches)
     return v
+
+
+def filter_most_similar(most_similars):
+    res = {}
+    for i in most_similars:
+        # TODO: é preciso ajustar o valor?
+        if list(most_similars[i].values())[0] >= 0.5:
+            res[i] = most_similars[i]
+    return res
 
 
 def calculate_average(similars):

@@ -37,12 +37,11 @@
             Specify the necessary information to access your CMDB data model.
         </p>
 
-        <form action="{% url 'mapping:process_cmdb_setup' %}" method="post">
+        <form action="{% url 'mapping:process_idoit_info' %}" method="post">
 
             {% csrf_token %}
 
             <div>
-                <input type="hidden" id="cmdbtype" name="cmdbtype" value="i-doit">
                 <h5 id="title">How to access to the CMDB CI types?</h5>
 
                 <div class="row">
