@@ -2,6 +2,7 @@
 
 from syntatic_matching import syntatic_matching
 from semantic_matching import semantic_matching
+import numpy
 
 
 def calculate_similarity(text1, text2):
@@ -28,10 +29,10 @@ def calculate_similarity(text1, text2):
     """
     syn_value = syntatic_matching.syntatic_coeficient(text1, text2)
     if syn_value > 0.99:
-        return syn_value
+        return numpy.clip(syn_value, 0, 1)
     else:
         sem_value = semantic_matching.semantic_coeficient(text1, text2)
         if sem_value > syn_value:
-            return sem_value
+            return numpy.clip(sem_value, 0, 1)
         else:
-            return syn_value
+            return numpy.clip(syn_value, 0, 1)

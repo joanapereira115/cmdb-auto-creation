@@ -7,6 +7,9 @@ from colored import fg, bg, attr
 from discovery_phase import run_discovery
 from mapping_phase import run_mapping
 from population_phase import run_population
+import warnings
+
+warnings.filterwarnings("ignore")
 
 """
     Color definition.

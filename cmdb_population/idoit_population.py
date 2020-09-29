@@ -131,3 +131,5 @@ def run_idoit_population(cmdb_info, rules, cis_types, rels_types, cis_attributes
             rel), rels_attributes.get(rel), rules.get("rel_types"), rules.get("rel_attributes"), ids, sources.get(rel), targets.get(rel))
 
     return True
+
+    # TODO: devo fazer o logout?

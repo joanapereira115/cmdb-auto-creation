@@ -73,8 +73,8 @@ def run_mapping():
     cmdb = choose_software()
     connection = choose_connection_method()
 
-    info["cmdb"]["software"] = cmdb
-    info["cmdb"]["connection"] = connection
+    info["software"] = cmdb
+    info["connection"] = connection
 
     if cmdb == "i-doit" and connection == "API":
         # {"server": "", "username": "", "password": "", "api_key": ""}

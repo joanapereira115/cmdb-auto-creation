@@ -265,6 +265,15 @@ def get_rel_attributes(rel_type):
             if w.startswith("http://www.semanticweb.org/cmdb_auto_creation/2020/cmdb#"):
                 w = w[len("http://www.semanticweb.org/cmdb_auto_creation/2020/cmdb#"):]
             res.append(w)
+
+    query_string = "select ?s where { ?s rdfs:domain :Relationship . ?s rdfs:range xsd:string . }"
+    r = execQuery(query_string)
+    for w in r.text.split('\n')[1:]:
+        w = regex.sub(r"\r", "", w)
+        if w != "":
+            if w.startswith("http://www.semanticweb.org/cmdb_auto_creation/2020/cmdb#"):
+                w = w[len("http://www.semanticweb.org/cmdb_auto_creation/2020/cmdb#"):]
+            res.append(w)
     return res
 
 
@@ -311,5 +320,3 @@ def process_db_data_model():
         db_data_model["ci_attributes"] = new_ci_attributes
         db_data_model["rel_attributes"] = new_rel_attributes
     return db_info
-
-# TODO: devo fazer o logout?

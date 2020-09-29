@@ -53,6 +53,7 @@
 
 :name rdf:type owl:DatatypeProperty ;
     rdfs:domain :ConfigurationItem ,
+                :Relationship ,
                 :ConfigurationItemType ,
                 :RelationshipType ,
                 :Attribute ; 

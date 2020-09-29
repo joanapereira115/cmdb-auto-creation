@@ -345,7 +345,7 @@ def process_i_doit():
         Returns the CMDB information (server address, username, password and api key).
 
     """
-    print(blue + "\n>>> " + reset + "Make sure that i-doit is running.")
+    print(blue + "\n>>> " + reset + "Make sure that i-doit is running.\n")
     api_info = api_specification()
 
     server = api_info.get("server")
@@ -357,7 +357,7 @@ def process_i_doit():
     if connection == False:
         process_i_doit()
     else:
-        print(blue + "\n>>> " + reset + "Processing i-doit CMDB data model...\n")
+        print(blue + ">>> " + reset + "Processing i-doit CMDB data model...\n")
         constants = api_constants()
 
         if constants == None:
