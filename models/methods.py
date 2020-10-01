@@ -10,9 +10,9 @@ from objects import objects
 from semantic_matching import matching
 
 
-def get_ci_type_name_from_id(id):
+def get_ci_type_title_from_id(id):
     """
-    Get the name of the configuration item type based on its identifier.
+    Get the title of the configuration item type based on its identifier.
 
     Goes through the existing configuration item types until it finds the type identified by the requested id.
 
@@ -24,20 +24,20 @@ def get_ci_type_name_from_id(id):
     Returns
     -------
     string
-        Name of the configuration item type.
+        title of the configuration item type.
 
     """
     ci_types = objects["configuration_item_types"]
     for ci_type in ci_types:
         type_id = ci_type.get_id()
         if type_id == id:
-            return ci_type.get_name()
+            return ci_type.get_title()
     return None
 
 
-def get_relationship_type_name_from_id(id):
+def get_relationship_type_title_from_id(id):
     """
-    Get the name of the relationship type based on its identifier.
+    Get the title of the relationship type based on its identifier.
 
     Goes through the existing relationship types until it finds the type identified by the requested id.
 
@@ -49,20 +49,20 @@ def get_relationship_type_name_from_id(id):
     Returns
     -------
     string
-        Name of the relationship type.
+        title of the relationship type.
 
     """
     rel_types = objects["relationship_types"]
     for rel_type in rel_types:
         type_id = rel_type.get_id()
         if type_id == id:
-            return rel_type.get_name()
+            return rel_type.get_title()
     return None
 
 
-def get_attribute_name_from_id(id):
+def get_attribute_title_from_id(id):
     """
-    Get the name of the attribute based on its identifier.
+    Get the title of the attribute based on its identifier.
 
     Goes through the existing attributes until it finds the attribute identified by the requested id.
 
@@ -74,14 +74,14 @@ def get_attribute_name_from_id(id):
     Returns
     -------
     string
-        Name of the attribute.
+        title of the attribute.
 
     """
     attributes = objects["attributes"]
     for atr in attributes:
         type_id = atr.get_id()
         if type_id == id:
-            return atr.get_name()
+            return atr.get_title()
     return None
 
 
@@ -177,14 +177,14 @@ def delete_object(obj):
         return False
 
 
-def find_most_similar_attribute(at_name, attributes):
+def find_most_similar_attribute(at_title, attributes):
     """
-    From a list of attributes, selects the one that has the most similar name to the requested attribute name.
+    From a list of attributes, selects the one that has the most similar title to the requested attribute title.
 
     Parameters
     ----------
-    at_name : string
-        The attribute name.
+    at_title : string
+        The attribute title.
 
     attribues: [int]
         The list of attributes identifiers.
@@ -195,14 +195,14 @@ def find_most_similar_attribute(at_name, attributes):
         Returns the identifier of the most similar attribute from the list.
 
     """
-    attributes_names = {}
+    attributes_titles = {}
     for at_id in attributes:
-        attributes_names[at_id] = get_attribute_name_from_id(at_id)
+        attributes_titles[at_id] = get_attribute_title_from_id(at_id)
     res = 0
     max = 0
-    for at in attributes_names:
+    for at in attributes_titles:
         attribute_similarity = matching.match_coeficient(
-            at_name, attributes_names[at])
+            at_title, attributes_titles[at])
         if attribute_similarity > max:
             res = at
     return res
@@ -232,11 +232,11 @@ def ci_already_exists(ci):
 
     existing_cis = objects["configuration_items"]
     ci_type_id = ci.get_type()
-    ci_type = get_ci_type_name_from_id(ci_type_id)
+    ci_type = get_ci_type_title_from_id(ci_type_id)
 
     for existing_ci in existing_cis:
         existing_ci_type_id = existing_ci.get_type()
-        existing_ci_type = get_ci_type_name_from_id(existing_ci_type_id)
+        existing_ci_type = get_ci_type_title_from_id(existing_ci_type_id)
         type_similarity = matching.match_coeficient(
             ci_type, existing_ci_type)
 
@@ -247,12 +247,12 @@ def ci_already_exists(ci):
             equal_attributes = 0
 
             for at_id in attributes:
-                at_name = get_attribute_name_from_id(at_id)
+                at_title = get_attribute_title_from_id(at_id)
                 ex_at_id = find_most_similar_attribute(
-                    at_name, existing_attributes)
-                ex_at_name = get_attribute_name_from_id(ex_at_id)
+                    at_title, existing_attributes)
+                ex_at_title = get_attribute_title_from_id(ex_at_id)
                 attribute_similarity = matching.match_coeficient(
-                    at_name, ex_at_name)
+                    at_title, ex_at_title)
 
                 if attribute_similarity >= 0.5:
                     at_value = get_attribute_value_from_id(at_id)
@@ -299,7 +299,7 @@ def relationship_already_exists(rel):
 
     existing_rels = objects["relationships"]
     rel_type_id = rel.get_type()
-    rel_type = get_relationship_type_name_from_id(rel_type_id)
+    rel_type = get_relationship_type_title_from_id(rel_type_id)
     source_id = rel.get_source_id()
     target_id = rel.get_target_id()
 
@@ -309,7 +309,7 @@ def relationship_already_exists(rel):
 
         if existing_source_id == source_id and existing_target_id == target_id:
             existing_rel_type_id = existing_rel.get_type()
-            existing_rel_type = get_relationship_type_name_from_id(
+            existing_rel_type = get_relationship_type_title_from_id(
                 existing_rel_type_id)
             type_similarity = matching.match_coeficient(
                 rel_type, existing_rel_type)
@@ -321,12 +321,12 @@ def relationship_already_exists(rel):
                 equal_attributes = 0
 
                 for at_id in attributes:
-                    at_name = get_attribute_name_from_id(at_id)
+                    at_title = get_attribute_title_from_id(at_id)
                     ex_at_id = find_most_similar_attribute(
-                        at_name, existing_attributes)
-                    ex_at_name = get_attribute_name_from_id(ex_at_id)
+                        at_title, existing_attributes)
+                    ex_at_title = get_attribute_title_from_id(ex_at_id)
                     attribute_similarity = matching.match_coeficient(
-                        at_name, ex_at_name)
+                        at_title, ex_at_title)
 
                     if attribute_similarity >= 0.5:
                         at_value = get_attribute_value_from_id(at_id)

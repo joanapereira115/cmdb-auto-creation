@@ -9,6 +9,7 @@ class Relationship:
 
     Attributes:
         id_iter         The iterator used to generate the relationship identifier.
+        title            The label of the relationship.
         type_id         The identifier of the relationship type.
         source_id       The identifier of the configuration item that plays yhe role of source/master in the relationship.
         target_id       The identifier of the configuration item that plays yhe role of target/slave in the relationship.
@@ -16,6 +17,7 @@ class Relationship:
     """
 
     id_iter = itertools.count()
+    title = ""
     type_id = 0
     source_id = 0
     target_id = 0
@@ -28,6 +30,10 @@ class Relationship:
     def get_id(self):
         """Get the relationship identifier."""
         return self.id
+
+    def get_title(self):
+        """Get the relationship title."""
+        return self.title
 
     def get_type(self):
         """Get the relationship type identifier."""

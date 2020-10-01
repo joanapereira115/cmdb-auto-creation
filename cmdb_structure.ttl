@@ -51,7 +51,7 @@
     rdfs:range xsd:string ;
     rdfs:comment "The manufacturer-allocated number used to identify the item.".
 
-:name rdf:type owl:DatatypeProperty ;
+:title rdf:type owl:DatatypeProperty ;
     rdfs:domain :ConfigurationItem ,
                 :Relationship ,
                 :ConfigurationItemType ,
@@ -126,18 +126,19 @@
 #################################################################
 
 :macbook rdf:type :ConfigurationItem .
-:macbook :name "Macbook pro de Joana" .
+:macbook :title "Macbook pro de Joana" .
+:macbook :cmdb_status "Operational" .
 
 :pc rdf:type :ConfigurationItemType .
-:pc :name "Portable Computer" .
+:pc :title "Portable Computer" .
 
 :macbook :has_ci_type :pc .
 
 :meo_router rdf:type :ConfigurationItem .
-:meo_router :name "MEO router" .
+:meo_router :title "MEO router" .
 
 :router rdf:type :ConfigurationItemType .
-:router :name "Router" .
+:router :title "Router" .
 
 :meo_router :has_ci_type :router .
 
@@ -146,12 +147,12 @@
 :mac_router :has_target :meo_router .
 
 :net rdf:type :RelationshipType .
-:net :name "Network connection" .
+:net :title "Network connection" .
 
 :mac_router :has_rel_type :net .
 
 :apple rdf:type :Attribute .
-:apple :name "Vendor" .
+:apple :title "Vendor" .
 :apple :value "Apple" .
 
 :macbook :has_attribute :apple .
@@ -160,7 +161,7 @@
 :macbook :has_ipv4 "10.10.1.3" .
 
 :speed rdf:type :Attribute .
-:speed :name "Speed" .
+:speed :title "Speed" .
 :speed :value "100 mbps" .
 
 :mac_router :has_attribute :speed .

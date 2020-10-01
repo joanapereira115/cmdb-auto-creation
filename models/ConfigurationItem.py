@@ -11,7 +11,7 @@ class ConfigurationItem:
         id_iter         int               The iterator used to generate the item identifier.
         uuid            string            The universally unique identifier (128-bit number) assigned to the item.
         serial_number   string            The manufacturer-allocated number used to identify the item.
-        name            string            The label by which the item is known.
+        title            string            The label by which the item is known.
         description     string            The textual description of the item.
         status          string            The current status value for the operational condition of the item.
         mac_address     string            The media access control address assigned to the item.
@@ -24,7 +24,7 @@ class ConfigurationItem:
     id_iter = itertools.count()
     uuid = ""
     serial_number = ""
-    name = ""
+    title = ""
     description = ""
     status = ""
     mac_address = ""
@@ -57,13 +57,13 @@ class ConfigurationItem:
         """Set the configuration item serial number to the value passed."""
         self.serial_number = serial_number
 
-    def get_name(self):
-        """Get the configuration item name."""
-        return self.name
+    def get_title(self):
+        """Get the configuration item title."""
+        return self.title
 
-    def set_name(self, name):
-        """Set the configuration item name to the value passed."""
-        self.name = name
+    def set_title(self, title):
+        """Set the configuration item title to the value passed."""
+        self.title = title
 
     def get_description(self):
         """Get the configuration item description."""

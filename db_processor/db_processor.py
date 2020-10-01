@@ -173,7 +173,7 @@ def get_ci_types():
 
     """
     res = []
-    query_string = "select distinct ?t where {?s rdf:type :ConfigurationItemType. ?s :name ?t .}"
+    query_string = "select distinct ?t where {?s rdf:type :ConfigurationItemType. ?s :title ?t .}"
     r = execQuery(query_string)
     for w in r.text.split('\n')[1:]:
         w = regex.sub(r"\r", "", w)
@@ -193,7 +193,7 @@ def get_relation_types():
 
     """
     res = []
-    query_string = "select distinct ?t where {?s rdf:type :RelationshipType. ?s :name ?t .}"
+    query_string = "select distinct ?t where {?s rdf:type :RelationshipType. ?s :title ?t .}"
     r = execQuery(query_string)
     for w in r.text.split('\n')[1:]:
         w = regex.sub(r"\r", "", w)
@@ -216,9 +216,9 @@ def get_ci_attributes(ci_type):
     query_string = """
     select distinct ?at where {?s rdf:type :ConfigurationItem .
         ?s :has_ci_type ?x .
-        ?x :name \"""" + ci_type + """\" .
+        ?x :title \"""" + ci_type + """\" .
         ?s :has_attribute ?a .
-        ?a :name ?at .
+        ?a :title ?at .
     }"""
 
     r = execQuery(query_string)
@@ -254,9 +254,9 @@ def get_rel_attributes(rel_type):
     query_string = """
     select distinct ?at where {?s rdf:type :Relationship .
         ?s :has_rel_type ?x .
-        ?x :name \"""" + rel_type + """\" .
+        ?x :title \"""" + rel_type + """\" .
         ?s :has_attribute ?a .
-        ?a :name ?at .
+        ?a :title ?at .
     }"""
     r = execQuery(query_string)
     for w in r.text.split('\n')[1:]:

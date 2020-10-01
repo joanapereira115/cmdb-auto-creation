@@ -8,21 +8,21 @@ class RelationshipType:
 
     Attributes:
         id_iter         The iterator used to generate the relationship identifier.
-        name            The name of the type of the relationship.
+        title            The title of the type of the relationship.
     """
 
     id_iter = itertools.count()
-    name = ""
+    title = ""
 
-    def __init__(self, name):
+    def __init__(self, title):
         """Initialize the relationship type with a generated identifier."""
         self.id = next(self.id_iter) + 1
-        self.name = name
+        self.title = title
 
     def get_id(self):
         """Get the relationship type identifier."""
         return self.id
 
-    def get_name(self):
-        """Get the relationship type name."""
-        return self.name
+    def get_title(self):
+        """Get the relationship type title."""
+        return self.title

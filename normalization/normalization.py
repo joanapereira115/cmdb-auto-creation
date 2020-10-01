@@ -5,6 +5,94 @@ import string
 from stringcase import sentencecase
 from nltk.corpus import stopwords
 
+acronyms_db = {
+    'os': 'operating_system',
+    'ip': 'internet_protocol',
+    'mac': 'media_access_control',
+    'tcp': 'transmission_control_protocol',
+    'itil': 'information technology infrastructure library',
+    'cmdb': 'configuration management database',
+    'ci': 'configuration item',
+    'iso': 'international organization for standardization',
+    'icmp': 'internet control message protocol',
+    'snmp': 'simple network management protocol',
+    'lan': 'local area network',
+    'wan': 'wide area netwok',
+    'vpn': 'virtual private network',
+    'fdb': 'forwarding database',
+    'arp': 'address resolution protocol',
+    'lldp': 'link layer discovery protocol',
+    'mib': 'management information base',
+    'udp': 'user datagram protocol',
+    'stp': 'spanning tree protocol',
+    'span': 'switched port analyzer',
+    'rdp': 'remote desktop protocol',
+    'api': 'application programming interface',
+    'rest': 'representational state transfer',
+    'ti': 'tecnologias da informação',
+    'itsm': 'it service management',
+    'osi': 'open system interconnection',
+    'ssh': 'secure_shell',
+    'wmi': 'windows management instrumentation',
+    'winrm': 'windows remote management',
+    'cdp': 'cisco discovery protocol',
+    'jmx': 'java management extensions',
+    'sql': 'structured query language',
+    'dns': 'domain name system',
+    'nfs': 'network file system',
+    'ldap': 'lightweight directory access protocol',
+    'taddm': 'tivoli application dependency discovery manager',
+    'ssd': 'solid-state drive',
+    'das': 'direct attached storage',
+    'nas': 'network attached storage',
+    'san': 'storage area network',
+    'cpu': 'central processing unit',
+    'bios': 'basic input/output system',
+    'json': 'javascript object notation',
+    'http': 'hypertext_transfer_protocol',
+    'https': 'hypertext transfer protocol secure',
+    'xml': 'extensible markup language',
+    'cim': 'common information model',
+    'svs': 'service value system',
+    'dmtf': 'distributed management task force',
+    'uml': 'unified modeling language',
+    'rpc': 'remote procedure call',
+    'cms': 'configuration management system',
+    'cidr': 'classless inter-domain routing',
+    'ttl': 'time to live',
+    'csv': 'comma-separated values',
+    'php': 'hypertext preprocessor',
+    'xdp': 'express data path',
+    'fdp': 'foundry discovery protocol',
+    'ospf': 'open shortest path first',
+    'bgp': 'border gateway protocol',
+    'ndp': 'neighbor discovery protocol',
+    'ups': 'uninterruptible power source',
+    'man': 'metropolitan area network',
+    'ban': 'body area network',
+    'pan': 'personal area network',
+    'ap': 'access point',
+    'hdd': 'hard disk drive',
+    'sgbd': 'sistemas de gestão de base de dados',
+    'bd': 'bases de dados',
+    'html': 'hypertext markup language',
+    'url': 'uniform resource locator',
+    'ssl': 'secure sockets layer',
+    'vlan': 'virtual local area network',
+    'ucs': 'unified computing system',
+    'aci': 'application centric infrastructure',
+    'sdn': 'software defined network',
+    'ipmi': 'intelligent platform management interface',
+    'bmc': 'baseboard management controller',
+    'sccm': 'system center configuration manager',
+    'ftp': 'file transfer protocol',
+    'uuid': 'universally unique identifier',
+    'cdm': 'common data model',
+    'tpl': 'template file',
+    'is-IS': 'intermediate system-intermediate system',
+    'rip': 'routing information protocol'
+}
+
 
 def remove_spaces(text):
     """
@@ -61,6 +149,8 @@ def remove_style_case(text):
     res = " ".join(new_words)
     return res
 
+# TODO: não remover : quando é um endereço ipv6
+
 
 def remove_punctuation(text):
     """
@@ -99,11 +189,16 @@ def remove_stop_words(text):
     return text
 
 
+def acronym(text):
+    return ' '.join([acronyms_db.get(i, i) for i in text.split()])
+
+
 def clean_text(text):
     text = remove_style_case(text)
     text = remove_spaces(text)
     text = remove_punctuation(text)
     text = text.lower()
+    text = acronym(text)
     text = remove_stop_words(text)
     return text
 

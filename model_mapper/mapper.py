@@ -6,6 +6,7 @@ from PyInquirer import style_from_dict, Token, prompt
 from PyInquirer import Validator, ValidationError
 import regex
 from tabulate import tabulate
+import json
 
 from cmdb_processor import cmdb_data_model
 from db_processor import db_data_model
@@ -54,9 +55,6 @@ def calculate_class_similarity(cmdb_types, app_types):
 
 
 def present_map(cmdb_ci_types, db_ci_types, cmdb_rel_types, db_rel_types, cmdb_ci_attributes, db_ci_attributes, cmdb_rel_attributes, db_rel_attributes, similar_ci, similar_rel, similar_attr_ci, similar_attr_rel):
-    # data = [[1, 'Liquid', 24, 12], [2, 'Virtus.pro.pro.pro', 19, 14],
-    #        [3, 'PSG.LGD', 15, 19], [4, 'Team Secret', 10, 20]]
-
     print("\n===============================================================================================================================================================================")
     print(blue + "CONFIGURATION ITEMS MAPPING" + reset)
     print("===============================================================================================================================================================================")
@@ -68,17 +66,16 @@ def present_map(cmdb_ci_types, db_ci_types, cmdb_rel_types, db_rel_types, cmdb_c
         row = [cmdb_ci, cmdb_ci_types.get(
             cmdb_ci), db_ci, db_ci_types.get(db_ci), sim]
         data.append(row)
-        # print("|| " + green + cmdb_ci + reset + " \t || \t " + green + cmdb_ci_types.get(cmdb_ci) + reset +
-        #      " \t || \t " + blue + db_ci + reset + " \t || \t " + blue + db_ci_types.get(db_ci) + reset + " \t || \t " + red + str(sim) + reset + " ||")
     print(tabulate(data, headers=[
         "CI in CMDB", "Description", "CI in DB", "Description", "Similarity Coeficient"]))
     print()
 
     for db_ci in similar_ci:
         data = []
+        cmdb_ci = list(similar_ci[db_ci].keys())[0]
         print("**************************************************************************************************")
         print(
-            green + str(list(similar_ci[db_ci].keys())[0]) + " Attributes Mapping" + reset)
+            green + str(cmdb_ci) + " Attributes Mapping" + reset)
         print("**************************************************************************************************")
         print()
         atrs = similar_attr_ci.get(cmdb_ci)
@@ -88,8 +85,6 @@ def present_map(cmdb_ci_types, db_ci_types, cmdb_rel_types, db_rel_types, cmdb_c
             row = [cmdb_at, cmdb_ci_attributes.get(
                 cmdb_ci).get(cmdb_at), db_at, db_ci_attributes.get(db_ci).get(db_at), sim]
             data.append(row)
-            # print("|| " + green + cmdb_at + reset + " \t || \t " + green + cmdb_ci_attributes.get(cmdb_ci).get(cmdb_at) + reset +
-            #      " \t || \t " + blue + db_at + reset + " \t || \t " + blue + db_ci_attributes.get(db_ci).get(db_at) + reset + " \t || \t " + red + str(sim) + reset + " ||")
         print(tabulate(data, headers=["Attribute in CMDB", "Description",
                                       "Attribute in DB", "Description", "Similarity Coeficient"]))
         print()
@@ -107,8 +102,6 @@ def present_map(cmdb_ci_types, db_ci_types, cmdb_rel_types, db_rel_types, cmdb_c
         row = [cmdb_rel, cmdb_rel_types.get(
             cmdb_rel), db_rel, db_rel_types.get(db_rel), sim]
         data.append(row)
-        # print("|| " + green + cmdb_rel + reset + " \t || \t " + green + cmdb_rel_types.get(cmdb_rel) + reset +
-        #      " \t || \t " + blue + db_rel + reset + " \t || \t " + blue + db_rel_types.get(db_rel) + reset + " \t || \t " + red + str(sim) + reset + " ||")
         atrs = similar_attr_rel.get(cmdb_rel)
     print(tabulate(data, headers=[
         "Relationship in CMDB", "Description", "Relationship in DB", "Description", "Similarity Coeficient"]))
@@ -116,9 +109,9 @@ def present_map(cmdb_ci_types, db_ci_types, cmdb_rel_types, db_rel_types, cmdb_c
 
     for db_rel in similar_rel:
         data = []
+        cmdb_rel = list(similar_rel[db_rel].keys())[0]
         print("**************************************************************************************************")
-        print(
-            green + str(list(similar_rel[db_rel].keys())[0]) + " Attributes Mapping" + reset)
+        print(green + str(cmdb_rel) + " Attributes Mapping" + reset)
         print("**************************************************************************************************")
         print()
         for cmdb_at in atrs:
@@ -133,8 +126,6 @@ def present_map(cmdb_ci_types, db_ci_types, cmdb_rel_types, db_rel_types, cmdb_c
             row = [cmdb_at, cmdb_at_desc, db_at,
                    db_at_desc, sim]
             data.append(row)
-            # print("|| " + green + cmdb_at + reset + " \t || \t " + green + str(cmdb_at_desc) + reset + " \t || \t " +
-            #      blue + db_at + reset + " \t || \t " + blue + str(db_at_desc) + reset + " \t || \t " + red + str(sim) + reset + " ||")
         print(tabulate(data, headers=["Attribute in CMDB", "Description",
                                       "Attribute in DB", "Description", "Similarity Coeficient"]))
         print
@@ -210,40 +201,29 @@ def define_rules(threshold, similar_ci, similar_rel, similar_attr_ci, similar_at
                     attr[db_at] = cmdb_at
             rules["rel_attributes"][db_rel] = attr
 
-    print(rules)
+    #print(json.dumps(rules, indent=4, sort_keys=True))
 
 
 def run_mapper():
     print(blue + ">>> " + reset + "Executing the model mapper...\n")
 
-    # {"CI type": "description", ...}
     cmdb_ci_types = cmdb_data_model.cmdb_data_model.get("ci_types")
-    # {"relationship type": "description", ...}
     cmdb_rel_types = cmdb_data_model.cmdb_data_model.get("rel_types")
-    # {"CI type": {"attribute": "description", ...}, ...}
     cmdb_ci_attributes = cmdb_data_model.cmdb_data_model.get("ci_attributes")
-    # {"relationship type": {"attribute": "description", ...}, ...}
     cmdb_rel_attributes = cmdb_data_model.cmdb_data_model.get("rel_attributes")
 
-    # {"CI type": "description", ...}
     db_ci_types = db_data_model.db_data_model.get("ci_types")
-    # {"relationship type": "description", ...}
     db_rel_types = db_data_model.db_data_model.get("rel_types")
-    # {"CI type": {"attribute": "description", ...}, ...}
     db_ci_attributes = db_data_model.db_data_model.get("ci_attributes")
-    # {"relationship type": {"attribute": "description", ...}, ...}
     db_rel_attributes = db_data_model.db_data_model.get("rel_attributes")
 
     print(blue + ">>> " + reset +
           "Calculating configuration item types similarity...")
     ci_similarity = calculate_class_similarity(cmdb_ci_types, db_ci_types)
+    similar_ci = select_most_similar(ci_similarity)
 
     print(blue + "\n>>> " + reset + "Calculating relationship types similarity...")
     rel_similarity = calculate_class_similarity(cmdb_rel_types, db_rel_types)
-
-    # {'Portable Computer': {'C__OBJTYPE__SERVER': 0.8181818181818182}, 'Router': {'C__OBJTYPE__ROUTER': 1.0}}
-    similar_ci = select_most_similar(ci_similarity)
-    # {'Network connection': {'C__RELATION_TYPE__NET_CONNECTIONS': 0.954378751269652}}
     similar_rel = select_most_similar(rel_similarity)
 
     print(blue + "\n>>> " + reset +

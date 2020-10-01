@@ -6,6 +6,8 @@ from colored import fg, bg, attr
 import regex
 import json
 from .idoit_population import run_idoit_population
+from cmdb_processor import cmdb_data_model
+from model_mapper import transformation_rules
 
 """
     Color definition.
@@ -64,7 +66,7 @@ def get_ci_type(ci_id):
     query = """
     select distinct ?k where { 
         """ + ci_id + """ :has_ci_type ?s .
-        ?s :name ?k .
+        ?s :title ?k .
     }"""
     encoded = quote(prefix + "\n" + query)
     url = db_url + "?query=" + encoded
@@ -81,7 +83,7 @@ def get_rel_type(rel_id):
     query = """
     select distinct ?k where { 
         """ + rel_id + """ :has_rel_type ?s .
-        ?s :name ?k .
+        ?s :title ?k .
     }"""
     encoded = quote(prefix + "\n" + query)
     url = db_url + "?query=" + encoded
@@ -99,7 +101,7 @@ def get_ci_attributes(ci_id):
     query = """
     select distinct ?at ?v where { 
     """ + ci_id + """ :has_attribute ?a .
-        ?a :name ?at .
+        ?a :title ?at .
         ?a :value ?v .
     }"""
     encoded = quote(prefix + "\n" + query)
@@ -133,6 +135,9 @@ def get_ci_attributes(ci_id):
                 name = name[len(
                     "http://www.semanticweb.org/cmdb_auto_creation/2020/cmdb#"):]
             value = at.split(',')[1]
+            if name in attrs:
+                # TODO: como fazer quando é mais do que um valor para o mesmo atributo?
+                pass
             attrs[name] = value
 
     return attrs
@@ -143,7 +148,7 @@ def get_rel_attributes(rel_id):
     query = """
     select distinct ?at ?v where { 
     """ + rel_id + """ :has_attribute ?a .
-        ?a :name ?at .
+        ?a :title ?at .
         ?a :value ?v .
     }"""
     encoded = quote(prefix + "\n" + query)
@@ -222,9 +227,11 @@ def get_target(rel_id):
     return target
 
 
-def run_cmdb_population(info, rules):
+def run_cmdb_population(info):
     """
     info = {
+        "software" = "i-doit",
+        "connection" = "API",
         "cmdb": {"server": "192.168.1.72", "username": "admin", "password": "admin", "api_key": "joana"},
         "db": {"server": "192.168.1.72", "port": "7200", "repository": "cmdb"}
     }
@@ -258,6 +265,8 @@ def run_cmdb_population(info, rules):
     sources = {}
     targets = {}
 
+    rules = transformation_rules.rules
+
     print(blue + "\n>>> " + reset +
           "Obtaining the existing CI's in the database...")
     cis_ids = get_cis(info.get("db"))
@@ -278,11 +287,11 @@ def run_cmdb_population(info, rules):
           "Starting the population of the CMDB...")
 
     cmdb_info = info.get("cmdb")
+    sw = info.get("software")
 
-    # TODO: testar qual é o tipo da cmdb
-    if True:
-        success = run_idoit_population(cmdb_info, rules, cis_types, rels_types,
-                                       cis_attributes, rels_attributes, sources, targets)
+    if sw == "i-doit":
+        success = run_idoit_population(cmdb_info, cmdb_data_model.cmdb_data_model, rules, cis_types,
+                                       rels_types, cis_attributes, rels_attributes, sources, targets)
         if success:
             print(green + "\n>>> " + reset +
                   "CMDB population complete...")
