@@ -63,9 +63,7 @@ def select_option(option1, option2, choice):
 def select_most_similar(calculated_matches):
     m = []
     v = {}
-    # TODO: quando há dois iguais posso escolher?
 
-    # {'System Service': {'Service': 0.7958800017463593, 'Operating System': 0.6879912871822835, 'media access control': 0.5440860997165468}}
     for key in calculated_matches:
         values = calculated_matches.get(key)
         if len(values) > 0:

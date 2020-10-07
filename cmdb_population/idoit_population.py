@@ -117,12 +117,13 @@ def create_idoit_relationship(rel_type, rel_attrs, rules_rel_types, rules_rel_at
     cmdb_id = None
     cmdb_type = rules_rel_types.get(rel_type)
     if cmdb_type != None:
-        cmdb_type_text = "\"type\": \"" + cmdb_type + "\", "
+        cmdb_type_text = "\"type\": \"C__OBJTYPE__RELATION\", \"relation_type\": \"" + \
+            cmdb_type + "\", "
 
         if source != None and target != None:
-            cmdb_source_target_text = "\"object1\": \"" + \
-                str(ci_ids.get(source)) + "\", \"object2\": \"" + \
-                str(ci_ids.get(target)) + "\", "
+            cmdb_source_target_text = "\"object1\": " + \
+                str(ci_ids.get(source)) + ", \"object2\": " + \
+                str(ci_ids.get(target)) + ", "
             cmdb_at_text = ""
 
             has_title = False

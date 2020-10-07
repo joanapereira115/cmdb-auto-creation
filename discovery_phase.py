@@ -134,6 +134,7 @@ def machine_password():
 
 
 def get_addresses():
+    # TODO: poder introduzir rede inteira x.y.z.w/24
     range_specification = [
         {
             'type': 'list',
@@ -222,11 +223,11 @@ def run_discovery():
     # TODO: descoberta básica
     ##########
 
-    categories = what2discover()
-
     ##########
     # TODO: mais intervalos?
     ##########
+
+    categories = what2discover()
 
     ##########
     # TODO: mecanismos de descoberta

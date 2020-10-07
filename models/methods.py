@@ -3,11 +3,13 @@
 import json
 import itertools
 
-import Relationship
-import ConfigurationItem
-from objects import objects
+from . import Relationship
+from . import ConfigurationItem
+from .objects import objects
 # TODO: mudar
-from semantic_matching import matching
+from semantic_matching import semantic_matching
+from similarity import similarity
+from reconciliation import reconciliation
 
 
 def get_ci_type_title_from_id(id):
@@ -201,7 +203,7 @@ def find_most_similar_attribute(at_title, attributes):
     res = 0
     max = 0
     for at in attributes_titles:
-        attribute_similarity = matching.match_coeficient(
+        attribute_similarity = semantic_matching.semantic_coeficient(
             at_title, attributes_titles[at])
         if attribute_similarity > max:
             res = at
@@ -237,7 +239,7 @@ def ci_already_exists(ci):
     for existing_ci in existing_cis:
         existing_ci_type_id = existing_ci.get_type()
         existing_ci_type = get_ci_type_title_from_id(existing_ci_type_id)
-        type_similarity = matching.match_coeficient(
+        type_similarity = semantic_matching.semantic_coeficient(
             ci_type, existing_ci_type)
 
         if type_similarity >= 0.5:
@@ -251,13 +253,13 @@ def ci_already_exists(ci):
                 ex_at_id = find_most_similar_attribute(
                     at_title, existing_attributes)
                 ex_at_title = get_attribute_title_from_id(ex_at_id)
-                attribute_similarity = matching.match_coeficient(
+                attribute_similarity = semantic_matching.semantic_coeficient(
                     at_title, ex_at_title)
 
                 if attribute_similarity >= 0.5:
                     at_value = get_attribute_value_from_id(at_id)
                     ex_at_value = get_attribute_value_from_id(ex_at_id)
-                    value_similarity = matching.match_coeficient(
+                    value_similarity = semantic_matching.semantic_coeficient(
                         at_value, ex_at_value)
 
                     if value_similarity >= 0.8:
@@ -311,7 +313,7 @@ def relationship_already_exists(rel):
             existing_rel_type_id = existing_rel.get_type()
             existing_rel_type = get_relationship_type_title_from_id(
                 existing_rel_type_id)
-            type_similarity = matching.match_coeficient(
+            type_similarity = semantic_matching.semantic_coeficient(
                 rel_type, existing_rel_type)
 
             if type_similarity >= 0.5:
@@ -325,19 +327,22 @@ def relationship_already_exists(rel):
                     ex_at_id = find_most_similar_attribute(
                         at_title, existing_attributes)
                     ex_at_title = get_attribute_title_from_id(ex_at_id)
-                    attribute_similarity = matching.match_coeficient(
+                    attribute_similarity = semantic_matching.semantic_coeficient(
                         at_title, ex_at_title)
 
                     if attribute_similarity >= 0.5:
                         at_value = get_attribute_value_from_id(at_id)
                         ex_at_value = get_attribute_value_from_id(ex_at_id)
-                        value_similarity = matching.match_coeficient(
+                        value_similarity = semantic_matching.semantic_coeficient(
                             at_value, ex_at_value)
 
                         if value_similarity >= 0.8:
                             equal_attributes += 1
 
-                ratio = (equal_attributes*100)/total_attributes
+                if total_attributes > 0:
+                    ratio = (equal_attributes*100)/total_attributes
+                else:
+                    ratio = type_similarity * 100
 
                 if ratio > max_ratio:
                     equal_rel = existing_rel
@@ -370,3 +375,71 @@ def already_exists(obj):
         return relationship_already_exists(obj)
     else:
         return None
+
+
+def ci_type_already_exists(title):
+    equal = None
+    max_ratio = 0
+    existing_types = objects["configuration_item_types"]
+
+    for t in existing_types:
+        t_name = t.get_title()
+        sim = similarity.calculate_similarity(t_name, title)
+        if sim > max_ratio:
+            max_ratio = sim
+            equal = t
+
+    if max_ratio > 0.9:
+        return equal
+    else:
+        return None
+
+
+def rel_type_already_exists(title):
+    equal = None
+    max_ratio = 0
+    existing_types = objects["relationship_types"]
+
+    for t in existing_types:
+        t_name = t.get_title()
+        sim = similarity.calculate_similarity(t_name, title)
+        if sim > max_ratio:
+            max_ratio = sim
+            equal = t
+
+    if max_ratio > 0.9:
+        return equal
+    else:
+        return None
+
+
+def add_ci(ci):
+    # TODO: verificar se já existe
+    objects["configuration_items"].append(ci)
+
+
+def add_rel(rel):
+    print("Adding rel: " + str(rel.get_title()))
+    if rel != None:
+        exists = relationship_already_exists(rel)
+        if exists != None:
+            new = reconciliation.reconcile_relationships(rel, exists)
+            delete_relationship(exists)
+            objects["relationships"].append(new)
+        else:
+            objects["relationships"].append(rel)
+
+
+def add_ci_type(ci_type):
+    if ci_type != None:
+        objects["configuration_item_types"].append(ci_type)
+
+
+def add_rel_type(rel_type):
+    if rel_type != None:
+        objects["relationship_types"].append(rel_type)
+
+
+def add_attribute(attr):
+    if attr != None:
+        objects["attributes"].append(attr)

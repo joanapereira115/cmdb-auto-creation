@@ -104,11 +104,16 @@ def add_secret(name, login, password):
 
 
 def show_secret(login):
+    res = []
     print(blue + "\n>>> " + reset +
           "Checking '%s' password in the vault." % (login))
-    item = get_session().query(SecretModel).filter(
-        SecretModel.login.like(login)).order_by(SecretModel.id).all()[0]
-    return item.password
+    for item in get_session().query(SecretModel).filter(
+            SecretModel.login.like(login)).order_by(SecretModel.id).all():
+        res.append(item.password)
+    return res
+    # item = get_session().query(SecretModel).filter(
+    #    SecretModel.login.like(login)).order_by(SecretModel.id).all()[0]
+    # return item.password
 
 
 def lock():

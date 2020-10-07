@@ -383,12 +383,22 @@ def process_i_doit():
 
             rel_attributes_types = {}
 
-            for rel in rel_types:
-                attrs = get_object_attributes(rel, cat_attr_types)
-                if attrs == None:
-                    process_i_doit()
-                else:
+            attrs = get_object_attributes(
+                "C__OBJTYPE__RELATION", cat_attr_types)
+            print()
+            print(json.dumps(attrs, indent=4, sort_keys=True))
+            print()
+            if attrs == None:
+                process_i_doit()
+            else:
+                for rel in rel_types:
                     rel_attributes_types[rel] = attrs
+            # for rel in rel_types:
+            #    attrs = get_object_attributes(rel, cat_attr_types)
+            #    if attrs == None:
+            #        process_i_doit()
+            #    else:
+            #        rel_attributes_types[rel] = attrs
 
             cmdb_data_model["ci_attributes"] = {
                 ci: ci_attributes_types[ci]["attributes"] for ci in ci_attributes_types}
