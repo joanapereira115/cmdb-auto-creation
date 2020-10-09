@@ -13,6 +13,7 @@ from discovery_mechanisms import snmp, nmap
 from discovery_phase import run_discovery
 from mapping_phase import run_mapping
 from population_phase import run_population
+from db_population import population
 
 warnings.filterwarnings("ignore")
 
@@ -37,6 +38,7 @@ def main():
         # run_population(info)
         # snmp.run_snmp("192.168.1.60-75")
         nmap.run_nmap("192.168.1.60-75")
+        population.run_population()
 
 
 main()

@@ -2,4 +2,5 @@
 implementation/cim/api/node_modules
 __pycache__
 */__pycache__
-
+cmdb_population/__pycache__/
+!**/__pycache__/

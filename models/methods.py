@@ -62,6 +62,31 @@ def get_relationship_type_title_from_id(id):
     return None
 
 
+def get_attribute_from_id(id):
+    """
+    Get the attribute based on its identifier.
+
+    Goes through the existing attributes until it finds the attribute identified by the requested id.
+
+    Parameters
+    ----------
+    id : int
+        Identifier of the attribute.
+
+    Returns
+    -------
+    Attribute
+        The attribute.
+
+    """
+    attributes = objects["attributes"]
+    for atr in attributes:
+        type_id = atr.get_id()
+        if type_id == id:
+            return atr
+    return None
+
+
 def get_attribute_title_from_id(id):
     """
     Get the title of the attribute based on its identifier.
@@ -203,8 +228,12 @@ def find_most_similar_attribute(at_title, attributes):
     res = 0
     max = 0
     for at in attributes_titles:
-        attribute_similarity = semantic_matching.semantic_coeficient(
-            at_title, attributes_titles[at])
+        at_title2 = attributes_titles.get(at)
+        if at_title2 != None and at_title != None:
+            attribute_similarity = semantic_matching.semantic_coeficient(
+                at_title, at_title2)
+        else:
+            attribute_similarity = 0
         if attribute_similarity > max:
             res = at
     return res
@@ -299,7 +328,7 @@ def relationship_already_exists(rel):
     equal_rel = None
     max_ratio = 0
 
-    existing_rels = objects["relationships"]
+    existing_rels = objects.get("relationships")
     rel_type_id = rel.get_type()
     rel_type = get_relationship_type_title_from_id(rel_type_id)
     source_id = rel.get_source_id()
@@ -315,8 +344,7 @@ def relationship_already_exists(rel):
                 existing_rel_type_id)
             type_similarity = semantic_matching.semantic_coeficient(
                 rel_type, existing_rel_type)
-
-            if type_similarity >= 0.5:
+            if type_similarity >= 0.5 and type_similarity < 0.9:
                 attributes = rel.get_attributes()
                 existing_attributes = existing_rel.get_attributes()
                 total_attributes = len(attributes)
@@ -343,10 +371,14 @@ def relationship_already_exists(rel):
                     ratio = (equal_attributes*100)/total_attributes
                 else:
                     ratio = type_similarity * 100
-
                 if ratio > max_ratio:
+                    max_ratio = ratio
                     equal_rel = existing_rel
-
+            elif type_similarity > 0.9:
+                ratio = type_similarity * 100
+                if ratio > max_ratio:
+                    max_ratio = ratio
+                    equal_rel = existing_rel
     if max_ratio > 70:
         return equal_rel
 
@@ -422,6 +454,7 @@ def add_rel(rel):
     print("Adding rel: " + str(rel.get_title()))
     if rel != None:
         exists = relationship_already_exists(rel)
+        print("Existing one: " + str(exists))
         if exists != None:
             new = reconciliation.reconcile_relationships(rel, exists)
             delete_relationship(exists)

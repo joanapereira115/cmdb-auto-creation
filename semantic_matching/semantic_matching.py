@@ -39,21 +39,24 @@ def semantic_coeficient(text1, text2):
         The value, between 0 and 1, that represents the biggest value of semantic similarity calculated between the two terms.
 
     """
-    t1 = snakecase(normalization.clean_text(text1))
-    t2 = snakecase(normalization.clean_text(text2))
-    maxi = 0
-    syn1 = wn.synsets(t1)
-    syn2 = wn.synsets(t2)
-    for s1 in syn1:
-        for s2 in syn2:
-            new = wn.wup_similarity(s1, s2)
-            if new != None:
-                if new > maxi:
-                    maxi = new
-    new_spacy = nlp(text1).similarity(nlp(text2))
-    if new_spacy > maxi:
-        maxi = new_spacy
-    return maxi
+    if text1 != None and text2 != None:
+        t1 = snakecase(normalization.clean_text(text1))
+        t2 = snakecase(normalization.clean_text(text2))
+        maxi = 0
+        syn1 = wn.synsets(t1)
+        syn2 = wn.synsets(t2)
+        for s1 in syn1:
+            for s2 in syn2:
+                new = wn.wup_similarity(s1, s2)
+                if new != None:
+                    if new > maxi:
+                        maxi = new
+        new_spacy = nlp(text1).similarity(nlp(text2))
+        if new_spacy > maxi:
+            maxi = new_spacy
+        return maxi
+    else: 
+        return 0
 
 
 """
