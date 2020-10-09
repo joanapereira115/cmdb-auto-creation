@@ -39,6 +39,33 @@ def change_ids(old, new):
 
 
 def reconcile_configuration_items(new, prev):
+
+    new_uuid = new.get_uuid()
+    if new_uuid == None or new_uuid == "":
+        prev_uuid = prev.get_uuid()
+        if prev_uuid != None and prev_uuid != "":
+            new.set_uuid(prev_uuid)
+
+    new_serial_number = new.get_serial_number()
+    if new_serial_number == None or new_serial_number == "":
+        prev_serial_number = prev.get_serial_number()
+        if prev_serial_number != None and prev_serial_number != "":
+            new.set_serial_number(prev_serial_number)
+
+    new_description = new.get_description()
+    prev_description = prev.get_description()
+    if prev_description != None and prev_description != "":
+        desc = new_description + prev_description
+        new.set_description(desc)
+
+    for ip4 in prev.get_ipv4_addresses():
+        if ip4 not in new.get_ipv4_addresses():
+            new.add_ipv4_address(ip4)
+
+    for ip6 in prev.get_ipv6_addresses():
+        if ip6 not in new.get_ipv6_addresses():
+            new.add_ipv6_address(ip6)
+
     new_at = [methods.get_attribute_from_id(at) for at in new.get_attributes()]
     prev_at = [methods.get_attribute_from_id(
         at) for at in prev.get_attributes()]
