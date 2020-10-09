@@ -36,6 +36,16 @@ class ConfigurationItem:
     def __init__(self):
         """Initialize the configuration item with a generated identifier."""
         self.id = next(self.id_iter) + 1
+        self.uuid = ""
+        self.serial_number = ""
+        self.title = ""
+        self.description = ""
+        self.status = ""
+        self.mac_address = ""
+        self.ipv4_addresses = []
+        self.ipv6_addresses = []
+        self.type_id = 0
+        self.attributes = []
 
     def get_id(self):
         """Get the configuration item identifier."""

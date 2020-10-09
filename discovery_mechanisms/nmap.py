@@ -86,25 +86,19 @@ def run_nmap(addresses):
     nm.scan(hosts=addresses, arguments='-PR -sV -A -R')
 
     for h in nm.all_hosts():
-        print(h)
         host = ConfigurationItem.ConfigurationItem()
-
         addresses = nm[h].get("addresses")
         for addr in addresses:
             if addr == "ipv4":
-                print("ipv4 address" + str(addresses.get(addr)))
                 host.add_ipv4_address(addresses.get(addr))
             if addr == "ipv6":
-                print("ipv6 address" + str(addresses.get(addr)))
                 host.add_ipv6_address(addresses.get(addr))
             elif addr == "mac":
-                print("mac address" + str(addresses.get(addr)))
                 host.set_mac_address(addresses.get(addr))
 
         hostnames = nm[h].get("hostnames")
         for hostname in hostnames:
             name = hostname.get("name")
-            print("hostname" + str(name))
             if name != None and name != "":
                 hostname_attr = create_attribute(host, "hostname", name)
                 methods.add_attribute(hostname_attr)
@@ -112,14 +106,12 @@ def run_nmap(addresses):
         v = list(nm[h].get("vendor").values())
         if len(v) > 0:
             vendor = list(nm[h].get("vendor").values())[0]
-            print("vendor" + str(vendor))
             vendor_ci = ConfigurationItem.ConfigurationItem()
             vendor_type = methods.ci_type_already_exists("Vendor")
             if vendor_type == None:
                 vendor_type = ConfigurationItemType.ConfigurationItemType(
                     "Vendor")
                 methods.add_ci_type(vendor_type)
-            print("vendor type" + str(vendor_type))
             vendor_ci.set_type(vendor_type.get_id())
             vendor_ci.set_title = vendor
             vendor_rel_type = methods.rel_type_already_exists("has vendor")
@@ -127,9 +119,7 @@ def run_nmap(addresses):
                 vendor_rel_type = RelationshipType.RelationshipType(
                     "has vendor")
                 methods.add_rel_type(vendor_rel_type)
-            print("vendor rel type" + str(vendor_rel_type))
             vendor_rel = create_relation(host, vendor_ci, vendor_rel_type)
-            print("vendor rel id: " + str(vendor_rel.get_id()))
             vendor_rel.title = "has vendor 2"
             methods.add_ci(vendor_ci)
             methods.add_rel(vendor_rel)
@@ -149,6 +139,10 @@ def run_nmap(addresses):
                 p.set_type(port_type.get_id())
                 p.set_title(port)
 
+                protocol_attr = create_attribute(p, "protocol", proto)
+                methods.add_attribute(protocol_attr)
+
+                """
                 proto_type = methods.ci_type_already_exists("Protocol")
                 if proto_type == None:
                     proto_type = ConfigurationItemType.ConfigurationItemType(
@@ -168,6 +162,7 @@ def run_nmap(addresses):
                 proto_rel.title = "has protocol"
                 methods.add_ci(protocol)
                 methods.add_rel(proto_rel)
+                """
 
                 if nm[h][proto][port]['state'] != '':
                     p.set_status(nm[h][proto][port]['state'])

@@ -26,6 +26,11 @@ class Relationship:
     def __init__(self):
         """Initialize the relationship with a generated identifier."""
         self.id = next(self.id_iter) + 1
+        self.title = ""
+        self.type_id = 0
+        self.source_id = 0
+        self.target_id = 0
+        self.attributes = []
 
     def get_id(self):
         """Get the relationship identifier."""
@@ -43,9 +48,17 @@ class Relationship:
         """Get the source configuration item identifier."""
         return self.id
 
+    def set_source_id(self, s_id):
+        """."""
+        self.source_id = s_id
+
     def get_target_id(self):
         """Get the target configuration item identifier."""
         return self.id
+
+    def set_target_id(self, t_id):
+        """."""
+        self.target_id = t_id
 
     def get_attributes(self):
         """Get the list of attributes identifiers of the relationship."""
