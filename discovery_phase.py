@@ -7,8 +7,13 @@ import os
 import getpass
 import regex
 import pyfiglet
+import requests
+
 
 from password_vault import vault
+from execution_queue import execution_queue
+from db_population import population
+
 
 """
     Color definition.
@@ -60,7 +65,28 @@ class AddressRangeValidator(Validator):
                 cursor_position=len(document.text))  # Move cursor to end
 
 
+class AddressValidator(Validator):
+    def validate(self, document):
+        ok = regex.match(
+            r'(\d{1,3}\.){3}\d{1,3}', document.text)
+        if not ok:
+            raise ValidationError(
+                message='Please enter a valid IP address.',
+                cursor_position=len(document.text))  # Move cursor to end
+
+
+class NumberValidator(Validator):
+    def validate(self, document):
+        ok = regex.match(
+            r'\d+', document.text)
+        if not ok:
+            raise ValidationError(
+                message='Please enter a valid port number.',
+                cursor_position=len(document.text))  # Move cursor to end
+
+
 def define_vault_password():
+    print(blue + ">>> " + reset + "Defining vault password...\n")
     password_vault = [
         {
             'type': 'password',
@@ -123,7 +149,7 @@ def machine_password():
         password_question = [
             {
                 'type': 'password',
-                'message': 'Enter your password:',
+                'message': 'Enter your machine password:',
                 'name': 'password',
                 'validate': NotEmpty
             }
@@ -157,10 +183,29 @@ def get_addresses():
         ]
         range_answer = prompt(range_question, style=style)
         addresses = range_answer["addresses"]
+        return addresses
 
     else:
         # TODO: descobrir endereços IP ativos
         print(blue + "\n>>> " + reset + "Finding addresses...\n")
+
+
+def more_addresses():
+    print()
+    more_addresses = [
+        {
+            'type': 'list',
+            'message': 'Do you want to specify another IPv4 address range?',
+            'name': 'more',
+            'choices': [{'name': 'Yes'}, {'name': 'No'}]
+        }
+    ]
+
+    more_addresses_answer = prompt(more_addresses, style=style)
+    if more_addresses_answer.get('more') == "Yes":
+        return True
+    else:
+        return False
 
 
 def what2discover():
@@ -208,6 +253,107 @@ def what2discover():
     return categories
 
 
+def basic_discovery():
+    addresses = get_addresses()
+    basic = ["nmap", "snmp"]
+    #basic = ["snmp"]
+    execution_queue.execute(basic, addresses)
+    more = more_addresses()
+    if more == True:
+        basic_discovery()
+
+
+def db_specification():
+    """
+    Asks the user to enter the necessary information (server address, port number and repository name) to access the database.
+
+    Returns
+    -------
+    dict
+        The database information (server address, port number and repository name).
+
+    """
+    db_specification_question = [
+        {
+            'type': 'input',
+            'message': 'Enter the IP address of the GraphDB server (use format yyx.yyx.yyx.yyx where \'y\' is optional):',
+            'name': 'server',
+            'validate': AddressValidator
+        },
+        {
+            'type': 'input',
+            'message': 'Enter the port number where GraphDB is running:',
+            'name': 'port',
+            'validate': NumberValidator
+        },
+        {
+            'type': 'input',
+            'message': 'Enter the name of the GraphDB repository:',
+            'name': 'repository',
+            'validate': NotEmpty
+        }
+    ]
+
+    db_specification_answer = prompt(db_specification_question, style=style)
+    return db_specification_answer
+
+
+def test_db_connection(server, port, repository):
+    """
+    Tests the access to the database.
+
+    Parameters
+    ----------
+    server : string
+        The IP address of the database server.
+
+    port : string
+        The port where the database is running.
+
+    repository : string
+        The name of the database repository.
+
+    Returns
+    -------
+    boolean
+        Returns true if the connection was successful and false otherwise.
+
+    """
+    global db_url
+    db_url = "http://" + server + ":" + port + "/repositories/" + repository
+
+    try:
+        s = requests.Session()
+        connection = s.get(db_url)
+        unknown = regex.search(r'unknown repository',
+                               connection.text, regex.IGNORECASE)
+        if unknown != None:
+            print(red + "\n>>> " + reset +
+                  "Unknown repository. Please verify the connection information.\n")
+            return False
+        else:
+            print(green + "\n>>> " + reset + "Successfully connected.\n")
+            return True
+    except requests.exceptions.RequestException:
+        print(red + "\n>>> " + reset +
+              "Unable to connect to GraphDB. Please verify the connection information.\n")
+        return False
+
+
+def get_db_info():
+    db_info = db_specification()
+
+    server = db_info.get("server")
+    port = db_info.get("port")
+    repository = db_info.get("repository")
+
+    connection = test_db_connection(server, port, repository)
+    if connection == False:
+        get_db_info()
+    else:
+        return db_info
+
+
 def run_discovery():
     open_message = pyfiglet.figlet_format(
         "Discovery Phase", font="small")
@@ -217,22 +363,17 @@ def run_discovery():
 
     vault_configuration()
     machine_password()
-    get_addresses()
 
-    ##########
-    # TODO: descoberta básica
-    ##########
+    basic_discovery()
 
-    ##########
-    # TODO: mais intervalos?
-    ##########
-
-    categories = what2discover()
+    # categories = what2discover()
 
     ##########
     # TODO: mecanismos de descoberta
     ##########
 
     ##########
-    # TODO: povoamento da BD
-    ##########
+    print(blue + "\n>>> " + reset + "Make sure that GraphDB is running.\n")
+    db_info = get_db_info()
+    population.run_population(db_info)
+    return db_info

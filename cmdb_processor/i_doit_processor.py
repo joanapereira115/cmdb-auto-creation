@@ -385,9 +385,7 @@ def process_i_doit():
 
             attrs = get_object_attributes(
                 "C__OBJTYPE__RELATION", cat_attr_types)
-            print()
-            print(json.dumps(attrs, indent=4, sort_keys=True))
-            print()
+
             if attrs == None:
                 process_i_doit()
             else:

@@ -63,11 +63,17 @@ def unlock_vault():
 
 
 def create_relation(source, target, relation_type):
-    rel = Relationship.Relationship()
-    rel.type_id = relation_type.get_id()
-    rel.source_id = source.get_id()
-    rel.target_id = target.get_id()
-    return rel
+    if source != None and target != None and relation_type != None:
+        rel = Relationship.Relationship()
+        rel.type_id = relation_type.get_id()
+        if source.get_id() == target.get_id():
+            print("same source and target!")
+            print()
+        rel.source_id = source.get_id()
+        rel.target_id = target.get_id()
+        return rel
+    else:
+        return None
 
 
 def create_attribute(obj, name, value):
@@ -80,12 +86,15 @@ def create_attribute(obj, name, value):
 
 
 def run_nmap(addresses):
-    print(blue + "\n>>> " + reset + "NMAP discovery...\n")
+    print(blue + "\n>>> " + reset +
+          "NMAP discovery in the range address " + str(addresses) + "...\n")
 
     nm = nmap.PortScanner()
     nm.scan(hosts=addresses, arguments='-PR -sV -A -R')
 
     for h in nm.all_hosts():
+        print(green + "\t>>> " + reset +
+              "Found active machine in the address " + str(h) + "...")
         host = ConfigurationItem.ConfigurationItem()
         addresses = nm[h].get("addresses")
         for addr in addresses:
@@ -120,7 +129,7 @@ def run_nmap(addresses):
                     "has vendor")
                 methods.add_rel_type(vendor_rel_type)
             vendor_rel = create_relation(host, vendor_ci, vendor_rel_type)
-            vendor_rel.title = "has vendor 2"
+            vendor_rel.title = "has vendor"
             methods.add_ci(vendor_ci)
             methods.add_rel(vendor_rel)
 
@@ -219,7 +228,7 @@ def run_nmap(addresses):
                         host_type = None
                         if osclass.get('type') == "general purpose":
                             host_type = methods.ci_type_already_exists("Host")
-                            if os_type == None:
+                            if host_type == None:
                                 host_type = ConfigurationItemType.ConfigurationItemType(
                                     "Host")
                                 methods.add_ci_type(host_type)
@@ -268,5 +277,13 @@ def run_nmap(addresses):
                             os_attr = create_attribute(
                                 host, "operating system", osclass.get('osfamily'))
                             methods.add_attribute(os_attr)
+                    host_type = methods.ci_type_already_exists("Host")
+                    if host_type == None:
+                        host_type = ConfigurationItemType.ConfigurationItemType(
+                            "Host")
+                        methods.add_ci_type(host_type)
+                    host.set_type(host_type.get_id())
 
         methods.add_ci(host)
+
+    print(green + "\n>>> " + reset + "Nmap discovery ended.")

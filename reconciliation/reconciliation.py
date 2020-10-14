@@ -15,6 +15,18 @@ def combine_attributes(new_at, prev_at):
 
 
 def reconcile_relationships(new, prev):
+    new_title = new.get_title()
+    if new_title == None or new_title == "":
+        prev_title = prev.get_title()
+        if prev_title != None and prev_title != "":
+            new.set_title(prev_title)
+
+    new_type = new.get_type()
+    if new_type == None or new_type == 0:
+        prev_type = prev.get_type()
+        if prev_type != None and prev_type != 0:
+            new.set_type(prev_type)
+
     new_at = [methods.get_attribute_from_id(at) for at in new.get_attributes()]
     prev_at = [methods.get_attribute_from_id(
         at) for at in prev.get_attributes()]
@@ -52,11 +64,35 @@ def reconcile_configuration_items(new, prev):
         if prev_serial_number != None and prev_serial_number != "":
             new.set_serial_number(prev_serial_number)
 
+    new_title = new.get_title()
+    if new_title == None or new_title == "":
+        prev_title = prev.get_title()
+        if prev_title != None and prev_title != "":
+            new.set_title(prev_title)
+
     new_description = new.get_description()
     prev_description = prev.get_description()
     if prev_description != None and prev_description != "":
         desc = new_description + prev_description
         new.set_description(desc)
+
+    new_status = new.get_status()
+    if new_status == None or new_status == "":
+        prev_status = prev.get_status()
+        if prev_status != None and prev_status != "":
+            new.set_status(prev_status)
+
+    new_mac_address = new.get_mac_address()
+    if new_mac_address == None or new_mac_address == "":
+        prev_mac_address = prev.get_mac_address()
+        if prev_mac_address != None and prev_mac_address != "":
+            new.set_mac_address(prev_mac_address)
+
+    new_type = new.get_type()
+    if new_type == None or new_type == 0:
+        prev_type = prev.get_type()
+        if prev_type != None and prev_type != 0:
+            new.set_type(prev_type)
 
     for ip4 in prev.get_ipv4_addresses():
         if ip4 not in new.get_ipv4_addresses():

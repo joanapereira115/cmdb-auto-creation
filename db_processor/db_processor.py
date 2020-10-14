@@ -277,12 +277,12 @@ def get_rel_attributes(rel_type):
     return res
 
 
-def process_db_data_model():
+def process_db_data_model(db_info):
     """
     Handles the information about the database, processing, and saving it to the data model.
     """
     print(blue + ">>> " + reset + "Make sure that GraphDB is running.\n")
-    db_info = db_specification()
+    # db_info = db_specification()
 
     server = db_info.get("server")
     port = db_info.get("port")
@@ -290,7 +290,7 @@ def process_db_data_model():
 
     connection = test_db_connection(server, port, repository)
     if connection == False:
-        process_db_data_model()
+        process_db_data_model(db_info)
     else:
         ci_types = get_ci_types()
         rel_types = get_relation_types()

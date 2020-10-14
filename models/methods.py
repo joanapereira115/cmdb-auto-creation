@@ -181,29 +181,6 @@ def delete_relationship(rel):
         return False
 
 
-def delete_object(obj):
-    """
-    Removes an object, in case it exists.
-
-    Parameters
-    ----------
-    obj : ConfigurationItem or Relationship
-        The object.
-
-    Returns
-    -------
-    boolean
-        Returns true if the object was removed successfully, and false if it doesn't.
-
-    """
-    if type(obj) == ConfigurationItem:
-        return delete_configuration_item(obj)
-    elif type(obj) == Relationship:
-        return delete_relationship(obj)
-    else:
-        return False
-
-
 def find_most_similar_attribute(at_title, attributes):
     """
     From a list of attributes, selects the one that has the most similar title to the requested attribute title.
@@ -307,32 +284,53 @@ def ci_already_exists(ci):
                 if ip6 in ex_ci_ipv6:
                     equal += 1
 
-            attributes = ci.get_attributes()
-            ex_attributes = existing_ci.get_attributes()
-
-            total += len(attributes)
-
-            for at_id in attributes:
-                at_title = get_attribute_title_from_id(at_id)
-                ex_at_id, sim = find_most_similar_attribute(
-                    at_title, ex_attributes)
-                ex_at_title = get_attribute_title_from_id(ex_at_id)
-                attribute_similarity = semantic_matching.semantic_coeficient(
-                    at_title, ex_at_title)
-
-                if attribute_similarity >= 0.7:
-                    at_value = get_attribute_value_from_id(at_id)
-                    ex_at_value = get_attribute_value_from_id(ex_at_id)
-                    value_similarity = semantic_matching.semantic_coeficient(
-                        at_value, ex_at_value)
-
-                    if value_similarity >= 0.8:
-                        equal += 1
-
-            if total != 0:
+            if total > 0:
                 ratio = (equal*100)/total
+
             else:
-                ratio = 0
+                total = 0
+                equal = 0
+
+                ci_title = ci.get_title()
+                ex_ci_title = existing_ci.get_title()
+
+                title_sim = similarity.calculate_similarity(
+                    str(ci_title), str(ex_ci_title))
+                total += 1
+
+                if title_sim >= 0.9:
+                    equal += 1
+
+                    attributes = ci.get_attributes()
+                    ex_attributes = existing_ci.get_attributes()
+
+                    if len(attributes) > len(ex_attributes):
+                        total += len(ex_attributes)
+                    else:
+                        total += len(attributes)
+
+                    for at_id in attributes:
+                        at_title = get_attribute_title_from_id(at_id)
+                        ex_at_id, sim = find_most_similar_attribute(
+                            at_title, ex_attributes)
+                        ex_at_title = get_attribute_title_from_id(ex_at_id)
+                        attribute_similarity = semantic_matching.semantic_coeficient(
+                            at_title, ex_at_title)
+
+                        if attribute_similarity >= 0.7:
+                            total += 1
+                            at_value = get_attribute_value_from_id(at_id)
+                            ex_at_value = get_attribute_value_from_id(ex_at_id)
+                            value_similarity = semantic_matching.semantic_coeficient(
+                                at_value, ex_at_value)
+
+                            if value_similarity >= 0.8:
+                                equal += 1
+
+                if total != 0:
+                    ratio = (equal*100)/total
+                else:
+                    ratio = 0
 
             if ratio > max_ratio:
                 equal_ci = existing_ci
@@ -390,29 +388,6 @@ def relationship_already_exists(rel):
     return equal_rel
 
 
-def already_exists(obj):
-    """
-    Finds out if a configuration item or a relationship already exists.
-
-    Parameters
-    ----------
-    obj : ConfigurationItem or Relationship
-        The object.
-
-    Returns
-    -------
-    ConfigurationItem or Relationship or None
-        Returns the already existing object, in case it exists, or None.
-
-    """
-    if type(obj) == ConfigurationItem:
-        return ci_already_exists(obj)
-    elif type(obj) == Relationship:
-        return relationship_already_exists(obj)
-    else:
-        return None
-
-
 def ci_type_already_exists(title):
     equal = None
     max_ratio = 0
@@ -451,10 +426,10 @@ def rel_type_already_exists(title):
 
 def add_ci(ci):
     if ci != None:
-        exists = already_exists(ci)
-        if ci != None:
+        exists = ci_already_exists(ci)
+        if exists != None:
             new = reconciliation.reconcile_configuration_items(ci, exists)
-            delete_object(exists)
+            delete_configuration_item(exists)
             objects["configuration_items"].append(new)
         else:
             objects["configuration_items"].append(ci)
@@ -462,10 +437,10 @@ def add_ci(ci):
 
 def add_rel(rel):
     if rel != None:
-        exists = already_exists(rel)
+        exists = relationship_already_exists(rel)
         if exists != None:
             new = reconciliation.reconcile_relationships(rel, exists)
-            delete_object(exists)
+            delete_relationship(exists)
             objects["relationships"].append(new)
         else:
             objects["relationships"].append(rel)

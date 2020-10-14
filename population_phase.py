@@ -15,11 +15,11 @@ green = fg('#86DEB7')
 reset = attr('reset')
 
 
-def run_population(info):
+def run_population(db_info, cmdb_info):
     open_message = pyfiglet.figlet_format(
         "Population Phase", font="small")
     print("\n**********************************************************************")
     print(open_message)
     print("**********************************************************************\n")
 
-    population.run_cmdb_population(info)
+    population.run_cmdb_population(db_info, cmdb_info)

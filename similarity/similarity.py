@@ -27,12 +27,15 @@ def calculate_similarity(text1, text2):
         The value, between 0 and 1, that represents the similarity between the two terms.
 
     """
-    syn_value = syntatic_matching.syntatic_coeficient(text1, text2)
-    if syn_value > 0.99:
-        return numpy.clip(syn_value, 0, 1)
-    else:
-        sem_value = semantic_matching.semantic_coeficient(text1, text2)
-        if sem_value > syn_value:
-            return numpy.clip(sem_value, 0, 1)
-        else:
+    if text1 != "" and text2 != "" and text1 != None and text2 != None:
+        syn_value = syntatic_matching.syntatic_coeficient(text1, text2)
+        if syn_value > 0.99:
             return numpy.clip(syn_value, 0, 1)
+        else:
+            sem_value = semantic_matching.semantic_coeficient(text1, text2)
+            if sem_value > syn_value:
+                return numpy.clip(sem_value, 0, 1)
+            else:
+                return numpy.clip(syn_value, 0, 1)
+    else:
+        return 0

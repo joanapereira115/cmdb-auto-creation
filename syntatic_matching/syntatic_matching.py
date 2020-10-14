@@ -24,11 +24,14 @@ def syntatic_coeficient(text1, text2):
         The value, between 0 and 1, that represents the syntatic similarity between the two terms.
 
     """
-    t1 = normalization.clean_text(text1)
-    t2 = normalization.clean_text(text2)
-    text = [t1, t2]
-    vectorizer = CountVectorizer().fit_transform(text)
-    vectors = vectorizer.toarray()
-    csims = cosine_similarity(vectors)
-    csim = csims[0][1]
-    return csim
+    if text1 != "" and text2 != "" and text1 != None and text2 != None:
+        t1 = normalization.clean_text(text1)
+        t2 = normalization.clean_text(text2)
+        text = [t1, t2]
+        vectorizer = CountVectorizer().fit_transform(text)
+        vectors = vectorizer.toarray()
+        csims = cosine_similarity(vectors)
+        csim = csims[0][1]
+        return csim
+    else:
+        return 0

@@ -41,7 +41,7 @@ def choose_software():
     ]
 
     cmdb_software_answer = prompt(cmdb_software, style=style)
-    cmdb = cmdb_software_answer["software"]
+    cmdb = cmdb_software_answer.get("software")
     return cmdb
 
 
@@ -61,8 +61,8 @@ def choose_connection_method():
     return connection
 
 
-def run_mapping():
-    info = {}
+def run_mapping(db_info):
+    cmdb_info = {}
 
     open_message = pyfiglet.figlet_format(
         "Mapping Phase", font="small")
@@ -73,15 +73,16 @@ def run_mapping():
     cmdb = choose_software()
     connection = choose_connection_method()
 
-    info["software"] = cmdb
-    info["connection"] = connection
+    cmdb_info["software"] = cmdb
+    cmdb_info["connection"] = connection
 
     if cmdb == "i-doit" and connection == "API":
         # {"server": "", "username": "", "password": "", "api_key": ""}
-        info["cmdb"] = i_doit_processor.process_i_doit()
+        cmdb_info["cmdb"] = i_doit_processor.process_i_doit()
     # {"server": "", "port": "", "repository": ""}
-    info["db"] = db_processor.process_db_data_model()
+    # cmdb_info["db"] = db_processor.process_db_data_model()
+    db_processor.process_db_data_model(db_info)
 
     mapper.run_mapper()
 
-    return info
+    return cmdb_info

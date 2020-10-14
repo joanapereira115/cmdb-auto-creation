@@ -13,7 +13,6 @@ from discovery_mechanisms import snmp, nmap
 from discovery_phase import run_discovery
 from mapping_phase import run_mapping
 from population_phase import run_population
-from db_population import population
 
 warnings.filterwarnings("ignore")
 
@@ -33,12 +32,10 @@ def main():
     else:
         open_message = pyfiglet.figlet_format("CMDB Automatic Creation")
         print(open_message)
-        # run_discovery()
-        # info = run_mapping()
-        # run_population(info)
-        # snmp.run_snmp("192.168.1.60-75")
-        nmap.run_nmap("192.168.1.60-75")
-        population.run_population()
+        db_info = run_discovery()
+        cmdb_info = run_mapping(db_info)
+        run_population(db_info, cmdb_info)
+        #
 
 
 main()

@@ -22,23 +22,23 @@ red = fg('#B54653')
 green = fg('#86DEB7')
 reset = attr('reset')
 
-repository = "http://192.168.1.4:7200/repositories/cmdb"
+# TODO: mudar onde é criado o ficheiro
 
 """ criar ficheiro ttl com a definição das classes, object properties e data properties """
 
 
 def create_file():
     # TODO: criar no sítio certo
-    if not os.path.exists('/Users/Joana/graphdb-import'):
-        print("Creating graphdb-import folder...")
-        os.makedirs('/Users/Joana/graphdb-import')
-    if not os.path.exists('/Users/Joana/graphdb-import/cmdb.ttl'):
-        print("Creating cmdb.ttl file...")
-        f = open('/Users/Joana/graphdb-import/cmdb.ttl', "x")
+    if not os.path.exists('graphdb-import'):
+        print(blue + ">>> " + reset + "Creating graphdb-import folder...\n")
+        os.makedirs('graphdb-import')
+    if not os.path.exists('graphdb-import/cmdb.ttl'):
+        print(blue + ">>> " + reset + "Creating cmdb.ttl file...\n")
+        f = open('graphdb-import/cmdb.ttl', "x")
 
 
 def create_structure():
-    f = open("/Users/Joana/graphdb-import/cmdb.ttl", "w")
+    f = open("graphdb-import/cmdb.ttl", "w")
     f.write("""
 @prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
@@ -177,7 +177,7 @@ def create_ci_type(obj):
         id_ = obj.get_id()
         title = obj.get_title()
         if id_ != "" and title != "":
-            f = open("/Users/Joana/graphdb-import/cmdb.ttl", "a")
+            f = open("graphdb-import/cmdb.ttl", "a")
             res += ":" + str(snakecase(title)) + str(id_) + \
                 " rdf:type :ConfigurationItemType ;\n\t :title \"" + \
                 str(title) + "\".\n"
@@ -193,7 +193,7 @@ def create_rel_type(obj):
         id_ = obj.get_id()
         title = obj.get_title()
         if id_ != "" and title != "":
-            f = open("/Users/Joana/graphdb-import/cmdb.ttl", "a")
+            f = open("graphdb-import/cmdb.ttl", "a")
             res += ":" + str(snakecase(title)) + str(id_) + \
                 " rdf:type :RelationshipType ;\n\t :title \"" + \
                 str(title) + "\".\n"
@@ -211,7 +211,7 @@ def create_attribute(obj):
         value = obj.get_value()
 
         if id_ != "" and title != "":
-            f = open("/Users/Joana/graphdb-import/cmdb.ttl", "a")
+            f = open("graphdb-import/cmdb.ttl", "a")
             res += ":" + str(id_) + str(snakecase(title)) + \
                 " rdf:type :Attribute ;\n"
             res += "\t :title \"" + str(title) + "\";\n"
@@ -240,8 +240,8 @@ def create_ci(obj, ci_types):
         type_id = obj.get_type()
         attributes = obj.get_attributes()
         if id_ != "" and type_id != "":
-            f = open("/Users/Joana/graphdb-import/cmdb.ttl", "a")
-            res += ":" + str(id_) + str(type_id) + \
+            f = open("graphdb-import/cmdb.ttl", "a")
+            res += ":" + str(id_) + str(type_id) + str(snakecase(title)) + \
                 " rdf:type :ConfigurationItem "
             if title != "":
                 res += ";\n\t :title \"" + str(title) + "\""
@@ -272,7 +272,7 @@ def create_ci(obj, ci_types):
 
             f.write(res)
             f.close()
-            return ":" + str(id_) + str(type_id)
+            return ":" + str(id_) + str(type_id) + str(snakecase(title))
     return None
 
 
@@ -287,8 +287,9 @@ def create_rel(obj, rel_types, ci_ids):
         attributes = obj.get_attributes()
 
         if id_ != "" and type_id != "":
-            f = open("/Users/Joana/graphdb-import/cmdb.ttl", "a")
-            res += ":" + str(id_) + str(type_id) + " rdf:type :Relationship "
+            f = open("graphdb-import/cmdb.ttl", "a")
+            res += ":" + str(id_) + str(type_id) + \
+                str(snakecase(title)) + " rdf:type :Relationship "
             if title != "":
                 res += ";\n\t :title \"" + str(title) + "\""
             if source_id != "":
@@ -306,18 +307,18 @@ def create_rel(obj, rel_types, ci_ids):
                     res += ";\n\t :has_attribute " + str(at_db_id)
             if type_id in rel_types:
                 if rel_types.get(type_id) != None:
-                    res += ";\n\t :has_ci_type " + \
+                    res += ";\n\t :has_rel_type " + \
                         str(rel_types.get(type_id))
             res += ".\n"
 
             f.write(res)
             f.close()
-            return ":" + str(id_) + str(type_id)
+            return ":" + str(id_) + str(type_id) + str(snakecase(title))
     return None
 
 
 def parse_discovered():
-    f = open("/Users/Joana/graphdb-import/cmdb.ttl", "a")
+    f = open("graphdb-import/cmdb.ttl", "a")
 
     ci_types = {}
     for o in objects.objects.get("configuration_item_types"):
@@ -344,25 +345,34 @@ def parse_discovered():
     f.close()
 
 
-def upload_to_graphdb(repository_id):
+def upload_to_graphdb():
     headers = {
         'Content-Type': 'application/json',
         'Accept': 'application/json',
     }
 
-    data = '{"fileNames": ["/Users/Joana/graphdb-import/cmdb.ttl"]}'
+    data = '{"fileNames": ["cmdb.ttl"]}'
 
     # file import to graphdb
     response = requests.post(
-        'http://192.168.1.72:7200/rest/data/import/server/' + str(repository_id), headers=headers, data=data)
-    print(response.json())
+        'http://' + server + ':' + port + '/rest/data/import/server/' + str(repository), headers=headers, data=data)
+    print(blue + ">>> " + reset + str(response.json()) + "\n")
 
 
-def run_population():
+def run_population(db_info):
+    global server
+    server = db_info.get("server")
+
+    global port
+    port = db_info.get("port")
+
+    global repository
+    repository = db_info.get("repository")
+
     create_file()
     create_structure()
     parse_discovered()
-    upload_to_graphdb('cmdb')
+    upload_to_graphdb()
 
 
 # curl -X POST --header 'Content-Type: application/json' --header 'Accept: application/json' -d '{"fileNames": ["cmdb.ttl"]}' 'http://localhost:7200/rest/data/import/server/cmdb_creation'

@@ -120,7 +120,7 @@ def create_idoit_relationship(rel_type, rel_attrs, rules_rel_types, rules_rel_at
         cmdb_type_text = "\"type\": \"C__OBJTYPE__RELATION\", \"relation_type\": \"" + \
             cmdb_type + "\", "
 
-        if source != None and target != None:
+        if ci_ids.get(source) != None and ci_ids.get(target) != None:
             cmdb_source_target_text = "\"object1\": " + \
                 str(ci_ids.get(source)) + ", \"object2\": " + \
                 str(ci_ids.get(target)) + ", "
@@ -169,14 +169,12 @@ def create_idoit_relationship(rel_type, rel_attrs, rules_rel_types, rules_rel_at
             body = json.loads("""{"version\": \"2.0\",
                 \"method\": \"cmdb.object.create\",
                 \"params\": {
-                    """ + cmdb_type_text + cmdb_weight_text + cmdb_source_target_text + cmdb_at_text + """
+                    """ + str(cmdb_type_text) + str(cmdb_weight_text) + str(cmdb_source_target_text) + str(cmdb_at_text) + """
                     \"apikey\": \"""" + apikey + """\",
                     \"language\": \"en\"
                 },
                 \"id\": 1
             }""")
-
-            print(body)
 
             s = requests.Session()
             create_rel_request = s.post(cmdb_url, json=body, headers=headers)

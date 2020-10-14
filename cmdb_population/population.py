@@ -227,7 +227,7 @@ def get_target(rel_id):
     return target
 
 
-def run_cmdb_population(info):
+def run_cmdb_population(db_info, cmdb_info):
     """
     info = {
         "software" = "i-doit",
@@ -269,14 +269,14 @@ def run_cmdb_population(info):
 
     print(blue + "\n>>> " + reset +
           "Obtaining the existing CI's in the database...")
-    cis_ids = get_cis(info.get("db"))
+    cis_ids = get_cis(db_info)
     for ci in cis_ids:
         cis_types[ci] = get_ci_type(ci)
         cis_attributes[ci] = get_ci_attributes(ci)
 
     print(blue + "\n>>> " + reset +
           "Obtaining the existing relationships in the database...")
-    rels_ids = get_rels(info.get("db"))
+    rels_ids = get_rels(db_info)
     for rel in rels_ids:
         rels_types[rel] = get_rel_type(rel)
         rels_attributes[rel] = get_rel_attributes(rel)
@@ -286,11 +286,10 @@ def run_cmdb_population(info):
     print(blue + "\n>>> " + reset +
           "Starting the population of the CMDB...")
 
-    cmdb_info = info.get("cmdb")
-    sw = info.get("software")
+    sw = cmdb_info.get("software")
 
     if sw == "i-doit":
-        success = run_idoit_population(cmdb_info, cmdb_data_model.cmdb_data_model, rules, cis_types,
+        success = run_idoit_population(cmdb_info.get("cmdb"), cmdb_data_model.cmdb_data_model, rules, cis_types,
                                        rels_types, cis_attributes, rels_attributes, sources, targets)
         if success:
             print(green + "\n>>> " + reset +

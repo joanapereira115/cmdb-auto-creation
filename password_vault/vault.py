@@ -31,10 +31,11 @@ def checkExistence():
     import os
 
     if os.path.isdir(dir_):
-        print(blue + "\n>>> " + reset + "Vault initialized.\n")
+        print(green + "\n>>> " + reset + "Vault initialized.\n")
         pass
     else:
-        print(blue + "\n>>> " + reset + "Creating vault...")
+        print(blue + "\n>>> " + reset +
+              "Password vault does not exists. Creating vault...\n")
         import os
         try:
             if not os.path.exists(dir_):
@@ -54,7 +55,6 @@ def checkExistence():
 
 
 def define_master_key(master_key):
-    print(blue + "\n>>> " + reset + "Defining vault password...")
     res = s_initialize(master_key, global_scope['conf'].salt)
     if res is False:
         print()
@@ -66,7 +66,7 @@ def unlock(attempt):
     key = attempt
 
     if validate_key(key):
-        print(green + "\n>>> " + reset + "Vault unlocked.")
+        print(green + "\n>>> " + reset + "Vault unlocked.\n")
         return True
     else:
         print(red + "\n>>> " + reset + "The password is incorrect.\n")
@@ -99,14 +99,14 @@ def add_secret(name, login, password):
                          password=password)
     get_session().add(secret)
     get_session().commit()
-    print(green + "\n>>> " + reset + "'%s' password added to the vault." % (login))
+    print(green + "\n>>> " + reset + "Password added to the vault.\n")
     return True
 
 
 def show_secret(login):
     res = []
     print(blue + "\n>>> " + reset +
-          "Checking '%s' password in the vault." % (login))
+          "Checking password in the vault.\n")
     for item in get_session().query(SecretModel).filter(
             SecretModel.login.like(login)).order_by(SecretModel.id).all():
         res.append(item.password)

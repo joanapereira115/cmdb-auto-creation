@@ -26,7 +26,7 @@ def s_initialize(key, salt):
         # Create validation key
         validation_key_new()
 
-        print(green + ">>> " + reset +
+        print(green + "\n>>> " + reset +
               "Your vault has been created and encrypted with your master key. Your unique salt is: %s. Write it down. If you lose your config file you will need it to unlock your vault." % (salt))
 
         return True

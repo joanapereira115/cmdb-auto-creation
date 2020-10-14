@@ -46,7 +46,7 @@ class Relationship:
 
     def get_source_id(self):
         """Get the source configuration item identifier."""
-        return self.id
+        return self.source_id
 
     def set_source_id(self, s_id):
         """."""
@@ -54,7 +54,7 @@ class Relationship:
 
     def get_target_id(self):
         """Get the target configuration item identifier."""
-        return self.id
+        return self.target_id
 
     def set_target_id(self, t_id):
         """."""

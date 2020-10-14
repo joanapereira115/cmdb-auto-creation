@@ -14,7 +14,7 @@ import regex
 from easysnmp import snmp_get, snmp_set, snmp_walk
 
 from password_vault import vault
-
+from models import Attribute, ConfigurationItem, ConfigurationItemType, Relationship, RelationshipType, methods, objects
 """
     Color definition.
 """
@@ -32,6 +32,28 @@ style = style_from_dict({
 })
 
 
+def create_relation(source, target, relation_type):
+    if source != None and target != None and relation_type != None:
+        rel = Relationship.Relationship()
+        rel.type_id = relation_type.get_id()
+        if source.get_id() == target.get_id():
+            print("same source and target!")
+        rel.set_source_id(source.get_id())
+        rel.set_target_id(target.get_id())
+        return rel
+    else:
+        return None
+
+
+def create_attribute(obj, name, value):
+    if value != None and value != "":
+        attr = Attribute.Attribute(name, value)
+        obj.add_attribute(attr.get_id())
+        return attr
+    else:
+        return None
+
+
 class NotEmpty(Validator):
     def validate(self, document):
         ok = document.text != "" and document.text != None
@@ -42,31 +64,44 @@ class NotEmpty(Validator):
 
 
 def define_snmp_community():
-    print()
-    community = [
-        {
-            'type': 'password',
-            'message': 'Enter your SNMP devices\' community string:',
-            'name': 'community',
-            'validate': NotEmpty
-        }
-    ]
-    community_answer = prompt(community, style=style)
-    community = community_answer["community"]
-    vault.add_secret('SNMP', "SNMP", community)
+    users = vault.get_usernames()
+    if "SNMP" in users:
+        more_community = [
+            {
+                'type': 'list',
+                'message': 'Do you want to specify another SNMP community string?',
+                'name': 'more',
+                'choices': [{'name': 'Yes'}, {'name': 'No'}]
+            }
+        ]
 
-    print()
-    more_community = [
-        {
-            'type': 'list',
-            'message': 'Do you want to specify another SNMP community string?',
-            'name': 'more',
-            'choices': [{'name': 'Yes'}, {'name': 'No'}]
-        }
-    ]
-
-    more_community_answer = prompt(more_community, style=style)
-    if more_community_answer['more'] == "Yes":
+        more_community_answer = prompt(more_community, style=style)
+        if more_community_answer['more'] == "Yes":
+            print()
+            community = [
+                {
+                    'type': 'password',
+                    'message': 'Enter your SNMP devices\' community string:',
+                    'name': 'community',
+                    'validate': NotEmpty
+                }
+            ]
+            community_answer = prompt(community, style=style)
+            community = community_answer["community"]
+            vault.add_secret('SNMP', "SNMP", community)
+            define_snmp_community()
+    else:
+        community = [
+            {
+                'type': 'password',
+                'message': 'Enter your SNMP devices\' community string:',
+                'name': 'community',
+                'validate': NotEmpty
+            }
+        ]
+        community_answer = prompt(community, style=style)
+        community = community_answer["community"]
+        vault.add_secret('SNMP', "SNMP", community)
         define_snmp_community()
 
 
@@ -146,6 +181,7 @@ def scanner(net, begin, end, community):
     """
     Verificar que endereços, no intervalo especificado, estão disponíveis via snmp
     """
+    print(blue + ">>> " + reset + "SNMP discovery...\n")
     available = []
     load_module("p0f")
     for i in range(begin, end+1):
@@ -167,11 +203,30 @@ def snmp_info(available_ips, secrets):
     snmp_info = {}
     for secret in secrets:
         for ip in available_ips:
+            info = None
             # TODO: checkar a versão do SNMP
-            snmp_info[ip] = {}
             try:
                 info = snmp_walk('system', hostname=ip,
                                  community=secret, version=2)
+            except:
+                info = None
+                print(red + "\n>>> " + reset +
+                      "An error occured with snmp_walk on the machine with the " + ip + " address.")
+
+            if info != None:
+                print(green + "\n\t>>> " + reset +
+                      "SNMP discovery on the machine with the " + ip + " address...")
+                host = ConfigurationItem.ConfigurationItem()
+
+                host_type = methods.ci_type_already_exists("Host")
+                if host_type == None:
+                    host_type = ConfigurationItemType.ConfigurationItemType(
+                        "Host")
+                    methods.add_ci_type(host_type)
+                host.set_type(host_type.get_id())
+
+                host.add_ipv4_address(ip)
+
                 for x in info:
                     if x.oid == "sysDescr":
                         description = x.value
@@ -182,21 +237,47 @@ def snmp_info(available_ips, secrets):
                     if x.oid == "sysContact":
                         contact = x.value
                     if x.oid == "sysLocation":
-                        location = x.value
-                snmp_info[ip]["description"] = description
-                snmp_info[ip]["name"] = name
-                snmp_info[ip]["uptime"] = uptime
-                snmp_info[ip]["contact"] = contact
-                snmp_info[ip]["location"] = location
-            except:
-                print("\nAn error occured with snmp_walk.\n")
+                        local = x.value
+                host.set_description(description)
+                host.set_title(name)
+
+                uptime_attr = create_attribute(host, "uptime", uptime)
+                methods.add_attribute(uptime_attr)
+
+                contact_attr = create_attribute(host, "contact", contact)
+                methods.add_attribute(contact_attr)
+
+                location = ConfigurationItem.ConfigurationItem()
+                local_type = methods.ci_type_already_exists("Location")
+                if local_type == None:
+                    local_type = ConfigurationItemType.ConfigurationItemType(
+                        "Location")
+                    methods.add_ci_type(local_type)
+                location.set_type(local_type.get_id())
+                location.set_title(local)
+
+                local_rel_type = methods.rel_type_already_exists(
+                    "has location")
+                if local_rel_type == None:
+                    local_rel_type = RelationshipType.RelationshipType(
+                        "has location")
+                    methods.add_rel_type(local_rel_type)
+
+                local_rel = create_relation(host, location, local_rel_type)
+                local_rel.title = str(host.get_title()) + \
+                    " has location " + str(location.get_title())
+
+                methods.add_rel(local_rel)
+
+                methods.add_ci(location)
+                methods.add_ci(host)
     return snmp_info
 
 
 def run_snmp(address_range):
     print(blue + "\n>>> " + reset + "Configuring SNMP...\n")
     unlock_vault()
-    # define_snmp_community()
+    define_snmp_community()
     nets = handle_networks(address_range)
     secrets = vault.show_secret("SNMP")
     print()
@@ -207,9 +288,8 @@ def run_snmp(address_range):
             av = scanner(net, begin, end, secret)
             for a in av:
                 available_ips.append(a)
-    print(available_ips)
     info = snmp_info(available_ips, secrets)
-    print(info)
+    print(green + "\n>>> " + reset + "SNMP discovery ended.")
 
 
 """
