@@ -220,11 +220,11 @@ def run_mapper():
     print(blue + ">>> " + reset +
           "Calculating configuration item types similarity...")
     ci_similarity = calculate_class_similarity(cmdb_ci_types, db_ci_types)
-    similar_ci = select_most_similar(ci_similarity)
+    similar_ci = select_most_similar(ci_similarity, {}, [])
 
     print(blue + "\n>>> " + reset + "Calculating relationship types similarity...")
     rel_similarity = calculate_class_similarity(cmdb_rel_types, db_rel_types)
-    similar_rel = select_most_similar(rel_similarity)
+    similar_rel = select_most_similar(rel_similarity, {}, [])
 
     print(blue + "\n>>> " + reset +
           "Calculating configuration item attributes similarity...")
@@ -237,10 +237,10 @@ def run_mapper():
         similar_rel, cmdb_rel_attributes, db_rel_attributes)
 
     similar_attr_ci = {x: select_most_similar(
-        attr_ci_similarity.get(x)) for x in attr_ci_similarity}
+        attr_ci_similarity.get(x), {}, []) for x in attr_ci_similarity}
 
     similar_attr_rel = {y: select_most_similar(
-        attr_rel_similarity.get(y)) for y in attr_rel_similarity}
+        attr_rel_similarity.get(y), {}, []) for y in attr_rel_similarity}
 
     present_map(cmdb_ci_types, db_ci_types, cmdb_rel_types, db_rel_types, cmdb_ci_attributes, db_ci_attributes, cmdb_rel_attributes, db_rel_attributes, similar_ci, similar_rel,
                 similar_attr_ci, similar_attr_rel)

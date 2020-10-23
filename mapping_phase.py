@@ -8,7 +8,7 @@ import getpass
 import regex
 import pyfiglet
 
-from cmdb_processor import i_doit_processor
+from cmdb_processor import i_doit_processor, itop_processor
 from db_processor import db_processor
 from model_mapper import mapper
 
@@ -36,7 +36,7 @@ def choose_software():
             'type': 'list',
             'message': 'What is the software of the CMDB?',
             'name': 'software',
-            'choices': [{'name': 'i-doit'}, {'name': 'Other', 'disabled': 'unavailable'}]
+            'choices': [{'name': 'i-doit'}, {'name': 'iTop'}, {'name': 'Other', 'disabled': 'unavailable'}]
         }
     ]
 
@@ -45,17 +45,26 @@ def choose_software():
     return cmdb
 
 
-def choose_connection_method():
+def choose_connection_method(cmdb):
     # TODO: desenvolver para as bases de dados
-    connection_question = [
-        {
-            'type': 'list',
-            'message': 'How to connect to the CMDB?',
-            'name': 'connection',
-            'choices': [{'name': 'API'}, {'name': 'Database', 'disabled': 'unavailable'}]
-        }
-    ]
-
+    if cmdb == 'i-doit':
+        connection_question = [
+            {
+                'type': 'list',
+                'message': 'How to connect to the CMDB?',
+                'name': 'connection',
+                'choices': [{'name': 'API'}]
+            }
+        ]
+    if cmdb == 'iTop':
+        connection_question = [
+            {
+                'type': 'list',
+                'message': 'How to connect to the CMDB?',
+                'name': 'connection',
+                'choices': [{'name': 'Database'}]
+            }
+        ]
     connection_answer = prompt(connection_question, style=style)
     connection = connection_answer["connection"]
     return connection
@@ -71,7 +80,7 @@ def run_mapping(db_info):
     print("**********************************************************************\n")
 
     cmdb = choose_software()
-    connection = choose_connection_method()
+    connection = choose_connection_method(cmdb)
 
     cmdb_info["software"] = cmdb
     cmdb_info["connection"] = connection
@@ -79,6 +88,9 @@ def run_mapping(db_info):
     if cmdb == "i-doit" and connection == "API":
         # {"server": "", "username": "", "password": "", "api_key": ""}
         cmdb_info["cmdb"] = i_doit_processor.process_i_doit()
+    if cmdb == "iTop" and connection == "Database":
+        # {"server": "", "username": "", "password": "", "api_key": ""}
+        cmdb_info["cmdb"] = itop_processor.process_itop()
     # {"server": "", "port": "", "repository": ""}
     # cmdb_info["db"] = db_processor.process_db_data_model()
     db_processor.process_db_data_model(db_info)

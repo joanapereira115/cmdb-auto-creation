@@ -6,10 +6,10 @@ from stringcase import sentencecase
 from nltk.corpus import stopwords
 
 acronyms_db = {
-    'os': 'operating_system',
-    'ip': 'internet_protocol',
-    'mac': 'media_access_control',
-    'tcp': 'transmission_control_protocol',
+    'os': 'operating system',
+    'ip': 'internet protocol',
+    'mac': 'media access control',
+    'tcp': 'transmission control protocol',
     'itil': 'information technology infrastructure library',
     'cmdb': 'configuration management database',
     'ci': 'configuration item',
@@ -32,7 +32,7 @@ acronyms_db = {
     'ti': 'tecnologias da informação',
     'itsm': 'it service management',
     'osi': 'open system interconnection',
-    'ssh': 'secure_shell',
+    'ssh': 'secure shell',
     'wmi': 'windows management instrumentation',
     'winrm': 'windows remote management',
     'cdp': 'cisco discovery protocol',
@@ -49,7 +49,7 @@ acronyms_db = {
     'cpu': 'central processing unit',
     'bios': 'basic input/output system',
     'json': 'javascript object notation',
-    'http': 'hypertext_transfer_protocol',
+    'http': 'hypertext transfer protocol',
     'https': 'hypertext transfer protocol secure',
     'xml': 'extensible markup language',
     'cim': 'common information model',
@@ -89,7 +89,7 @@ acronyms_db = {
     'uuid': 'universally unique identifier',
     'cdm': 'common data model',
     'tpl': 'template file',
-    'is-IS': 'intermediate system-intermediate system',
+    'is-is': 'intermediate system-intermediate system',
     'rip': 'routing information protocol'
 }
 

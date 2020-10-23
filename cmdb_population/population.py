@@ -6,6 +6,7 @@ from colored import fg, bg, attr
 import regex
 import json
 from .idoit_population import run_idoit_population
+from .itop_population import run_itop_population
 from cmdb_processor import cmdb_data_model
 from model_mapper import transformation_rules
 
@@ -290,6 +291,16 @@ def run_cmdb_population(db_info, cmdb_info):
 
     if sw == "i-doit":
         success = run_idoit_population(cmdb_info.get("cmdb"), cmdb_data_model.cmdb_data_model, rules, cis_types,
+                                       rels_types, cis_attributes, rels_attributes, sources, targets)
+        if success:
+            print(green + "\n>>> " + reset +
+                  "CMDB population complete...")
+        else:
+            print(red + "\n>>> " + reset +
+                  "The CMDB population was not successful...")
+
+    if sw == "iTop":
+        success = run_itop_population(cmdb_data_model.cmdb_data_model, rules, cis_types,
                                        rels_types, cis_attributes, rels_attributes, sources, targets)
         if success:
             print(green + "\n>>> " + reset +

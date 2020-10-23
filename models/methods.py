@@ -254,18 +254,12 @@ def ci_already_exists(ci):
 
         if ci_uuid != None and ci_uuid != "" and ci_uuid == ex_ci_uuid:
             return existing_ci
-        if ci_uuid != None and ci_uuid != "" and ex_ci_uuid != None and ex_ci_uuid != "" and ci_uuid != ex_ci_uuid:
-            return None
 
         if ci_serial != None and ci_serial != "" and ci_serial == ex_ci_serial:
             return existing_ci
-        if ci_serial != None and ci_serial != "" and ex_ci_serial != None and ex_ci_serial != "" and ci_serial != ex_ci_serial:
-            return None
 
         if ci_mac != None and ci_mac != "" and ci_mac == ex_ci_mac:
             return existing_ci
-        if ci_mac != None and ci_mac != "" and ex_ci_mac != None and ex_ci_mac != "" and ci_mac != ex_ci_mac:
-            return None
 
         if (ci_uuid == "" or ci_uuid == None) and (ci_serial == "" or ci_serial == None) and (ci_mac == "" or ci_mac == None):
             ci_ipv4 = ci.get_ipv4_addresses()
