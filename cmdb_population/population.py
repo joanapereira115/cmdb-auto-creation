@@ -229,34 +229,6 @@ def get_target(rel_id):
 
 
 def run_cmdb_population(db_info, cmdb_info):
-    """
-    info = {
-        "software" = "i-doit",
-        "connection" = "API",
-        "cmdb": {"server": "192.168.1.72", "username": "admin", "password": "admin", "api_key": "joana"},
-        "db": {"server": "192.168.1.72", "port": "7200", "repository": "cmdb"}
-    }
-
-    rules = {
-        'ci_types': {
-            'Router': 'C__OBJTYPE__ROUTER'
-        },
-        'rel_types': {
-            'Network connection': 'C__RELATION_TYPE__NET_CONNECTIONS'
-        },
-        'ci_attributes': {
-            'Router': {
-                'serial_number': 'serial',
-                'name': 'title',
-                'description': 'description',
-                'status': 'status'
-            }
-        },
-        'rel_attributes': {
-            'Network connection': {}
-        }
-    }
-    """
     cis_types = {}
     rels_types = {}
 
@@ -301,7 +273,7 @@ def run_cmdb_population(db_info, cmdb_info):
 
     if sw == "iTop":
         success = run_itop_population(cmdb_data_model.cmdb_data_model, rules, cis_types,
-                                       rels_types, cis_attributes, rels_attributes, sources, targets)
+                                      rels_types, cis_attributes, rels_attributes, sources, targets)
         if success:
             print(green + "\n>>> " + reset +
                   "CMDB population complete...")

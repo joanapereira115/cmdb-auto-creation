@@ -136,7 +136,6 @@ def create_itop_ci(cmdb_info, cmdb_url, ci_type, ci_attrs, rules_ci_types, rules
 
     if cmdb_type != None:
         json_req["class"] = stringcase.capitalcase(cmdb_type)
-        has_name = False
 
         at_types = ci_attributes_data_types.get(cmdb_type)
         fields = {}
@@ -153,8 +152,6 @@ def create_itop_ci(cmdb_info, cmdb_url, ci_type, ci_attrs, rules_ci_types, rules
 
             at_type = at_types.get(cmdb_at)
             if cmdb_at != None:
-                if cmdb_at == "name":
-                    has_name = True
 
                 if at_type == "string":
                     fields[str(cmdb_at)] = str(value)
@@ -173,23 +170,118 @@ def create_itop_ci(cmdb_info, cmdb_url, ci_type, ci_attrs, rules_ci_types, rules
                         print(red + "\n>>> " + reset +
                               "Error converting string '" + str(value) + "' to float.")
 
-        if has_name == False:
+        if ("name" in fields) == False:
             fields["name"] = ci_type
+
+        if cmdb_type == "person":
+            if ('first_name' in fields) == False:
+                fields["first_name"] = ci_type
 
         json_req["fields"] = fields
         json_data = json.dumps(json_req)
         payload = dict(json_data=json_data,)
         create_ci = requests.post(cmdb_url, data=payload, auth=(
             user, pwd), verify=False)
-
         try:
-            objs = create_ci.json().get("objects")
-            cmdb_id = objs.get(list(objs.keys())[0]).get("key")
-            print(green + "\n>>> " + reset + "Object of type " +
-                  str(cmdb_type) + " created successfully in the CMDB.")
+            cmdb_id = create_ci.json().get("objects").get(
+                list(create_ci.json().get("objects").keys())[0]).get("key")
         except:
             print(red + "\n>>> " + reset +
-                  "Error creating the configuration item of type " + str(cmdb_type) + ".")
+                  "Error creating the configuration item of type " + str(cmdb_type) + ": " + str(create_ci.json().get("message")))
+    if cmdb_id != None:
+        print(green + "\n>>> " + reset + "Object of type " +
+              str(cmdb_type) + " created successfully in the CMDB.")
+    return cmdb_id, cmdb_type
+
+
+"""
+"lnkphysicalinterfacetovlan": {
+        "physicalinterface_id": "physicalinterface",
+        "vlan_id": "vlan"
+    },
+"""
+
+
+def create_itop_relationship(cmdb_info, cmdb_url, rel_type, rel_attrs, rules_rel_types, rules_rel_attributes, ci_ids, ci_types, source, target, rel_attributes_data_types, rel_dialog_attributes, rel_restrictions):
+    cmdb_id = None
+    cmdb_type = rules_rel_types.get(rel_type)
+
+    user = str(cmdb_info.get("username"))
+    pwd = str(cmdb_info.get("password"))
+
+    json_req = {}
+    json_req['operation'] = "core/create"
+    json_req['comment'] = "Synchronization from CMDB automatic creation..."
+    json_req["user"] = user
+    json_req["password"] = pwd
+
+    if cmdb_type != None:
+        json_req["class"] = stringcase.capitalcase(cmdb_type)
+
+        at_types = rel_attributes_data_types.get(cmdb_type)
+
+        fields = {}
+        fields["org_id"] = 'SELECT Organization WHERE name = \"My Company/Department\"'
+
+        if (cmdb_type in rel_restrictions) == True:
+            if ci_ids.get(source) != None and ci_ids.get(target) != None:
+                source_type = ci_types.get(source)
+                target_type = ci_types.get(target)
+                restrictions = {x: y for y,
+                                x in rel_restrictions.get(cmdb_type).items()}
+                if source_type in restrictions and target_type in restrictions:
+                    fields[restrictions.get(source_type)] = ci_ids.get(source)
+                    fields[restrictions.get(target_type)] = ci_ids.get(target)
+
+                    for at in rel_attrs:
+                        cmdb_at = rules_rel_attributes.get(rel_type).get(at)
+                        value = rel_attrs.get(at)
+
+                        if cmdb_type in rel_dialog_attributes:
+                            if cmdb_at in rel_dialog_attributes.get(cmdb_type):
+                                value = calculate_value_from_dialog(
+                                    value, rel_dialog_attributes.get(cmdb_type).get(cmdb_at))
+
+                        at_type = at_types.get(cmdb_at)
+                        if cmdb_at != None:
+                            if at_type == "string":
+                                fields[str(cmdb_at)] = str(value)
+
+                            elif at_type == "int":
+                                try:
+                                    fields[str(cmdb_at)] = str(int(value))
+                                except ValueError:
+                                    print(red + "\n>>> " + reset +
+                                          "Error converting string '" + str(value) + "' to int.")
+
+                            elif at_type == "float":
+                                try:
+                                    fields[str(cmdb_at)] = str(float(value))
+                                except ValueError:
+                                    print(red + "\n>>> " + reset +
+                                          "Error converting string '" + str(value) + "' to float.")
+
+                    if ("name" in fields) == False:
+                        fields["name"] = cmdb_type
+
+                    json_req["fields"] = fields
+                    json_data = json.dumps(json_req)
+                    print("json_data: " + str(json_data))
+                    print()
+                    payload = dict(json_data=json_data,)
+                    create_ci = requests.post(cmdb_url, data=payload, auth=(
+                        user, pwd), verify=False)
+                    try:
+                        cmdb_id = create_ci.json().get("objects").get(
+                            list(create_ci.json().get("objects").keys())[0]).get("key")
+                    except:
+                        print(red + "\n>>> " + reset +
+                              "Error creating the configuration item of type " + str(cmdb_type) + ": " + str(create_ci.json().get("message")))
+
+                if cmdb_id != None:
+                    print(green + "\n>>> " + reset + "Object of type " +
+                          str(cmdb_type) + " created successfully in the CMDB.")
+
     return cmdb_id
 
 
@@ -198,6 +290,7 @@ def run_itop_population(cmdb_data_model, rules, cis_types, rels_types, cis_attri
     cmdb_url = itop_specification(cmdb_info)
 
     ids = {}  # id bd : id cmdb
+    types = {}  # id bd : id cmdb
     # {"CI type": {"attribute": "data type", ...}, ...}
     ci_attributes_data_types = cmdb_data_model.get("ci_attributes_data_types")
     # {"relationship type": {"attribute": "data type", ...}, ...}
@@ -213,9 +306,17 @@ def run_itop_population(cmdb_data_model, rules, cis_types, rels_types, cis_attri
     print(blue + "\n>>> " + reset +
           "Creating the configuration items...")
     for ci in cis_types:
-        id_ci = create_itop_ci(cmdb_info, cmdb_url, cis_types.get(ci), cis_attributes.get(
+        id_ci, type_ci = create_itop_ci(cmdb_info, cmdb_url, cis_types.get(ci), cis_attributes.get(
             ci), rules.get("ci_types"), rules.get("ci_attributes"), ci_attributes_data_types, ci_dialog_attributes)
         if id_ci != None:
             ids[ci] = id_ci
+        if type_ci != None:
+            types[ci] = type_ci
+
+    print(blue + "\n>>> " + reset +
+          "Creating the relationships...")
+    for rel in rels_types:
+        rel_id = create_itop_relationship(cmdb_info, cmdb_url, rels_types.get(
+            rel), rels_attributes.get(rel), rules.get("rel_types"), rules.get("rel_attributes"), ids, types, sources.get(rel), targets.get(rel), rel_attributes_data_types, rel_dialog_attributes, rel_restrictions)
 
     return True

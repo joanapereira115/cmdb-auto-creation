@@ -355,7 +355,7 @@ def process_i_doit():
 
     connection = test_api_connection(server, username, password, api_key)
     if connection == False:
-        process_i_doit()
+        return process_i_doit()
     else:
         print(blue + ">>> " + reset + "Processing i-doit CMDB data model...\n")
         constants = api_constants()

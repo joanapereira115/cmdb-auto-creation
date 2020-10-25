@@ -204,19 +204,18 @@ def get_type(what, table, text):
 
 
 def restrictions(rel_attributes):
-    # {"relationship type": [{"source CI attribute": "CI type", "target CI attribute": "CI type"}, ...], ...}
     for rel in rel_attributes:
         attrs = rel_attributes.get(rel)
         cmdb_data_model["rel_restrictions"][rel] = {}
+        dlt = False
         for a in attrs:
             if regex.search(r'_id', a) != None:
                 cmdb_data_model["rel_restrictions"][rel][a] = regex.sub(
                     r'_id', "", a)
                 if regex.sub(r'_id', "", a) not in cmdb_data_model["ci_types"]:
-                    print(regex.sub(r'_id', "", a))
-        # TODO: corrigir!
-    print(json.dumps(
-        cmdb_data_model["rel_restrictions"], indent=4, sort_keys=True))
+                    dlt = True
+        if dlt == True:
+            del cmdb_data_model["rel_restrictions"][rel]
 
 
 def process_itop():
@@ -241,7 +240,7 @@ def process_itop():
 
     connection = test_db_connection(server, db_name, username, password)
     if connection == None:
-        process_itop()
+        return process_itop()
     else:
         print(blue + ">>> " + reset + "Processing iTop CMDB data model...\n")
         cursor = connection.cursor()
