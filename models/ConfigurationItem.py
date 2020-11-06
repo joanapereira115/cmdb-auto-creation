@@ -57,7 +57,8 @@ class ConfigurationItem:
 
     def set_uuid(self, uuid):
         """Set the configuration item universally unique identifier to the value passed."""
-        self.uuid = uuid
+        if uuid != None:
+            self.uuid = uuid
 
     def get_serial_number(self):
         """Get the configuration item serial number."""
@@ -65,7 +66,8 @@ class ConfigurationItem:
 
     def set_serial_number(self, serial_number):
         """Set the configuration item serial number to the value passed."""
-        self.serial_number = serial_number
+        if serial_number != None:
+            self.serial_number = serial_number
 
     def get_title(self):
         """Get the configuration item title."""
@@ -73,7 +75,8 @@ class ConfigurationItem:
 
     def set_title(self, title):
         """Set the configuration item title to the value passed."""
-        self.title = title
+        if title != None:
+            self.title = title
 
     def get_description(self):
         """Get the configuration item description."""
@@ -81,7 +84,8 @@ class ConfigurationItem:
 
     def set_description(self, description):
         """Set the configuration item description to the value passed."""
-        self.description = description
+        if description != None:
+            self.description = description
 
     def get_status(self):
         """Get the configuration item status."""
@@ -89,7 +93,8 @@ class ConfigurationItem:
 
     def set_status(self, status):
         """Set the configuration item status to the value passed."""
-        self.status = status
+        if status != None:
+            self.status = status
 
     def get_mac_address(self):
         """Get the configuration item mac address."""
@@ -97,7 +102,8 @@ class ConfigurationItem:
 
     def set_mac_address(self, mac_address):
         """Set the configuration item mac address to the value passed."""
-        self.mac_address = mac_address
+        if mac_address != None:
+            self.mac_address = mac_address
 
     def get_ipv4_addresses(self):
         """Get the list of IPv4 addresses associated with the configuration item."""
@@ -105,7 +111,7 @@ class ConfigurationItem:
 
     def add_ipv4_address(self, ipv4):
         """Adds a new IPv4 address to the list of IPv4 addresses of the configuration item."""
-        if ipv4 not in self.ipv4_addresses:
+        if ipv4 not in self.ipv4_addresses and ipv4 != None:
             self.ipv4_addresses.append(ipv4)
 
     def get_ipv6_addresses(self):
@@ -114,7 +120,7 @@ class ConfigurationItem:
 
     def add_ipv6_address(self, ipv6):
         """Adds a new IPv6 address to the list of IPv6 addresses of the configuration item."""
-        if ipv6 not in self.ipv6_addresses:
+        if ipv6 not in self.ipv6_addresses and ipv6 != None:
             self.ipv6_addresses.append(ipv6)
 
     def get_type(self):
@@ -123,7 +129,8 @@ class ConfigurationItem:
 
     def set_type(self, type_id):
         """Set the configuration item type identifier to the value passed."""
-        self.type_id = type_id
+        if type_id != None:
+            self.type_id = type_id
 
     def get_attributes(self):
         """Get the list of attributes identifiers of the configuration item."""
@@ -131,9 +138,5 @@ class ConfigurationItem:
 
     def add_attribute(self, attribute_id):
         """Adds a new attribute identifier to the list of configuration item attributes."""
-        if attribute_id not in self.attributes:
+        if attribute_id not in self.attributes and attribute_id != None:
             self.attributes.append(attribute_id)
-
-    # TODO: não é necessário
-    def toJSON(self):
-        return json.dumps(self, default=lambda o: o.__dict__, sort_keys=True, indent=4)

@@ -33,3 +33,7 @@ class Attribute:
     def get_value(self):
         """Get the attribute value."""
         return self.value
+
+    def set_value(self, value):
+        """Get the attribute value."""
+        self.value = value

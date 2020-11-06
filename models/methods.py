@@ -5,6 +5,7 @@ import itertools
 
 from . import Relationship
 from . import ConfigurationItem
+from . import Attribute
 from .objects import objects
 # TODO: mudar
 from semantic_matching import semantic_matching
@@ -441,15 +442,88 @@ def add_rel(rel):
 
 
 def add_ci_type(ci_type):
-    if ci_type != None:
+    ex_ci_type = ci_type_already_exists(ci_type.get_title())
+    if ex_ci_type != None:
+        return ex_ci_type
+    else:
         objects["configuration_item_types"].append(ci_type)
+        return ci_type
 
 
 def add_rel_type(rel_type):
-    if rel_type != None:
+    ex_rel_type = rel_type_already_exists(rel_type.get_title())
+    if ex_rel_type != None:
+        return ex_rel_type
+    else:
         objects["relationship_types"].append(rel_type)
+        return rel_type
 
 
-def add_attribute(attr):
-    if attr != None:
+def add_attribute(attr, obj):
+    title = attr.get_title()
+
+    equal = None
+    max_ratio = 0
+    existing_attrs = obj.get_attributes()
+
+    for i in existing_attrs:
+        a = get_attribute_from_id(i)
+        a_name = a.get_title()
+        sim = similarity.calculate_similarity(a_name, title)
+        if sim > max_ratio:
+            max_ratio = sim
+            equal = a
+
+    if max_ratio > 0.9:
+        print()
+        print("old_name: " + str(equal.get_title()))
+        print("new_name: " + str(attr.get_title()))
+        print("old_value: " + str(equal.get_value()))
+        print("new_value: " + str(attr.get_value()))
+        equal.set_value(attr.get_value())
+    else:
+        obj.add_attribute(attr.get_id())
         objects["attributes"].append(attr)
+
+
+def create_relation(source, target, relation_type):
+    if source != None and target != None and relation_type != None:
+        rel = Relationship.Relationship()
+        rel.type_id = relation_type.get_id()
+        if source.get_id() == target.get_id():
+            print("same source and target!")
+            print()
+        rel.source_id = source.get_id()
+        rel.target_id = target.get_id()
+        return rel
+    else:
+        return None
+
+
+def create_attribute(name, value):
+    if value != None and value != "":
+        attr = Attribute.Attribute(name, value)
+        return attr
+    else:
+        return None
+
+
+def define_attribute(title, value, ci):
+    if title != None and title != "" and value != None and value != "":
+        if similarity.calculate_similarity(title, "uuid") > 0.85:
+            ci.set_uuid(value)
+        elif similarity.calculate_similarity(title, "serial_number") > 0.85:
+            ci.set_serial_number(value)
+        elif similarity.calculate_similarity(title, "description") > 0.85:
+            ci.set_description(value)
+        elif similarity.calculate_similarity(title, "status") > 0.85:
+            ci.set_status(value)
+        elif similarity.calculate_similarity(title, "mac address") > 0.85:
+            ci.set_mac_address(value)
+        elif similarity.calculate_similarity(title, "ipv4 address") > 0.85:
+            ci.add_ipv4_address(value)
+        elif similarity.calculate_similarity(title, "ipv6 address") > 0.85:
+            ci.add_ipv6_address(value)
+        else:
+            atr = create_attribute(title, value)
+            add_attribute(atr, ci)

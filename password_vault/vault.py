@@ -93,6 +93,13 @@ def get_usernames():
     return []
 
 
+def get_names():
+    secrets = get_session().query(SecretModel.name).order_by(SecretModel.id).all()
+    if secrets:
+        return [result.name for result in secrets]
+    return []
+
+
 def add_secret(name, login, password):
     secret = SecretModel(name=name,
                          login=login,
@@ -114,6 +121,22 @@ def show_secret(login):
     # item = get_session().query(SecretModel).filter(
     #    SecretModel.login.like(login)).order_by(SecretModel.id).all()[0]
     # return item.password
+
+
+def show_secret_by_name(name):
+    res = []
+    for item in get_session().query(SecretModel).filter(
+            SecretModel.name.like(name)).order_by(SecretModel.id).all():
+        res.append(item.password)
+    return res
+
+
+def show_login_by_name(name):
+    res = []
+    for item in get_session().query(SecretModel).filter(
+            SecretModel.name.like(name)).order_by(SecretModel.id).all():
+        res.append(item.login)
+    return res
 
 
 def lock():
