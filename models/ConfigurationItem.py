@@ -15,6 +15,7 @@ class ConfigurationItem:
         description     string            The textual description of the item.
         status          string            The current status value for the operational condition of the item.
         mac_address     string            The media access control address assigned to the item.
+        os_family       string            The operating system family of the item.
         ipv4_addresses  list<string>      The list of Internet Protocol version 4 addresses assigned to the item.
         ipv6_addresses  list<string>      The list of Internet Protocol version 6 addresses assigned to the item.
         type_id         int               The identifier of the item type.
@@ -28,6 +29,7 @@ class ConfigurationItem:
     description = ""
     status = ""
     mac_address = ""
+    os_family = ""
     ipv4_addresses = []
     ipv6_addresses = []
     type_id = 0
@@ -104,6 +106,15 @@ class ConfigurationItem:
         """Set the configuration item mac address to the value passed."""
         if mac_address != None:
             self.mac_address = mac_address
+
+    def get_os_family(self):
+        """Get the configuration item operating system family."""
+        return self.os_family
+
+    def set_os_family(self, os_family):
+        """Set the configuration item operating system family to the value passed."""
+        if os_family != None:
+            self.os_family = os_family
 
     def get_ipv4_addresses(self):
         """Get the list of IPv4 addresses associated with the configuration item."""
