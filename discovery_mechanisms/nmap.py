@@ -5,7 +5,6 @@ import nmap
 from colored import fg, bg, attr
 
 from models import ConfigurationItem, ConfigurationItemType, Relationship, RelationshipType, methods
-from normalization import normalization
 import nmap
 
 blue = fg('#46B1C9')
@@ -15,6 +14,16 @@ reset = attr('reset')
 
 
 def run_nmap(available_ips):
+    """
+    Obtains information about the machines using the Nmap tool.
+    Gathers data about addresses, status, ports, device types and operating systems families.
+    Creates the configuration items, attributes and relationships between them.
+
+    Parameters
+    ----------
+    available_ips : list
+        The list of IPv4 addresses that are available for discover.
+    """
     for ip in available_ips:
         print(blue + ">>> " + reset +
               "NMAP discovery in the address " + str(ip) + "...")

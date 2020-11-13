@@ -6,97 +6,167 @@ from stringcase import sentencecase
 from nltk.corpus import stopwords
 
 acronyms_db = {
-    'os': 'operating system',
-    'ip': 'internet protocol',
-    'mac': 'media access control',
-    'tcp': 'transmission control protocol',
-    'itil': 'information technology infrastructure library',
-    'cmdb': 'configuration management database',
-    'ci': 'configuration item',
-    'iso': 'international organization for standardization',
-    'icmp': 'internet control message protocol',
-    'snmp': 'simple network management protocol',
-    'lan': 'local area network',
-    'wan': 'wide area netwok',
-    'vpn': 'virtual private network',
-    'fdb': 'forwarding database',
-    'arp': 'address resolution protocol',
-    'lldp': 'link layer discovery protocol',
-    'mib': 'management information base',
-    'udp': 'user datagram protocol',
-    'stp': 'spanning tree protocol',
-    'span': 'switched port analyzer',
-    'rdp': 'remote desktop protocol',
+    'aci': 'application centric infrastructure',
+    'ack': 'acknowledgement',
+    'acl': 'access control list',
+    'adsl': 'asymmetric digital subscriber line',
+    'aes': 'advanced encryption standard',
+    'ap': 'access point',
     'api': 'application programming interface',
-    'rest': 'representational state transfer',
-    'ti': 'tecnologias da informação',
-    'itsm': 'it service management',
-    'osi': 'open system interconnection',
-    'ssh': 'secure shell',
-    'wmi': 'windows management instrumentation',
-    'winrm': 'windows remote management',
-    'cdp': 'cisco discovery protocol',
-    'jmx': 'java management extensions',
-    'sql': 'structured query language',
-    'dns': 'domain name system',
-    'nfs': 'network file system',
-    'ldap': 'lightweight directory access protocol',
-    'taddm': 'tivoli application dependency discovery manager',
-    'ssd': 'solid-state drive',
-    'das': 'direct attached storage',
-    'nas': 'network attached storage',
-    'san': 'storage area network',
-    'cpu': 'central processing unit',
+    'arp': 'address resolution protocol',
+    'atm': 'asynchronous transfer mode',
+    'ban': 'body area network',
+    'bgp': 'border gateway protocol',
     'bios': 'basic input/output system',
-    'json': 'javascript object notation',
+    'bmc': 'baseboard management controller',
+    'bss': 'basic service set',
+    'cd': 'compact disc',
+    'cd-rom': 'compact disc read-only memory',
+    'cdm': 'common data model',
+    'chap': 'challenge-handshake authentication protocol',
+    'ci': 'configuration item',
+    'cidr': 'classless inter-domain routing',
+    'cim': 'common information model',
+    'cdp': 'cisco discovery protocol',
+    'cli': 'command line interpreter',
+    'cmdb': 'configuration management database',
+    'cms': 'configuration management system',
+    'cpe': 'customer premises equipment',
+    'cpu': 'central processing unit',
+    'crc': 'cyclic redundancy check',
+    'csma/ca': 'carrier sense multiple access / collision avoidance',
+    'csma/cd': 'carrier sense multiple access / collision detection',
+    'csu/dsu': 'channel service unit / data service unit',
+    'csv': 'comma-separated values',
+    'das': 'direct attached storage',
+    'db': 'database',
+    'dnms': 'database management system',
+    'dce': 'data communications equipment',
+    'dec': 'digital equipment corporation',
+    'des': 'data encryption standard',
+    'dhcp': 'dynamic host configuration protocol',
+    'dimm': 'dual in-line memory module',
+    'dmtf': 'distributed management task force',
+    'dns': 'domain name system',
+    'dram': 'dynamic random-access memory',
+    'dsl': 'digital subscriber line',
+    'dte': 'data terminal equipment',
+    'dmi': 'desktop management interface',
+    'eha': 'ethernet hardware address ',
+    'eigrp': 'enhanced interior gateway routing protocol',
+    'eof': 'end of file',
+    'ess': 'extended service set',
+    'fdb': 'forwarding database',
+    'fdp': 'foundry discovery protocol',
+    'fcc': 'federal communications commission',
+    'fcs': 'frame check sequence',
+    'fddi': 'fiber distributed data interface',
+    'ftp': 'file transfer protocol',
+    'hdd': 'hard disk drive',
+    'hdlc': 'high-level data link control',
+    'html': 'hypertext markup language',
     'http': 'hypertext transfer protocol',
     'https': 'hypertext transfer protocol secure',
-    'xml': 'extensible markup language',
-    'cim': 'common information model',
-    'svs': 'service value system',
-    'dmtf': 'distributed management task force',
-    'uml': 'unified modeling language',
-    'rpc': 'remote procedure call',
-    'cms': 'configuration management system',
-    'cidr': 'classless inter-domain routing',
-    'ttl': 'time to live',
-    'csv': 'comma-separated values',
-    'php': 'hypertext preprocessor',
-    'xdp': 'express data path',
-    'fdp': 'foundry discovery protocol',
-    'ospf': 'open shortest path first',
-    'bgp': 'border gateway protocol',
-    'ndp': 'neighbor discovery protocol',
-    'ups': 'uninterruptible power source',
-    'man': 'metropolitan area network',
-    'ban': 'body area network',
-    'pan': 'personal area network',
-    'ap': 'access point',
-    'hdd': 'hard disk drive',
-    'sgbd': 'sistemas de gestão de base de dados',
-    'bd': 'bases de dados',
-    'html': 'hypertext markup language',
-    'url': 'uniform resource locator',
-    'ssl': 'secure sockets layer',
-    'vlan': 'virtual local area network',
-    'ucs': 'unified computing system',
-    'aci': 'application centric infrastructure',
-    'sdn': 'software defined network',
+    'icmp': 'internet control message protocol',
+    'idf': 'intermediate distribution frame',
+    'ids': 'intrusion detection system',
+    'ieee': 'institute for electrical and electronic engineers',
+    'ietf': 'internet engineering task force',
+    'imap': 'internet message access protocol',
+    'ip': 'internet protocol',
     'ipmi': 'intelligent platform management interface',
-    'bmc': 'baseboard management controller',
-    'sccm': 'system center configuration manager',
-    'ftp': 'file transfer protocol',
-    'uuid': 'universally unique identifier',
-    'cdm': 'common data model',
-    'tpl': 'template file',
+    'ips': 'intrusion prevention system',
     'is-is': 'intermediate system-intermediate system',
-    'rip': 'routing information protocol'
+    'iso': 'international organization for standardization',
+    'it': 'information technology',
+    'itil': 'information technology infrastructure library',
+    'itsm': 'information technology service management',
+    'isdn': 'integrated services digital network',
+    'isp': 'internet service provider',
+    'jmx': 'java management extensions',
+    'json': 'javascript object notation',
+    'lacp': 'link aggregation control protocol',
+    'lan': 'local area network',
+    'lapf': 'link-access procedure for frame relay',
+    'ldap': 'lightweight directory access protocol',
+    'llc': 'logical link control',
+    'lldp': 'link layer discovery protocol',
+    'mac': 'media access control',
+    'mam': 'media access management',
+    'man': 'metropolitan area network',
+    'mdf': 'main distribution frame',
+    'mib': 'management information base',
+    'mpls': 'multiprotocol label switching',
+    'mtu': 'maximum Transmission Unit',
+    'nac': 'network access control',
+    'nas': 'network attached storage',
+    'nat': 'network address translation',
+    'ndp': 'neighbor discovery protocol',
+    'nfs': 'network file system',
+    'nic': 'network interface card',
+    'os': 'operating system',
+    'osi': 'open system interconnection',
+    'ospf': 'open shortest path first',
+    'pan': 'personal area network',
+    'pap': 'password authentication protocol',
+    'pat': 'port address translation',
+    'pc': 'personal computer',
+    'pdu': 'protocol data unit',
+    'php': 'hypertext preprocessor',
+    'ppp': 'point-to-point protocol',
+    'ram': 'random access memory',
+    'rarp': 'reverse address resolution protocol',
+    'rdp': 'remote desktop protocol',
+    'rest': 'representational state transfer',
+    'rip': 'routing information protocol',
+    'rom': 'read-only memory',
+    'rpc': 'remote procedure call',
+    'rstp': 'rapid spanning tree protocol',
+    'rtp': 'real-time transport protocol',
+    'san': 'storage area network',
+    'sccm': 'system center configuration manager',
+    'sdlc': 'synchronous data link control',
+    'sdn': 'software defined network',
+    'smtp': 'simple mail transfer protocol',
+    'sna': 'systems network architecture',
+    'snmp': 'simple network management protocol',
+    'sram': 'static random access memory',
+    'span': 'switched port analyzer',
+    'sql': 'structured query language',
+    'ssd': 'solid-state drive',
+    'ssh': 'secure shell',
+    'ssid': 'service set identifier',
+    'ssl': 'secure sockets layer',
+    'stp': 'spanning tree protocol',
+    'svs': 'service value system',
+    'syn': 'synchronization',
+    'taddm': 'tivoli application dependency discovery manager',
+    'tcp': 'transmission control protocol',
+    'tpl': 'template file',
+    'ttl': 'time to live',
+    'udp': 'user datagram protocol',
+    'ucs': 'unified computing system',
+    'uml': 'unified modeling language',
+    'ups': 'uninterruptible power source',
+    'url': 'uniform resource locator',
+    'usb': 'universal serial bus',
+    'utp': 'unshielded twisted pair',
+    'uuid': 'universally unique identifier',
+    'vlan': 'virtual local area network',
+    'vpn': 'virtual private network',
+    'wan': 'wide area netwok',
+    'winrm': 'windows remote management',
+    'wmi': 'windows management instrumentation',
+    'wpa': 'wi-fi protected access',
+    'www': 'world wide web',
+    'xdp': 'express data path',
+    'xml': 'extensible markup language'
 }
 
 
-def remove_spaces(text):
+def remove_special_chars(text):
     """
-    Removes multiple spaces and spaces at the beginning and at the end of the text.
+    Removes multiple spaces, paragraphs and tabs and spaces, paragraphs and tabs at the beginning and at the end of the text.
 
     Parameters
     ----------
@@ -107,14 +177,19 @@ def remove_spaces(text):
     -------
     string
         Returns the text parsed.
-
     """
-    # remove spaces at the begin
+    # remove characters at the begin
     text = re.sub(r"^\s+", "", text)
-    # remove spaces at the end
+    text = re.sub(r"^\n+", "", text)
+    text = re.sub(r"^\t+", "", text)
+    # remove characters at the end
     text = re.sub(r"\s+$", "", text)
-    # remove multiple spaces
+    text = re.sub(r"\n+$", "", text)
+    text = re.sub(r"\t+$", "", text)
+    # remove multiple characters
     text = re.sub(r"\s+", " ", text)
+    text = re.sub(r"\n+", " ", text)
+    text = re.sub(r"\t+", " ", text)
     return text
 
 
@@ -131,7 +206,6 @@ def remove_style_case(text):
     -------
     string
         Returns the text parsed.
-
     """
     words = text.split()
     new_words = []
@@ -149,14 +223,11 @@ def remove_style_case(text):
     res = " ".join(new_words)
     return res
 
-# TODO: não remover : quando é um endereço ipv6
-
 
 def remove_punctuation(text):
     """
     Removes punctuation from text.
-
-    Does not remove '.' and ':' if they are separating numbers (e.g.: 10.1.1.1).
+    Does not remove '.' and ':' from addresses (e.g.: 10.1.1.1).
 
     Parameters
     ----------
@@ -167,35 +238,96 @@ def remove_punctuation(text):
     -------
     string
         Returns the text parsed.
-
     """
     words = text.split()
     new_words = []
     for w in words:
-        numbers = re.search(r"\d\.\d", w) or re.search(r"\d\:\d", w)
-        if numbers:
-            w = ''.join([c for c in w if c not in string.punctuation.replace(
-                '.', '').replace(':', '')])
-        else:
+        ipv6 = re.search(r'(([0-9a-fA-F]{1,4}:){7,7}[0-9a-fA-F]{1,4}|([0-9a-fA-F]{1,4}:){1,7}:|([0-9a-fA-F]{1,4}:){1,6}:[0-9a-fA-F]{1,4}|([0-9a-fA-F]{1,4}:){1,5}(:[0-9a-fA-F]{1,4}){1,2}|([0-9a-fA-F]{1,4}:){1,4}(:[0-9a-fA-F]{1,4}){1,3}|([0-9a-fA-F]{1,4}:){1,3}(:[0-9a-fA-F]{1,4}){1,4}|([0-9a-fA-F]{1,4}:){1,2}(:[0-9a-fA-F]{1,4}){1,5}|[0-9a-fA-F]{1,4}:((:[0-9a-fA-F]{1,4}){1,6})|:((:[0-9a-fA-F]{1,4}){1,7}|:)|fe80:(:[0-9a-fA-F]{0,4}){0,4}%[0-9a-zA-Z]{1,}|::(ffff(:0{1,4}){0,1}:){0,1}((25[0-5]|(2[0-4]|1{0,1}[0-9]){0,1}[0-9])\.){3,3}(25[0-5]|(2[0-4]|1{0,1}[0-9]){0,1}[0-9])|([0-9a-fA-F]{1,4}:){1,4}:((25[0-5]|(2[0-4]|1{0,1}[0-9]){0,1}[0-9])\.){3,3}(25[0-5]|(2[0-4]|1{0,1}[0-9]){0,1}[0-9]))', w)
+        ipv4 = re.search(
+            r'((25[0-5]|(2[0-4]|1{0,1}[0-9]){0,1}[0-9])\.){3,3}(25[0-5]|(2[0-4]|1{0,1}[0-9]){0,1}[0-9])', w)
+        mac = re.search(r'([0-9A-Fa-f]{2}[:-]){5}([0-9A-Fa-f]{2})', w)
+
+        if ipv6 == None and ipv4 == None and mac == None:
             w = ''.join([c for c in w if c not in string.punctuation])
         new_words.append(w)
+
     res = " ".join(new_words)
     return res
 
 
 def remove_stop_words(text):
+    """
+    Removes stop words of the text.
+
+    Parameters
+    ----------
+    text : string
+        The text that we want to parse.
+
+    Returns
+    -------
+    string
+        Returns the text parsed.
+    """
     sw = stopwords.words("english")
     text = ' '.join([word for word in text.split() if word not in sw])
     return text
 
 
 def acronym(text):
+    """
+    Replaces the acronyms present in the text with its extended version.
+
+    Parameters
+    ----------
+    text : string
+        The text that we want to parse.
+
+    Returns
+    -------
+    string
+        Returns the text parsed.
+    """
     return ' '.join([acronyms_db.get(i, i) for i in text.split()])
 
 
-def clean_text(text):
+def parse_text_to_store(text):
+    """
+    Cleans the text without removing any of its content for storing.
+
+    Parameters
+    ----------
+    text : string
+        The text that we want to parse.
+
+    Returns
+    -------
+    string
+        Returns the text parsed.
+    """
     text = remove_style_case(text)
-    text = remove_spaces(text)
+    text = remove_special_chars(text)
+    text = text.lower()
+    text = acronym(text)
+    return text
+
+
+def parse_text_to_compare(text):
+    """
+    Cleans the text for comparasions.
+
+    Parameters
+    ----------
+    text : string
+        The text that we want to parse.
+
+    Returns
+    -------
+    string
+        Returns the text parsed.
+    """
+    text = remove_style_case(text)
+    text = remove_special_chars(text)
     text = remove_punctuation(text)
     text = text.lower()
     text = acronym(text)
@@ -203,8 +335,11 @@ def clean_text(text):
     return text
 
 
-"""
-separate numbers from units
-    text = re.sub(r"([0-9]+\.?|,?[0-9]+?)([a-zA-Z]+)[^:]",
-                  r"\1 \2", text, re.DOTALL)
-"""
+def conversion(text):
+    # TODO: units conversion
+    """
+    separate numbers from units
+        text = re.sub(r"([0-9]+\.?|,?[0-9]+?)([a-zA-Z]+)[^:]",
+                    r"\1 \2", text, re.DOTALL)
+    """
+    pass

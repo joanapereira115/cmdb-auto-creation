@@ -1,3 +1,5 @@
+# -*- coding: utf-8 -*-
+
 import regex
 import json
 import requests
@@ -168,47 +170,47 @@ def hw_discovery(client, ci):
 
                 ac_info = pinfo.get("AC Power")
                 methods.define_attribute(
-                    "Auto Power Off Delay", bat_info.get("AutoPowerOff Delay"), bat_obj)
+                    "Auto Power Off Delay", ac_info.get("AutoPowerOff Delay"), ac_obj)
                 methods.define_attribute(
-                    "Auto Power Off Enabled", bat_info.get("AutoPowerOff Enabled"), bat_obj)
+                    "Auto Power Off Enabled", ac_info.get("AutoPowerOff Enabled"), ac_obj)
                 methods.define_attribute(
-                    "Current Power Source", bat_info.get("Current Power Source"), bat_obj)
+                    "Current Power Source", ac_info.get("Current Power Source"), ac_obj)
                 methods.define_attribute(
-                    "Dark Wake Background Tasks", bat_info.get("DarkWakeBackgroundTasks"), bat_obj)
+                    "Dark Wake Background Tasks", ac_info.get("DarkWakeBackgroundTasks"), ac_obj)
                 methods.define_attribute(
-                    "Disk Sleep Timer", bat_info.get("Disk Sleep Timer"), bat_obj)
+                    "Disk Sleep Timer", ac_info.get("Disk Sleep Timer"), ac_obj)
                 methods.define_attribute(
-                    "Display Sleep Timer", bat_info.get("Display Sleep Timer"), bat_obj)
+                    "Display Sleep Timer", ac_info.get("Display Sleep Timer"), ac_obj)
                 methods.define_attribute(
-                    "Display Sleep Uses Dim", bat_info.get("Display Sleep Uses Dim"), bat_obj)
+                    "Display Sleep Uses Dim", ac_info.get("Display Sleep Uses Dim"), ac_obj)
                 methods.define_attribute(
-                    "GPU Switch", bat_info.get("GPUSwitch"), bat_obj)
+                    "GPU Switch", ac_info.get("GPUSwitch"), ac_obj)
                 methods.define_attribute(
-                    "Hibernate Mode", bat_info.get("Hibernate Mode"), bat_obj)
+                    "Hibernate Mode", ac_info.get("Hibernate Mode"), ac_obj)
                 methods.define_attribute(
-                    "High Standby Delay", bat_info.get("High Standby Delay"), bat_obj)
+                    "High Standby Delay", ac_info.get("High Standby Delay"), ac_obj)
                 methods.define_attribute(
-                    "Prioritize Network Reachability Over Sleep", bat_info.get("PrioritizeNetworkReachabilityOverSleep"), bat_obj)
+                    "Prioritize Network Reachability Over Sleep", ac_info.get("PrioritizeNetworkReachabilityOverSleep"), ac_obj)
                 methods.define_attribute(
-                    "Proximity Dark Wake", bat_info.get("ProximityDarkWake"), bat_obj)
+                    "Proximity Dark Wake", ac_info.get("ProximityDarkWake"), ac_obj)
                 methods.define_attribute(
-                    "Reduce Brightness", bat_info.get("ReduceBrightness"), bat_obj)
+                    "Reduce Brightness", ac_info.get("ReduceBrightness"), ac_obj)
                 methods.define_attribute(
-                    "Standby Battery Threshold", bat_info.get("Standby Battery Threshold"), bat_obj)
+                    "Standby Battery Threshold", ac_info.get("Standby Battery Threshold"), ac_obj)
                 methods.define_attribute(
-                    "Standby Delay", bat_info.get("Standby Delay"), bat_obj)
+                    "Standby Delay", ac_info.get("Standby Delay"), ac_obj)
                 methods.define_attribute(
-                    "Standby Enabled", bat_info.get("Standby Enabled"), bat_obj)
+                    "Standby Enabled", ac_info.get("Standby Enabled"), ac_obj)
                 methods.define_attribute(
-                    "System Sleep Timer", bat_info.get("System Sleep Timer"), bat_obj)
+                    "System Sleep Timer", ac_info.get("System Sleep Timer"), ac_obj)
                 methods.define_attribute(
-                    "TCP Keep Alive Pref", bat_info.get("TCPKeepAlivePref"), bat_obj)
+                    "TCP Keep Alive Pref", ac_info.get("TCPKeepAlivePref"), ac_obj)
                 methods.define_attribute(
-                    "Wake On AC Change", bat_info.get("Wake On AC Change"), bat_obj)
+                    "Wake On AC Change", ac_info.get("Wake On AC Change"), ac_obj)
                 methods.define_attribute(
-                    "Wake On Clamshell Open", bat_info.get("Wake On Clamshell Open"), bat_obj)
+                    "Wake On Clamshell Open", ac_info.get("Wake On Clamshell Open"), ac_obj)
                 methods.define_attribute(
-                    "Wake On LAN", bat_info.get("Wake On LAN"), bat_obj)
+                    "Wake On LAN", ac_info.get("Wake On LAN"), ac_obj)
 
                 bat_info = pinfo.get("Battery Power")
                 methods.define_attribute(

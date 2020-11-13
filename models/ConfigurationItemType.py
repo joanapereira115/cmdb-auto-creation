@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 
 import itertools
+from normalization import normalization
 
 
 class ConfigurationItemType:
@@ -17,7 +18,7 @@ class ConfigurationItemType:
     def __init__(self, title):
         """Initialize the configuration item type with a generated identifier."""
         self.id = next(self.id_iter) + 1
-        self.title = title
+        self.title = normalization.parse_text_to_store(title)
 
     def get_id(self):
         """Get the configuration item type identifier."""

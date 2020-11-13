@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
-import json
 import itertools
+from normalization import normalization
 
 
 class Relationship:
@@ -40,6 +40,11 @@ class Relationship:
         """Get the relationship title."""
         return self.title
 
+    def set_title(self, title):
+        """Set the relationship title to the value passed."""
+        if title != None:
+            self.title = normalization.parse_text_to_store(title)
+
     def get_type(self):
         """Get the relationship type identifier."""
         return self.type_id
@@ -67,7 +72,3 @@ class Relationship:
     def add_attribute(self, attribute_id):
         """Adds a new attribute identifier to the list of the relationship attributes."""
         self.attributes.append(attribute_id)
-
-    # TODO: não é necessário
-    def toJSON(self):
-        return json.dumps(self, default=lambda o: o.__dict__, sort_keys=True, indent=4)

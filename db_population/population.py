@@ -1,43 +1,35 @@
-#!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
-from __future__ import print_function, unicode_literals
 import regex
-import sys
 import os
-from pprint import pprint
-from colored import fg, bg, attr
-from elevate import elevate
-import getpass
-import subprocess
-import xml.etree.ElementTree as ET
-import requests
+from colored import fg, attr
 from stringcase import snakecase
 
 from models import ConfigurationItem, Relationship, ConfigurationItemType, RelationshipType, Attribute, methods, objects
-
 
 blue = fg('#46B1C9')
 red = fg('#B54653')
 green = fg('#86DEB7')
 reset = attr('reset')
 
-# TODO: mudar onde é criado o ficheiro
-
-""" criar ficheiro ttl com a definição das classes, object properties e data properties """
-
 
 def create_file():
-    # TODO: criar no sítio certo
+    """
+    If it doesn't exist, creates the .ttl file that will store the discovered info and the database structure.
+    """
     if not os.path.exists('graphdb-import'):
         print(blue + ">>> " + reset + "Creating graphdb-import folder...\n")
         os.makedirs('graphdb-import')
     if not os.path.exists('graphdb-import/cmdb.ttl'):
         print(blue + ">>> " + reset + "Creating cmdb.ttl file...\n")
         f = open('graphdb-import/cmdb.ttl', "x")
+        f.close()
 
 
 def create_structure():
+    """
+    Writes the database structure to the .ttl file.
+    """
     f = open("graphdb-import/cmdb.ttl", "w")
     f.write("""
 @prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
@@ -172,10 +164,23 @@ def create_structure():
 
 
 def create_ci_type(obj):
+    """
+    Creates the configuration item type and writes its gathered information to the .ttl file.
+
+    Parameters
+    ----------
+    obj : ConfigurationItemType
+        The configuration item type that is going to be stored.
+
+    Returns
+    -------
+    string or None
+        Returns the configuration item type identifier if its successfully created, and None otherwise.
+    """
     if obj != None:
         res = ""
         id_ = obj.get_id()
-        title = obj.get_title()
+        title = str(regex.sub(r'[()/]', "", obj.get_title()))
         if id_ != "" and title != "":
             f = open("graphdb-import/cmdb.ttl", "a")
             res += ":" + str(snakecase(title)) + str(id_) + \
@@ -184,14 +189,28 @@ def create_ci_type(obj):
             f.write(res)
             f.close()
             return ":" + str(snakecase(title)) + str(id_)
-    return None
+    else:
+        return None
 
 
 def create_rel_type(obj):
+    """
+    Creates the relationship type and writes its gathered information to the .ttl file.
+
+    Parameters
+    ----------
+    obj : RelationshipType
+        The relationship type that is going to be stored.
+
+    Returns
+    -------
+    string or None
+        Returns the relationship type identifier if its successfully created, and None otherwise.
+    """
     if obj != None:
         res = ""
         id_ = obj.get_id()
-        title = obj.get_title()
+        title = str(regex.sub(r'[()/]', "", obj.get_title()))
         if id_ != "" and title != "":
             f = open("graphdb-import/cmdb.ttl", "a")
             res += ":" + str(snakecase(title)) + str(id_) + \
@@ -200,14 +219,28 @@ def create_rel_type(obj):
             f.write(res)
             f.close()
             return ":" + str(snakecase(title)) + str(id_)
-    return None
+    else:
+        return None
 
 
 def create_attribute(obj):
+    """
+    Creates the attribute and writes its gathered information to the .ttl file.
+
+    Parameters
+    ----------
+    obj : Attribute
+        The attribute that is going to be stored.
+
+    Returns
+    -------
+    string or None
+        Returns the attribute identifier if its successfully created, and None otherwise.
+    """
     if obj != None:
         res = ""
         id_ = obj.get_id()
-        title = obj.get_title()
+        title = str(regex.sub(r'[()/]', "", obj.get_title()))
         value = obj.get_value()
 
         if id_ != "" and title != "":
@@ -226,14 +259,31 @@ def create_attribute(obj):
 
 
 def create_ci(obj, ci_types):
+    """
+    Creates the configuration item and writes its gathered information to the .ttl file.
+
+    Parameters
+    ----------
+    obj : ConfigurationItem
+        The configuration item that is going to be stored.
+
+    ci_types: list
+        The list of the correspondent identifiers of the configuration item types.
+
+    Returns
+    -------
+    string or None
+        Returns the configuration item type identifier if its successfully created, and None otherwise.
+    """
     if obj != None:
         res = ""
         id_ = obj.get_id()
-        title = obj.get_title()
+        title = regex.sub(r'[()/]', "", str(obj.get_title()))
         uuid = obj.get_uuid()
         serial_number = obj.get_serial_number()
         description = obj.get_description()
         status = obj.get_status()
+        os_family = obj.get_os_family()
         mac_address = obj.get_mac_address()
         ipv4_addresses = obj.get_ipv4_addresses()
         ipv6_addresses = obj.get_ipv6_addresses()
@@ -253,6 +303,8 @@ def create_ci(obj, ci_types):
                 res += ";\n\t :description \"" + str(description) + "\""
             if status != "":
                 res += ";\n\t :cmdb_status \"" + str(status) + "\""
+            if os_family != "":
+                res += ";\n\t :os_family \"" + str(os_family) + "\""
             if mac_address != "":
                 res += ";\n\t :mac_address \"" + str(mac_address) + "\""
             for ipv4 in ipv4_addresses:
@@ -273,14 +325,34 @@ def create_ci(obj, ci_types):
             f.write(res)
             f.close()
             return ":" + str(id_) + str(type_id) + str(snakecase(title))
-    return None
+    else:
+        return None
 
 
 def create_rel(obj, rel_types, ci_ids):
+    """
+    Creates the relationship and writes its gathered information to the .ttl file.
+
+    Parameters
+    ----------
+    obj : Relationship
+        The relationship that is going to be stored.
+
+    rel_types: list
+        The list of the correspondent identifiers of the relationship types.
+
+    ci_ids: list
+        The list of the correspondent identifiers of the configuration items already created.
+
+    Returns
+    -------
+    string or None
+        Returns the configuration item type identifier if its successfully created, and None otherwise.
+    """
     if obj != None:
         res = ""
         id_ = obj.get_id()
-        title = obj.get_title()
+        title = str(regex.sub(r'[()/]', "", obj.get_title()))
         source_id = obj.get_source_id()
         target_id = obj.get_target_id()
         type_id = obj.get_type()
@@ -314,10 +386,14 @@ def create_rel(obj, rel_types, ci_ids):
             f.write(res)
             f.close()
             return ":" + str(id_) + str(type_id) + str(snakecase(title))
-    return None
+    else:
+        return None
 
 
 def parse_discovered():
+    """
+    Goes through the configuration item and relationship types, and configuration items and relationships created in the discovery.
+    """
     f = open("graphdb-import/cmdb.ttl", "a")
 
     ci_types = {}
@@ -345,34 +421,10 @@ def parse_discovered():
     f.close()
 
 
-def upload_to_graphdb():
-    headers = {
-        'Content-Type': 'application/json',
-        'Accept': 'application/json',
-    }
-
-    data = '{"fileNames": ["cmdb.ttl"]}'
-
-    # file import to graphdb
-    response = requests.post(
-        'http://' + server + ':' + port + '/rest/data/import/server/' + str(repository), headers=headers, data=data)
-    print(blue + ">>> " + reset + str(response.json()) + "\n")
-
-
-def run_population(db_info):
-    global server
-    server = db_info.get("server")
-
-    global port
-    port = db_info.get("port")
-
-    global repository
-    repository = db_info.get("repository")
-
+def run_population():
+    """
+    Creates the file to store de strucutre and data to populate the database.
+    """
     create_file()
     create_structure()
     parse_discovered()
-    upload_to_graphdb()
-
-
-# curl -X POST --header 'Content-Type: application/json' --header 'Accept: application/json' -d '{"fileNames": ["cmdb.ttl"]}' 'http://localhost:7200/rest/data/import/server/cmdb_creation'
