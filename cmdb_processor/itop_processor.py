@@ -1,15 +1,14 @@
 # -*- coding: utf-8 -*-
 
-import requests
-import json
-from colored import fg, bg, attr
+from colored import fg, attr
 from PyInquirer import style_from_dict, Token, prompt
 from PyInquirer import Validator, ValidationError
-import os
 import regex
 import mysql.connector
 from mysql.connector import errorcode
 import wordninja
+import json
+import requests
 
 from normalization import normalization
 from .cmdb_data_model import cmdb_data_model
@@ -43,11 +42,11 @@ class NotEmpty(Validator):
 class AddressValidator(Validator):
     def validate(self, document):
         ok = regex.match(
-            r'(\d{1,3}\.){3}\d{1,3}', document.text)
+            r'(\d{1,3}\.){3}\d{1,3}(/.*)*', document.text)
         if not ok:
             raise ValidationError(
                 message='Please enter a valid IP address.',
-                cursor_position=len(document.text))  # Move cursor to end
+                cursor_position=len(document.text))
 
 
 def db_specification():
@@ -87,6 +86,40 @@ def db_specification():
     ]
     db_specification_answer = prompt(db_specification_question, style=style)
     return db_specification_answer
+
+
+def api_specification():
+    """
+    Asks the user to enter the necessary information (server address, username and password) to access the iTop CMDB.
+
+    Returns
+    -------
+    dict
+        The CMDB information (server address, username and password).
+
+    """
+    print()
+    api_specification_question = [
+        {
+            'type': 'input',
+            'message': 'Enter the url of your iTop CMDB server:',
+            'name': 'url',
+            'validate': AddressValidator
+        },
+        {
+            'type': 'input',
+            'message': 'Enter your iTop username:',
+            'name': 'username',
+            'validate': NotEmpty
+        },
+        {
+            'type': 'password',
+            'message': 'Enter your iTop password:',
+            'name': 'password'
+        }
+    ]
+    api_specification_answer = prompt(api_specification_question, style=style)
+    return api_specification_answer
 
 
 def test_db_connection(server, db_name, username, passwd):
@@ -133,7 +166,70 @@ def test_db_connection(server, db_name, username, passwd):
     return cnx
 
 
-def return_tables(cnx, cursor, db):
+def test_api_connection(server, username, password):
+    """
+    Tests the access to the CMDB.
+
+    Parameters
+    ----------
+    server : string
+        The address of the CMDB server.
+
+    username : string
+        The CMDB username.
+
+    password : string
+        The CMDB password.
+
+    Returns
+    -------
+    boolean
+        Returns true if the connection was successful and false otherwise.
+
+    """
+    cmdb_url = "http://" + str(server) + \
+        "/webservices/rest.php?version=1.3"
+
+    json_req = {'operation': "core/check_credentials"}
+    json_req["user"] = username
+    json_req["password"] = password
+    json_data = json.dumps(json_req)
+    payload = dict(json_data=json_data,)
+
+    test = requests.post(cmdb_url, data=payload, auth=(
+        username, password), verify=False)
+
+    auth = False
+
+    try:
+        auth = test.json().get("authorized")
+    except:
+        print(red + "\n>>> " + reset +
+              "Unable to connect to the API. Please verify the connection information.")
+        return False
+
+    if auth == True:
+        print(green + "\n>>> " + reset + "Successfully connected.")
+        return True
+
+
+def return_tables(cursor, db):
+    """
+    Executes a query to obtain all the tables in the iTop database.
+
+    Parameters
+    -------
+    cursor: MySQLCursor
+        The cursor associated with the database connection.
+
+    db: string
+        The database name
+
+    Returns
+    -------
+    list
+        Returns the list of table names.
+    """
     res = []
     query = ""
     query = (
@@ -145,6 +241,19 @@ def return_tables(cnx, cursor, db):
 
 
 def get_ci_types(tables):
+    """
+    Parses the tables to obtain the ones that correspond to configuration item types.
+
+    Parameters
+    -------
+    tables: list
+        The list of table names.
+
+    Returns
+    -------
+    list
+        Returns the list of table names that correspond to configuration item types.
+    """
     res = []
     for t in tables:
         if regex.search(r'view_', t) == None and regex.search(r'lnk', t) == None:
@@ -153,6 +262,19 @@ def get_ci_types(tables):
 
 
 def get_rel_types(tables):
+    """
+    Parses the tables to obtain the ones that correspond to relationship types.
+
+    Parameters
+    -------
+    tables: list
+        The list of table names.
+
+    Returns
+    -------
+    list
+        Returns the list of table names that correspond to relationship types.
+    """
     res = []
     for t in tables:
         if regex.search(r'lnk', t) != None and regex.search(r'view_', t) == None:
@@ -161,6 +283,25 @@ def get_rel_types(tables):
 
 
 def get_attributes(table, db_name, cursor):
+    """
+    Executes a query to obtain the attributes associated with a table.
+
+    Parameters
+    -------
+    table: string
+        The list of table names.
+
+    db_name: string
+        The database name.
+
+    cursor: MySQLCursor
+        The cursor associated with the database connection.
+
+    Returns
+    -------
+    list
+        Returns the list of attributes associated with the table.
+    """
     res = {}
     query = ("DESCRIBE " + str(db_name) + "." + str(table) + ";")
     cursor.execute(query)
@@ -170,6 +311,25 @@ def get_attributes(table, db_name, cursor):
 
 
 def get_type(what, table, text):
+    """
+    Calculates the data type of an attribute.
+
+    Parameters
+    -------
+    what: string
+        "ci" if the attribute belongs to a configuration item and "rel" if it belongs to a relationship.
+
+    table: string
+        The table name.
+
+    text: string
+        The data type present in the database.
+
+    Returns
+    -------
+    string
+        The attribute data type.
+    """
     int_ = regex.search(r'int', text, flags=regex.IGNORECASE)
     txt = regex.search(r'varchar', text, flags=regex.IGNORECASE) or regex.search(
         r'text', text, flags=regex.IGNORECASE) or regex.search(
@@ -189,10 +349,10 @@ def get_type(what, table, text):
         proc_enums = {}
         for e in enums:
             if regex.search(r'_', e) == None:
-                proc_enums[e] = normalization.clean_text(
+                proc_enums[e] = normalization.parse_text_to_compare(
                     " ".join(wordninja.split(e)))
             else:
-                proc_enums[e] = normalization.clean_text(e)
+                proc_enums[e] = normalization.parse_text_to_compare(e)
         if what == "ci":
             cmdb_data_model["ci_dialog_attributes"][table] = {}
             cmdb_data_model["ci_dialog_attributes"][table][text] = proc_enums
@@ -204,6 +364,14 @@ def get_type(what, table, text):
 
 
 def restrictions(rel_attributes):
+    """
+    Calculates the configuration item types restrictions of the relationships.
+
+    Parameters
+    -------
+    rel_attributes: dict
+        A dictionary with the relationships and its attributes.
+    """
     for rel in rel_attributes:
         attrs = rel_attributes.get(rel)
         cmdb_data_model["rel_restrictions"][rel] = {}
@@ -227,11 +395,12 @@ def process_itop():
     Returns
     -------
     dict
-        Returns the CMDB information (server address, username, password and database name).
+        Returns the CMDB API information (server address, username and password).
 
     """
-    print(blue + "\n>>> " + reset + "Make sure that i-Top is running.\n")
+    print(blue + "\n>>> " + reset + "Make sure that iTop is running.")
     db_info = db_specification()
+    api_info = api_specification()
 
     server = db_info.get("server")
     username = db_info.get("username")
@@ -242,55 +411,71 @@ def process_itop():
     if connection == None:
         return process_itop()
     else:
-        print(blue + ">>> " + reset + "Processing iTop CMDB data model...\n")
-        cursor = connection.cursor()
-        table_names = return_tables(connection, cursor, db_name)
+        api_server = api_info.get("server")
+        api_username = api_info.get("username")
+        api_password = api_info.get("password")
+        api_connection = test_api_connection(
+            api_server, api_username, api_password)
+        if api_connection == False:
+            return process_itop()
+        else:
 
-        ci_types = get_ci_types(table_names)
-        for ci in ci_types:
-            if regex.search(r'_', ci) == None:
-                cmdb_data_model["ci_types"][ci] = normalization.clean_text(
-                    " ".join(wordninja.split(ci)))
-            else:
-                cmdb_data_model["ci_types"][ci] = normalization.clean_text(
-                    ci)
+            print(blue + "\n>>> " + reset + "Processing iTop CMDB data model...")
+            cursor = connection.cursor()
 
-        rel_types = get_rel_types(table_names)
-        for rel in rel_types:
-            if regex.search(r'_', rel) == None:
-                cmdb_data_model["rel_types"][rel] = normalization.clean_text(
-                    " ".join(wordninja.split(rel[len("lnk"):])))
-            else:
-                cmdb_data_model["rel_types"][rel] = normalization.clean_text(
-                    rel[len("lnk"):])
+            table_names = return_tables(cursor, db_name)
 
-        for ci_type in ci_types:
-            attrs = get_attributes(ci_type, db_name, cursor)
-            proc_attrs = {}
-            types_attrs = {}
-            for a in attrs:
-                if regex.search(r'_', a) == None:
-                    proc_attrs[a] = normalization.clean_text(
-                        " ".join(wordninja.split(a)))
+            ci_types = get_ci_types(table_names)
+            for ci in ci_types:
+                if regex.search(r'_', ci) == None:
+                    cmdb_data_model["ci_types"][ci] = normalization.parse_text_to_compare(
+                        " ".join(wordninja.split(ci)))
                 else:
-                    proc_attrs[a] = normalization.clean_text(a)
-                types_attrs[ci_type] = get_type("ci", ci_type, attrs.get(a))
-            cmdb_data_model["ci_attributes"][ci_type] = proc_attrs
-            cmdb_data_model["ci_attributes_data_types"][ci_type] = types_attrs
+                    cmdb_data_model["ci_types"][ci] = normalization.parse_text_to_compare(
+                        ci)
 
-        for rel_type in rel_types:
-            attrs = get_attributes(rel_type, db_name, cursor)
-            proc_attrs = {}
-            types_attrs = {}
-            for a in attrs:
-                if regex.search(r'_', a) == None:
-                    proc_attrs[a] = normalization.clean_text(
-                        " ".join(wordninja.split(a)))
+            rel_types = get_rel_types(table_names)
+            for rel in rel_types:
+                if regex.search(r'_', rel) == None:
+                    cmdb_data_model["rel_types"][rel] = normalization.parse_text_to_store(
+                        " ".join(wordninja.split(rel[len("lnk"):])))
                 else:
-                    proc_attrs[a] = normalization.clean_text(a)
-                types_attrs[rel_type] = get_type("rel", rel_type, attrs.get(a))
-            cmdb_data_model["rel_attributes"][rel_type] = proc_attrs
-            cmdb_data_model["rel_attributes_data_types"][ci_type] = types_attrs
+                    cmdb_data_model["rel_types"][rel] = normalization.parse_text_to_store(
+                        rel[len("lnk"):])
 
-    restrictions(cmdb_data_model["rel_attributes"])
-    return db_info
+            for ci_type in ci_types:
+                attrs = get_attributes(ci_type, db_name, cursor)
+                proc_attrs = {}
+                types_attrs = {}
+                for a in attrs:
+                    if regex.search(r'_', a) == None:
+                        proc_attrs[a] = normalization.parse_text_to_store(
+                            " ".join(wordninja.split(a)))
+                    else:
+                        proc_attrs[a] = normalization.parse_text_to_store(a)
+                    types_attrs[ci_type] = get_type(
+                        "ci", ci_type, attrs.get(a))
+                cmdb_data_model["ci_attributes"][ci_type] = proc_attrs
+                cmdb_data_model["ci_attributes_data_types"][ci_type] = types_attrs
+
+            for rel_type in rel_types:
+                attrs = get_attributes(rel_type, db_name, cursor)
+                proc_attrs = {}
+                types_attrs = {}
+                for a in attrs:
+                    if regex.search(r'_', a) == None:
+                        proc_attrs[a] = normalization.parse_text_to_store(
+                            " ".join(wordninja.split(a)))
+                    else:
+                        proc_attrs[a] = normalization.parse_text_to_store(a)
+                    types_attrs[rel_type] = get_type(
+                        "rel", rel_type, attrs.get(a))
+                cmdb_data_model["rel_attributes"][rel_type] = proc_attrs
+                cmdb_data_model["rel_attributes_data_types"][ci_type] = types_attrs
+
+            restrictions(cmdb_data_model["rel_attributes"])
+
+    # TODO: tirar
+    print(cmdb_data_model["ci_dialog_attributes"])
+
+    return api_info

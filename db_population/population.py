@@ -5,7 +5,7 @@ import os
 from colored import fg, attr
 from stringcase import snakecase
 
-from models import ConfigurationItem, Relationship, ConfigurationItemType, RelationshipType, Attribute, methods, objects
+from models import methods, objects
 
 blue = fg('#46B1C9')
 red = fg('#B54653')
@@ -118,6 +118,11 @@ def create_structure():
     rdfs:domain :ConfigurationItem ; 
     rdfs:range xsd:string ;
     rdfs:comment "The associated IPv4 address.".
+
+:os_family rdf:type owl:DatatypeProperty ;
+    rdfs:domain :ConfigurationItem ; 
+    rdfs:range xsd:string ;
+    rdfs:comment "The associated operating system family.".
 
 :has_ipv6 rdf:type owl:DatatypeProperty ;
     rdfs:domain :ConfigurationItem ; 

@@ -1,13 +1,28 @@
 # -*- coding: utf-8 -*-
 
-from models import Attribute, ConfigurationItem, ConfigurationItemType, Relationship, RelationshipType, methods, objects
-from model_mapper import mapper, mapping
+from models import methods, objects
 
 
 def combine_attributes(new_at, prev_at):
+    """
+    Combines the information of the attributes.
+
+    Parameters
+    ----------
+    new_at : int[]
+        The list of the attributes identifiers of the new object.
+
+    prev_at : int[]
+        The list of the attributes identifiers of the already existing object.
+
+    Returns
+    -------
+    int[]
+        The list of the combined attributes identifiers.
+    """
     res = []
     for prev in prev_at:
-        at_id, sim = methods.find_most_similar_attribute(
+        _, sim = methods.find_most_similar_attribute(
             prev.get_title(), [at.get_id() for at in new_at])
         if sim < 0.9:
             res.append(prev.get_id())
@@ -15,6 +30,22 @@ def combine_attributes(new_at, prev_at):
 
 
 def reconcile_relationships(new, prev):
+    """
+    Reconcilies the information of the two relationships into one.
+
+    Parameters
+    ----------
+    new : Relationship
+        The new relationship.
+
+    prev : Relationship
+        The relationship that represents the new one, but was already created.
+
+    Returns
+    -------
+    Relationship
+        The relationship that combines the information of the other two.
+    """
     new_title = new.get_title()
     if new_title == None or new_title == "":
         prev_title = prev.get_title()
@@ -40,6 +71,17 @@ def reconcile_relationships(new, prev):
 
 
 def change_ids(old, new):
+    """
+    Changes the configuration item identifier of the relationships that the old one was involved, to the new identifier.
+
+    Parameters
+    ----------
+    old : Relationship
+        The identifier of the relationship that was already created.
+
+    new : Relationship
+        The identifier of the new relationship.
+    """
     rels = objects.objects.get("relationships")
     for rel in rels:
         source = rel.get_source_id()
@@ -51,7 +93,22 @@ def change_ids(old, new):
 
 
 def reconcile_configuration_items(new, prev):
+    """
+    Reconcilies the information of the two configuration item into one.
 
+    Parameters
+    ----------
+    new : ConfigurationItem
+        The new configuration item.
+
+    prev : ConfigurationItem
+        The configuration item that represents the new one, but was already created.
+
+    Returns
+    -------
+    ConfigurationItem
+        The configuration item that combines the information of the other two.
+    """
     new_uuid = new.get_uuid()
     if new_uuid == None or new_uuid == "":
         prev_uuid = prev.get_uuid()

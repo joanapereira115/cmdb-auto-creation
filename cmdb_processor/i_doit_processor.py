@@ -2,10 +2,9 @@
 
 import requests
 import json
-from colored import fg, bg, attr
+from colored import fg, attr
 from PyInquirer import style_from_dict, Token, prompt
 from PyInquirer import Validator, ValidationError
-import os
 import regex
 
 from .cmdb_data_model import cmdb_data_model
@@ -54,7 +53,6 @@ def api_specification():
     -------
     dict
         The CMDB information (server address, username, password and api key).
-
     """
     api_specification_question = [
         {
@@ -107,7 +105,6 @@ def test_api_connection(server, username, password, api_key):
     -------
     boolean
         Returns true if the connection was successful and false otherwise.
-
     """
     global api_url
     api_url = "http://" + server + "/i-doit/src/jsonrpc.php"
@@ -146,14 +143,12 @@ def test_api_connection(server, username, password, api_key):
 def api_constants():
     """
     Executes the method 'idoit.contants' of the i-doit API.
-
     Gets the configuration item types, relationship types, and categories present in the CMDB.
 
     Returns
     -------
     boolean
         Returns the result of the execution of the method.
-
     """
     constants_body = json.loads("{\"version\": \"2.0\",\"method\": \"idoit.constants\",\"params\": {\"apikey\": \"" +
                                 apikey + "\",\"language\": \"en\"},\"id\": 1}")
@@ -183,7 +178,6 @@ def api_category_info(category):
     -------
     dict
         Returns the attributes, its data types and the available values of the dialog type attributes associated with the category.
-
     """
     res = {}
     attributes = []
@@ -247,7 +241,6 @@ def category_attributes_types(categories):
     -------
     dict
         Returns the attributes, its data types and the available values of the dialog type attributes associated with all the categories.
-
     """
     attributes = {}
     for cat in categories:
@@ -288,7 +281,6 @@ def get_object_attributes(ci, cat_attr_types):
     -------
     dict
         Returns the attributes, its data types and the available values of the dialog type attributes associated with the object type.
-
     """
     res = {}
     object_attributes = {}
@@ -336,16 +328,15 @@ def get_object_attributes(ci, cat_attr_types):
 def process_i_doit():
     """
     Processes the i-doit CMDB data model, obtaining information about configuration item types, 
-    relationship types, configuration items, and relationship attributes, restrictions between relationships, 
+    relationship types, configuration items and relationship attributes, restrictions between relationships, 
     data types of attributes, and values for dialog type attributes.
 
     Returns
     -------
     dict
         Returns the CMDB information (server address, username, password and api key).
-
     """
-    print(blue + "\n>>> " + reset + "Make sure that i-doit is running.\n")
+    print(blue + "\n>>> " + reset + "Make sure that i-doit is running.")
     api_info = api_specification()
 
     server = api_info.get("server")
@@ -357,7 +348,7 @@ def process_i_doit():
     if connection == False:
         return process_i_doit()
     else:
-        print(blue + ">>> " + reset + "Processing i-doit CMDB data model...\n")
+        print(blue + "\n>>> " + reset + "Processing i-doit CMDB data model...")
         constants = api_constants()
 
         if constants == None:
@@ -391,12 +382,6 @@ def process_i_doit():
             else:
                 for rel in rel_types:
                     rel_attributes_types[rel] = attrs
-            # for rel in rel_types:
-            #    attrs = get_object_attributes(rel, cat_attr_types)
-            #    if attrs == None:
-            #        process_i_doit()
-            #    else:
-            #        rel_attributes_types[rel] = attrs
 
             cmdb_data_model["ci_attributes"] = {
                 ci: ci_attributes_types[ci]["attributes"] for ci in ci_attributes_types}
@@ -412,7 +397,5 @@ def process_i_doit():
 
             cmdb_data_model["rel_attributes_data_types"] = {
                 rel: rel_attributes_types[rel]["types"] for rel in rel_attributes_types}
-
-            # there isn't relationship restrictions
 
     return api_info
