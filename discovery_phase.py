@@ -188,7 +188,6 @@ def unlock_vault():
 def vault_configuration():
     """
     Verifies if a vault already exists.
-
     """
     vault.initialize()
     if not os.path.isfile(vault.vault_path):

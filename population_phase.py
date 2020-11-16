@@ -1,7 +1,6 @@
 # -*- coding: utf-8 -*-
 
-from model_mapper import transformation_rules
-from colored import fg, bg, attr
+from colored import fg, attr
 import pyfiglet
 
 from cmdb_population import population
@@ -16,6 +15,17 @@ reset = attr('reset')
 
 
 def run_population(db_info, cmdb_info):
+    """
+    Executes the population of the CMDB. 
+
+    Parameters
+    -------
+    db_info : dict
+        The information about the database.
+
+    cmdb_info : dict
+        The information about the CMDB.
+    """
     open_message = pyfiglet.figlet_format(
         "Population Phase", font="small")
     print("\n**********************************************************************")

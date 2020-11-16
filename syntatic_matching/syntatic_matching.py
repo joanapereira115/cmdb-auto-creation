@@ -25,8 +25,8 @@ def syntatic_coeficient(text1, text2):
 
     """
     if text1 != "" and text2 != "" and text1 != None and text2 != None:
-        t1 = normalization.clean_text(text1)
-        t2 = normalization.clean_text(text2)
+        t1 = normalization.parse_text_to_compare(text1)
+        t2 = normalization.parse_text_to_compare(text2)
         text = [t1, t2]
         vectorizer = CountVectorizer().fit_transform(text)
         vectors = vectorizer.toarray()

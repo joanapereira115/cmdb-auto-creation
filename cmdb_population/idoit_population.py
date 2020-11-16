@@ -2,8 +2,7 @@
 
 import requests
 from urllib.parse import quote
-from colored import fg, bg, attr
-import regex
+from colored import fg, attr
 import json
 
 from similarity import similarity
@@ -18,6 +17,14 @@ reset = attr('reset')
 
 
 def idoit_specification(cmdb_info):
+    """
+    Defines the necessary elements to access the API.
+
+    Parameters
+    ----------
+    cmdb_info : dict
+        The API information (server address, username, password and API key).
+    """
     global cmdb_url
     cmdb_url = "http://" + \
         cmdb_info.get("server") + "/i-doit/src/jsonrpc.php"
@@ -33,6 +40,22 @@ def idoit_specification(cmdb_info):
 
 
 def calculate_value_from_dialog(original_value, dialog_values):
+    """
+    Calculates the most similar value of a dialog attribute based on the discovered value.
+
+    Parameters
+    ----------
+    original_value : string
+        The discovered value.
+
+    dialog_values : dict
+        The values available for the attribute.
+
+    Returns
+    -------
+    string, string
+        Returns the most similar value for the attribute.
+    """
     mx = 0
     res = None
     for pv in dialog_values:
@@ -45,6 +68,34 @@ def calculate_value_from_dialog(original_value, dialog_values):
 
 
 def create_idoit_ci(ci_type, ci_attrs, rules_ci_types, rules_ci_attributes, ci_attributes_data_types, ci_dialog_attributes):
+    """
+    Creates a configuration item into the CMDB.
+
+    Parameters
+    ----------
+    ci_type : string
+        The type of the configuration item in the database.
+
+    ci_attrs : dict
+        The attributes of configuration item.
+
+    rules_ci_types : dict
+        The transformation rules to the types of the configuration items.
+
+    rules_ci_attributes : dict
+        The transformation rules to the attributes of the configuration items.
+
+    ci_attributes_data_types : dict
+        The data types of the attributes in the CMDB.
+
+    ci_dialog_attributes : dict
+        The values of the dialog attributes in the CMDB.
+
+    Returns
+    -------
+    string
+        Returns the identifier of the configuration item in the CMDB.
+    """
     cmdb_id = None
     cmdb_type = rules_ci_types.get(ci_type)
     if cmdb_type != None:
@@ -114,6 +165,44 @@ def create_idoit_ci(ci_type, ci_attrs, rules_ci_types, rules_ci_attributes, ci_a
 
 
 def create_idoit_relationship(rel_type, rel_attrs, rules_rel_types, rules_rel_attributes, ci_ids, source, target, rel_attributes_data_types, rel_dialog_attributes):
+    """
+    Creates a relationship into the CMDB.
+
+    Parameters
+    ----------
+    rel_type : string
+        The type of the relationship in the database.
+
+    rel_attrs : dict
+        The attributes of relationship.
+
+    rules_rel_types : dict
+        The transformation rules to the types of the relationships.
+
+    rules_rel_attributes : dict
+        The transformation rules to the attributes of the relationships.
+
+    ci_ids : dict
+        The identifiers of the configuration items in the CMDB.
+
+    source : string
+        The source configuration item involved in the relationship.
+
+    target : string
+        The target configuration item involved in the relationship.
+
+    rel_attributes_data_types : dict
+        The data types of the attributes in the CMDB.
+
+    rel_dialog_attributes : dict
+        The values of the dialog attributes in the CMDB.
+
+    Returns
+    -------
+    string
+        Returns the identifier of the relationship in the CMDB.
+    """
+
     cmdb_id = None
     cmdb_type = rules_rel_types.get(rel_type)
     if cmdb_type != None:
@@ -194,19 +283,78 @@ def create_idoit_relationship(rel_type, rel_attrs, rules_rel_types, rules_rel_at
     return cmdb_id
 
 
+def logout():
+    """
+    Closes the current session.
+
+    Returns
+    -------
+    boolean
+        Returns true if the disconnection was successfull, and false otherwise.
+    """
+    body = json.loads(
+        "{\"version\": \"2.0\",\"method\": \"idoit.logout\",\"params\": {\"apikey\": \"" + apikey + "\",\"language\": \"en\"},\"id\": 3}")
+    try:
+        s = requests.Session()
+        logout_request = s.post(cmdb_url, json=body, headers=headers)
+        logout = logout_request.json()
+        if "error" in logout:
+            print(red + "\n>>> " + reset +
+                  "Unable to disconnect to the API.")
+            return False
+        else:
+            print(green + "\n>>> " + reset + "Successfully disconnected.")
+            return True
+    except requests.exceptions.RequestException:
+        print(red + "\n>>> " + reset +
+              "Unable to disconnect to the API.")
+        return False
+
+
 def run_idoit_population(cmdb_info, cmdb_data_model, rules, cis_types, rels_types, cis_attributes, rels_attributes, sources, targets):
+    """
+    Executes the population in the i-doit CMDB.
+
+    Parameters
+    ----------
+    cmdb_info : dict
+        The API information (server address, username, password and API key).
+
+    cmdb_data_model : dict
+        The CMDB data model.
+
+    rules : dict
+        The transformation rules between the two models.
+
+    cis_types : dict
+        The types of configuration items.
+
+    rels_types : dict
+        The types of relationships.
+
+    cis_attributes : dict
+        The attributes of configuration items.
+
+    rels_attributes : dict  
+        The attributes of relationships.
+
+    sources : dict
+        The configuration item sources of the relationships.
+
+    targets : dict
+        The configuration item targets of the relationships.
+
+    Returns
+    -------
+    boolean
+        Returns true if the population was successfully executed, and false otherwise.
+    """
     idoit_specification(cmdb_info)
-    ids = {}  # id bd : id cmdb
-    # {"CI type": {"attribute": "data type", ...}, ...}
+    ids = {}
     ci_attributes_data_types = cmdb_data_model.get("ci_attributes_data_types")
-    # {"relationship type": {"attribute": "data type", ...}, ...}
     rel_attributes_data_types = cmdb_data_model.get(
         "rel_attributes_data_types")
-    # {"relationship type": [{"source CI attribute": "CI type", "target CI attribute": "CI type"}, ...], ...}
-    rel_restrictions = cmdb_data_model.get("rel_restrictions")
-    # {"CI type": {"attribute": {"value", "description", ...}, ...}, ...}
     ci_dialog_attributes = cmdb_data_model.get("ci_dialog_attributes")
-    # {"relationship type": {"attribute": {"value", "description", ...}, ...}, ...}
     rel_dialog_attributes = cmdb_data_model.get("rel_dialog_attributes")
 
     print(blue + "\n>>> " + reset +
@@ -219,11 +367,10 @@ def run_idoit_population(cmdb_info, cmdb_data_model, rules, cis_types, rels_type
 
     print(blue + "\n>>> " + reset +
           "Creating the relationships...")
-
     for rel in rels_types:
         rel_id = create_idoit_relationship(rels_types.get(
             rel), rels_attributes.get(rel), rules.get("rel_types"), rules.get("rel_attributes"), ids, sources.get(rel), targets.get(rel), rel_attributes_data_types, rel_dialog_attributes)
 
-    return True
+    out = logout()
 
-    # TODO: devo fazer o logout?
+    return out

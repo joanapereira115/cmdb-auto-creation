@@ -1,11 +1,7 @@
 # -*- coding: utf-8 -*-
 
 import requests
-from urllib.parse import quote
-from colored import fg, bg, attr
-from PyInquirer import style_from_dict, Token, prompt
-from PyInquirer import Validator, ValidationError
-import regex
+from colored import fg, attr
 import json
 import stringcase
 
@@ -19,97 +15,24 @@ red = fg('#B54653')
 green = fg('#86DEB7')
 reset = attr('reset')
 
-style = style_from_dict({
-    Token.QuestionMark: '#B54653 bold',
-    Token.Selected: '#86DEB7 bold',
-    Token.Instruction: '',  # default
-    Token.Answer: '#46B1C9 bold',
-    Token.Question: '',
-})
 
-
-class NotEmpty(Validator):
-    def validate(self, document):
-        ok = document.text != "" and document.text != None
-        if not ok:
-            raise ValidationError(
-                message='Please enter something',
-                cursor_position=len(document.text))  # Move cursor to end
-
-
-class AddressValidator(Validator):
-    def validate(self, document):
-        ok = regex.match(
-            r'(\d{1,3}\.){3}\d{1,3}(/.*)*', document.text)
-        if not ok:
-            raise ValidationError(
-                message='Please enter a valid IP address.',
-                cursor_position=len(document.text))  # Move cursor to end
-
-
-def api_specification():
+def calculate_value_from_dialog(original_value, dialog_values):
     """
-    Asks the user to enter the necessary information (server address, username and password) to access the iTop CMDB.
+    Calculates the most similar value of a dialog attribute based on the discovered value.
+
+    Parameters
+    ----------
+    original_value : string
+        The discovered value.
+
+    dialog_values : dict
+        The values available for the attribute.
 
     Returns
     -------
-    dict
-        The CMDB information (server address, username and password).
-
+    string, string
+        Returns the most similar value for the attribute.
     """
-    print()
-    api_specification_question = [
-        {
-            'type': 'input',
-            'message': 'Enter the url of your iTop CMDB server:',
-            'name': 'url',
-            'validate': AddressValidator
-        },
-        {
-            'type': 'input',
-            'message': 'Enter your iTop username:',
-            'name': 'username',
-            'validate': NotEmpty
-        },
-        {
-            'type': 'password',
-            'message': 'Enter your iTop password:',
-            'name': 'password'
-        }
-    ]
-    api_specification_answer = prompt(api_specification_question, style=style)
-    return api_specification_answer
-
-
-def itop_specification(cmdb_info):
-    cmdb_url = "http://" + str(cmdb_info.get("url")) + \
-        "/webservices/rest.php?version=1.3"
-
-    user = str(cmdb_info.get("username"))
-    pwd = str(cmdb_info.get("password"))
-
-    json_req = {'operation': "core/check_credentials"}
-    json_req["user"] = user
-    json_req["password"] = pwd
-    json_data = json.dumps(json_req)
-    payload = dict(json_data=json_data,)
-
-    test = requests.post(cmdb_url, data=payload, auth=(
-        user, pwd), verify=False)
-
-    auth = False
-    try:
-        auth = test.json().get("authorized")
-    except:
-        print(red + "\n>>> " + reset +
-              "Unable to connect to the API. Please verify the connection information.\n")
-    if auth == True:
-        print(green + "\n>>> " + reset + "Successfully connected.\n")
-
-    return cmdb_url
-
-
-def calculate_value_from_dialog(original_value, dialog_values):
     mx = 0
     res = None
     for pv in dialog_values:
@@ -122,6 +45,40 @@ def calculate_value_from_dialog(original_value, dialog_values):
 
 
 def create_itop_ci(cmdb_info, cmdb_url, ci_type, ci_attrs, rules_ci_types, rules_ci_attributes, ci_attributes_data_types, ci_dialog_attributes):
+    """
+    Creates a configuration item into the CMDB.
+
+    Parameters
+    ----------
+    cmdb_info : dict
+        The API information (server address, username and password).
+
+    cmdb_url : string
+        The url to access the API.
+
+    ci_type : string
+        The type of the configuration item in the database.
+
+    ci_attrs : dict
+        The attributes of configuration item.
+
+    rules_ci_types : dict
+        The transformation rules to the types of the configuration items.
+
+    rules_ci_attributes : dict
+        The transformation rules to the attributes of the configuration items.
+
+    ci_attributes_data_types : dict
+        The data types of the attributes in the CMDB.
+
+    ci_dialog_attributes : dict
+        The values of the dialog attributes in the CMDB.
+
+    Returns
+    -------
+    string, string
+        Returns the identifier of the configuration item in the CMDB, and its type.
+    """
     cmdb_id = None
     cmdb_type = rules_ci_types.get(ci_type)
 
@@ -194,15 +151,56 @@ def create_itop_ci(cmdb_info, cmdb_url, ci_type, ci_attrs, rules_ci_types, rules
     return cmdb_id, cmdb_type
 
 
-"""
-"lnkphysicalinterfacetovlan": {
-        "physicalinterface_id": "physicalinterface",
-        "vlan_id": "vlan"
-    },
-"""
-
-
 def create_itop_relationship(cmdb_info, cmdb_url, rel_type, rel_attrs, rules_rel_types, rules_rel_attributes, ci_ids, ci_types, source, target, rel_attributes_data_types, rel_dialog_attributes, rel_restrictions):
+    """
+    Creates a relationship into the CMDB.
+
+    Parameters
+    ----------
+    cmdb_info : dict
+        The API information (server address, username and password).
+
+    cmdb_url : string
+        The url to access the API.
+
+    rel_type : string
+        The type of the relationship in the database.
+
+    rel_attrs : dict
+        The attributes of relationship.
+
+    rules_rel_types : dict
+        The transformation rules to the types of the relationships.
+
+    rules_rel_attributes : dict
+        The transformation rules to the attributes of the relationships.
+
+    ci_ids : dict
+        The identifiers of the configuration items in the CMDB.
+
+    ci_types : dict
+        The identifiers of the configuration items in the CMDB.
+
+    source : string
+        The source configuration item involved in the relationship.
+
+    target : string
+        The target configuration item involved in the relationship.
+
+    rel_attributes_data_types : dict
+        The data types of the attributes in the CMDB.
+
+    rel_dialog_attributes : dict
+        The values of the dialog attributes in the CMDB.
+
+    rel_restrictions : dict
+        The types restrictions of the configuration items involved in the relationship.
+
+    Returns
+    -------
+    string
+        Returns the identifier of the relationship in the CMDB.
+    """
     cmdb_id = None
     cmdb_type = rules_rel_types.get(rel_type)
 
@@ -285,22 +283,54 @@ def create_itop_relationship(cmdb_info, cmdb_url, rel_type, rel_attrs, rules_rel
     return cmdb_id
 
 
-def run_itop_population(cmdb_data_model, rules, cis_types, rels_types, cis_attributes, rels_attributes, sources, targets):
-    cmdb_info = api_specification()
-    cmdb_url = itop_specification(cmdb_info)
+def run_itop_population(cmdb_info, cmdb_data_model, rules, cis_types, rels_types, cis_attributes, rels_attributes, sources, targets):
+    """
+    Executes the population in the iTop CMDB.
 
-    ids = {}  # id bd : id cmdb
-    types = {}  # id bd : id cmdb
-    # {"CI type": {"attribute": "data type", ...}, ...}
+    Parameters
+    ----------
+    cmdb_info : dict
+        The API information (server address, username and password).
+
+    cmdb_data_model : dict
+        The CMDB data model.
+
+    rules : dict
+        The transformation rules between the two models.
+
+    cis_types : dict
+        The types of configuration items.
+
+    rels_types : dict
+        The types of relationships.
+
+    cis_attributes : dict
+        The attributes of configuration items.
+
+    rels_attributes : dict  
+        The attributes of relationships.
+
+    sources : dict
+        The configuration item sources of the relationships.
+
+    targets : dict
+        The configuration item targets of the relationships.
+
+    Returns
+    -------
+    boolean
+        Returns true if the population was successfully executed, and false otherwise.
+    """
+    cmdb_url = "http://" + str(cmdb_info.get("url")) + \
+        "/webservices/rest.php?version=1.3"
+
+    ids = {}
+    types = {}
     ci_attributes_data_types = cmdb_data_model.get("ci_attributes_data_types")
-    # {"relationship type": {"attribute": "data type", ...}, ...}
     rel_attributes_data_types = cmdb_data_model.get(
         "rel_attributes_data_types")
-    # {"relationship type": [{"source CI attribute": "CI type", "target CI attribute": "CI type"}, ...], ...}
     rel_restrictions = cmdb_data_model.get("rel_restrictions")
-    # {"CI type": {"attribute": {"value", "description", ...}, ...}, ...}
     ci_dialog_attributes = cmdb_data_model.get("ci_dialog_attributes")
-    # {"relationship type": {"attribute": {"value", "description", ...}, ...}, ...}
     rel_dialog_attributes = cmdb_data_model.get("rel_dialog_attributes")
 
     print(blue + "\n>>> " + reset +
@@ -316,7 +346,7 @@ def run_itop_population(cmdb_data_model, rules, cis_types, rels_types, cis_attri
     print(blue + "\n>>> " + reset +
           "Creating the relationships...")
     for rel in rels_types:
-        rel_id = create_itop_relationship(cmdb_info, cmdb_url, rels_types.get(
+        _ = create_itop_relationship(cmdb_info, cmdb_url, rels_types.get(
             rel), rels_attributes.get(rel), rules.get("rel_types"), rules.get("rel_attributes"), ids, types, sources.get(rel), targets.get(rel), rel_attributes_data_types, rel_dialog_attributes, rel_restrictions)
 
     return True

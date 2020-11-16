@@ -266,17 +266,17 @@ def run_cmdb_population(db_info, cmdb_info):
                                        rels_types, cis_attributes, rels_attributes, sources, targets)
         if success:
             print(green + "\n>>> " + reset +
-                  "CMDB population complete...")
+                  "CMDB population completed.")
         else:
             print(red + "\n>>> " + reset +
                   "The CMDB population was not successful...")
 
     if sw == "iTop":
-        success = run_itop_population(cmdb_data_model.cmdb_data_model, rules, cis_types,
+        success = run_itop_population(cmdb_info.get("cmdb"), cmdb_data_model.cmdb_data_model, rules, cis_types,
                                       rels_types, cis_attributes, rels_attributes, sources, targets)
         if success:
             print(green + "\n>>> " + reset +
-                  "CMDB population complete...")
+                  "CMDB population completed.")
         else:
             print(red + "\n>>> " + reset +
                   "The CMDB population was not successful...")

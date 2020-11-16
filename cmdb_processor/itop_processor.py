@@ -154,7 +154,8 @@ def test_db_connection(server, db_name, username, passwd):
             password=passwd,
             host=server,
             database=db_name)
-        print(green + "\n>>> " + reset + "Successfully connected.\n")
+        print(green + "\n>>> " + reset +
+              "Successfully connected to the iTop database.")
     except mysql.connector.Error as err:
         if err.errno == errorcode.ER_ACCESS_DENIED_ERROR:
             print(red + "\n>>> " + reset +
@@ -196,7 +197,8 @@ def test_api_connection(server, username, password):
     json_data = json.dumps(json_req)
     payload = dict(json_data=json_data,)
 
-    test = requests.post(cmdb_url, data=payload, auth=(
+    s = requests.Session()
+    test = s.post(cmdb_url, data=payload, auth=(
         username, password), verify=False)
 
     auth = False
@@ -209,7 +211,8 @@ def test_api_connection(server, username, password):
         return False
 
     if auth == True:
-        print(green + "\n>>> " + reset + "Successfully connected.")
+        print(green + "\n>>> " + reset +
+              "Successfully connected to the iTop API.")
         return True
 
 
@@ -411,7 +414,7 @@ def process_itop():
     if connection == None:
         return process_itop()
     else:
-        api_server = api_info.get("server")
+        api_server = api_info.get("url")
         api_username = api_info.get("username")
         api_password = api_info.get("password")
         api_connection = test_api_connection(
@@ -474,8 +477,5 @@ def process_itop():
                 cmdb_data_model["rel_attributes_data_types"][ci_type] = types_attrs
 
             restrictions(cmdb_data_model["rel_attributes"])
-
-    # TODO: tirar
-    print(cmdb_data_model["ci_dialog_attributes"])
 
     return api_info

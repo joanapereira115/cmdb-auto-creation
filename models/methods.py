@@ -11,6 +11,7 @@ from .objects import objects
 from semantic_matching import semantic_matching
 from similarity import similarity
 from reconciliation import reconciliation
+from normalization import normalization
 
 
 def get_ci_type_title_from_id(id):
@@ -446,6 +447,8 @@ def add_ci_type(ci_type):
     if ex_ci_type != None:
         return ex_ci_type
     else:
+        ci_type.set_title(
+            normalization.parse_text_to_store(ci_type.get_title()))
         objects["configuration_item_types"].append(ci_type)
         return ci_type
 
@@ -455,6 +458,8 @@ def add_rel_type(rel_type):
     if ex_rel_type != None:
         return ex_rel_type
     else:
+        rel_type.set_title(
+            normalization.parse_text_to_store(rel_type.get_title()))
         objects["relationship_types"].append(rel_type)
         return rel_type
 
@@ -490,9 +495,6 @@ def create_relation(source, target, relation_type):
     if source != None and target != None and relation_type != None:
         rel = Relationship.Relationship()
         rel.type_id = relation_type.get_id()
-        if source.get_id() == target.get_id():
-            print("same source and target!")
-            print()
         rel.source_id = source.get_id()
         rel.target_id = target.get_id()
         return rel
@@ -511,19 +513,20 @@ def create_attribute(name, value):
 def define_attribute(title, value, ci):
     if title != None and title != "" and value != None and value != "":
         if similarity.calculate_similarity(title, "uuid") > 0.85:
-            ci.set_uuid(value)
+            ci.set_uuid(normalization.parse_text_to_store(value))
         elif similarity.calculate_similarity(title, "serial_number") > 0.85:
-            ci.set_serial_number(value)
+            ci.set_serial_number(normalization.parse_text_to_store(value))
         elif similarity.calculate_similarity(title, "description") > 0.85:
-            ci.set_description(value)
+            ci.set_description(normalization.parse_text_to_store(value))
         elif similarity.calculate_similarity(title, "status") > 0.85:
-            ci.set_status(value)
+            ci.set_status(normalization.parse_text_to_store(value))
         elif similarity.calculate_similarity(title, "mac address") > 0.85:
-            ci.set_mac_address(value)
+            ci.set_mac_address(normalization.parse_text_to_store(value))
         elif similarity.calculate_similarity(title, "ipv4 address") > 0.85:
-            ci.add_ipv4_address(value)
+            ci.add_ipv4_address(normalization.parse_text_to_store(value))
         elif similarity.calculate_similarity(title, "ipv6 address") > 0.85:
-            ci.add_ipv6_address(value)
+            ci.add_ipv6_address(normalization.parse_text_to_store(value))
         else:
-            atr = create_attribute(title, value)
+            atr = create_attribute(
+                title, normalization.parse_text_to_store(value))
             add_attribute(atr, ci)

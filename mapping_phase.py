@@ -1,16 +1,14 @@
 # -*- coding: utf-8 -*-
 
-from colored import fg, bg, attr
+from colored import fg, attr
 from PyInquirer import style_from_dict, Token, prompt
 from PyInquirer import Validator, ValidationError
-import os
-import getpass
-import regex
 import pyfiglet
 
 from cmdb_processor import i_doit_processor, itop_processor
 from db_processor import db_processor
 from model_mapper import mapper
+from db_processor import db_info
 
 """
     Color definition.
@@ -23,14 +21,22 @@ reset = attr('reset')
 style = style_from_dict({
     Token.QuestionMark: '#B54653 bold',
     Token.Selected: '#86DEB7 bold',
-    Token.Instruction: '',  # default
+    Token.Instruction: '',
     Token.Answer: '#46B1C9 bold',
     Token.Question: '',
 })
 
 
 def choose_software():
-    # TODO: desenvolver para outro tipo de software
+    """
+    Asks the user which CMDB software is he using.
+
+    Returns
+    -------
+    string
+        The CMDB software selected by the user.
+    """
+    # TODO: handle other CMDBs
     cmdb_software = [
         {
             'type': 'list',
@@ -46,7 +52,20 @@ def choose_software():
 
 
 def choose_connection_method(cmdb):
-    # TODO: desenvolver para as bases de dados
+    """
+    Asks the user which type of connection is going to be used to access to it's CMDB.
+
+    Parameters
+    ----------
+    cmdb : string
+        The CMDB software selected by the user.
+
+    Returns
+    -------
+    string
+        The type of connection selected by the user.
+    """
+    # TODO: handle other connections and software
     if cmdb == 'i-doit':
         connection_question = [
             {
@@ -70,14 +89,26 @@ def choose_connection_method(cmdb):
     return connection
 
 
-def run_mapping(db_info):
+def run_mapping():
+    """
+    Executes the mapping between the CMDB and the database data models. 
+
+    Returns
+    -------
+    dict, dict
+        Returns the information about the database and the CMDB information.
+    """
     cmdb_info = {}
+    db = {}
 
     open_message = pyfiglet.figlet_format(
         "Mapping Phase", font="small")
     print("**********************************************************************")
     print(open_message)
     print("**********************************************************************\n")
+
+    db = db_info.get_db_info()
+    db_processor.process_db_data_model(db)
 
     cmdb = choose_software()
     connection = choose_connection_method(cmdb)
@@ -86,15 +117,10 @@ def run_mapping(db_info):
     cmdb_info["connection"] = connection
 
     if cmdb == "i-doit" and connection == "API":
-        # {"server": "", "username": "", "password": "", "api_key": ""}
         cmdb_info["cmdb"] = i_doit_processor.process_i_doit()
     if cmdb == "iTop" and connection == "Database":
-        # {"server": "", "username": "", "password": "", "api_key": ""}
         cmdb_info["cmdb"] = itop_processor.process_itop()
-    # {"server": "", "port": "", "repository": ""}
-    # cmdb_info["db"] = db_processor.process_db_data_model()
-    db_processor.process_db_data_model(db_info)
 
     mapper.run_mapper()
 
-    return cmdb_info
+    return db, cmdb_info
