@@ -2,9 +2,8 @@
 
 import requests
 from urllib.parse import quote
-from colored import fg, bg, attr
+from colored import fg, attr
 import regex
-import json
 from .idoit_population import run_idoit_population
 from .itop_population import run_itop_population
 from cmdb_processor import cmdb_data_model
@@ -23,6 +22,19 @@ prefix = 'prefix : <http://www.semanticweb.org/cmdb_auto_creation/2020/cmdb#>'
 
 
 def get_cis(db_info):
+    """
+    Obtains the existing configuration items in the database.
+
+    Parameters
+    -------
+    db_info : dict
+        The information (server address, port number and repository name) about the database.
+
+    Returns
+    -------
+    list
+        Returns the list of identifiers of the existing configuration items.
+    """
     global db_url
     db_url = "http://" + \
         db_info.get("server") + ":" + db_info.get("port") + \
@@ -46,6 +58,19 @@ def get_cis(db_info):
 
 
 def get_rels(db_info):
+    """
+    Obtains the existing relationships in the database.
+
+    Parameters
+    -------
+    db_info : dict
+        The information (server address, port number and repository name) about the database.
+
+    Returns
+    -------
+    list
+        Returns the list of identifiers of the existing relationships.
+    """
     rels_ids = []
     query = "select distinct ?s where { ?s rdf:type :Relationship .}"
     encoded = quote(prefix + "\n" + query)
@@ -64,6 +89,19 @@ def get_rels(db_info):
 
 
 def get_ci_type(ci_id):
+    """
+    Obtains the type of a configuration item.
+
+    Parameters
+    -------
+    ci_id : string
+        The identifier of the configuration item.
+
+    Returns
+    -------
+    string
+        Returns the type of the configuration item.
+    """
     query = """
     select distinct ?k where { 
         """ + ci_id + """ :has_ci_type ?s .
@@ -81,6 +119,19 @@ def get_ci_type(ci_id):
 
 
 def get_rel_type(rel_id):
+    """
+    Obtains the type of a relationship.
+
+    Parameters
+    -------
+    ci_id : string
+        The identifier of the relationship.
+
+    Returns
+    -------
+    string
+        Returns the type of the relationship.
+    """
     query = """
     select distinct ?k where { 
         """ + rel_id + """ :has_rel_type ?s .
@@ -98,7 +149,20 @@ def get_rel_type(rel_id):
 
 
 def get_ci_attributes(ci_id):
-    attrs = {}  # name: value
+    """
+    Obtains the attributes, and its corresponding values, of a configuration item.
+
+    Parameters
+    -------
+    ci_id : string
+        The identifier of the configuration item.
+
+    Returns
+    -------
+    dict
+        Returns the attributes, and its corresponding values, of the configuration item.
+    """
+    attrs = {}
     query = """
     select distinct ?at ?v where { 
     """ + ci_id + """ :has_attribute ?a .
@@ -137,7 +201,7 @@ def get_ci_attributes(ci_id):
                     "http://www.semanticweb.org/cmdb_auto_creation/2020/cmdb#"):]
             value = at.split(',')[1]
             if name in attrs:
-                # TODO: como fazer quando é mais do que um valor para o mesmo atributo?
+                # TODO: how to deal with duplicate attributes?
                 pass
             attrs[name] = value
 
@@ -145,7 +209,20 @@ def get_ci_attributes(ci_id):
 
 
 def get_rel_attributes(rel_id):
-    attrs = {}  # name: value
+    """
+    Obtains the attributes, and its corresponding values, of a relationship.
+
+    Parameters
+    -------
+    rel_id : string
+        The identifier of the relationship.
+
+    Returns
+    -------
+    dict
+        Returns the attributes, and its corresponding values, of the relationship.
+    """
+    attrs = {}
     query = """
     select distinct ?at ?v where { 
     """ + rel_id + """ :has_attribute ?a .
@@ -189,6 +266,19 @@ def get_rel_attributes(rel_id):
 
 
 def get_source(rel_id):
+    """
+    Obtains the identifier of the source configuration item of a relationship.
+
+    Parameters
+    -------
+    rel_id : string
+        The identifier of the relationship.
+
+    Returns
+    -------
+    string
+        Returns the identifier of the source configuration item of the relationship.
+    """
     query = """
     select distinct ?s where { 
         """ + rel_id + """ :has_source ?s .
@@ -209,6 +299,19 @@ def get_source(rel_id):
 
 
 def get_target(rel_id):
+    """
+    Obtains the identifier of the target configuration item of a relationship.
+
+    Parameters
+    -------
+    rel_id : string
+        The identifier of the relationship.
+
+    Returns
+    -------
+    string
+        Returns the identifier of the target configuration item of the relationship.
+    """
     query = """
     select distinct ?s where {
         """ + rel_id + """ :has_target ?s .
@@ -229,6 +332,17 @@ def get_target(rel_id):
 
 
 def run_cmdb_population(db_info, cmdb_info):
+    """
+    Executes the population of the CMDB, based on its software and the existing objects in the database.
+
+    Parameters
+    -------
+    db_info : dict
+        The information (server address, port number and repository name) about the database.
+
+    cmdb_info : dict
+        The information about the CMDB.
+    """
     cis_types = {}
     rels_types = {}
 
