@@ -27,3 +27,8 @@ class ConfigurationItemType:
     def get_title(self):
         """Get the configuration item type title."""
         return self.title
+
+    def set_title(self, title):
+        """Sets the configuration item type title."""
+        if title != None and title != "":
+            self.title = normalization.parse_text_to_store(title)

@@ -513,19 +513,19 @@ def create_attribute(name, value):
 def define_attribute(title, value, ci):
     if title != None and title != "" and value != None and value != "":
         if similarity.calculate_similarity(title, "uuid") > 0.85:
-            ci.set_uuid(normalization.parse_text_to_store(value))
+            ci.set_uuid(value)
         elif similarity.calculate_similarity(title, "serial_number") > 0.85:
-            ci.set_serial_number(normalization.parse_text_to_store(value))
+            ci.set_serial_number(value)
         elif similarity.calculate_similarity(title, "description") > 0.85:
-            ci.set_description(normalization.parse_text_to_store(value))
+            ci.set_description(value)
         elif similarity.calculate_similarity(title, "status") > 0.85:
-            ci.set_status(normalization.parse_text_to_store(value))
+            ci.set_status(value)
         elif similarity.calculate_similarity(title, "mac address") > 0.85:
-            ci.set_mac_address(normalization.parse_text_to_store(value))
+            ci.set_mac_address(value)
         elif similarity.calculate_similarity(title, "ipv4 address") > 0.85:
-            ci.add_ipv4_address(normalization.parse_text_to_store(value))
+            ci.add_ipv4_address(value)
         elif similarity.calculate_similarity(title, "ipv6 address") > 0.85:
-            ci.add_ipv6_address(normalization.parse_text_to_store(value))
+            ci.add_ipv6_address(value)
         else:
             atr = create_attribute(
                 title, normalization.parse_text_to_store(value))

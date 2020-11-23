@@ -88,7 +88,13 @@ class ConfigurationItem:
     def set_description(self, description):
         """Set the configuration item description to the value passed."""
         if description != None:
-            self.description = normalization.parse_text_to_store(description)
+            old = self.description
+            if old != "":
+                self.description = normalization.parse_text_to_store(
+                    old + " " + description)
+            else:
+                self.description = normalization.parse_text_to_store(
+                    description)
 
     def get_status(self):
         """Get the configuration item status."""

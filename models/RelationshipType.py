@@ -27,3 +27,8 @@ class RelationshipType:
     def get_title(self):
         """Get the relationship type title."""
         return self.title
+
+    def set_title(self, title):
+        """Sets the relationship type title."""
+        if title != None and title != "":
+            self.title = normalization.parse_text_to_store(title)
