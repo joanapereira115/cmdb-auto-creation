@@ -1,156 +1,149 @@
+# !/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-from sqlalchemy.orm import Session
-from sqlalchemy import create_engine
-import json
-import os.path
-import sys
-from uuid import uuid4
-from hashlib import sha256
-from .carry import global_scope
-from .Config import Config
-from .setup import s_initialize, create_db
-from .Encryption import Encryption
-from .users import validation_key_validate
-from .base import get_session
-from .Secret import SecretModel
-from colored import fg, bg, attr
-
-dir_ = os.path.expanduser('~') + '/.vault/'
-config_path = dir_ + '.config'
-vault_path = dir_ + '.secure.db'
-sessions = {}
+import os
+import sqlite3
+from colored import fg, attr
+import codecs
 
 blue = fg('#46B1C9')
 red = fg('#B54653')
 green = fg('#86DEB7')
 reset = attr('reset')
 
+dbFolder = os.path.abspath(os.getcwd())
+dbPath = os.path.join(os.path.abspath(os.getcwd()), 'pwd.db')
+
 
 def checkExistence():
-    import os
-
-    if os.path.isdir(dir_):
-        print(green + "\n>>> " + reset + "Vault initialized.\n")
+    if os.path.isdir(dbFolder):
+        print(green + "\n>>> " + reset + "Vault exists.")
         pass
     else:
         print(blue + "\n>>> " + reset +
-              "Password vault does not exists. Creating vault...\n")
-        import os
+              "Password vault does not exists. Creating vault...")
         try:
-            if not os.path.exists(dir_):
-                os.makedirs(dir_)
-                return True
-            return False
+            if not os.path.exists(dbFolder):
+                os.makedirs(dbFolder)
         except Exception:
             import sys
             print(red + "\n>>> " + reset +
-                  "We were unable to create the folder `%s` to store the vault and configuration file." % (dir_))
+                  "We were unable to create the folder `%s` to store the vault and configuration file." % (dbFolder))
             sys.exit()
 
-    if not os.path.isfile(config_path) and os.path.isfile(vault_path):
-        print(red + "\n>>> " + reset +
-              "It looks like you have a vault setup but your config file is missing. The vault cannot be unlocked without a critical piece of information from the config file (the salt). Please restore the config file before proceeding.")
-        sys.exit()
-
-
-def define_master_key(master_key):
-    res = s_initialize(master_key, global_scope['conf'].salt)
-    if res is False:
-        print()
-        return False
-
-
-def unlock(attempt):
-    # Get master key
-    key = attempt
-
-    if validate_key(key):
-        print(green + "\n>>> " + reset + "Vault unlocked.\n")
-        return True
-    else:
-        print(red + "\n>>> " + reset + "The password is incorrect.\n")
-        return False
-
-
-def validate_key(key):
-    # Create instance of Encryption class with the given key
-    global_scope['enc'] = Encryption(key.encode())
-    return validation_key_validate(key.encode())
+    if not os.path.isfile(dbPath):
+        f = open(dbPath, "x")
+        print(blue + "\n>>> " + reset +
+              "Creating the database file...")
+        f.close()
 
 
 def initialize():
     print(blue + ">>> " + reset + "Initializing the vault...")
-    global_scope['db_file'] = vault_path
     checkExistence()
-    global_scope['conf'] = Config(config_path)
+
+    global db_conn
+    db_conn = sqlite3.connect(dbPath)
+    global cursor
+    cursor = db_conn.cursor()
+
+    create_table_query = """CREATE TABLE IF NOT EXISTS Passwords (name text, username text, password text)"""
+    cursor.execute(create_table_query)
 
 
-def get_usernames():
-    secrets = get_session().query(SecretModel.login).order_by(SecretModel.id).all()
-    if secrets:
-        return [result.login for result in secrets]
-    return []
+def define_master_key(master_key):
+    if len(master_key) < 8:
+        return False
+    else:
+        create_user_query = """INSERT INTO Passwords (name, username, password) VALUES (?, ?, ?)"""
+        cursor.execute(create_user_query, [
+            'vault', 'vault', codecs.encode(master_key, 'rot-13')])
+        db_conn.commit()
+        print(green + "\n>>> " + reset +
+              "Your vault has been created and encrypted with your master key.")
+        return True
 
 
-def get_names():
-    secrets = get_session().query(SecretModel.name).order_by(SecretModel.id).all()
-    if secrets:
-        return [result.name for result in secrets]
-    return []
+def unlock(attempt):
+    user_exists_query = 'SELECT * FROM Passwords WHERE name = \'vault\''
+    if cursor.execute(user_exists_query).fetchone() == None:
+        return define_master_key(attempt)
+
+    query = 'SELECT * FROM Passwords WHERE name = ?'
+    entry = cursor.execute(query, ["vault"]).fetchone()
+
+    correct_pass = [entry[0], codecs.decode(entry[1], 'rot-13')]
+
+    if attempt == correct_pass:
+        print(green + "\n>>> " + reset + "Vault unlocked.")
+        return True
+    else:
+        print(red + "\n>>> " + reset + "The password is incorrect.")
+        return False
 
 
 def add_secret(name, login, password):
-    secret = SecretModel(name=name,
-                         login=login,
-                         password=password)
-    get_session().add(secret)
-    get_session().commit()
-    print(green + "\n>>> " + reset + "Password added to the vault.\n")
+    if name == 'vault':
+        print(red + "\n>>> " + reset + "Sorry, user is a reserved name.")
+        return False
+
+    entry_exist_query = 'SELECT * FROM Passwords WHERE name = ?'
+    query = 'INSERT INTO Passwords (name, username, password) VALUES (?, ?, ?)'
+
+    encrypted_pass = codecs.encode(password, 'rot-13')
+
+    if len(cursor.execute(entry_exist_query, [name]).fetchall()) >= 1:
+        print(red + "\n>>> " + reset + "Sorry, this name already exists.")
+        return False
+
+    cursor.execute(query, [name, login, encrypted_pass])
+    db_conn.commit()
+    print(green + "\n>>> " + reset + "Password added to the vault.")
     return True
 
 
-def show_secret(login):
-    res = []
-    print(blue + "\n>>> " + reset +
-          "Checking password in the vault.\n")
-    for item in get_session().query(SecretModel).filter(
-            SecretModel.login.like(login)).order_by(SecretModel.id).all():
-        res.append(item.password)
-    return res
-    # item = get_session().query(SecretModel).filter(
-    #    SecretModel.login.like(login)).order_by(SecretModel.id).all()[0]
-    # return item.password
-
-
 def show_secret_by_name(name):
+    query = 'SELECT * FROM Passwords WHERE name = ?'
+    entry = cursor.execute(query, [name]).fetchone()
+
+    return codecs.decode(entry[2], 'rot-13')
+
+
+def show_secret_by_username(username):
+    query = 'SELECT * FROM Passwords WHERE username = ?'
+    entry = cursor.execute(query, [username]).fetchone()
+
+    return codecs.decode(entry[2], 'rot-13')
+
+
+def show_username_by_name(name):
+    query = 'SELECT * FROM Passwords WHERE name = ?'
+    entry = cursor.execute(query, [name]).fetchone()
+
+    return entry[1]
+
+
+def get_usernames():
     res = []
-    for item in get_session().query(SecretModel).filter(
-            SecretModel.name.like(name)).order_by(SecretModel.id).all():
-        res.append(item.password)
+    query = 'SELECT username FROM Passwords'
+    entry = cursor.execute(query, []).fetchall()
+    for e in entry:
+        res.append(e[0])
+
     return res
 
 
-def show_login_by_name(name):
+def get_names():
     res = []
-    for item in get_session().query(SecretModel).filter(
-            SecretModel.name.like(name)).order_by(SecretModel.id).all():
-        res.append(item.login)
+    query = 'SELECT name FROM Passwords'
+    entry = cursor.execute(query, []).fetchall()
+    for e in entry:
+        res.append(e[0])
+
     return res
 
 
 def lock():
+    cursor.close()
+    db_conn.close()
     print(green + "\n>>> " + reset + "Vault locked.")
-    global_scope['enc'] = None
-
-
-def is_key_valid(key):
-    if len(key) < 8:
-        return False
-    return True
-
-
-def check_key_and_repeat(key, repeat):
-    if key != repeat:
-        return False
-    return True
