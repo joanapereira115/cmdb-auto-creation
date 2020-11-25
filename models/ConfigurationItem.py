@@ -129,7 +129,7 @@ class ConfigurationItem:
 
     def add_ipv4_address(self, ipv4):
         """Adds a new IPv4 address to the list of IPv4 addresses of the configuration item."""
-        if ipv4 not in self.ipv4_addresses and ipv4 != None:
+        if ipv4 not in self.ipv4_addresses and ipv4 != None and ipv4 != "127.0.0.1" and ipv4 != "":
             self.ipv4_addresses.append(normalization.parse_text_to_store(ipv4))
 
     def get_ipv6_addresses(self):

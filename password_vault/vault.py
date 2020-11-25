@@ -58,21 +58,26 @@ def define_master_key(master_key):
         create_user_query = """INSERT INTO Passwords (name, username, password) VALUES (?, ?, ?)"""
         cursor.execute(create_user_query, [
             'vault', 'vault', codecs.encode(master_key, 'rot-13')])
+
         db_conn.commit()
         print(green + "\n>>> " + reset +
               "Your vault has been created and encrypted with your master key.")
         return True
 
 
-def unlock(attempt):
+def password_already_definined():
     user_exists_query = 'SELECT * FROM Passwords WHERE name = \'vault\''
     if cursor.execute(user_exists_query).fetchone() == None:
-        return define_master_key(attempt)
+        return False
+    else:
+        return True
 
+
+def unlock(attempt):
     query = 'SELECT * FROM Passwords WHERE name = ?'
     entry = cursor.execute(query, ["vault"]).fetchone()
 
-    correct_pass = [entry[0], codecs.decode(entry[1], 'rot-13')]
+    correct_pass = codecs.decode(entry[2], 'rot-13')
 
     if attempt == correct_pass:
         print(green + "\n>>> " + reset + "Vault unlocked.")
@@ -100,6 +105,16 @@ def add_secret(name, login, password):
     db_conn.commit()
     print(green + "\n>>> " + reset + "Password added to the vault.")
     return True
+
+
+def show_secrets(name):
+    res = []
+    query = 'SELECT * FROM Passwords WHERE name = ?'
+    entry = cursor.execute(query, [name]).fetchall()
+    for e in entry:
+        res.append(codecs.decode(e[2], 'rot-13'))
+
+    return res
 
 
 def show_secret_by_name(name):
@@ -147,3 +162,7 @@ def lock():
     cursor.close()
     db_conn.close()
     print(green + "\n>>> " + reset + "Vault locked.")
+
+
+def delete():
+    os.remove(dbPath)

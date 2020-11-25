@@ -208,7 +208,7 @@ def remove_style_case(text):
     string
         Returns the text parsed.
     """
-    words = text.split()
+    words = str(text).split()
     new_words = []
     for w in words:
         snake_case = re.search("_", w)
@@ -219,8 +219,8 @@ def remove_style_case(text):
             w = sentencecase(w)
         camelOrPascalCase = re.search(r"[a-z][A-Z]", w)
         if camelOrPascalCase != None:
-            t = re.sub(r'([a-z])([A-Z])', r'\1 \2', t)
-            t = re.sub(r'([A-Z]+)([A-Z][a-z])', r'\1 \2', t)
+            text = re.sub(r'([a-z])([A-Z])', r'\1 \2', str(text))
+            text = re.sub(r'([A-Z]+)([A-Z][a-z])', r'\1 \2', str(text))
         new_words.append(w)
     res = " ".join(new_words)
     return res
@@ -241,7 +241,7 @@ def remove_punctuation(text):
     string
         Returns the text parsed.
     """
-    words = text.split()
+    words = str(text).split()
     new_words = []
     for w in words:
         ipv6 = re.search(r'(([0-9a-fA-F]{1,4}:){7,7}[0-9a-fA-F]{1,4}|([0-9a-fA-F]{1,4}:){1,7}:|([0-9a-fA-F]{1,4}:){1,6}:[0-9a-fA-F]{1,4}|([0-9a-fA-F]{1,4}:){1,5}(:[0-9a-fA-F]{1,4}){1,2}|([0-9a-fA-F]{1,4}:){1,4}(:[0-9a-fA-F]{1,4}){1,3}|([0-9a-fA-F]{1,4}:){1,3}(:[0-9a-fA-F]{1,4}){1,4}|([0-9a-fA-F]{1,4}:){1,2}(:[0-9a-fA-F]{1,4}){1,5}|[0-9a-fA-F]{1,4}:((:[0-9a-fA-F]{1,4}){1,6})|:((:[0-9a-fA-F]{1,4}){1,7}|:)|fe80:(:[0-9a-fA-F]{0,4}){0,4}%[0-9a-zA-Z]{1,}|::(ffff(:0{1,4}){0,1}:){0,1}((25[0-5]|(2[0-4]|1{0,1}[0-9]){0,1}[0-9])\.){3,3}(25[0-5]|(2[0-4]|1{0,1}[0-9]){0,1}[0-9])|([0-9a-fA-F]{1,4}:){1,4}:((25[0-5]|(2[0-4]|1{0,1}[0-9]){0,1}[0-9])\.){3,3}(25[0-5]|(2[0-4]|1{0,1}[0-9]){0,1}[0-9]))', w)
@@ -272,7 +272,7 @@ def remove_stop_words(text):
         Returns the text parsed.
     """
     sw = stopwords.words("english")
-    text = ' '.join([word for word in text.split() if word not in sw])
+    text = ' '.join([word for word in str(text).split() if word not in sw])
     return text
 
 
@@ -290,7 +290,7 @@ def acronym(text):
     string
         Returns the text parsed.
     """
-    return ' '.join([acronyms_db.get(i, i) for i in text.split()])
+    return ' '.join([acronyms_db.get(i, i) for i in str(text).split()])
 
 
 def parse_text_to_store(text):
@@ -307,6 +307,7 @@ def parse_text_to_store(text):
     string
         Returns the text parsed.
     """
+    text = str(text)
     text = remove_style_case(text)
     text = remove_special_chars(text)
     text = text.lower()
@@ -328,6 +329,7 @@ def parse_text_to_compare(text):
     string
         Returns the text parsed.
     """
+    text = str(text)
     text = remove_style_case(text)
     text = remove_special_chars(text)
     text = remove_punctuation(text)
@@ -352,7 +354,7 @@ def unit_formatter(text):
         Returns the text parsed.
     """
     # TODO: add more units
-
+    text = str(text)
     # time
     text = re.sub("yoctosecond(s)?", "ys", text)
     text = re.sub("zeptosecond(s)?", "zs", text)

@@ -18,10 +18,10 @@ def create_file():
     If it doesn't exist, creates the .ttl file that will store the discovered info and the database structure.
     """
     if not os.path.exists('graphdb-import'):
-        print(blue + ">>> " + reset + "Creating graphdb-import folder...\n")
+        print(blue + "\n>>> " + reset + "Creating graphdb-import folder...")
         os.makedirs('graphdb-import')
     if not os.path.exists('graphdb-import/cmdb.ttl'):
-        print(blue + ">>> " + reset + "Creating cmdb.ttl file...\n")
+        print(blue + "\n>>> " + reset + "Creating cmdb.ttl file...")
         f = open('graphdb-import/cmdb.ttl', "x")
         f.close()
 

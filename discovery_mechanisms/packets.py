@@ -5,6 +5,9 @@ import pyshark
 import psutil
 from colored import fg, attr
 from getmac import get_mac_address as gma
+import regex
+
+from discovery import discovery_info
 
 """
     Color definition.
@@ -56,7 +59,7 @@ def get_packets(ifc):
     try:
         capture.sniff(packet_count=500)
     except:
-        print(red + "\n>>> " + reset + "Error sniffing.")
+        print(red + ">>> " + reset + "Error sniffing.")
     return capture
 
 
@@ -84,7 +87,7 @@ def get_lldp_packets(packets):
 
 def explore_lldp_packets(lldp_packs):
     """
-    Explores LLDP packets.
+    Explores LLDP packets to find more devices.
 
     Parameters
     -------
@@ -95,9 +98,17 @@ def explore_lldp_packets(lldp_packs):
     for pack in lldp_packs:
         src = pack.eth.src
         if src != my_mac:
-            print(green + "\n>>> " + reset +
-                  "Found a machine via LLDP: " + str(src))
-            # TODO: explore this machine
+            ipv6 = regex.search(r'(([0-9a-fA-F]{1,4}:){7,7}[0-9a-fA-F]{1,4}|([0-9a-fA-F]{1,4}:){1,7}:|([0-9a-fA-F]{1,4}:){1,6}:[0-9a-fA-F]{1,4}|([0-9a-fA-F]{1,4}:){1,5}(:[0-9a-fA-F]{1,4}){1,2}|([0-9a-fA-F]{1,4}:){1,4}(:[0-9a-fA-F]{1,4}){1,3}|([0-9a-fA-F]{1,4}:){1,3}(:[0-9a-fA-F]{1,4}){1,4}|([0-9a-fA-F]{1,4}:){1,2}(:[0-9a-fA-F]{1,4}){1,5}|[0-9a-fA-F]{1,4}:((:[0-9a-fA-F]{1,4}){1,6})|:((:[0-9a-fA-F]{1,4}){1,7}|:)|fe80:(:[0-9a-fA-F]{0,4}){0,4}%[0-9a-zA-Z]{1,}|::(ffff(:0{1,4}){0,1}:){0,1}((25[0-5]|(2[0-4]|1{0,1}[0-9]){0,1}[0-9])\.){3,3}(25[0-5]|(2[0-4]|1{0,1}[0-9]){0,1}[0-9])|([0-9a-fA-F]{1,4}:){1,4}:((25[0-5]|(2[0-4]|1{0,1}[0-9]){0,1}[0-9])\.){3,3}(25[0-5]|(2[0-4]|1{0,1}[0-9]){0,1}[0-9]))', src)
+            ipv4 = regex.search(
+                r'((25[0-5]|(2[0-4]|1{0,1}[0-9]){0,1}[0-9])\.){3,3}(25[0-5]|(2[0-4]|1{0,1}[0-9]){0,1}[0-9])', src)
+            mac = regex.search(r'([0-9A-Fa-f]{2}[:-]){5}([0-9A-Fa-f]{2})', src)
+
+            if ipv6 != None:
+                discovery_info.add_ip(src)
+            elif ipv4 != None:
+                discovery_info.add_ip(src)
+            elif mac != None:
+                discovery_info.add_mac(src)
 
 
 def explore_packets():

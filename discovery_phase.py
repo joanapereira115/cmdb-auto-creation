@@ -6,12 +6,11 @@ from PyInquirer import Validator, ValidationError
 import os
 import regex
 import pyfiglet
-import ping3
 from netaddr import IPNetwork
 
 from password_vault import vault
 from db_population import population
-from discovery import basic_discovery, detailed_discovery
+from discovery import basic_discovery, detailed_discovery, discovery_info
 
 """
     Color definition.
@@ -96,7 +95,7 @@ class AddressesValidator(Validator):
                 raise ValidationError(
                     message='Please enter a valid IPv4 address range.',
                     cursor_position=len(document.text))
-            if int(groups[4]) > 32:
+            if int(groups[4]) > 255:
                 raise ValidationError(
                     message='Please enter a valid IPv4 address.',
                     cursor_position=len(document.text))
@@ -124,75 +123,6 @@ class AddressesValidator(Validator):
             raise ValidationError(
                 message='Please enter a valid IPv4 address range.',
                 cursor_position=len(document.text))
-
-
-def define_vault_password():
-    """
-    Asks the user for a password to associate to the vault.
-
-    Returns
-    -------
-    string
-        Returns the password.
-
-    """
-    print(blue + ">>> " + reset + "Defining vault password...\n")
-    password_vault = [
-        {
-            'type': 'password',
-            'message': 'Enter your vault password:',
-            'name': 'password',
-            'validate': NotEmpty
-        },
-        {
-            'type': 'password',
-            'message': 'Repeat your vault password:',
-            'name': 'check_password',
-            'validate': NotEmpty
-        }
-    ]
-    password_answer = prompt(password_vault, style=style)
-    passwd = password_answer.get("password")
-    check_passwd = password_answer["check_password"]
-    if passwd != check_passwd:
-        print(red + "\n>>> " + reset + "Passwords do not match.\n")
-        return define_vault_password()
-    else:
-        if not vault.is_key_valid(passwd):
-            print(red + "\n>>> " + reset +
-                  "The password should be at least 8 characters.\n")
-            return define_vault_password()
-        else:
-            return passwd
-
-
-def unlock_vault():
-    """
-    Asks the user for the password of the vault to unlock it.
-    """
-    password_vault = [
-        {
-            'type': 'password',
-            'message': 'Enter your vault password:',
-            'name': 'password',
-            'validate': NotEmpty
-        }
-    ]
-    password_answer = prompt(password_vault, style=style)
-    passwd = password_answer["password"]
-    v = vault.unlock(passwd)
-    if v == False:
-        unlock_vault()
-
-
-def vault_configuration():
-    """
-    Verifies if a vault already exists.
-    """
-    vault.initialize()
-    if not os.path.isfile(vault.vault_path):
-        passwd = define_vault_password()
-        vault.define_master_key(passwd)
 
 
 def handle_range(addresses):
@@ -259,19 +189,9 @@ def more_addresses():
         return False
 
 
-def get_addresses(available):
+def get_addresses():
     """
     Asks the user for the addresses to discover.
-
-    Parameters
-    ----------
-    available : list
-        The gradual list of possible addresses that the user specified.
-
-    Returns
-    -------
-    list
-        Returns the list of possible addresses that the user specified.
     """
     range_question = [
         {
@@ -285,37 +205,10 @@ def get_addresses(available):
     addresses = range_answer["addresses"]
     ips = handle_range(addresses)
     for ip in ips:
-        if ip not in available:
-            available.append(ip)
+        discovery_info.add_ip(ip)
     more = more_addresses()
     if more == True:
-        return get_addresses(available)
-    else:
-        return available
-
-
-def check_ips(ips):
-    """
-    Checks if the IPv4 addresses are available via ping.
-
-    Parameters
-    ----------
-    ips : list
-        The list of IPv4 addresses defined by the user.
-
-    Returns
-    -------
-    list
-        Returns the list of available addresses.
-    """
-    print(blue + "\n>>> " + reset +
-          "Checking the availability of the IP addresses...\n")
-    available = []
-    for ip in ips:
-        r = ping3.ping(ip, timeout=1)
-        if r != None:
-            available.append(ip)
-    return available
+        get_addresses()
 
 
 def what2discover():
@@ -390,24 +283,40 @@ def what2discover():
     return categories
 
 
+def import_data():
+    """
+    Asks the user if he imported the file into his GraphDB repository.
+    """
+    print(orange + "\n>>> " + reset +
+          "Make sure that GraphDB is running and that you import the discovered information.")
+    import_question = [
+        {
+            'type': 'confirm',
+            'name': 'import',
+            'message': "Have you imported the file 'cmdb.ttl' stored in the folder 'graphdb-import' to your GraphDB repository?\n"
+        }]
+    import_answer = prompt(import_question, style=style).get("import")
+    if import_answer == False:
+        import_data()
+
+
 def run_discovery():
     """
     Executes the discovery of the machines and the population of the database with that info. 
     """
     open_message = pyfiglet.figlet_format(
         "Discovery Phase", font="small")
-    print("**********************************************************************")
+    print()
+    print(
+        "\033[1m**********************************************************************\033[0m")
     print(open_message)
-    print("**********************************************************************\n")
+    print(
+        "\033[1m**********************************************************************\033[0m\n")
 
-    vault_configuration()
-    ips = get_addresses([])
-    available_ips = check_ips(ips)
-    basic_discovery.basic_discovery(available_ips)
+    get_addresses()
+    basic_discovery.basic_discovery()
     categories = what2discover()
-    detailed_discovery.detailed_discovery(available_ips, categories)
+    detailed_discovery.detailed_discovery(categories)
     population.run_population()
 
-    print(orange + ">>> " + reset + "Make sure that GraphDB is running.")
-    print(orange + ">>> " + reset +
-          "Import the file 'cmdb.ttl' stored in the folder 'graphdb-import' to your GraphDB repository.\n")
+    import_data()
