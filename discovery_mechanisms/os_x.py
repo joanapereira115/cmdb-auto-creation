@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 import regex
-from colored import fg, bg, attr
+from colored import fg, attr
 import paramiko
 
 from models import methods
@@ -93,25 +93,7 @@ def run_os_x_discovery(ci, user, pwd, ip, categories):
         if 'network' in categories:
             network.network_discovery(client, ci)
 
-        # TODO: implement the other discovery mechanisms
-        """    
-        if 'devices' in categories:
-            devices_discovery(client, ci)
-        if 'virtual machines' in categories:
-            vm_discovery(client, ci)
-        if 'databases' in categories:
-            db_discovery(client, ci)
-        if 'services' in categories:
-            services_discovery(client, ci)
-        if 'containers' in categories:
-            containers_discovery(client, ci)
-        if 'cloud systems' in categories:
-            cloud_discovery(client, ci)
-        if 'documents' in categories:
-            doc_discovery(client, ci)
-        if 'people' in categories:
-            people_discovery(client, ci)
-        """
+        # TODO: implement the other discovery mechanisms ('devices', 'virtual machines', 'databases', 'services', 'containers', 'cloud systems', 'documents', 'people')
 
     client.close()
     return ok

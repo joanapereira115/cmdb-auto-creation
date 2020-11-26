@@ -1,20 +1,28 @@
-import regex
+# -*- coding: utf-8 -*-
+
 import json
-import requests
-from colored import fg, bg, attr
+from colored import fg, attr
 
 from models import ConfigurationItem, ConfigurationItemType, Relationship, RelationshipType, methods
-from normalization import normalization
 
 blue = fg('#46B1C9')
 red = fg('#B54653')
 green = fg('#86DEB7')
 reset = attr('reset')
 
-# descoberta de aplicações instaladas, frameworks e extensões
-
 
 def sw_discovery(client, ci):
+    """
+    Gathers information about the installed applications, frameworks and extensions of the OS X machine.
+
+    Parameters
+    ----------
+    client: SSHClient
+        The SSH client that permits the comunication with the machine that is being explored.
+
+    ci: ConfigurationItem
+        The configuration item that represents the OS X machine that is going to be explored.
+    """
     _, stdout, stderr = client.exec_command(
         "system_profiler SPApplicationsDataType -json")
 

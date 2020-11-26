@@ -13,15 +13,15 @@ reset = attr('reset')
 
 def os_discovery(client, ci):
     """
-        Gathers information about the OS X operating system of the machine that is being explored.
+    Gathers information about the OS X operating system of the machine that is being explored.
 
-        Parameters
-        ----------
-        client: SSHClient
-            The SSH client that permits the comunication with the machine that is being explored.
+    Parameters
+    ----------
+    client: SSHClient
+        The SSH client that permits the comunication with the machine that is being explored.
 
-        ci: ConfigurationItem
-            The configuration item that represents the OS X machine that is going to be explored.
+    ci: ConfigurationItem
+        The configuration item that represents the OS X machine that is going to be explored.
 
     """
     os_type = methods.add_ci_type(
@@ -69,13 +69,13 @@ def os_discovery(client, ci):
         os_info = json.loads("".join(os)).get('SPSoftwareDataType')[0]
 
         methods.define_attribute(
-            "kernel version", os_info.get("kernel_version"), obj)
+            "kernel version", os_info.get("kernel_version"), ci)
         methods.define_attribute(
-            "boot volume", os_info.get("boot_volume"), obj)
+            "boot volume", os_info.get("boot_volume"), ci)
         methods.define_attribute(
-            "boot mode", os_info.get("boot_mode"), obj)
+            "boot mode", os_info.get("boot_mode"), ci)
         methods.define_attribute(
-            "time since boot", os_info.get("uptime"), obj)
+            "time since boot", os_info.get("uptime"), ci)
 
         ci.set_title(os_info.get("local_host_name"))
 

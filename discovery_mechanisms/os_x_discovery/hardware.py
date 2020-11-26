@@ -2,11 +2,9 @@
 
 import regex
 import json
-import requests
-from colored import fg, bg, attr
+from colored import fg, attr
 
 from models import ConfigurationItem, ConfigurationItemType, Relationship, RelationshipType, methods
-from normalization import normalization
 
 blue = fg('#46B1C9')
 red = fg('#B54653')
@@ -15,6 +13,17 @@ reset = attr('reset')
 
 
 def hw_discovery(client, ci):
+    """
+    Gathers information about the hardware (physical ports, energy, displays, ...) of the OS X machine.
+
+    Parameters
+    ----------
+    client: SSHClient
+        The SSH client that permits the comunication with the machine that is being explored.
+
+    ci: ConfigurationItem
+        The configuration item that represents the OS X machine that is going to be explored.
+    """
     _, stdout, stderr = client.exec_command(
         "networksetup -listallhardwareports")
     error = stderr.read().decode('utf-8')
@@ -480,8 +489,3 @@ def hw_discovery(client, ci):
         methods.add_ci(obj)
         methods.add_rel(rel_ci_obj)
         methods.add_rel(rel_obj_ci)
-
-
-"""
-$ system_profiler SPUSBDataType
-"""

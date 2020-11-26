@@ -1,10 +1,9 @@
-import regex
+# -*- coding: utf-8 -*-
+
 import json
-import requests
-from colored import fg, bg, attr
+from colored import fg, attr
 
 from models import ConfigurationItem, ConfigurationItemType, Relationship, RelationshipType, methods
-from normalization import normalization
 
 blue = fg('#46B1C9')
 red = fg('#B54653')
@@ -13,6 +12,17 @@ reset = attr('reset')
 
 
 def storage_discovery(client, ci):
+    """
+    Gathers information about the storage of the OS X machine.
+
+    Parameters
+    ----------
+    client: SSHClient
+        The SSH client that permits the comunication with the machine that is being explored.
+
+    ci: ConfigurationItem
+        The configuration item that represents the OS X machine that is going to be explored.
+    """
     _, stdout, stderr = client.exec_command(
         "system_profiler SPMemoryDataType -json")
     error = stderr.read().decode('utf-8')
@@ -30,7 +40,6 @@ def storage_discovery(client, ci):
             obj = ConfigurationItem.ConfigurationItem()
             obj.set_title(mem.get("_name"))
             obj.set_type(mem_type.get_id())
-            # TODO: relacionamento com manufacturer?
             methods.define_attribute(
                 "manufacturer", mem.get("dimm_manufacturer"), obj)
             methods.define_attribute(
