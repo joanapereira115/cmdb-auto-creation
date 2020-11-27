@@ -232,7 +232,7 @@ def what2discover():
                     'value': 'network', 'short': 'Network'},
 
                 {'name': 'Devices - gathers data about the devices directly connected or attached to the machine', 'value': 'devices',
-                    'short': 'Devices'},
+                    'short': 'Devices', 'disabled': 'Unavailable'},
 
                 {'name': 'Operating Systems - collects information about the operating system executing on the machine', 'value': 'operating systems',
                     'short': 'Operating Systems'},
@@ -250,28 +250,28 @@ def what2discover():
                     'value': 'hardware', 'short': 'Hardware'},
 
                 {'name': 'Virtual Machines - gathers information about virtual machine instances executing in the machine', 'value': 'virtual machines',
-                    'short': 'Virtual Machines'},
+                    'short': 'Virtual Machines', 'disabled': 'Unavailable'},
 
                 {'name': 'Databases - gathers information about the database management systems executing in the machine and the database instances associated with them',
-                    'value': 'databases', 'short': 'Databases'},
+                    'value': 'databases', 'short': 'Databases', 'disabled': 'Unavailable'},
 
                 {'name': 'Services - collects data about the services executing in the machine',
                     'value': 'services', 'short': 'Services'},
 
                 {'name': 'Containers - gathers information about container instances executing in the machine',
-                    'value': 'containers', 'short': 'Containers'},
+                    'value': 'containers', 'short': 'Containers', 'disabled': 'Unavailable'},
 
                 {'name': 'Cloud Systems - collects information about cloud systems executing in the machine', 'value': 'cloud systems',
-                    'short': 'Cloud Systems'},
+                    'short': 'Cloud Systems', 'disabled': 'Unavailable'},
 
                 {'name': 'Location - gathers data about the geographical location of the machine', 'value': 'location',
                     'short': 'Location'},
 
                 {'name': 'People - collects information about users',
-                    'value': 'people', 'short': 'People'},
+                    'value': 'people', 'short': 'People', 'disabled': 'Unavailable'},
 
                 {'name': 'Documents - collects data about the existing documents in the machine',
-                    'value': 'documents', 'short': 'Documents'}
+                    'value': 'documents', 'short': 'Documents', 'disabled': 'Unavailable'}
 
             ],
             'validate': lambda answer: len(answer) > 0 or 'You must choose at least one category.'
