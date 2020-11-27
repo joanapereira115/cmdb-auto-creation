@@ -1,14 +1,9 @@
 # -*- coding: utf-8 -*-
 
-import json
-import itertools
-
 from . import Relationship
 from . import ConfigurationItem
 from . import Attribute
 from .objects import objects
-# TODO: mudar
-from semantic_matching import semantic_matching
 from similarity import similarity
 from reconciliation import reconciliation
 from normalization import normalization
@@ -17,7 +12,6 @@ from normalization import normalization
 def get_ci_type_title_from_id(id):
     """
     Get the title of the configuration item type based on its identifier.
-
     Goes through the existing configuration item types until it finds the type identified by the requested id.
 
     Parameters
@@ -29,7 +23,6 @@ def get_ci_type_title_from_id(id):
     -------
     string
         title of the configuration item type.
-
     """
     ci_types = objects["configuration_item_types"]
     for ci_type in ci_types:
@@ -42,7 +35,6 @@ def get_ci_type_title_from_id(id):
 def get_relationship_type_title_from_id(id):
     """
     Get the title of the relationship type based on its identifier.
-
     Goes through the existing relationship types until it finds the type identified by the requested id.
 
     Parameters
@@ -54,7 +46,6 @@ def get_relationship_type_title_from_id(id):
     -------
     string
         title of the relationship type.
-
     """
     rel_types = objects["relationship_types"]
     for rel_type in rel_types:
@@ -67,7 +58,6 @@ def get_relationship_type_title_from_id(id):
 def get_attribute_from_id(id):
     """
     Get the attribute based on its identifier.
-
     Goes through the existing attributes until it finds the attribute identified by the requested id.
 
     Parameters
@@ -77,9 +67,8 @@ def get_attribute_from_id(id):
 
     Returns
     -------
-    Attribute
-        The attribute.
-
+    Attribute, None
+        The attribute, or None if the attribute does not exists.
     """
     attributes = objects["attributes"]
     for atr in attributes:
@@ -92,7 +81,6 @@ def get_attribute_from_id(id):
 def get_attribute_title_from_id(id):
     """
     Get the title of the attribute based on its identifier.
-
     Goes through the existing attributes until it finds the attribute identified by the requested id.
 
     Parameters
@@ -102,9 +90,8 @@ def get_attribute_title_from_id(id):
 
     Returns
     -------
-    string
-        title of the attribute.
-
+    string, None
+        The title of the attribute, or None if the attribute does not exists.
     """
     attributes = objects["attributes"]
     for atr in attributes:
@@ -117,7 +104,6 @@ def get_attribute_title_from_id(id):
 def get_attribute_value_from_id(id):
     """
     Get the value of the attribute based on its identifier.
-
     Goes through the existing attributes until it finds the attribute identified by the requested id.
 
     Parameters
@@ -129,7 +115,6 @@ def get_attribute_value_from_id(id):
     -------
     string
         Value of the attribute.
-
     """
     attributes = objects["attributes"]
     for atr in attributes:
@@ -152,7 +137,6 @@ def delete_configuration_item(ci):
     -------
     boolean
         Returns true if the object was removed successfully, and false if it doesn't.
-
     """
     if ci in objects["configuration_items"]:
         objects["configuration_items"].remove(ci)
@@ -174,7 +158,6 @@ def delete_relationship(rel):
     -------
     boolean
         Returns true if the object was removed successfully, and false if it doesn't.
-
     """
     if rel in objects["relationships"]:
         objects["relationships"].remove(rel)
@@ -199,7 +182,6 @@ def find_most_similar_attribute(at_title, attributes):
     -------
     int
         Returns the identifier of the most similar attribute from the list.
-
     """
     attributes_titles = {}
     for at_id in attributes:
@@ -209,7 +191,7 @@ def find_most_similar_attribute(at_title, attributes):
     for at in attributes_titles:
         at_title2 = attributes_titles.get(at)
         if at_title2 != None and at_title != None:
-            attribute_similarity = semantic_matching.semantic_coeficient(
+            attribute_similarity = similarity.calculate_similarity(
                 at_title, at_title2)
         else:
             attribute_similarity = 0
@@ -310,14 +292,14 @@ def ci_already_exists(ci):
                         ex_at_id, sim = find_most_similar_attribute(
                             at_title, ex_attributes)
                         ex_at_title = get_attribute_title_from_id(ex_at_id)
-                        attribute_similarity = semantic_matching.semantic_coeficient(
+                        attribute_similarity = similarity.calculate_similarity(
                             at_title, ex_at_title)
 
                         if attribute_similarity >= 0.7:
                             total += 1
                             at_value = get_attribute_value_from_id(at_id)
                             ex_at_value = get_attribute_value_from_id(ex_at_id)
-                            value_similarity = semantic_matching.semantic_coeficient(
+                            value_similarity = similarity.calculate_similarity(
                                 at_value, ex_at_value)
 
                             if value_similarity >= 0.8:
@@ -374,7 +356,7 @@ def relationship_already_exists(rel):
             ex_rel_type = get_relationship_type_title_from_id(
                 existing_rel.get_type())
 
-            type_similarity = semantic_matching.semantic_coeficient(
+            type_similarity = similarity.calculate_similarity(
                 rel_type, ex_rel_type)
             if type_similarity >= 0.9:
                 if type_similarity > max_ratio:
@@ -385,6 +367,21 @@ def relationship_already_exists(rel):
 
 
 def ci_type_already_exists(title):
+    """
+    Finds out if a configuration item type already exists.
+    Goes through the existing configuration item types and calculates the similarity between the titles, to find out if
+    they are similar enough to be considered the same.
+
+    Parameters
+    ----------
+    title : string
+        The title of the configuration item type.
+
+    Returns
+    -------
+    ConfiguratioItemType, None
+        The existing configuration item type, or None if it wasn't found a onfiguration item type similar enough.
+    """
     equal = None
     max_ratio = 0
     existing_types = objects["configuration_item_types"]
@@ -403,6 +400,21 @@ def ci_type_already_exists(title):
 
 
 def rel_type_already_exists(title):
+    """
+    Finds out if a relationship type already exists.
+    Goes through the existing relationship types and calculates the similarity between the titles, to find out if
+    they are similar enough to be considered the same.
+
+    Parameters
+    ----------
+    title : string
+        The title of the relationship type.
+
+    Returns
+    -------
+    RelationshipType, None
+        The existing relationship type, or None if it wasn't found a onfiguration item type similar enough.
+    """
     equal = None
     max_ratio = 0
     existing_types = objects["relationship_types"]
@@ -421,6 +433,14 @@ def rel_type_already_exists(title):
 
 
 def add_ci(ci):
+    """
+    Adds a new configuration item, reconciling if the same object already exists.
+
+    Parameters
+    ----------
+    ci : ConfiguratioItem
+        The configuration item.
+    """
     if ci != None:
         exists = ci_already_exists(ci)
         if exists != None:
@@ -432,6 +452,14 @@ def add_ci(ci):
 
 
 def add_rel(rel):
+    """
+    Adds a new relationship, reconciling if the same object already exists.
+
+    Parameters
+    ----------
+    rel : Relationship
+        The relationship.
+    """
     if rel != None:
         exists = relationship_already_exists(rel)
         if exists != None:
@@ -443,6 +471,19 @@ def add_rel(rel):
 
 
 def add_ci_type(ci_type):
+    """
+    Adds a new configuration item type, if it does not already exists.
+
+    Parameters
+    ----------
+    ci_type : ConfiguratioItemType
+        The configuration item type.
+
+    Returns 
+    ----------
+    ConfiguratioItemType
+        The same object, or the already existing one.
+    """
     ex_ci_type = ci_type_already_exists(ci_type.get_title())
     if ex_ci_type != None:
         return ex_ci_type
@@ -454,6 +495,19 @@ def add_ci_type(ci_type):
 
 
 def add_rel_type(rel_type):
+    """
+    Adds a new relationship type, if it does not already exists.
+
+    Parameters
+    ----------
+    rel_type : RelationshipType
+        The relationship type.
+
+    Returns 
+    ----------
+    RelationshipType
+        The same object, or the already existing one.
+    """
     ex_rel_type = rel_type_already_exists(rel_type.get_title())
     if ex_rel_type != None:
         return ex_rel_type
@@ -465,6 +519,17 @@ def add_rel_type(rel_type):
 
 
 def add_attribute(attr, obj):
+    """
+    Adds a new attribute to an object, if it does not already exists.
+
+    Parameters
+    ----------
+    attr : Attribute
+        The attribute.
+
+    obj : ConfigurationItem or Relationship
+        The object.
+    """
     title = attr.get_title()
 
     equal = None
@@ -480,11 +545,6 @@ def add_attribute(attr, obj):
             equal = a
 
     if max_ratio > 0.9:
-        print()
-        print("old_name: " + str(equal.get_title()))
-        print("new_name: " + str(attr.get_title()))
-        print("old_value: " + str(equal.get_value()))
-        print("new_value: " + str(attr.get_value()))
         equal.set_value(attr.get_value())
     else:
         obj.add_attribute(attr.get_id())
@@ -492,6 +552,25 @@ def add_attribute(attr, obj):
 
 
 def create_relation(source, target, relation_type):
+    """
+    Creates a new reltionship between two configuration items.
+
+    Parameters
+    ----------
+    source : ConfigurationItem
+        The source configuration item involved in the relationship.
+
+    target : ConfigurationItem
+        The target configuration item involved in the relationship.
+
+    relation_type : RelationshipType
+        The type of the relationship.
+
+    Returns
+    ----------
+    Relationship, None
+        Returns the relationship, or None if the source, target or type weren't valid.
+    """
     if source != None and target != None and relation_type != None:
         rel = Relationship.Relationship()
         rel.type_id = relation_type.get_id()
@@ -503,6 +582,22 @@ def create_relation(source, target, relation_type):
 
 
 def create_attribute(name, value):
+    """
+    Creates a new attribute.
+
+    Parameters
+    ----------
+    name : string
+        The name of the attribute.
+
+    value : string
+        The value of the attribute.
+
+    Returns
+    ----------
+    Attribute, None
+        Returns the attribute, or None if the name or value weren't valid.
+    """
     if value != None and value != "":
         attr = Attribute.Attribute(name, value)
         return attr
@@ -511,6 +606,20 @@ def create_attribute(name, value):
 
 
 def define_attribute(title, value, ci):
+    """
+    Adds a new attribute to an configuration item.
+
+    Parameters
+    ----------
+    title : string
+        The name of the attribute.
+
+    value : string
+        The value of the attribute.
+
+    ci : ConfigurationItem
+        The configuration item.
+    """
     if title != None and title != "" and value != None and value != "":
         if similarity.calculate_similarity(title, "uuid") > 0.85:
             ci.set_uuid(value)

@@ -3,7 +3,6 @@
 from normalization import normalization
 
 import nltk
-from nltk.corpus import stopwords
 from nltk.corpus import wordnet as wn
 from nltk.tokenize import word_tokenize
 import spacy
@@ -35,7 +34,7 @@ def semantic_coeficient(text1, text2):
 
     Returns
     -------
-    string
+    int
         The value, between 0 and 1, that represents the biggest value of semantic similarity calculated between the two terms.
     """
     if text1 != None and text2 != None:
@@ -56,58 +55,3 @@ def semantic_coeficient(text1, text2):
         return maxi
     else:
         return 0
-
-
-"""
-def tokenization(text):
-    text_doc = nlp(text)
-    # token.idx, token.text_with_ws, token.is_alpha, token.is_punct, token.is_space, token.shape_, token.is_stop
-    tokens = [token.text for token in text_doc if not token.is_stop]
-    return tokens
-
-
-def entity_detection(text):
-    text_doc = nlp(text)
-    entities = [e.text for e in text_doc.ents]
-    return entities
-
-
-def get_synonyms(word):
-    word = snakecase(word)
-    word.lower()
-    res = []
-    for ss in wn.synsets(word):
-        syn = ss.lemma_names()
-        for s in syn:
-            if s not in res:
-                res.append(s)
-    new_res = []
-    for r in res:
-        new_res.append(sentencecase(r).lower())
-    return new_res
-
-
-def get_similars(word):
-    res = []
-    for ss in wn.synsets(word):
-        syn = ss.similar_tos()
-        for s in syn:
-            if s not in res:
-                res.append(s)
-    return res
-
-
-def get_antonyms(word):
-    res = []
-    for ss in wn.synsets(word):
-        lemmas = ss.lemmas()
-        for lemma in lemmas:
-            lemma_antonyms = lemma.antonyms()
-            for lemma_antonym in lemma_antonyms:
-                antonyms = wn.lemma_from_key(
-                    lemma_antonym.key()).synset().lemma_names()
-                for antonym in antonyms:
-                    if antonym not in res:
-                        res.append(antonym)
-    return res
-"""

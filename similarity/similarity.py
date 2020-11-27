@@ -10,8 +10,8 @@ def calculate_similarity(text1, text2):
     Calculates the similarity of two terms.
 
     It calculates the syntatic similarity between the two terms.
-    If it's more than 0.99, returns that value.
-    If not, calculates the semantic similarity between the two terms and returns that value.
+    If it's equal to 1, returns that value.
+    If not, calculates the semantic similarity between the two terms and returns the biggest value between the semantic and syntatic similarity.
 
     Parameters
     ----------
@@ -23,13 +23,12 @@ def calculate_similarity(text1, text2):
 
     Returns
     -------
-    string
+    int
         The value, between 0 and 1, that represents the similarity between the two terms.
-
     """
     if text1 != "" and text2 != "" and text1 != None and text2 != None:
         syn_value = syntatic_matching.syntatic_coeficient(text1, text2)
-        if syn_value > 0.99:
+        if syn_value == 1:
             return numpy.clip(syn_value, 0, 1)
         else:
             sem_value = semantic_matching.semantic_coeficient(text1, text2)

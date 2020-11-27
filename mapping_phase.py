@@ -42,7 +42,7 @@ def choose_software():
             'type': 'list',
             'message': 'What is the software of the CMDB?',
             'name': 'software',
-            'choices': [{'name': 'i-doit'}, {'name': 'iTop'}, {'name': 'Other', 'disabled': 'unavailable'}]
+            'choices': [{'name': 'i-doit'}, {'name': 'iTop'}]
         }
     ]
 
@@ -103,9 +103,12 @@ def run_mapping():
 
     open_message = pyfiglet.figlet_format(
         "Mapping Phase", font="small")
-    print("**********************************************************************")
+    print()
+    print(
+        "\033[1m**********************************************************************\033[0m")
     print(open_message)
-    print("**********************************************************************\n")
+    print(
+        "\033[1m**********************************************************************\033[0m\n")
 
     db = db_info.get_db_info()
     db_processor.process_db_data_model(db)

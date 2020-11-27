@@ -1,6 +1,5 @@
 # -*- coding: utf-8 -*-
 
-import difflib
 from normalization import normalization
 from sklearn.metrics.pairwise import cosine_similarity
 from sklearn.feature_extraction.text import CountVectorizer
@@ -20,7 +19,7 @@ def syntatic_coeficient(text1, text2):
 
     Returns
     -------
-    string
+    int
         The value, between 0 and 1, that represents the syntatic similarity between the two terms.
 
     """
