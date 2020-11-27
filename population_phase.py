@@ -28,8 +28,11 @@ def run_population(db_info, cmdb_info):
     """
     open_message = pyfiglet.figlet_format(
         "Population Phase", font="small")
-    print("\n**********************************************************************")
+    print()
+    print(
+        "\033[1m**********************************************************************\033[0m")
     print(open_message)
-    print("**********************************************************************\n")
+    print(
+        "\033[1m**********************************************************************\033[0m\n")
 
     population.run_cmdb_population(db_info, cmdb_info)

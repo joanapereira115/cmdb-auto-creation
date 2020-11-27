@@ -1,7 +1,6 @@
 # -*- coding: utf-8 -*-
 
 import requests
-from urllib.parse import quote
 from colored import fg, attr
 import json
 

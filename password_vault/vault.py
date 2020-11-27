@@ -163,5 +163,5 @@ def lock():
     print(green + "\n>>> " + reset + "Vault locked.")
 
 
-def delete():
+def delete_vault():
     os.remove(dbPath)
