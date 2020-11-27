@@ -5,11 +5,10 @@ from PyInquirer import style_from_dict, Token, prompt
 from PyInquirer import Validator, ValidationError
 
 from password_vault import vault
-from discovery_mechanisms import os_x
-from discovery_mechanisms import windows
+from discovery_mechanisms import os_x, windows, linux
 from models import ConfigurationItem, methods
 from similarity import similarity
-from normalization import normalization
+from .discovery_info import discovery_info
 
 """
     Color definition.
@@ -41,7 +40,7 @@ def unlock_vault():
     """
     Asks the user for the password of the vault to unlock it.
     """
-    vault.initialize()
+    print()
     password_vault = [
         {
             'type': 'password',
@@ -113,31 +112,6 @@ def ask_password(ip):
     return pwd
 
 
-def external_data():
-    """
-    Asks the user if he wants to import information from an external application/source.
-
-    Returns
-    -------
-    boolean
-        Returns true if the user wants to use an external source, and false if not.
-    """
-    external_data = [
-        {
-            'type': 'list',
-            'message': 'Do you want to import information from an external application/source?',
-            'name': 'external',
-            'choices': [{'name': 'Yes'}, {'name': 'No'}]
-        }
-    ]
-
-    external_data_answer = prompt(external_data, style=style)
-    if external_data_answer.get('external') == "Yes":
-        return True
-    else:
-        return False
-
-
 def check_os(ci):
     """
     Checks the operating system family of a configuration item.
@@ -150,64 +124,71 @@ def check_os(ci):
     Returns
     -------
     string
-        Returns "mac" if the operating system family of the configuration item is Mac OS X and "windows" if it's Microsoft Windows.
+        Returns "mac" if the operating system family of the configuration item is Mac OS X, "windows" if it's Microsoft Windows and
+        "linux" if it's Linux. 
     """
     # TODO: handle more operating systems
     ci_os = ci.get_os_family()
 
     mac = similarity.calculate_similarity(ci_os, "mac os x")
     windows = similarity.calculate_similarity(ci_os, "windows")
+    linux = similarity.calculate_similarity(ci_os, "linux")
 
-    if mac > windows:
+    if mac > windows and mac > linux:
         return "mac"
-    elif windows > mac:
+    elif windows > mac and windows > linux:
         return "windows"
+    elif linux > mac and linux > windows:
+        return "linux"
 
 
-def detailed_discovery(available_ips, categories):
-    external = external_data()
-    if external == True:
-        # TODO: handle external app
-        pass
-    else:
-        # TODO: tirar
-        print()
-        print("available_ips: " + str(available_ips))
-        print("categories: " + str(categories))
-        print()
-        unlock_vault()
-        for ip in available_ips:
-            names = vault.get_names()
-            if ip not in names:
-                user = ask_username(ip)
-                pwd = ask_password(ip)
-                vault.add_secret(ip, user, pwd)
-            else:
-                user = vault.show_login_by_name(ip)[0]
-                pwd = vault.show_secret_by_name(ip)[0]
+def detailed_discovery(categories):
+    """
+    Executes the detailed discovery of the machine.
+    Explores OS X, Windows and Linux devices.
 
-            ci = ConfigurationItem.ConfigurationItem()
-            ci.add_ipv4_address(ip)
-            new_ci = methods.ci_already_exists(ci)
-            if new_ci == None:
-                new_ci = ci
+    Parameters
+    --------
+    categories : list
+        The list of categories selected by the user to explore.
+    """
+    unlock_vault()
 
-            ci_os = check_os(new_ci)
+    for ip in discovery_info.get("ip_addresses"):
+        names = vault.get_names()
+        if ip not in names:
+            user = ask_username(ip)
+            pwd = ask_password(ip)
+            vault.add_secret(ip, user, pwd)
+
+    for ip in discovery_info.get("ip_addresses"):
+        if ip not in discovery_info.get("visited_addresses"):
+            discovery_info["visited_addresses"].append(ip)
+
+            user = vault.show_username_by_name(ip)
+            pwd = vault.show_secret_by_name(ip)
+
+            new_ci = ConfigurationItem.ConfigurationItem()
+            new_ci.add_ipv4_address(ip)
+            ci = methods.ci_already_exists(new_ci)
+            if ci == None:
+                ci = new_ci
+
+            ci_os = check_os(ci)
+
             if ci_os == "mac":
                 print(blue + ">>> " + reset +
                       "Discovery in the OS X machine with the address " + str(ip) + "...\n")
-                os_disc = os_x.run_os_x_discovery(
-                    new_ci, user, pwd, ip, categories)
-                if os_disc == False:
-                    pass
-                    # TODO: credenciais erradas ou o OS estava errado?
+                os_x.run_os_x_discovery(ci, user, pwd, ip, categories)
+
             elif ci_os == "windows":
                 print(blue + ">>> " + reset +
                       "Discovery in the Windows machine with the address " + str(ip) + "...\n")
-                win_disc = windows.run_windows_discovery(
-                    new_ci, user, pwd, ip, categories)
-                if win_disc == False:
-                    pass
-                    # TODO: credenciais erradas ou o OS estava errado?
+                windows.run_windows_discovery(ci, user, pwd, ip, categories)
 
-            methods.add_ci(new_ci)
+            elif ci_os == "linux":
+                print(blue + ">>> " + reset +
+                      "Discovery in the Linux machine with the address " + str(ip) + "...\n")
+                linux.run_linux_discovery(ci, user, pwd, ip, categories)
+
+            methods.add_ci(ci)

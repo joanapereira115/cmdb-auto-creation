@@ -195,3 +195,4 @@ def basic_discovery():
     define_networks()
 
     print(green + "\n>>> " + reset + "Basic discovery ended.")
+    discovery_info["visited_addresses"] = []

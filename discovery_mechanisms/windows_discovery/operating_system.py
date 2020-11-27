@@ -1,22 +1,29 @@
-import regex
-import json
-import requests
-from colored import fg, bg, attr
-import winrm
+# -*- coding: utf-8 -*-
+
+from colored import fg, attr
 import chardet
 
 from models import ConfigurationItem, ConfigurationItemType, Relationship, RelationshipType, methods
-from normalization import normalization
 
 blue = fg('#46B1C9')
 red = fg('#B54653')
 green = fg('#86DEB7')
 reset = attr('reset')
 
-# descoberta de informação acerca do sistema operativo
-
 
 def os_discovery(client, ci):
+    """
+    Gathers information about the Windows operating system of the machine that is being explored.
+
+    Parameters
+    ----------
+    client: SSHClient
+        The SSH client that permits the comunication with the machine that is being explored.
+
+    ci: ConfigurationItem
+        The configuration item that represents the Windows machine that is going to be explored.
+
+    """
     os_type = methods.add_ci_type(
         ConfigurationItemType.ConfigurationItemType("Operating System"))
     obj = ConfigurationItem.ConfigurationItem()

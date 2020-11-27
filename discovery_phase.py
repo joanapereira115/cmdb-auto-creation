@@ -11,6 +11,7 @@ from netaddr import IPNetwork
 from password_vault import vault
 from db_population import population
 from discovery import basic_discovery, detailed_discovery, discovery_info
+from discovery_mechanisms import angry_ip_scanner
 
 """
     Color definition.
@@ -300,6 +301,53 @@ def import_data():
         import_data()
 
 
+def external_data():
+    """
+    Asks the user if he wants to import information from an external application/source.
+
+    Returns
+    -------
+    boolean
+        Returns true if the user wants to use an external source, and false if not.
+    """
+    external_data = [
+        {
+            'type': 'list',
+            'message': 'Do you want to import information from an external application/source?',
+            'name': 'external',
+            'choices': [{'name': 'No'}, {'name': 'Yes'}]
+        }
+    ]
+
+    external_data_answer = prompt(external_data, style=style)
+    if external_data_answer.get('external') == "Yes":
+        return True
+    else:
+        return False
+
+
+def selecting_external():
+    """
+    Asks the user what external application/source he wants to use.
+
+    Returns
+    -------
+    string
+        Returns the name of the selected application.
+    """
+    external_data = [
+        {
+            'type': 'list',
+            'message': 'What external application/source do you want to use?',
+            'name': 'external',
+            'choices': [{'name': 'Angry IP Scanner'}]
+        }
+    ]
+
+    external_data_answer = prompt(external_data, style=style)
+    return external_data_answer.get('external')
+
+
 def run_discovery():
     """
     Executes the discovery of the machines and the population of the database with that info. 
@@ -313,10 +361,24 @@ def run_discovery():
     print(
         "\033[1m**********************************************************************\033[0m\n")
 
-    get_addresses()
+    external = external_data()
+    if external == True:
+        app = selecting_external()
+        print(app)
+        if app == "Angry IP Scanner":
+            angry_ip_scanner.parse_info()
+
+    if len(discovery_info.discovery_info.get("ip_addresses")) > 0:
+        more = more_addresses()
+        if more == True:
+            get_addresses()
+    else:
+        get_addresses()
+
     basic_discovery.basic_discovery()
+
     categories = what2discover()
     detailed_discovery.detailed_discovery(categories)
-    population.run_population()
 
+    population.run_population()
     import_data()

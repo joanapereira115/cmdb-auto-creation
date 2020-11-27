@@ -45,6 +45,16 @@ def run_os_x_discovery(ci, user, pwd, ip, categories):
     ok = True
     try:
         client.connect(ip, 22, user, pwd)
+    except paramiko.ssh_exception.AuthenticationException:
+        print(red + ">>> " + reset +
+              "Wrong credentials! Unable to connect with the machine " + ip + " via SSH.\n")
+        ok = False
+        return ok
+    except TimeoutError:
+        print(red + ">>> " + reset +
+              "Cannot reach the server! Unable to connect with the machine " + ip + " via SSH.\n")
+        ok = False
+        return ok
     except:
         print(red + ">>> " + reset +
               "Unable to connect with the machine " + ip + " via SSH.\n")
