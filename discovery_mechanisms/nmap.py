@@ -5,7 +5,6 @@ import nmap
 from colored import fg, attr
 
 from models import ConfigurationItem, ConfigurationItemType, Relationship, RelationshipType, methods
-import nmap
 from discovery import discovery_info
 
 blue = fg('#46B1C9')

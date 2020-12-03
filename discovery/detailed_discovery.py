@@ -102,8 +102,7 @@ def ask_password(ip):
         {
             'type': 'password',
             'message': 'Enter the password of the machine with yhe IP address ' + ip + ':',
-            'name': 'password',
-            'validate': NotEmpty
+            'name': 'password'
         }
     ]
 

@@ -48,17 +48,17 @@ def run_windows_discovery(ci, user, pwd, ip, categories):
     # TODO: verificar esta exceção
     except ConnectionRefusedError:
         print(red + ">>> " + reset +
-              "Wrong credentials! Unable to connect with the machine " + ip + " via SSH.\n")
+              "Wrong credentials! Unable to connect with the machine " + ip + " via WinRM.\n")
         ok = False
         return ok
     except requests.exceptions.ConnectTimeout:
         print(red + ">>> " + reset +
-              "Cannot reach the server! Unable to connect with the machine " + ip + " via SSH.\n")
+              "Cannot reach the server! Unable to connect with the machine " + ip + " via WinRM.\n")
         ok = False
         return ok
     except:
         print(red + ">>> " + reset +
-              "Unable to connect with the machine " + ip + " via SSH.\n")
+              "Unable to connect with the machine " + ip + " via WinRM.\n")
         ok = False
         return ok
 
