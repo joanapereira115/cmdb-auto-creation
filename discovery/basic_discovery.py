@@ -190,9 +190,10 @@ def basic_discovery():
         if ip not in discovery_info.get("visited_addresses"):
             discovery_info["visited_addresses"].append(ip)
 
-            check_ip(ip)
-            nmap.run_nmap(ip)
-            snmp.run_snmp(ip, secrets)
+            av = check_ip(ip)
+            if av == True:
+                nmap.run_nmap(ip)
+                snmp.run_snmp(ip, secrets)
 
     define_networks()
 
