@@ -190,6 +190,9 @@ def basic_discovery():
     print()
 
     for ip in discovery_info.get("ip_addresses"):
+        print()
+        print(ip)
+        print()
         if ip not in discovery_info.get("visited_addresses"):
             discovery_info["visited_addresses"].append(ip)
 
@@ -199,6 +202,9 @@ def basic_discovery():
                 snmp.run_snmp(ip, secrets)
             else:
                 discovery_info["ip_addresses"].remove(ip)
+                print()
+                print("removing")
+                print()
 
     define_networks()
 
