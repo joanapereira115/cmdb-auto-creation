@@ -126,6 +126,8 @@ def check_ip(ip):
     if r == None:
         if ip in discovery_info.get("ip_addresses"):
             discovery_info["ip_addresses"].remove(ip)
+            return False
+    return True
 
 
 def define_networks():
