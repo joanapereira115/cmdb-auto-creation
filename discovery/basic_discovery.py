@@ -122,10 +122,8 @@ def check_ip(ip):
         r = ping3.ping(ip, timeout=1)
     except:
         print(red + "\n>>> " + reset + "Not available via ping.")
-        discovery_info["ip_addresses"].remove(ip)
     if r == None:
         if ip in discovery_info.get("ip_addresses"):
-            discovery_info["ip_addresses"].remove(ip)
             return False
     return True
 
@@ -192,6 +190,7 @@ def basic_discovery():
 
             av = check_ip(ip)
             if av == True:
+                discovery_info["ip_addresses"].remove(ip)
                 nmap.run_nmap(ip)
                 snmp.run_snmp(ip, secrets)
 
