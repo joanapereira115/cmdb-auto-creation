@@ -121,9 +121,10 @@ def check_ip(ip):
     try:
         r = ping3.ping(ip, timeout=1)
     except:
-        print(red + "\n>>> " + reset + "Not available via ping.")
+        r = None
     if r == None:
         if ip in discovery_info.get("ip_addresses"):
+            print(red + ">>> " + reset + "Not available via ping.")
             return False
     return True
 
@@ -178,26 +179,15 @@ def basic_discovery():
         - SNMP 
         - LLDP
     """
+    rem = []
+
     packets.explore_packets()
 
     unlock_vault()
     define_snmp_community()
     secrets = vault.show_secrets("SNMP")
 
-    import json
-    print()
-    print(json.dumps(discovery_info.get(
-        "visited_addresses"), indent=4, sort_keys=True))
-    print()
-
-    print()
-    print(json.dumps(discovery_info.get("ip_addresses"), indent=4, sort_keys=True))
-    print()
-
     for ip in discovery_info.get("ip_addresses"):
-        print()
-        print(ip)
-        print()
         if ip not in discovery_info.get("visited_addresses"):
             discovery_info["visited_addresses"].append(ip)
 
@@ -206,10 +196,10 @@ def basic_discovery():
                 nmap.run_nmap(ip)
                 snmp.run_snmp(ip, secrets)
             else:
-                discovery_info["ip_addresses"].remove(ip)
-                print()
-                print("removing")
-                print()
+                rem.append(ip)
+
+    for i in rem:
+        discovery_info["ip_addresses"].remove(i)
 
     define_networks()
 
