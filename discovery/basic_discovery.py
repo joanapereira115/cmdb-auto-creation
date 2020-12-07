@@ -184,6 +184,11 @@ def basic_discovery():
     define_snmp_community()
     secrets = vault.show_secrets("SNMP")
 
+    import json
+    print()
+    print(json.dumps(discovery_info.get("ip_addresses"), indent=4, sort_keys=True))
+    print()
+
     for ip in discovery_info.get("ip_addresses"):
         if ip not in discovery_info.get("visited_addresses"):
             discovery_info["visited_addresses"].append(ip)
