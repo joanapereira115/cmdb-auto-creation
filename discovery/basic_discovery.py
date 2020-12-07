@@ -186,6 +186,11 @@ def basic_discovery():
 
     import json
     print()
+    print(json.dumps(discovery_info.get(
+        "visited_addresses"), indent=4, sort_keys=True))
+    print()
+
+    print()
     print(json.dumps(discovery_info.get("ip_addresses"), indent=4, sort_keys=True))
     print()
 
