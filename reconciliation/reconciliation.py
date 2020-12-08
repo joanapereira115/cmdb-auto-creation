@@ -145,6 +145,12 @@ def reconcile_configuration_items(new, prev):
         if prev_mac_address != None and prev_mac_address != "":
             new.set_mac_address(prev_mac_address)
 
+    new_os_family = new.get_os_family()
+    if new_os_family == None or new_os_family == "":
+        prev_os_family = prev.get_os_family()
+        if prev_os_family != None and prev_os_family != "":
+            new.set_os_family(prev_os_family)
+
     new_type = new.get_type()
     if new_type == None or new_type == 0:
         prev_type = prev.get_type()
