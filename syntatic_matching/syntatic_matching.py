@@ -23,10 +23,6 @@ def syntatic_coeficient(text1, text2):
         The value, between 0 and 1, that represents the syntatic similarity between the two terms.
 
     """
-    print()
-    print(text1)
-    print(text2)
-    print()
     if text1 != "" and text2 != "" and text1 != None and text2 != None:
         t1 = normalization.parse_text_to_compare(text1)
         t2 = normalization.parse_text_to_compare(text2)
