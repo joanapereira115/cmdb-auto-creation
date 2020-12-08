@@ -1,5 +1,5 @@
 #!/bin/sh
-PYTHON_APPS="python3 python3-pip python-dev python3-dev build-essential libssl-dev libffi-dev libxml2-dev libxslt1-dev zlib1g-dev portaudio19-dev libperl-dev gcc libsnmp-dev"
+PYTHON_APPS="python3 export LC_ALL="en_US.UTF-8" python-dev python3-dev build-essential libssl-dev libffi-dev libxml2-dev libxslt1-dev zlib1g-dev portaudio19-dev libperl-dev gcc libsnmp-dev"
 SNMP_APPS="snmp snmp-mibs-downloader snmpd"
 LIST_OF_APPS="iputils-ping software-properties-common nmap wireshark"
 
