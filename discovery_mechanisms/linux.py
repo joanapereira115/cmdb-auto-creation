@@ -61,6 +61,20 @@ def run_linux_discovery(ci, user, pwd, ip, categories):
         ok = False
         return ok
 
+    _, stdout, stderr = client.exec_command("hostnamectl")
+    error = stderr.read().decode('utf-8')
+    if error != "":
+        print(red + ">>> " + reset + str(error) + "\n")
+    else:
+        hostnamectl = stdout.readlines()
+        info = {}
+        if len(hostnamectl) > 0:
+            for line in hostnamectl:
+                info[regex.sub("\n|\"", "", line.split(":")[0]).strip()] = regex.sub(
+                    "\n|\"", "", line.split(":")[1]).strip()
+        for at in info:
+            methods.define_attribute(at, info.get(at), ci)
+
     if ok == True:
         if 'operating systems' in categories:
             operating_system.os_discovery(client, ci)

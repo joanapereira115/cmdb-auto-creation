@@ -46,21 +46,6 @@ def os_discovery(client, ci):
             else:
                 methods.define_attribute(at, info.get(at), obj)
 ###########################################
-    _, stdout, stderr = client.exec_command("hostnamectl")
-    error = stderr.read().decode('utf-8')
-    if error != "":
-        print(red + ">>> " + reset + str(error) + "\n")
-    else:
-        hostnamectl = stdout.readlines()
-        info = {}
-        if len(hostnamectl) > 0:
-            for line in hostnamectl:
-                info[regex.sub("\n|\"", "", line.split(":")[0]).strip()] = regex.sub(
-                    "\n|\"", "", line.split(":")[1]).strip()
-        for at in info:
-            methods.define_attribute(at, info.get(at), obj)
-###########################################
-
     rel_type_ci_obj = methods.add_rel_type(
         RelationshipType.RelationshipType("running operating system"))
     rel_ci_obj = methods.create_relation(ci, obj, rel_type_ci_obj)
