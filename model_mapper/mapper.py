@@ -77,8 +77,8 @@ def calc_similars(cmdb, db):
         l = {}
         for c2 in db:
             l[db.get(c2)] = similarity.calculate_similarity(c1, c2)
-        l_sort = dict(
-            sorted(l.items(), key=operator.itemgetter(1), reverse=True))
+        l_sort = {k: v for k, v in sorted(
+            l.items(), key=lambda item: item[1], reverse=True)}
         res[cmdb.get(c1)] = l_sort
     return res
 
@@ -238,7 +238,10 @@ def select_most_similar(calculated_matches, selected_values, selected):
                             selected_values[key] = {
                                 fst: calculated_matches.get(key).get(fst)}
                             return select_most_similar(calculated_matches, selected_values, selected)
-
+                else:
+                    selected_values[key] = {}
+            else:
+                selected_values[key] = {}
     return selected_values
 
 
