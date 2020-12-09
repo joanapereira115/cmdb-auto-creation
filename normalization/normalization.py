@@ -161,7 +161,8 @@ acronyms_db = {
     'wpa': 'wi-fi protected access',
     'www': 'world wide web',
     'xdp': 'express data path',
-    'xml': 'extensible markup language'
+    'xml': 'extensible markup language',
+    'vrrp': 'virtual router redundancy protocol'
 }
 
 

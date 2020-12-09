@@ -201,41 +201,43 @@ def select_most_similar(calculated_matches, selected_values, selected):
                 if fst == None:
                     while fst == None:
                         key_values = calculated_matches.get(key)
-                        if check_if_already_has_most_similar(key, list(key_values.keys())[0], key_values.get(list(key_values.keys())[0]), selected_values) == True:
-                            calculated_matches.get(key).pop(
-                                list(key_values.keys())[0], None)
+                        if len(key_values) > 0:
+                            if check_if_already_has_most_similar(key, list(key_values.keys())[0], key_values.get(list(key_values.keys())[0]), selected_values) == True:
+                                calculated_matches.get(key).pop(
+                                    list(key_values.keys())[0], None)
+                            else:
+                                fst = list(key_values.keys())[0]
+                if fst != None:
+                    if fst not in selected:
+                        selected.append(fst)
+                        selected_values[key] = {
+                            fst: calculated_matches.get(key).get(fst)}
+                        return select_most_similar(calculated_matches, selected_values, selected)
+
+                    else:
+                        for k in selected_values:
+                            if fst in selected_values.get(k):
+                                existing_key = k
+                                existing_value = selected_values.get(
+                                    k).get(fst)
+
+                        if existing_value == calculated_matches.get(key).get(fst):
+                            sel = select_option_2([existing_key, key], fst)
+                            if sel == key:
+                                del selected_values[existing_key]
+                                del calculated_matches[existing_key][fst]
+                                selected_values[key] = {
+                                    fst: calculated_matches.get(key).get(fst)}
+                                return select_most_similar(calculated_matches, selected_values, selected)
+                            else:
+                                del calculated_matches[key][fst]
+                                return select_most_similar(calculated_matches, selected_values, selected)
                         else:
-                            fst = list(key_values.keys())[0]
-
-                if fst not in selected:
-                    selected.append(fst)
-                    selected_values[key] = {
-                        fst: calculated_matches.get(key).get(fst)}
-                    return select_most_similar(calculated_matches, selected_values, selected)
-
-                else:
-                    for k in selected_values:
-                        if fst in selected_values.get(k):
-                            existing_key = k
-                            existing_value = selected_values.get(k).get(fst)
-
-                    if existing_value == calculated_matches.get(key).get(fst):
-                        sel = select_option_2([existing_key, key], fst)
-                        if sel == key:
                             del selected_values[existing_key]
                             del calculated_matches[existing_key][fst]
                             selected_values[key] = {
                                 fst: calculated_matches.get(key).get(fst)}
                             return select_most_similar(calculated_matches, selected_values, selected)
-                        else:
-                            del calculated_matches[key][fst]
-                            return select_most_similar(calculated_matches, selected_values, selected)
-                    else:
-                        del selected_values[existing_key]
-                        del calculated_matches[existing_key][fst]
-                        selected_values[key] = {
-                            fst: calculated_matches.get(key).get(fst)}
-                        return select_most_similar(calculated_matches, selected_values, selected)
 
     return selected_values
 
