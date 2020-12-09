@@ -455,8 +455,14 @@ def add_ci(ci):
         The configuration item.
     """
     if ci != None:
+        print()
+        print("adding ci")
         exists = ci_already_exists(ci)
+        print()
+        print(ci.get_title())
+        print(exists)
         if exists != None:
+            print(exists.get_title())
             new = reconciliation.reconcile_configuration_items(ci, exists)
             delete_configuration_item(exists)
             objects["configuration_items"].append(new)
