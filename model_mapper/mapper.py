@@ -139,8 +139,110 @@ def select_option(option1, option2, choice):
     return answer.get("option")
 
 
+def select_option_2(options, choice):
+    choices = []
+    txt = ""
+    last = len(options) - 1
+    for opt in options:
+        if options.index(opt) == 0:
+            txt += " " + str(opt)
+        elif options.index(opt) == last:
+            txt += " and " + str(opt) + " "
+        else:
+            txt += " ," + str(opt)
+        choices.append({'name': opt})
+
+    question = [
+        {
+            'type': 'list',
+            'message': 'The similarities between \'' + choice + '\' with \'' + txt + '\' are equal. Choose the one to consider.',
+            'name': 'option',
+            'choices': choices
+        }
+    ]
+
+    answer = prompt(question, style=style)
+    return answer.get("option")
+
+
+def check_if_already_has_most_similar(key, option, value, selected_values):
+    existing_value = -1
+    existing_key = ""
+    for k in selected_values:
+        if option in selected_values.get(k):
+            existing_value = selected_values.get(k).get(option)
+            existing_key = k
+    if existing_value == -1:
+        return key
+    else:
+        if existing_value <= value:
+            return False
+        else:
+            return True
+
+
+def select_most_similar(calculated_matches, selected_values, selected):
+    for key in calculated_matches:
+        if key not in selected_values:
+            key_values = calculated_matches.get(key)
+            values = list(key_values.values())
+            fst = None
+            if values.count(values[0]) > 1:
+                same = [x for x in key_values if key_values[x] == values[0]]
+                for s in same:
+                    if check_if_already_has_most_similar(key, s, values[0], selected_values) == True:
+                        same.remove(s)
+                        calculated_matches.get(key).pop(s, None)
+                if len(same) > 1:
+                    fst = select_option_2(same, key)
+                elif len(same) == 1:
+                    fst = same[0]
+            if fst == None:
+                while fst == None:
+                    key_values = calculated_matches.get(key)
+                    if check_if_already_has_most_similar(key, list(key_values.keys())[0], key_values.get(list(key_values.keys())[0]), selected_values) == True:
+                        calculated_matches.get(key).pop(
+                            list(key_values.keys())[0], None)
+                    else:
+                        fst = list(key_values.keys())[0]
+
+            if fst not in selected:
+                selected.append(fst)
+                selected_values[key] = {
+                    fst: calculated_matches.get(key).get(fst)}
+                return select_most_similar(calculated_matches, selected_values, selected)
+
+            else:
+                for k in selected_values:
+                    if fst in selected_values.get(k):
+                        existing_key = k
+                        existing_value = selected_values.get(k).get(fst)
+
+                if existing_value == calculated_matches.get(key).get(fst):
+                    sel = select_option_2([existing_key, key], fst)
+                    if sel == key:
+                        del selected_values[existing_key]
+                        del calculated_matches[existing_key][fst]
+                        selected_values[key] = {
+                            fst: calculated_matches.get(key).get(fst)}
+                        return select_most_similar(calculated_matches, selected_values, selected)
+                    else:
+                        del calculated_matches[key][fst]
+                        return select_most_similar(calculated_matches, selected_values, selected)
+                else:
+                    del selected_values[existing_key]
+                    del calculated_matches[existing_key][fst]
+                    selected_values[key] = {
+                        fst: calculated_matches.get(key).get(fst)}
+                    return select_most_similar(calculated_matches, selected_values, selected)
+
+    return selected_values
+
+
+"""
 def select_most_similar(calculated_matches, v, m):
-    """
+"""
+"""
     Selects the most similar terms between the similarity values calculated from the CMDB and the database terms.
 
     Parameters
@@ -159,6 +261,7 @@ def select_most_similar(calculated_matches, v, m):
     dict
         Returns the most similar terms correspondence.
     """
+"""
     existing_keys = []
     for k in v:
         existing_keys.append(list(v.get(k).keys())[0])
@@ -206,6 +309,7 @@ def select_most_similar(calculated_matches, v, m):
                         v[fst] = {key: values.get(fst)}
                         return select_most_similar(calculated_matches, v, m)
     return v
+"""
 
 
 def calculate_attribute_similarity(similars, cmdb_attributes, db_attributes):
