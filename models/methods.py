@@ -286,12 +286,13 @@ def ci_already_exists(ci):
                     attributes = ci.get_attributes()
                     ex_attributes = existing_ci.get_attributes()
 
-                    if len(attributes) > len(ex_attributes):
-                        total += len(ex_attributes)
-                    else:
-                        total += len(attributes)
+                    # if len(attributes) > len(ex_attributes):
+                    #    total += len(ex_attributes)
+                    # else:
+                    #    total += len(attributes)
 
                     for at_id in attributes:
+                        total += 1
                         print("Attribute name:")
                         at_title = get_attribute_title_from_id(at_id)
                         ex_at_id, sim = find_most_similar_attribute(
@@ -305,7 +306,6 @@ def ci_already_exists(ci):
 
                         if attribute_similarity >= 0.7:
                             print("Attribute value:")
-                            total += 1
                             at_value = get_attribute_value_from_id(at_id)
                             ex_at_value = get_attribute_value_from_id(ex_at_id)
                             value_similarity = similarity.calculate_similarity(
@@ -327,6 +327,7 @@ def ci_already_exists(ci):
                 equal_ci = existing_ci
                 max_ratio = ratio
 
+    print("max ratio: " + str(max_ratio))
     if max_ratio > 80:
         return equal_ci
 
