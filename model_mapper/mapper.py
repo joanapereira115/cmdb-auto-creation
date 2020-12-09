@@ -560,10 +560,16 @@ def run_mapper():
     print(blue + "\n>>> " + reset +
           "Calculating configuration item types similarity...")
     ci_similarity = calculate_class_similarity(cmdb_ci_types, db_ci_types)
+    print()
+    print("Similaridade dos CIs")
+    print(ci_similarity)
     similar_ci = select_most_similar(ci_similarity, {}, [])
 
     print(blue + "\n>>> " + reset + "Calculating relationship types similarity...")
     rel_similarity = calculate_class_similarity(cmdb_rel_types, db_rel_types)
+    print()
+    print("Similaridade dos Rels")
+    print(rel_similarity)
     similar_rel = select_most_similar(rel_similarity, {}, [])
 
     print(blue + "\n>>> " + reset +
