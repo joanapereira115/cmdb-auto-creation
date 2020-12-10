@@ -162,7 +162,8 @@ acronyms_db = {
     'www': 'world wide web',
     'xdp': 'express data path',
     'xml': 'extensible markup language',
-    'vrrp': 'virtual router redundancy protocol'
+    'vrrp': 'virtual router redundancy protocol',
+    'net': 'network'
 }
 
 

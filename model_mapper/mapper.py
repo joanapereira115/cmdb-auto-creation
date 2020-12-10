@@ -183,6 +183,8 @@ def check_if_already_has_most_similar(key, option, value, selected_values):
 
 def select_most_similar(calculated_matches, selected_values, selected):
     for key in calculated_matches:
+        calculated_matches[key] = {k: v for k, v in sorted(
+            calculated_matches.get(key).items(), key=lambda item: item[1], reverse=True)}
         if key not in selected_values:
             key_values = calculated_matches.get(key)
             values = list(key_values.values())
@@ -199,7 +201,7 @@ def select_most_similar(calculated_matches, selected_values, selected):
                     elif len(same) == 1:
                         fst = same[0]
                 if fst == None:
-                    while fst == None:
+                    while fst == None and len(calculated_matches.get(key)) > 0:
                         key_values = calculated_matches.get(key)
                         if len(key_values) > 0:
                             if check_if_already_has_most_similar(key, list(key_values.keys())[0], key_values.get(list(key_values.keys())[0]), selected_values) == True:
@@ -240,8 +242,10 @@ def select_most_similar(calculated_matches, selected_values, selected):
                             return select_most_similar(calculated_matches, selected_values, selected)
                 else:
                     selected_values[key] = {}
+                    return select_most_similar(calculated_matches, selected_values, selected)
             else:
                 selected_values[key] = {}
+                return select_most_similar(calculated_matches, selected_values, selected)
     return selected_values
 
 
