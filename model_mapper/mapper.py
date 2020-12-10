@@ -183,8 +183,6 @@ def check_if_already_has_most_similar(key, option, value, selected_values):
 
 def select_most_similar(calculated_matches, selected_values, selected):
     for key in calculated_matches:
-        calculated_matches[key] = {k: v for k, v in sorted(
-            calculated_matches.get(key).items(), key=lambda item: item[1], reverse=True)}
         if key not in selected_values:
             key_values = calculated_matches.get(key)
             values = list(key_values.values())
@@ -569,8 +567,13 @@ def run_mapper():
     ci_similarity = calculate_class_similarity(cmdb_ci_types, db_ci_types)
     print()
     print("Similaridade dos CIs")
+    for key in ci_similarity:
+        ci_similarity[key] = {k: v for k, v in sorted(
+            ci_similarity.get(key).items(), key=lambda item: item[1], reverse=True)}
     print(ci_similarity)
     similar_ci = select_most_similar(ci_similarity, {}, [])
+    print("\n----------------")
+    print(similar_ci)
 
     print(blue + "\n>>> " + reset + "Calculating relationship types similarity...")
     rel_similarity = calculate_class_similarity(cmdb_rel_types, db_rel_types)
