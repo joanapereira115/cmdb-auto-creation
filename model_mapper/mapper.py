@@ -106,17 +106,14 @@ def calculate_class_similarity(cmdb_types, db_types):
     return class_similarity
 
 
-def select_option(option1, option2, choice):
+def select_option(options, choice):
     """
     Asks the user what option he thinks is more similar with the term being compared.
 
     Parameters
     ----------
-    option1 : string
-        One option.
-
-    option2 : string
-        The other option.
+    option1 : list
+        The list of options.
 
     choice : string
         The term being compared with the options.
@@ -126,36 +123,22 @@ def select_option(option1, option2, choice):
     string
         The option selected by the user.
     """
-    question = [
-        {
-            'type': 'list',
-            'message': 'The similarities between \'' + choice + '\' with \'' + option1 + '\' and \'' + option2 + '\' are equal. Choose the one to consider.',
-            'name': 'option',
-            'choices': [{'name': option1}, {'name': option2}]
-        }
-    ]
-
-    answer = prompt(question, style=style)
-    return answer.get("option")
-
-
-def select_option_2(options, choice):
     choices = []
     txt = ""
     last = len(options) - 1
     for opt in options:
         if options.index(opt) == 0:
-            txt += " " + str(opt)
+            txt += "'" + str(opt) + "'"
         elif options.index(opt) == last:
-            txt += " and " + str(opt) + " "
+            txt += " and '" + str(opt) + "'"
         else:
-            txt += " ," + str(opt)
+            txt += ", '" + str(opt) + "'"
         choices.append({'name': opt})
 
     question = [
         {
             'type': 'list',
-            'message': 'The similarities between \'' + choice + '\' with \'' + txt + '\' are equal. Choose the one to consider.',
+            'message': 'The similarities between \'' + choice + '\' with ' + txt + ' are equal. Choose the one to consider.',
             'name': 'option',
             'choices': choices
         }
@@ -173,7 +156,7 @@ def check_if_already_has_most_similar(key, option, value, selected_values):
             existing_value = selected_values.get(k).get(option)
             existing_key = k
     if existing_value == -1:
-        return key
+        return False
     else:
         if existing_value <= value:
             return False
@@ -182,6 +165,25 @@ def check_if_already_has_most_similar(key, option, value, selected_values):
 
 
 def select_most_similar(calculated_matches, selected_values, selected):
+    """
+    Selects the most similar terms between the similarity values calculated from the CMDB and the database terms.
+
+    Parameters
+    ----------
+    calculated_matches : dict
+        The similarity values calculated.
+
+    v : dict
+        The most similar selected and the correspondent value.
+
+    m : list
+        The most similar selected.
+
+    Returns
+    -------
+    dict
+        Returns the most similar terms correspondence.
+    """
     for key in calculated_matches:
         if key not in selected_values:
             key_values = calculated_matches.get(key)
@@ -190,21 +192,28 @@ def select_most_similar(calculated_matches, selected_values, selected):
             if len(values) > 0:
                 if values.count(values[0]) > 1:
                     same = [x for x in key_values if key_values[x] == values[0]]
+                    rem = []
                     for s in same:
-                        if check_if_already_has_most_similar(key, s, values[0], selected_values) == True:
-                            same.remove(s)
-                            calculated_matches.get(key).pop(s, None)
+                        if s in selected:
+                            if check_if_already_has_most_similar(key, s, values[0], selected_values) == True:
+                                rem.append(s)
+                                del calculated_matches[key][s]
+                    for r in rem:
+                        same.remove(r)
                     if len(same) > 1:
-                        fst = select_option_2(same, key)
+                        fst = select_option(same, key)
                     elif len(same) == 1:
                         fst = same[0]
                 if fst == None:
                     while fst == None and len(calculated_matches.get(key)) > 0:
                         key_values = calculated_matches.get(key)
                         if len(key_values) > 0:
-                            if check_if_already_has_most_similar(key, list(key_values.keys())[0], key_values.get(list(key_values.keys())[0]), selected_values) == True:
-                                calculated_matches.get(key).pop(
-                                    list(key_values.keys())[0], None)
+                            if list(key_values.keys())[0] in selected:
+                                if check_if_already_has_most_similar(key, list(key_values.keys())[0], key_values.get(list(key_values.keys())[0]), selected_values) == True:
+                                    calculated_matches.get(key).pop(
+                                        list(key_values.keys())[0], None)
+                                else:
+                                    fst = list(key_values.keys())[0]
                             else:
                                 fst = list(key_values.keys())[0]
                 if fst != None:
@@ -222,7 +231,7 @@ def select_most_similar(calculated_matches, selected_values, selected):
                                     k).get(fst)
 
                         if existing_value == calculated_matches.get(key).get(fst):
-                            sel = select_option_2([existing_key, key], fst)
+                            sel = select_option([existing_key, key], fst)
                             if sel == key:
                                 del selected_values[existing_key]
                                 del calculated_matches[existing_key][fst]
@@ -245,79 +254,6 @@ def select_most_similar(calculated_matches, selected_values, selected):
                 selected_values[key] = {}
                 return select_most_similar(calculated_matches, selected_values, selected)
     return selected_values
-
-
-"""
-def select_most_similar(calculated_matches, v, m):
-"""
-"""
-    Selects the most similar terms between the similarity values calculated from the CMDB and the database terms.
-
-    Parameters
-    ----------
-    calculated_matches : dict
-        The similarity values calculated.
-
-    v : dict
-        The most similar selected and the correspondent value.
-
-    m : list
-        The most similar selected.
-
-    Returns
-    -------
-    dict
-        Returns the most similar terms correspondence.
-    """
-"""
-    existing_keys = []
-    for k in v:
-        existing_keys.append(list(v.get(k).keys())[0])
-    for key in calculated_matches:
-        if key not in existing_keys:
-            values = calculated_matches.get(key)
-            if len(values) > 0:
-                fst = list(values.keys())[0]
-                l = len(list(values.keys()))
-                i = 1
-                while i < l:
-                    # TODO: e não estiver no v o que está a ser comparado com um valor superior
-                    other = list(values.keys())[i]
-                    if values.get(fst) == values.get(other):
-                        selected = select_option(fst, other, key)
-                        fst = selected
-                        if selected == other:
-                            calculated_matches[key][fst], calculated_matches[key][
-                                other] = calculated_matches[key][other], calculated_matches[key][fst]
-                        i += 1
-                    else:
-                        i = l
-
-                if fst not in m:
-                    m.append(fst)
-                    v[fst] = {key: values.get(fst)}
-                else:
-                    prev = v.get(fst).get(list(v.get(fst).keys())[0])
-
-                    if values.get(fst) == prev:
-                        last = list(v.get(fst).keys())[0]
-                        print()
-                        selected = select_option(key, last, fst)
-                        if selected == key:
-                            del calculated_matches[last][fst]
-                            v[fst] = {key: values.get(fst)}
-                            return select_most_similar(calculated_matches, v, m)
-                        else:
-                            del calculated_matches[key][fst]
-                            return select_most_similar(calculated_matches, v, m)
-
-                    if values.get(fst) > prev:
-                        last = list(v.get(fst).keys())[0]
-                        del calculated_matches[last][fst]
-                        v[fst] = {key: values.get(fst)}
-                        return select_most_similar(calculated_matches, v, m)
-    return v
-"""
 
 
 def calculate_attribute_similarity(similars, cmdb_attributes, db_attributes):
@@ -565,38 +501,125 @@ def run_mapper():
     print(blue + "\n>>> " + reset +
           "Calculating configuration item types similarity...")
     ci_similarity = calculate_class_similarity(cmdb_ci_types, db_ci_types)
-    print()
-    print("Similaridade dos CIs")
+
+    new_ci_similarity = {}
     for key in ci_similarity:
-        ci_similarity[key] = {k: v for k, v in sorted(
+        new_ci_similarity[key] = {k: v for k, v in sorted(
             ci_similarity.get(key).items(), key=lambda item: item[1], reverse=True)}
-    print(ci_similarity)
+    order = {}
+    for key in ci_similarity:
+        order[key] = ci_similarity.get(key).get(
+            list(ci_similarity.get(key).keys())[0])
+    order = {k: v for k, v in sorted(
+        order.items(), key=lambda item: item[1], reverse=True)}
+    ci_similarity = {}
+    for key in order:
+        ci_similarity[key] = new_ci_similarity.get(key)
+
     similar_ci = select_most_similar(ci_similarity, {}, [])
-    print("\n----------------")
+    new_similar_ci = {}
+    for key in similar_ci:
+        if len(similar_ci.get(key)) > 0:
+            new_similar_ci[key] = similar_ci.get(key)
+    similar_ci = new_similar_ci
+
+    print()
+    print("SIMILAR CI'S:")
     print(similar_ci)
 
     print(blue + "\n>>> " + reset + "Calculating relationship types similarity...")
     rel_similarity = calculate_class_similarity(cmdb_rel_types, db_rel_types)
-    print()
-    print("Similaridade dos Rels")
-    print(rel_similarity)
+
+    new_rel_similarity = {}
+    for key in rel_similarity:
+        new_rel_similarity[key] = {k: v for k, v in sorted(
+            rel_similarity.get(key).items(), key=lambda item: item[1], reverse=True)}
+    order = {}
+    for key in rel_similarity:
+        order[key] = rel_similarity.get(key).get(
+            list(rel_similarity.get(key).keys())[0])
+    order = {k: v for k, v in sorted(
+        order.items(), key=lambda item: item[1], reverse=True)}
+    rel_similarity = {}
+    for key in order:
+        rel_similarity[key] = new_rel_similarity.get(key)
+
     similar_rel = select_most_similar(rel_similarity, {}, [])
+    new_similar_rel = {}
+    for key in similar_rel:
+        if len(similar_rel.get(key)) > 0:
+            new_similar_rel[key] = similar_rel.get(key)
+    similar_rel = new_similar_rel
+
+    print()
+    print("SIMILAR REL'S:")
+    print(similar_rel)
 
     print(blue + "\n>>> " + reset +
           "Calculating configuration item attributes similarity...")
     attr_ci_similarity = calculate_attribute_similarity(
         similar_ci, cmdb_ci_attributes, db_ci_attributes)
 
+    new_attr_ci_similarity = {}
+    for key in attr_ci_similarity:
+        new_attr_ci_similarity[key] = {k: v for k, v in sorted(
+            attr_ci_similarity.get(key).items(), key=lambda item: item[1], reverse=True)}
+    order = {}
+    for key in attr_ci_similarity:
+        if len(attr_ci_similarity.get(key)) > 0:
+            order[key] = attr_ci_similarity.get(key).get(
+                list(attr_ci_similarity.get(key).keys())[0])
+    order = {k: v for k, v in sorted(
+        order.items(), key=lambda item: item[1], reverse=True)}
+    attr_ci_similarity = {}
+    for key in order:
+        attr_ci_similarity[key] = new_attr_ci_similarity.get(key)
+
     print(blue + "\n>>> " + reset +
           "Calculating relationship attributes similarity...")
     attr_rel_similarity = calculate_attribute_similarity(
         similar_rel, cmdb_rel_attributes, db_rel_attributes)
 
+    new_attr_rel_similarity = {}
+    for key in attr_rel_similarity:
+        new_attr_rel_similarity[key] = {k: v for k, v in sorted(
+            attr_rel_similarity.get(key).items(), key=lambda item: item[1], reverse=True)}
+    order = {}
+    for key in attr_rel_similarity:
+        if len(attr_rel_similarity.get(key)) > 0:
+            order[key] = attr_rel_similarity.get(key).get(
+                list(attr_rel_similarity.get(key).keys())[0])
+    order = {k: v for k, v in sorted(
+        order.items(), key=lambda item: item[1], reverse=True)}
+    attr_rel_similarity = {}
+    for key in order:
+        attr_rel_similarity[key] = new_attr_rel_similarity.get(key)
+
     similar_attr_ci = {x: select_most_similar(
         attr_ci_similarity.get(x), {}, []) for x in attr_ci_similarity}
 
+    new_similar_attr_ci = {}
+    for key in similar_attr_ci:
+        if len(similar_attr_ci.get(key)) > 0:
+            new_similar_attr_ci[key] = similar_attr_ci.get(key)
+    similar_attr_ci = new_similar_attr_ci
+
+    print()
+    print("SIMILAR CI ATTRIBUTES:")
+    print(similar_attr_ci)
+
     similar_attr_rel = {y: select_most_similar(
         attr_rel_similarity.get(y), {}, []) for y in attr_rel_similarity}
+
+    new_similar_attr_rel = {}
+    for key in similar_attr_rel:
+        if len(similar_attr_rel.get(key)) > 0:
+            new_similar_attr_rel[key] = similar_attr_rel.get(key)
+    similar_attr_rel = new_similar_attr_rel
+
+    print()
+    print("SIMILAR REL ATTRIBUTES:")
+    print(similar_attr_rel)
 
     present_map(cmdb_ci_types, db_ci_types, cmdb_rel_types, db_rel_types, cmdb_ci_attributes, db_ci_attributes, cmdb_rel_attributes, db_rel_attributes, similar_ci, similar_rel,
                 similar_attr_ci, similar_attr_rel)
