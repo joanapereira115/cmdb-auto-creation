@@ -509,8 +509,9 @@ def run_mapper():
             ci_similarity.get(key).items(), key=lambda item: item[1], reverse=True)}
     order = {}
     for key in new_ci_similarity:
-        order[key] = new_ci_similarity.get(key).get(
-            list(new_ci_similarity.get(key).keys())[0])
+        if len(new_ci_similarity.get(key)) > 0:
+            order[key] = new_ci_similarity.get(key).get(
+                list(new_ci_similarity.get(key).keys())[0])
     order = {k: v for k, v in sorted(
         order.items(), key=lambda item: item[1], reverse=True)}
     ci_similarity = {}
@@ -533,8 +534,9 @@ def run_mapper():
             rel_similarity.get(key).items(), key=lambda item: item[1], reverse=True)}
     order = {}
     for key in new_rel_similarity:
-        order[key] = new_rel_similarity.get(key).get(
-            list(new_rel_similarity.get(key).keys())[0])
+        if len(new_rel_similarity.get(key)) > 0:
+            order[key] = new_rel_similarity.get(key).get(
+                list(new_rel_similarity.get(key).keys())[0])
     order = {k: v for k, v in sorted(
         order.items(), key=lambda item: item[1], reverse=True)}
     rel_similarity = {}
