@@ -1,3 +1,10 @@
 DESCRIPTION OF TEST 1:
 
+Topologia: dual attach
+Fonte externa: não
+Endereço: 192.168.121.0/24
+Categorias: sistemas operativos
+CMDB: i-doit via API
+Threshold: 0.7
+
 

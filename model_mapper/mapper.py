@@ -76,7 +76,8 @@ def calc_similars(cmdb, db):
     for c1 in cmdb:
         l = {}
         for c2 in db:
-            l[db.get(c2)] = similarity.calculate_similarity(c1, c2)
+            if similarity.calculate_similarity(c1, c2) != 0:
+                l[db.get(c2)] = similarity.calculate_similarity(c1, c2)
         l_sort = {k: v for k, v in sorted(
             l.items(), key=lambda item: item[1], reverse=True)}
         res[cmdb.get(c1)] = l_sort
@@ -576,6 +577,10 @@ def run_mapper():
         for key in order.get(o):
             attr_ci_similarity[o][key] = new_attr_ci_similarity.get(o).get(key)
 
+    print()
+    print("SIMILARITY:")
+    print(attr_ci_similarity)
+
     similar_attr_ci = {x: select_most_similar(
         attr_ci_similarity.get(x), {}, []) for x in attr_ci_similarity}
 
@@ -584,6 +589,10 @@ def run_mapper():
         if len(similar_attr_ci.get(key)) > 0:
             new_similar_attr_ci[key] = similar_attr_ci.get(key)
     similar_attr_ci = new_similar_attr_ci
+
+    print()
+    print("MOST SIMILARS:")
+    print(similar_attr_ci)
 
     print(blue + "\n>>> " + reset +
           "Calculating relationship attributes similarity...")

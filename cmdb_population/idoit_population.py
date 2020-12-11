@@ -156,7 +156,7 @@ def create_idoit_ci(ci_type, ci_attrs, rules_ci_types, rules_ci_attributes, ci_a
         if "result" in create_ci:
             success = create_ci.get("result").get("success")
             if success == True:
-                print(green + "\n>>> " + reset +
+                print(green + ">>> " + reset +
                       "Object of type " + str(cmdb_type) + " created successfully in the CMDB.")
                 cmdb_id = create_ci.get("result").get("id")
 
@@ -275,7 +275,7 @@ def create_idoit_relationship(rel_type, rel_attrs, rules_rel_types, rules_rel_at
             if "result" in create_rel:
                 success = create_rel.get("result").get("success")
                 if success == True:
-                    print(green + "\n>>> " + reset +
+                    print(green + ">>> " + reset +
                           "Object of type " + str(cmdb_type) + " created successfully in the CMDB.")
                     cmdb_id = create_rel.get("result").get("id")
 
