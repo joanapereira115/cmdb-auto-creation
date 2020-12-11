@@ -129,14 +129,14 @@ def test_api_connection(server, username, password, api_key):
         login = login_request.json()
         if "error" in login:
             print(red + "\n>>> " + reset +
-                  "Unable to connect to the API. Please verify the connection information.\n")
+                  "Unable to connect to the API. Please verify the connection information.")
             return False
         else:
-            print(green + "\n>>> " + reset + "Successfully connected.\n")
+            print(green + "\n>>> " + reset + "Successfully connected.")
             return True
     except requests.exceptions.RequestException:
         print(red + "\n>>> " + reset +
-              "Unable to connect to the API. Please verify the connection information.\n")
+              "Unable to connect to the API. Please verify the connection information.")
         return False
 
 

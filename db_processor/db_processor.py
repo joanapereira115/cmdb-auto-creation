@@ -182,6 +182,8 @@ def process_db_data_model(db_info):
     global prefix
     prefix = 'prefix : <http://www.semanticweb.org/cmdb_auto_creation/2020/cmdb#>'
 
+    print(blue + "\n>>> " + reset + "Processing GraphDB data model...")
+
     ci_types = get_ci_types()
     rel_types = get_relation_types()
 

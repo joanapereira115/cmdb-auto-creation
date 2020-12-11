@@ -118,14 +118,14 @@ def test_db_connection(server, port, repository):
                                connection.text, regex.IGNORECASE)
         if unknown != None:
             print(red + "\n>>> " + reset +
-                  "Unknown repository. Please verify the connection information.\n")
+                  "Unknown repository. Please verify the connection information.")
             return False
         else:
-            print(green + "\n>>> " + reset + "Successfully connected.\n")
+            print(green + "\n>>> " + reset + "Successfully connected.")
             return True
     except requests.exceptions.RequestException:
         print(red + "\n>>> " + reset +
-              "Unable to connect to GraphDB. Please verify the connection information.\n")
+              "Unable to connect to GraphDB. Please verify the connection information.")
         return False
 
 
