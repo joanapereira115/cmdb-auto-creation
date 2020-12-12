@@ -562,6 +562,10 @@ def run_mapper():
             new_attr_ci_similarity[cmdb_t][key] = {k: v for k, v in sorted(
                 attr_ci_similarity.get(cmdb_t).get(key).items(), key=lambda item: item[1], reverse=True)}
 
+    print()
+    print("FIRST ORDER:")
+    print(new_attr_ci_similarity)
+
     order = {}
     for cmdb_t in new_attr_ci_similarity:
         order[cmdb_t] = {}
