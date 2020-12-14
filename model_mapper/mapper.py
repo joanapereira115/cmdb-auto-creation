@@ -562,10 +562,6 @@ def run_mapper():
             new_attr_ci_similarity[cmdb_t][key] = {k: v for k, v in sorted(
                 attr_ci_similarity.get(cmdb_t).get(key).items(), key=lambda item: item[1], reverse=True)}
 
-    print()
-    print("FIRST ORDER:")
-    print(new_attr_ci_similarity)
-
     order = {}
     for cmdb_t in new_attr_ci_similarity:
         order[cmdb_t] = {}
@@ -583,10 +579,6 @@ def run_mapper():
         for key in order.get(o):
             attr_ci_similarity[o][key] = new_attr_ci_similarity.get(o).get(key)
 
-    print()
-    print("SIMILARITY:")
-    print(attr_ci_similarity)
-
     similar_attr_ci = {x: select_most_similar(
         attr_ci_similarity.get(x), {}, []) for x in attr_ci_similarity}
 
@@ -595,10 +587,6 @@ def run_mapper():
         if len(similar_attr_ci.get(key)) > 0:
             new_similar_attr_ci[key] = similar_attr_ci.get(key)
     similar_attr_ci = new_similar_attr_ci
-
-    print()
-    print("MOST SIMILARS:")
-    print(similar_attr_ci)
 
     print(blue + "\n>>> " + reset +
           "Calculating relationship attributes similarity...")

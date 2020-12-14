@@ -151,43 +151,45 @@ def detailed_discovery(categories):
     categories : list
         The list of categories selected by the user to explore.
     """
-    unlock_vault()
+    if len(categories) > 0:
+        unlock_vault()
 
-    for ip in discovery_info.get("ip_addresses"):
-        names = vault.get_names()
-        if ip not in names:
-            user = ask_username(ip)
-            pwd = ask_password(ip)
-            vault.add_secret(ip, user, pwd)
+        for ip in discovery_info.get("ip_addresses"):
+            names = vault.get_names()
+            if ip not in names:
+                user = ask_username(ip)
+                pwd = ask_password(ip)
+                vault.add_secret(ip, user, pwd)
 
-    for ip in discovery_info.get("ip_addresses"):
-        if ip not in discovery_info.get("visited_addresses"):
-            discovery_info["visited_addresses"].append(ip)
+        for ip in discovery_info.get("ip_addresses"):
+            if ip not in discovery_info.get("visited_addresses"):
+                discovery_info["visited_addresses"].append(ip)
 
-            user = vault.show_username_by_name(ip)
-            pwd = vault.show_secret_by_name(ip)
+                user = vault.show_username_by_name(ip)
+                pwd = vault.show_secret_by_name(ip)
 
-            new_ci = ConfigurationItem.ConfigurationItem()
-            new_ci.add_ipv4_address(ip)
-            ci = methods.ci_already_exists(new_ci)
-            if ci == None:
-                ci = new_ci
+                new_ci = ConfigurationItem.ConfigurationItem()
+                new_ci.add_ipv4_address(ip)
+                ci = methods.ci_already_exists(new_ci)
+                if ci == None:
+                    ci = new_ci
 
-            ci_os = check_os(ci)
+                ci_os = check_os(ci)
 
-            if ci_os == "mac":
-                print(blue + ">>> " + reset +
-                      "Discovery in the OS X machine with the address " + str(ip) + "...\n")
-                os_x.run_os_x_discovery(ci, user, pwd, ip, categories)
+                if ci_os == "mac":
+                    print(blue + ">>> " + reset +
+                          "Discovery in the OS X machine with the address " + str(ip) + "...\n")
+                    os_x.run_os_x_discovery(ci, user, pwd, ip, categories)
 
-            elif ci_os == "windows":
-                print(blue + ">>> " + reset +
-                      "Discovery in the Windows machine with the address " + str(ip) + "...\n")
-                windows.run_windows_discovery(ci, user, pwd, ip, categories)
+                elif ci_os == "windows":
+                    print(blue + ">>> " + reset +
+                          "Discovery in the Windows machine with the address " + str(ip) + "...\n")
+                    windows.run_windows_discovery(
+                        ci, user, pwd, ip, categories)
 
-            elif ci_os == "linux":
-                print(blue + ">>> " + reset +
-                      "Discovery in the Linux machine with the address " + str(ip) + "...\n")
-                linux.run_linux_discovery(ci, user, pwd, ip, categories)
+                elif ci_os == "linux":
+                    print(blue + ">>> " + reset +
+                          "Discovery in the Linux machine with the address " + str(ip) + "...\n")
+                    linux.run_linux_discovery(ci, user, pwd, ip, categories)
 
-            methods.add_ci(ci)
+                methods.add_ci(ci)
