@@ -181,7 +181,7 @@ def basic_discovery():
     """
     rem = []
 
-    packets.explore_packets()
+    # packets.explore_packets()
 
     unlock_vault()
     define_snmp_community()
