@@ -88,7 +88,7 @@ def run_nmap(ip):
             ports = nm[h][proto].keys()
             for port in ports:
                 port_type = methods.add_ci_type(
-                    ConfigurationItemType.ConfigurationItemType("Port"))
+                    ConfigurationItemType.ConfigurationItemType("Logical Port"))
                 p = ConfigurationItem.ConfigurationItem()
                 p.set_type(port_type.get_id())
                 p.set_title(port)

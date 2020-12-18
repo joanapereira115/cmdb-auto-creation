@@ -40,6 +40,7 @@ def processing_discovery(client, ci):
         obj.set_type(cpu_type.get_id())
 
         obj.set_title(hw_info.get("cpu_type"))
+        methods.define_attribute("CPU", hw_info.get("cpu_type"), ci)
         methods.define_attribute("Speed", hw_info.get(
             "current_processor_speed"), obj)
         methods.define_attribute("Number of Cores",
@@ -83,6 +84,7 @@ def processing_discovery(client, ci):
             obj.set_type(graph_type.get_id())
 
             obj.set_title(graph.get("_name"))
+            methods.define_attribute("GPU", graph.get("_name"), ci)
 
             methods.define_attribute("Chipset Model", graph.get(
                 "sppci_model"), obj)

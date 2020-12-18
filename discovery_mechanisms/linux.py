@@ -5,7 +5,7 @@ from colored import fg, attr
 import paramiko
 
 from models import methods
-from .linux_discovery import operating_system
+from .linux_discovery import operating_system, processing, storage, software, devices
 
 blue = fg('#46B1C9')
 red = fg('#B54653')
@@ -79,7 +79,19 @@ def run_linux_discovery(ci, user, pwd, ip, categories):
         if 'operating systems' in categories:
             operating_system.os_discovery(client, ci)
 
-        # TODO: implement the other discovery mechanisms ('services', 'devices', 'virtual machines', 'databases', 'processing', 'containers', 'cloud systems', 'documents', 'people', 'location', 'storage', 'software', 'hardware', 'network')
+        if 'processing' in categories:
+            processing.processing_discovery(client, ci)
+
+        if 'storage' in categories:
+            storage.storage_discovery(client, ci)
+
+        if 'software' in categories:
+            software.sw_discovery(client, ci)
+
+        if 'devices' in categories:
+            devices.devices_discovery(client, ci)
+
+        # TODO: implement the other discovery mechanisms ('services', 'virtual machines', 'databases', 'containers', 'cloud systems', 'documents', 'people', 'location', 'hardware', 'network')
 
     client.close()
     return ok
