@@ -2,7 +2,6 @@
 
 import re
 import string
-from stringcase import sentencecase
 from nltk.corpus import stopwords
 from unit_converter.converter import convert, converts
 
@@ -75,6 +74,8 @@ acronyms_db = {
     'ietf': 'internet engineering task force',
     'imap': 'internet message access protocol',
     'ip': 'internet protocol',
+    'ipv4': 'internet protocol version 4',
+    'ipv6': 'internet protocol version 6',
     'ipmi': 'intelligent platform management interface',
     'ips': 'intrusion prevention system',
     'is-is': 'intermediate system-intermediate system',
@@ -214,15 +215,15 @@ def remove_style_case(text):
     new_words = []
     for w in words:
         snake_case = re.search("_", w)
-        if snake_case != None:
-            w = sentencecase(w)
         kebab_case = re.search("-", w)
-        if kebab_case != None:
-            w = sentencecase(w)
         camelOrPascalCase = re.search(r"[a-z][A-Z]", w)
-        if camelOrPascalCase != None:
-            text = re.sub(r'([a-z])([A-Z])', r'\1 \2', str(text))
-            text = re.sub(r'([A-Z]+)([A-Z][a-z])', r'\1 \2', str(text))
+        if snake_case != None:
+            w = re.sub(r'_', r' ', str(w))
+        elif kebab_case != None:
+            w = re.sub(r'-', r' ', str(w))
+        elif camelOrPascalCase != None:
+            text = re.sub(r'([a-z])([A-Z])', r'\1 \2', str(w))
+            w = re.sub(r'([A-Z]+)([A-Z][a-z])', r'\1 \2', str(text))
         new_words.append(w)
     res = " ".join(new_words)
     return res

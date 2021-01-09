@@ -73,6 +73,11 @@ def password_already_definined():
 
 
 def unlock(attempt):
+    global db_conn
+    db_conn = sqlite3.connect(dbPath)
+    global cursor
+    cursor = db_conn.cursor()
+
     query = 'SELECT * FROM Passwords WHERE name = ?'
     entry = cursor.execute(query, ["vault"]).fetchone()
 
@@ -96,65 +101,132 @@ def add_secret(name, login, password):
 
     encrypted_pass = codecs.encode(password, 'rot-13')
 
-    if len(cursor.execute(entry_exist_query, [name]).fetchall()) >= 1:
-        print(red + "\n>>> " + reset + "Sorry, this name already exists.")
-        return False
+    try:
+        if len(cursor.execute(entry_exist_query, [name]).fetchall()) >= 1:
+            print(red + "\n>>> " + reset + "Sorry, this name already exists.")
+            return False
+    except sqlite3.ProgrammingError as e:
+        print(red + "\n>>> " + reset + "Vault is locked.")
 
-    cursor.execute(query, [name, login, encrypted_pass])
-    db_conn.commit()
-    print(green + "\n>>> " + reset + "Password added to the vault.")
-    return True
+    ok = False
+
+    try:
+        cursor.execute(query, [name, login, encrypted_pass])
+        ok = True
+    except sqlite3.ProgrammingError as e:
+        print(red + "\n>>> " + reset + "Vault is locked.")
+
+    if ok == True:
+        db_conn.commit()
+        print(green + "\n>>> " + reset + "Password added to the vault.")
+        return True
+    else:
+        return False
 
 
 def show_secrets(name):
     res = []
     query = 'SELECT * FROM Passwords WHERE name = ?'
-    entry = cursor.execute(query, [name]).fetchall()
-    for e in entry:
-        res.append(codecs.decode(e[2], 'rot-13'))
+    ok = False
 
-    return res
+    try:
+        entry = cursor.execute(query, [name]).fetchall()
+        ok = True
+    except sqlite3.ProgrammingError as e:
+        print(red + "\n>>> " + reset + "Vault is locked.")
+
+    if ok == True:
+        for e in entry:
+            res.append(codecs.decode(e[2], 'rot-13'))
+        return res
+    else:
+        return []
 
 
 def show_secret_by_name(name):
     query = 'SELECT * FROM Passwords WHERE name = ?'
-    entry = cursor.execute(query, [name]).fetchone()
+    ok = False
 
-    return codecs.decode(entry[2], 'rot-13')
+    try:
+        entry = cursor.execute(query, [name]).fetchone()
+        ok = True
+    except sqlite3.ProgrammingError as e:
+        print(red + "\n>>> " + reset + "Vault is locked.")
+
+    if ok == True:
+        return codecs.decode(entry[2], 'rot-13')
+    else:
+        return None
 
 
 def show_secret_by_username(username):
     query = 'SELECT * FROM Passwords WHERE username = ?'
-    entry = cursor.execute(query, [username]).fetchone()
+    ok = False
 
-    return codecs.decode(entry[2], 'rot-13')
+    try:
+        entry = cursor.execute(query, [username]).fetchone()
+        ok = True
+    except sqlite3.ProgrammingError as e:
+        print(red + "\n>>> " + reset + "Vault is locked.")
+
+    if ok == True:
+        return codecs.decode(entry[2], 'rot-13')
+    else:
+        return None
 
 
 def show_username_by_name(name):
     query = 'SELECT * FROM Passwords WHERE name = ?'
-    entry = cursor.execute(query, [name]).fetchone()
+    ok = False
 
-    return entry[1]
+    try:
+        entry = cursor.execute(query, [name]).fetchone()
+        ok = True
+    except sqlite3.ProgrammingError as e:
+        print(red + "\n>>> " + reset + "Vault is locked.")
+
+    if ok == True:
+        return entry[1]
+    else:
+        return None
 
 
 def get_usernames():
     res = []
     query = 'SELECT username FROM Passwords'
-    entry = cursor.execute(query, []).fetchall()
-    for e in entry:
-        res.append(e[0])
+    ok = False
 
-    return res
+    try:
+        entry = cursor.execute(query, []).fetchall()
+        ok = True
+    except sqlite3.ProgrammingError as e:
+        print(red + "\n>>> " + reset + "Vault is locked.")
+
+    if ok == True:
+        for e in entry:
+            res.append(e[0])
+        return res
+    else:
+        return []
 
 
 def get_names():
     res = []
     query = 'SELECT name FROM Passwords'
-    entry = cursor.execute(query, []).fetchall()
-    for e in entry:
-        res.append(e[0])
+    ok = False
 
-    return res
+    try:
+        entry = cursor.execute(query, []).fetchall()
+        ok = True
+    except sqlite3.ProgrammingError as e:
+        print(red + "\n>>> " + reset + "Vault is locked.")
+
+    if ok == True:
+        for e in entry:
+            res.append(e[0])
+        return res
+    else:
+        return []
 
 
 def lock():

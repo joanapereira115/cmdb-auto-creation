@@ -313,7 +313,7 @@ def get_attributes(table, db_name, cursor):
     return res
 
 
-def get_type(what, table, text):
+def get_type(what, table, text, at):
     """
     Calculates the data type of an attribute.
 
@@ -357,11 +357,13 @@ def get_type(what, table, text):
             else:
                 proc_enums[e] = normalization.parse_text_to_compare(e)
         if what == "ci":
-            cmdb_data_model["ci_dialog_attributes"][table] = {}
-            cmdb_data_model["ci_dialog_attributes"][table][text] = proc_enums
+            if table not in cmdb_data_model.get("ci_dialog_attributes"):
+                cmdb_data_model["ci_dialog_attributes"][table] = {}
+            cmdb_data_model["ci_dialog_attributes"][table][at] = proc_enums
         elif what == "rel":
-            cmdb_data_model["rel_dialog_attributes"][table] = {}
-            cmdb_data_model["rel_dialog_attributes"][table][text] = proc_enums
+            if table not in cmdb_data_model.get("rel_dialog_attributes"):
+                cmdb_data_model["rel_dialog_attributes"][table] = {}
+            cmdb_data_model["rel_dialog_attributes"][table][at] = proc_enums
         return "string"
     return "string"
 
@@ -403,8 +405,6 @@ def process_itop():
     """
     print(blue + "\n>>> " + reset + "Make sure that iTop is running.")
     db_info = db_specification()
-    api_info = api_specification()
-
     server = db_info.get("server")
     username = db_info.get("username")
     password = db_info.get("password")
@@ -413,7 +413,10 @@ def process_itop():
     connection = test_db_connection(server, db_name, username, password)
     if connection == None:
         return process_itop()
+
     else:
+        api_info = api_specification()
+
         api_server = api_info.get("url")
         api_username = api_info.get("username")
         api_password = api_info.get("password")
@@ -450,14 +453,15 @@ def process_itop():
                 attrs = get_attributes(ci_type, db_name, cursor)
                 proc_attrs = {}
                 types_attrs = {}
+                types_attrs[ci_type] = {}
                 for a in attrs:
                     if regex.search(r'_', a) == None:
                         proc_attrs[a] = normalization.parse_text_to_store(
                             " ".join(wordninja.split(a)))
                     else:
                         proc_attrs[a] = normalization.parse_text_to_store(a)
-                    types_attrs[ci_type] = get_type(
-                        "ci", ci_type, attrs.get(a))
+                    types_attrs[ci_type][a] = get_type(
+                        "ci", ci_type, attrs.get(a), a)
                 cmdb_data_model["ci_attributes"][ci_type] = proc_attrs
                 cmdb_data_model["ci_attributes_data_types"][ci_type] = types_attrs
 
@@ -465,16 +469,17 @@ def process_itop():
                 attrs = get_attributes(rel_type, db_name, cursor)
                 proc_attrs = {}
                 types_attrs = {}
+                types_attrs[rel_type] = {}
                 for a in attrs:
                     if regex.search(r'_', a) == None:
                         proc_attrs[a] = normalization.parse_text_to_store(
                             " ".join(wordninja.split(a)))
                     else:
                         proc_attrs[a] = normalization.parse_text_to_store(a)
-                    types_attrs[rel_type] = get_type(
-                        "rel", rel_type, attrs.get(a))
+                    types_attrs[rel_type][a] = get_type(
+                        "rel", rel_type, attrs.get(a), a)
                 cmdb_data_model["rel_attributes"][rel_type] = proc_attrs
-                cmdb_data_model["rel_attributes_data_types"][ci_type] = types_attrs
+                cmdb_data_model["rel_attributes_data_types"][rel_type] = types_attrs
 
             restrictions(cmdb_data_model["rel_attributes"])
 
