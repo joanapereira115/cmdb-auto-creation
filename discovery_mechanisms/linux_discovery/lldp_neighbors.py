@@ -2,6 +2,9 @@
 
 from colored import fg, attr
 import paramiko
+import re
+
+from models import ConfigurationItem, ConfigurationItemType, methods
 
 blue = fg('#46B1C9')
 red = fg('#B54653')
@@ -56,4 +59,30 @@ def find_lldp_neighbors(user, pwd, ip):
     if error != "":
         print(red + ">>> " + reset + str(error) + "\n")
     else:
-        print(stdout.readlines())
+        lldp_info = stdout.readlines()
+        neighbors = []
+        n = {}
+        for line in lldp_info:
+            if re.match(r'-------', line) != None:
+                if n != {}:
+                    neighbors.append(n)
+                else:
+                    n = {}
+            else:
+                n[line.split(":")[0].strip()] = ' '.join(
+                    line.split(":")[1:]).strip()
+
+        for nei in neighbors:
+            new_ci = ConfigurationItem.ConfigurationItem()
+            print()
+            for at in nei:
+                print(at)
+            """
+            tp = methods.add_ci_type(
+                ConfigurationItemType.ConfigurationItemType(""))
+            ci.set_type(tp.get_id())
+            new_ci.add_ipv4_address(ip)
+            ci = methods.ci_already_exists(new_ci)
+            if ci == None:
+                ci = new_ci
+            """
