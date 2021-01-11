@@ -209,24 +209,24 @@ def device_type(ip, community, ci):
     if l2 == "1":
         if l3 == "1":
             if has_bridge_mib(ip, community) == True:
-                ci_type = "L3 switch com Bridge MIB"
+                ci_type = "L3 Switch"
             else:
                 if l7 == "1":
-                    ci_type = "L7 application switch ou Router"
+                    ci_type = "L7 Application Switch"
                 else:
                     ci_type = "Router"
         else:
             if has_bridge_mib(ip, community) == True:
-                ci_type = "L2 switch"
+                ci_type = "L2 Switch"
             else:
                 ci_type = "Host"
     else:
         if l3 == "1":
             if l4 == "1":
-                ci_type = "L4 switch"
+                ci_type = "L4 Switch"
             else:
                 if l7 == "1":
-                    ci_type = "L7 application switch ou Router"
+                    ci_type = "L7 Application Switch"
                 else:
                     ci_type = "Router"
         else:

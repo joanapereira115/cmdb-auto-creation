@@ -1,7 +1,7 @@
 #!/bin/sh
-PYTHON_APPS="python3 export LC_ALL="en_US.UTF-8" python-dev python3-dev build-essential libssl-dev libffi-dev libxml2-dev libxslt1-dev zlib1g-dev portaudio19-dev libperl-dev gcc libsnmp-dev"
+PYTHON_APPS="python3.9 export LC_ALL=\"en_US.UTF-8\" python-setuptools python-scipy python-numpy libatlas-dev libatlas3-base python3.9-dev build-essential libssl-dev libffi-dev libxml2-dev libxslt1-dev zlib1g-dev portaudio19-dev libperl-dev gcc libsnmp-dev"
 SNMP_APPS="snmp snmp-mibs-downloader snmpd"
-LIST_OF_APPS="iputils-ping software-properties-common nmap wireshark"
+LIST_OF_APPS="iputils-ping software-properties-common nmap wireshark tshark"
 
 sudo apt update
 sudo apt install $SNMP_APPS
@@ -19,3 +19,11 @@ pip3 install -r requirements.txt
 python3 -m spacy download en_core_web_lg
 python3 -m nltk.downloader stopwords
 python3 -m nltk.downloader wordnet
+
+for i in `ls /sys/class/net/ | grep 'vnet\|eno'` ; do echo "enabling lldp for interface: $i" ; 
+lldptool set-lldp -i $i adminStatus=rxtx 
+sudo lldptool -T -i eno1 -V sysName enableTx=yes 
+sudo lldptool -T -i eno1 -V portDesc enableTx=yes  
+sudo lldptool -T -i eno1 -V sysDesc enableTx=yes
+sudo lldptool -T -i eno1 -V sysCap enableTx=yes
+sudo lldptool -T -i eno1 -V mngAddr enableTx=yes

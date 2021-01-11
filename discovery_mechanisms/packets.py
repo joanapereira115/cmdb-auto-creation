@@ -57,7 +57,7 @@ def get_packets(ifc):
           "Exploring packets in the interface " + str(ifc) + ".")
     capture = pyshark.LiveCapture(interface=ifc)
     try:
-        capture.sniff(timeout=20)
+        capture.sniff(packet_count=5, timeout=20)
     except:
         print(red + ">>> " + reset + "Error sniffing.")
     return capture

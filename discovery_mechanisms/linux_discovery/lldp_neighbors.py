@@ -60,6 +60,7 @@ def find_lldp_neighbors(user, pwd, ip):
         print(red + ">>> " + reset + str(error) + "\n")
     else:
         lldp_info = stdout.readlines()
+        lldp_info = lldp_info[3:]
         neighbors = []
         n = {}
         for line in lldp_info:
@@ -74,15 +75,40 @@ def find_lldp_neighbors(user, pwd, ip):
 
         for nei in neighbors:
             new_ci = ConfigurationItem.ConfigurationItem()
-            print()
-            for at in nei:
-                print(at)
-            """
-            tp = methods.add_ci_type(
-                ConfigurationItemType.ConfigurationItemType(""))
-            ci.set_type(tp.get_id())
-            new_ci.add_ipv4_address(ip)
+            cap = nei.get("Capability")
+            if cap != None and cap != "":
+                tp = methods.add_ci_type(
+                    ConfigurationItemType.ConfigurationItemType(cap))
+                new_ci.set_type(tp.get_id())
+
+            chassisid = nei.get("ChassisID")
+            sysname = nei.get("SysName")
+            descr = nei.get("SysDescr")
+            mac = nei.get("MgmtIP")
+
+            if chassisid != None and chassisid != "":
+                methods.define_attribute("chassis id", chassisid, new_ci)
+            if sysname != None and sysname != "":
+                methods.define_attribute("system name", sysname, new_ci)
+            if descr != None and descr != "":
+                new_ci.set_description(descr)
+            if mac != None and mac != "":
+                i = 0
+                new_mac = ""
+                for i in mac:
+                    if re.match(r'\d|\w', i) != None:
+                        if i < 2:
+                            i += 1
+                            new_mac += str(i)
+                        else:
+                            i = 0
+                            new_mac += ":" + str(i)
+
+                new_ci.set_mac_address(new_mac)
+
             ci = methods.ci_already_exists(new_ci)
+
             if ci == None:
                 ci = new_ci
-            """
+
+            methods.add_ci(ci)
