@@ -67,7 +67,7 @@ def check_if_file_exists(filename):
     boolean
         Returns true if the file exists in the 'external_data' folder, and false otherwise.
     """
-    file_path = os.path.abspath(os.getcwd()) + "/external_data/" + filename
+    file_path = os.path.abspath(os.getcwd()) + "/../external_data/" + filename
     return os.path.isfile(file_path)
 
 
@@ -98,7 +98,7 @@ def filename():
 def parse_info():
     import_file()
     fl = filename()
-    file_path = os.path.abspath(os.getcwd()) + "/external_data/" + fl
+    file_path = os.path.abspath(os.getcwd()) + "/../external_data/" + fl
 
     with open(file_path) as csv_file:
         csv_reader = csv.reader(csv_file, delimiter=',')

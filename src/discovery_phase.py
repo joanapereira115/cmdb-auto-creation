@@ -364,7 +364,6 @@ def run_discovery():
     external = external_data()
     if external == True:
         app = selecting_external()
-        print(app)
         if app == "Angry IP Scanner":
             angry_ip_scanner.parse_info()
 

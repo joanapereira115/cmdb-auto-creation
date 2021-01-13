@@ -17,12 +17,12 @@ def create_file():
     """
     If it doesn't exist, creates the .ttl file that will store the discovered info and the database structure.
     """
-    if not os.path.exists('graphdb-import'):
+    if not os.path.exists('../graphdb-import'):
         print(blue + "\n>>> " + reset + "Creating graphdb-import folder...")
-        os.makedirs('graphdb-import')
-    if not os.path.exists('graphdb-import/cmdb.ttl'):
+        os.makedirs('../graphdb-import')
+    if not os.path.exists('../graphdb-import/cmdb.ttl'):
         print(blue + "\n>>> " + reset + "Creating cmdb.ttl file...")
-        f = open('graphdb-import/cmdb.ttl', "x")
+        f = open('../graphdb-import/cmdb.ttl', "x")
         f.close()
 
 
@@ -30,7 +30,7 @@ def create_structure():
     """
     Writes the database structure to the .ttl file.
     """
-    f = open("graphdb-import/cmdb.ttl", "w")
+    f = open("../graphdb-import/cmdb.ttl", "w")
     f.write("""
 @prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
@@ -187,7 +187,7 @@ def create_ci_type(obj):
         id_ = obj.get_id()
         title = str(regex.sub(r'[\\()/]', "", obj.get_title()))
         if id_ != "" and title != "":
-            f = open("graphdb-import/cmdb.ttl", "a")
+            f = open("../graphdb-import/cmdb.ttl", "a")
             res += ":" + str(snakecase(title)) + str(id_) + \
                 " rdf:type :ConfigurationItemType ;\n\t :title \"" + \
                 str(title) + "\".\n"
@@ -217,7 +217,7 @@ def create_rel_type(obj):
         id_ = obj.get_id()
         title = str(regex.sub(r'[\\()/]', "", obj.get_title()))
         if id_ != "" and title != "":
-            f = open("graphdb-import/cmdb.ttl", "a")
+            f = open("../graphdb-import/cmdb.ttl", "a")
             res += ":" + str(snakecase(title)) + str(id_) + \
                 " rdf:type :RelationshipType ;\n\t :title \"" + \
                 str(title) + "\".\n"
@@ -249,7 +249,7 @@ def create_attribute(obj):
         value = str(regex.sub(r'\\', "", obj.get_value()))
 
         if id_ != "" and title != "":
-            f = open("graphdb-import/cmdb.ttl", "a")
+            f = open("../graphdb-import/cmdb.ttl", "a")
             res += ":" + str(id_) + str(snakecase(title)) + \
                 " rdf:type :Attribute ;\n"
             res += "\t :title \"" + str(title) + "\";\n"
@@ -295,7 +295,7 @@ def create_ci(obj, ci_types):
         type_id = obj.get_type()
         attributes = obj.get_attributes()
         if id_ != "" and type_id != "":
-            f = open("graphdb-import/cmdb.ttl", "a")
+            f = open("..graphdb-import/cmdb.ttl", "a")
             res += ":" + str(id_) + str(type_id) + str(snakecase(title)) + \
                 " rdf:type :ConfigurationItem "
             if title != "":
@@ -364,7 +364,7 @@ def create_rel(obj, rel_types, ci_ids):
         attributes = obj.get_attributes()
 
         if id_ != "" and type_id != "":
-            f = open("graphdb-import/cmdb.ttl", "a")
+            f = open("..graphdb-import/cmdb.ttl", "a")
             res += ":" + str(id_) + str(type_id) + \
                 str(snakecase(title)) + " rdf:type :Relationship "
             if title != "":
@@ -399,7 +399,7 @@ def parse_discovered():
     """
     Goes through the configuration item and relationship types, and configuration items and relationships created in the discovery.
     """
-    f = open("graphdb-import/cmdb.ttl", "a")
+    f = open("..graphdb-import/cmdb.ttl", "a")
 
     ci_types = {}
     for o in objects.objects.get("configuration_item_types"):
