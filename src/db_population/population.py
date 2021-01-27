@@ -295,7 +295,7 @@ def create_ci(obj, ci_types):
         type_id = obj.get_type()
         attributes = obj.get_attributes()
         if id_ != "" and type_id != "":
-            f = open("..graphdb-import/cmdb.ttl", "a")
+            f = open("../graphdb-import/cmdb.ttl", "a")
             res += ":" + str(id_) + str(type_id) + str(snakecase(title)) + \
                 " rdf:type :ConfigurationItem "
             if title != "":
@@ -364,7 +364,7 @@ def create_rel(obj, rel_types, ci_ids):
         attributes = obj.get_attributes()
 
         if id_ != "" and type_id != "":
-            f = open("..graphdb-import/cmdb.ttl", "a")
+            f = open("../graphdb-import/cmdb.ttl", "a")
             res += ":" + str(id_) + str(type_id) + \
                 str(snakecase(title)) + " rdf:type :Relationship "
             if title != "":
@@ -399,7 +399,7 @@ def parse_discovered():
     """
     Goes through the configuration item and relationship types, and configuration items and relationships created in the discovery.
     """
-    f = open("..graphdb-import/cmdb.ttl", "a")
+    f = open("../graphdb-import/cmdb.ttl", "a")
 
     ci_types = {}
     for o in objects.objects.get("configuration_item_types"):

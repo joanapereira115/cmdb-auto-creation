@@ -74,7 +74,8 @@ def storage_discovery(client, ci):
         print(red + ">>> " + reset + str(error) + "\n")
     else:
         storage = stdout.readlines()
-        storage_info = json.loads("".join(storage)).get('SPSerialATADataType')
+        storage_info = json.loads("".join(storage)).get(
+            'SPSerialATADataType')[0]
         storage_type = methods.add_ci_type(
             ConfigurationItemType.ConfigurationItemType(storage_info.get("spsata_product")))
         for s in storage_info.get("_items"):

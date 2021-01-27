@@ -28,7 +28,8 @@ def hw_discovery(client, ci):
         "networksetup -listallhardwareports")
     error = stderr.read().decode('utf-8')
     if error != "":
-        print(red + ">>> " + reset + str(error) + "\n")
+        print(red + ">>> " + reset +
+              "Error while collecting information about ports: " + str(error) + "\n")
     else:
         hw_ports = stdout.readlines()
         hw_ports_info = "".join(hw_ports).split("\n")
@@ -80,10 +81,11 @@ def hw_discovery(client, ci):
         "system_profiler SPPowerDataType -json")
     error = stderr.read().decode('utf-8')
     if error != "":
-        print(red + ">>> " + reset + str(error) + "\n")
+        print(red + ">>> " + reset +
+              "Error while collecting information about power: " + str(error) + "\n")
     else:
         power = stdout.readlines()
-        power_info = json.loads("".join(power)).get('SPPowerDataType')[0]
+        power_info = json.loads("".join(power)).get('SPPowerDataType')
         for pinfo in power_info:
             if pinfo.get("_name") == "spbattery_information":
                 battery_type = methods.add_ci_type(
@@ -259,6 +261,9 @@ def hw_discovery(client, ci):
                 methods.define_attribute(
                     "Wake On Clamshell Open", bat_info.get("Wake On Clamshell Open"), bat_obj)
 
+                methods.add_ci(ac_obj)
+                methods.add_ci(bat_obj)
+
             if pinfo.get("_name") == "sppower_ac_charger_information":
                 methods.define_attribute(
                     "family", pinfo.get("sppower_ac_charger_family"), ac_obj)
@@ -286,6 +291,7 @@ def hw_discovery(client, ci):
                 rel_ac_ci.title = str(ac_obj.get_title()) + \
                     " charger of " + str(ci.get_title())
 
+                methods.add_ci(ac_obj)
                 methods.add_rel(rel_ci_ac)
                 methods.add_rel(rel_ac_ci)
 ###########################################
@@ -293,7 +299,8 @@ def hw_discovery(client, ci):
         "system_profiler SPAudioDataType -json")
     error = stderr.read().decode('utf-8')
     if error != "":
-        print(red + ">>> " + reset + str(error) + "\n")
+        print(red + ">>> " + reset +
+              "Error while collecting information about audio: " + str(error) + "\n")
     else:
         audio = stdout.readlines()
         audio_info = json.loads("".join(audio)).get('SPAudioDataType')[0]
@@ -370,7 +377,8 @@ def hw_discovery(client, ci):
         "system_profiler SPCameraDataType -json")
     error = stderr.read().decode('utf-8')
     if error != "":
-        print(red + ">>> " + reset + str(error) + "\n")
+        print(red + ">>> " + reset +
+              "Error while collecting information about cameras: " + str(error) + "\n")
     else:
         cam = stdout.readlines()
         cam_info = json.loads("".join(cam)).get('SPCameraDataType')[0]

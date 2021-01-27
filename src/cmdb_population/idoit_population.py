@@ -105,7 +105,7 @@ def create_idoit_ci(ci_type, ci_attrs, rules_ci_types, rules_ci_attributes, ci_a
 
         for at in ci_attrs:
             cmdb_at = rules_ci_attributes.get(ci_type).get(at)
-            value = ci_attrs.get(at)
+            value = ci_attrs.get(at).strip("\"")
 
             if cmdb_type in ci_dialog_attributes:
                 if cmdb_at in ci_dialog_attributes.get(cmdb_type):
@@ -117,18 +117,20 @@ def create_idoit_ci(ci_type, ci_attrs, rules_ci_types, rules_ci_attributes, ci_a
                 if cmdb_at == "title":
                     has_title = True
                 if at_type == "text" or at_type == "text_area" or at_type == "date" or at_type == "date_time" or at_type == "json":
-                    cmdb_at_text += "\"" + cmdb_at + "\": \"" + value + "\","
+                    cmdb_at_text += '\"' + \
+                        str(cmdb_at) + '\": \"' + str(value) + '\", '
                 elif at_type == "int":
                     try:
-                        cmdb_at_text += "\"" + str(cmdb_at) + \
-                            "\": " + str(int(value)) + ","
+                        cmdb_at_text += '\"' + \
+                            str(cmdb_at) + '\": \"' + str(int(value)) + '\", '
                     except ValueError:
                         print(red + "\n>>> " + reset +
                               "Error converting string '" + str(value) + "' to int.")
                 elif at_type == "float" or at_type == "double":
                     try:
-                        cmdb_at_text += "\"" + str(cmdb_at) + \
-                            "\": " + str(float(value)) + ","
+                        cmdb_at_text += '\"' + \
+                            str(cmdb_at) + '\": \"' + \
+                            str(float(value)) + '\", '
                     except ValueError:
                         print(red + "\n>>> " + reset +
                               "Error converting string '" + str(value) + "' to float.")
@@ -137,7 +139,7 @@ def create_idoit_ci(ci_type, ci_attrs, rules_ci_types, rules_ci_attributes, ci_a
 
         if has_title == False:
             cmdb_at_text += "\"title\": \"" + ci_type + "\","
-        body = json.loads("""{"version\": \"2.0\",
+        body = json.loads("""{\"version\": \"2.0\",
             \"method\": \"cmdb.object.create\",
             \"params\": {
                 """ + cmdb_type_text + cmdb_at_text + """
@@ -219,7 +221,7 @@ def create_idoit_relationship(rel_type, rel_attrs, rules_rel_types, rules_rel_at
 
             for at in rel_attrs:
                 cmdb_at = rules_rel_attributes.get(rel_type).get(at)
-                value = rel_attrs.get(at)
+                value = rel_attrs.get(at).strip("\"")
 
                 if cmdb_type in rel_dialog_attributes:
                     if cmdb_at in rel_dialog_attributes.get(cmdb_type):

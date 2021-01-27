@@ -75,7 +75,7 @@ def network_discovery(client, ci):
     else:
         services = stdout.readlines()
         services_info = json.loads(
-            "".join(services)).get('SPNetworkDataType')[0]
+            "".join(services)).get('SPNetworkDataType')
         for serv in services_info:
             net_type = methods.add_ci_type(
                 ConfigurationItemType.ConfigurationItemType("Network Service"))
@@ -118,35 +118,36 @@ def network_discovery(client, ci):
             #dhcp_info = serv.get("dhcp")
             #dns_info = serv.get("DNS")
             ethernet_info = serv.get("Ethernet")
-            mac = ethernet_info.get("MAC Address")
-            obj.set_mac_address(mac)
+            if ethernet_info != None:
+                mac = ethernet_info.get("MAC Address")
+                obj.set_mac_address(mac)
 
-            ipv4_info = serv.get("IPv4")
-            for ipv4 in ipv4_info.get("Addresses"):
-                ci.add_ipv4_address(ipv4)
-                obj.add_ipv4_address(ipv4)
+                ipv4_info = serv.get("IPv4")
+                for ipv4 in ipv4_info.get("Addresses"):
+                    ci.add_ipv4_address(ipv4)
+                    obj.add_ipv4_address(ipv4)
 
-            ipv6_info = serv.get("IPv6")
-            for ipv6 in ipv6_info.get("Addresses"):
-                ci.add_ipv6_address(ipv6)
-                obj.add_ipv6_address(ipv6)
-            #proxies_info = serv.get("Proxies")
+                ipv6_info = serv.get("IPv6")
+                for ipv6 in ipv6_info.get("Addresses"):
+                    ci.add_ipv6_address(ipv6)
+                    obj.add_ipv6_address(ipv6)
+                #proxies_info = serv.get("Proxies")
 
-            rel_type_ci_obj = methods.add_rel_type(
-                RelationshipType.RelationshipType("has network service"))
-            rel_ci_obj = methods.create_relation(ci, obj, rel_type_ci_obj)
-            rel_ci_obj.title = str(ci.get_title()) + \
-                " has network service " + str(obj.get_title())
+                rel_type_ci_obj = methods.add_rel_type(
+                    RelationshipType.RelationshipType("has network service"))
+                rel_ci_obj = methods.create_relation(ci, obj, rel_type_ci_obj)
+                rel_ci_obj.title = str(ci.get_title()) + \
+                    " has network service " + str(obj.get_title())
 
-            rel_type_obj_ci = methods.add_rel_type(
-                RelationshipType.RelationshipType("running on"))
-            rel_obj_ci = methods.create_relation(obj, ci, rel_type_obj_ci)
-            rel_obj_ci.title = str(obj.get_title()) + \
-                " running on " + str(ci.get_title())
+                rel_type_obj_ci = methods.add_rel_type(
+                    RelationshipType.RelationshipType("running on"))
+                rel_obj_ci = methods.create_relation(obj, ci, rel_type_obj_ci)
+                rel_obj_ci.title = str(obj.get_title()) + \
+                    " running on " + str(ci.get_title())
 
-            methods.add_ci(obj)
-            methods.add_rel(rel_ci_obj)
-            methods.add_rel(rel_obj_ci)
+                methods.add_ci(obj)
+                methods.add_rel(rel_ci_obj)
+                methods.add_rel(rel_obj_ci)
 ###########################################
 
     # TODO: $ system_profiler SPNetworkLocationDataType

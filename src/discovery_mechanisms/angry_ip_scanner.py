@@ -140,6 +140,7 @@ def parse_info():
                 if 'MAC Vendor' in names:
                     vendor = row[names.index('MAC Vendor')]
                     if vendor != "" and vendor != "[n/a]" and vendor != "[n/s]":
+                        methods.define_attribute("vendor", vendor, ci)
                         vendor_type = methods.add_ci_type(
                             ConfigurationItemType.ConfigurationItemType("Vendor"))
                         vendor_obj = ConfigurationItem.ConfigurationItem()

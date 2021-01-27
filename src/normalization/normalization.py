@@ -293,7 +293,16 @@ def acronym(text):
     string
         Returns the text parsed.
     """
-    return ' '.join([acronyms_db.get(i, i) for i in str(text).split()])
+    result = ' '.join([acronyms_db.get(i, i) for i in str(text).split()])
+    if re.match(r"media access control operating system x", result, re.IGNORECASE):
+        result = re.sub(
+            "media access control operating system x", "mac os x", result)
+    if re.match(r"media access control operating system", result, re.IGNORECASE):
+        result = re.sub(
+            "media access control operating system", "mac os", result)
+    if re.match(r"operating system x", result, re.IGNORECASE):
+        result = re.sub("operating system x", "os x", result)
+    return result
 
 
 def parse_text_to_store(text):

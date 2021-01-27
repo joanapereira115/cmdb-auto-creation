@@ -68,7 +68,7 @@ def define_snmp_community():
         more_community = [
             {
                 'type': 'list',
-                'message': 'Do you want to specify another SNMP community string?',
+                'message': 'Do you want to specify another SNMP community string? ("public" is the default)',
                 'name': 'more',
                 'choices': [{'name': 'Yes'}, {'name': 'No'}]
             }
@@ -90,19 +90,32 @@ def define_snmp_community():
             vault.add_secret('SNMP', "SNMP", community)
             define_snmp_community()
     else:
+        vault.add_secret('SNMP', "SNMP", "public")
         print()
-        community = [
+        more_community = [
             {
-                'type': 'password',
-                'message': 'Enter your SNMP devices\' community string:',
-                'name': 'community',
-                'validate': NotEmpty
+                'type': 'list',
+                'message': 'Do you want to specify another SNMP community string? ("public" is the default)',
+                'name': 'more',
+                'choices': [{'name': 'Yes'}, {'name': 'No'}]
             }
         ]
-        community_answer = prompt(community, style=style)
-        community = community_answer.get("community")
-        vault.add_secret('SNMP', "SNMP", community)
-        define_snmp_community()
+
+        more_community_answer = prompt(more_community, style=style)
+        if more_community_answer.get('more') == "Yes":
+            print()
+            community = [
+                {
+                    'type': 'password',
+                    'message': 'Enter your SNMP devices\' community string:',
+                    'name': 'community',
+                    'validate': NotEmpty
+                }
+            ]
+            community_answer = prompt(community, style=style)
+            community = community_answer.get("community")
+            vault.add_secret('SNMP', "SNMP", community)
+            define_snmp_community()
 
 
 def check_ip(ip):
@@ -181,7 +194,7 @@ def basic_discovery():
     """
     rem = []
 
-    # packets.explore_packets()
+    packets.explore_packets()
 
     unlock_vault()
     define_snmp_community()

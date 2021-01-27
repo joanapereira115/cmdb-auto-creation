@@ -148,7 +148,7 @@ class ConfigurationItem:
     def set_type(self, type_id):
         """Set the configuration item type identifier to the value passed."""
         if type_id != None:
-            self.type_id = type_id
+            self.type_id = int(type_id)
 
     def get_attributes(self):
         """Get the list of attributes identifiers of the configuration item."""
