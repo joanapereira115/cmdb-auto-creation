@@ -122,18 +122,20 @@ def addresses(ip, community, ci):
     ipAdEntNetMask = "1.3.6.1.2.1.4.20.1.3"
 
     ret = get_bulk(ip, ipAdEntAddr, community)
-    for r in ret:
-        for _, val in r:
-            ip = val.prettyPrint()
-            ci.add_ipv4_address(ip)
-            discovery_info.add_ip(ip)
+    if ret != None:
+        for r in ret:
+            for _, val in r:
+                ip = val.prettyPrint()
+                ci.add_ipv4_address(ip)
+                discovery_info.add_ip(ip)
 
     ret = get_bulk(ip, ipAdEntNetMask, community)
-    for r in ret:
-        for name, val in r:
-            ip = name.prettyPrint()[len("SNMPv2-SMI::mib-2.4.20.1.3."):]
-            mask = val.prettyPrint()
-            discovery_info.add_to_network(ip, mask)
+    if ret != None:
+        for r in ret:
+            for name, val in r:
+                ip = name.prettyPrint()[len("SNMPv2-SMI::mib-2.4.20.1.3."):]
+                mask = val.prettyPrint()
+                discovery_info.add_to_network(ip, mask)
 
 
 def has_printer_mib(ip, community):
@@ -258,21 +260,22 @@ def arp_table(ip, community, ci):
     ipNetToMediaPhysAddress = "1.3.6.1.2.1.4.22.1.2"
 
     ret = get_bulk(ip, ipNetToMediaPhysAddress, community)
-    for r in ret:
-        for name, val in r:
-            ip = name.prettyPrint()[len("SNMPv2-SMI::mib-2.4.22.1.2.3."):]
-            mac = val.prettyPrint()[len("0x"):]
-            new_mac = ""
-            for i in range(0, len(mac)):
-                if i % 2 == 0 and i != 0:
-                    new_mac += ":" + mac[i]
-                else:
-                    new_mac += mac[i]
-            mac = new_mac.upper()
+    if ret != None:
+        for r in ret:
+            for name, val in r:
+                ip = name.prettyPrint()[len("SNMPv2-SMI::mib-2.4.22.1.2.3."):]
+                mac = val.prettyPrint()[len("0x"):]
+                new_mac = ""
+                for i in range(0, len(mac)):
+                    if i % 2 == 0 and i != 0:
+                        new_mac += ":" + mac[i]
+                    else:
+                        new_mac += mac[i]
+                mac = new_mac.upper()
 
-            discovery_info.add_ip(ip)
-            discovery_info.add_mac(mac)
-            discovery_info.add_ip_to_mac(ip, mac)
+                discovery_info.add_ip(ip)
+                discovery_info.add_mac(mac)
+                discovery_info.add_ip_to_mac(ip, mac)
 
 
 def routing_table(ip, community, ci):
@@ -295,39 +298,40 @@ def routing_table(ip, community, ci):
     """
     ipRouteType = "1.3.6.1.2.1.4.21.1.8"
     ret = get_bulk(ip, ipRouteType, community)
-    for r in ret:
-        for name, val in r:
-            ip = name.prettyPrint()[len("SNMPv2-SMI::mib-2.4.21.1.8."):]
-            route_type = int(val.prettyPrint())
+    if ret != None:
+        for r in ret:
+            for name, val in r:
+                ip = name.prettyPrint()[len("SNMPv2-SMI::mib-2.4.21.1.8."):]
+                route_type = int(val.prettyPrint())
 
-            # indirect(4)
-            if route_type == 4:
-                discovery_info.add_ip(ip)
+                # indirect(4)
+                if route_type == 4:
+                    discovery_info.add_ip(ip)
 
-                new_ci = ConfigurationItem.ConfigurationItem()
-                new_ci.add_ipv4_address(ip)
-                mac = discovery_info.get_mac_from_ip(ip)
-                if mac != None:
-                    ci.set_mac_address(mac)
+                    new_ci = ConfigurationItem.ConfigurationItem()
+                    new_ci.add_ipv4_address(ip)
+                    mac = discovery_info.get_mac_from_ip(ip)
+                    if mac != None:
+                        ci.set_mac_address(mac)
 
-                rel_type = methods.add_rel_type(
-                    RelationshipType.RelationshipType("route to"))
-                rel_obj_1 = methods.create_relation(ci, new_ci, rel_type)
-                rel_obj_1.set_title(str(ci.get_title()) +
-                                    " route to " + str(new_ci.get_title()))
+                    rel_type = methods.add_rel_type(
+                        RelationshipType.RelationshipType("route to"))
+                    rel_obj_1 = methods.create_relation(ci, new_ci, rel_type)
+                    rel_obj_1.set_title(str(ci.get_title()) +
+                                        " route to " + str(new_ci.get_title()))
 
-                rel_obj_2 = methods.create_relation(new_ci, ci, rel_type)
-                rel_obj_2.set_title(str(new_ci.get_title()) + " route to " +
-                                    str(ci.get_title()))
+                    rel_obj_2 = methods.create_relation(new_ci, ci, rel_type)
+                    rel_obj_2.set_title(str(new_ci.get_title()) + " route to " +
+                                        str(ci.get_title()))
 
-                methods.add_ci(new_ci)
-                methods.add_rel(rel_obj_1)
-                methods.add_rel(rel_obj_2)
+                    methods.add_ci(new_ci)
+                    methods.add_rel(rel_obj_1)
+                    methods.add_rel(rel_obj_2)
 
-            # direct(3)
-            elif route_type == 3:
-                ci.add_ipv4_address(ip)
-                discovery_info.add_ip(ip)
+                # direct(3)
+                elif route_type == 3:
+                    ci.add_ipv4_address(ip)
+                    discovery_info.add_ip(ip)
 
 
 def run_snmp(ip, secrets):
