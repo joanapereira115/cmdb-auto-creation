@@ -87,10 +87,10 @@ def define_snmp_community():
             ]
             community_answer = prompt(community, style=style)
             community = community_answer.get("community")
-            vault.add_secret('SNMP', "SNMP", community)
+            vault.add_secret(community, "SNMP", community)
             define_snmp_community()
     else:
-        vault.add_secret('SNMP', "SNMP", "public")
+        vault.add_secret("public", "SNMP", "public")
         print()
         more_community = [
             {
@@ -114,7 +114,7 @@ def define_snmp_community():
             ]
             community_answer = prompt(community, style=style)
             community = community_answer.get("community")
-            vault.add_secret('SNMP', "SNMP", community)
+            vault.add_secret(community, "SNMP", community)
             define_snmp_community()
 
 

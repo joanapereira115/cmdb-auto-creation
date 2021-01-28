@@ -124,13 +124,13 @@ def add_secret(name, login, password):
         return False
 
 
-def show_secrets(name):
+def show_secrets(login):
     res = []
-    query = 'SELECT * FROM Passwords WHERE name = ?'
+    query = 'SELECT * FROM Passwords WHERE username = ?'
     ok = False
 
     try:
-        entry = cursor.execute(query, [name]).fetchall()
+        entry = cursor.execute(query, [login]).fetchall()
         ok = True
     except sqlite3.ProgrammingError as e:
         print(red + "\n>>> " + reset + "Vault is locked.")
