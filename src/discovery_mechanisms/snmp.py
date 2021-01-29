@@ -257,14 +257,16 @@ def arp_table(ip, community, ci):
     ci : ConfigurationItem
         The ConfigurationItem object that represents the machine.
     """
-    ipNetToMediaPhysAddress = "1.3.6.1.2.1.4.22.1.2"
+    ipNetToMediaPhysAddress = "1.3.6.1.2.1.3.1.1.2"
 
     ret = get_bulk(ip, ipNetToMediaPhysAddress, community)
     if ret != None:
         for r in ret:
-            for name, val in r:
-                ip = name.prettyPrint()[len("SNMPv2-SMI::mib-2.4.22.1.2.3."):]
-                mac = val.prettyPrint()[len("0x"):]
+            for name in r:
+                val = name.prettyPrint()[len(
+                    "SNMPv2-SMI::mib-2.3.1.1.2.2.1."):]
+                ip = val.split("=")[0].strip()
+                mac = val.split("=")[1].strip()[len("0x"):]
                 new_mac = ""
                 for i in range(0, len(mac)):
                     if i % 2 == 0 and i != 0:
