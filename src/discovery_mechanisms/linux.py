@@ -73,7 +73,10 @@ def run_linux_discovery(ci, user, pwd, ip, categories):
                 info[regex.sub("\n|\"", "", line.split(":")[0]).strip()] = regex.sub(
                     "\n|\"", "", line.split(":")[1]).strip()
         for at in info:
-            methods.define_attribute(at, info.get(at), ci)
+            if at == "Static hostname":
+                ci.set_title(info.get(at))
+            else:
+                methods.define_attribute(at, info.get(at), ci)
 
     if ok == True:
         if 'operating systems' in categories:
