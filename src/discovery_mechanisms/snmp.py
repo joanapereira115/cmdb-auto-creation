@@ -127,7 +127,7 @@ def addresses(ip, community, ci):
             for _, val in r:
                 ip = val.prettyPrint()
                 ci.add_ipv4_address(ip)
-                discovery_info.add_ip(ip)
+                # discovery_info.add_ip(ip)
 
     ret = get_bulk(ip, ipAdEntNetMask, community)
     if ret != None:
@@ -333,7 +333,7 @@ def routing_table(ip, community, ci):
                 # direct(3)
                 elif route_type == 3:
                     ci.add_ipv4_address(ip)
-                    discovery_info.add_ip(ip)
+                    # discovery_info.add_ip(ip)
 
 
 def run_snmp(ip, secrets):
@@ -354,6 +354,6 @@ def run_snmp(ip, secrets):
             addresses(ip, secret, ci)
             device_type(ip, secret, ci)
             arp_table(ip, secret, ci)
-            routing_table(ip, secret, ci)
+            #routing_table(ip, secret, ci)
 
             methods.add_ci(ci)
