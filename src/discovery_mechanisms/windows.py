@@ -66,6 +66,7 @@ def run_windows_discovery(ci, user, pwd, ip, categories):
         r = s.run_cmd("hostname", [])
         hostname = r.std_out.decode("ISO-8859-1").strip("\n")
         methods.define_attribute("hostname", hostname, ci)
+        ci.set_title(hostname)
 
         r = s.run_cmd("wmic bios get serialnumber", [])
         serial = r.std_out.decode(
