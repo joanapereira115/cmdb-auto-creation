@@ -185,7 +185,7 @@ def create_ci_type(obj):
     if obj != None:
         res = ""
         id_ = obj.get_id()
-        title = str(regex.sub(r'[\\()/]', "", obj.get_title()))
+        title = str(regex.sub(r'[\\()/@"]', "", obj.get_title()))
         if id_ != "" and title != "":
             f = open("../graphdb-import/cmdb.ttl", "a")
             res += ":" + str(snakecase(title)) + str(id_) + \
@@ -215,7 +215,7 @@ def create_rel_type(obj):
     if obj != None:
         res = ""
         id_ = obj.get_id()
-        title = str(regex.sub(r'[\\()/]', "", obj.get_title()))
+        title = str(regex.sub(r'[\\()/@"]', "", obj.get_title()))
         if id_ != "" and title != "":
             f = open("../graphdb-import/cmdb.ttl", "a")
             res += ":" + str(snakecase(title)) + str(id_) + \
@@ -245,8 +245,8 @@ def create_attribute(obj):
     if obj != None:
         res = ""
         id_ = obj.get_id()
-        title = str(regex.sub(r'[\\()/]', "", obj.get_title()))
-        value = str(regex.sub(r'\\', "", obj.get_value()))
+        title = str(regex.sub(r'[\\()/@"]', "", obj.get_title()))
+        value = str(regex.sub(r'[\\"]', "", obj.get_value()))
 
         if id_ != "" and title != "":
             f = open("../graphdb-import/cmdb.ttl", "a")
@@ -283,7 +283,7 @@ def create_ci(obj, ci_types):
     if obj != None:
         res = ""
         id_ = obj.get_id()
-        title = regex.sub(r'[\\()/]', "", str(obj.get_title()))
+        title = regex.sub(r'[\\()/@]', "", str(obj.get_title()))
         uuid = obj.get_uuid()
         serial_number = obj.get_serial_number()
         description = obj.get_description()
@@ -357,7 +357,7 @@ def create_rel(obj, rel_types, ci_ids):
     if obj != None:
         res = ""
         id_ = obj.get_id()
-        title = str(regex.sub(r'[()/]', "", obj.get_title()))
+        title = str(regex.sub(r'[()/@"]', "", obj.get_title()))
         source_id = obj.get_source_id()
         target_id = obj.get_target_id()
         type_id = obj.get_type()
