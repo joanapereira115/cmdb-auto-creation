@@ -23,7 +23,7 @@ def storage_discovery(client, ci):
     ci: ConfigurationItem
         The configuration item that represents the Linux machine that is going to be explored.
     """
-    _, stdout, stderr = client.exec_command("blkid")
+    _, stdout, stderr = client.exec_command("/sbin/blkid")
     error = stderr.read().decode('utf-8')
     if error != "":
         print(red + ">>> " + reset + str(error) + "\n")
@@ -61,7 +61,8 @@ def storage_discovery(client, ci):
                          'SIZE', 'RO', 'TYPE', 'MOUNTPOINT']
                 memory = memory[1].split()
             for i in range(len(names)):
-                attrs[names[i]] = memory[i]
+                if i < len(memory):
+                    attrs[names[i]] = memory[i]
 
             obj = ConfigurationItem.ConfigurationItem()
 
