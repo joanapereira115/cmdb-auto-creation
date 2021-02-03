@@ -66,6 +66,7 @@ def storage_discovery(client, ci):
 
             obj = ConfigurationItem.ConfigurationItem()
 
+            mem_type = None
             for at in attrs:
                 if at == "RO":
                     if attrs.get(at) == 0:
@@ -77,19 +78,20 @@ def storage_discovery(client, ci):
 
                 methods.define_attribute(at, attrs.get(at), obj)
 
-            obj.set_type(mem_type.get_id())
-            rel_type_ci_obj = methods.add_rel_type(
-                RelationshipType.RelationshipType("has storage"))
-            rel_ci_obj = methods.create_relation(ci, obj, rel_type_ci_obj)
-            rel_ci_obj.title = str(ci.get_title()) + \
-                " has storage " + str(obj.get_title())
+            if mem_type != None:
+                obj.set_type(mem_type.get_id())
+                rel_type_ci_obj = methods.add_rel_type(
+                    RelationshipType.RelationshipType("has storage"))
+                rel_ci_obj = methods.create_relation(ci, obj, rel_type_ci_obj)
+                rel_ci_obj.title = str(ci.get_title()) + \
+                    " has storage " + str(obj.get_title())
 
-            rel_type_obj_ci = methods.add_rel_type(
-                RelationshipType.RelationshipType("is storage of"))
-            rel_obj_ci = methods.create_relation(obj, ci, rel_type_obj_ci)
-            rel_obj_ci.title = str(obj.get_title()) + \
-                " is storage of " + str(ci.get_title())
+                rel_type_obj_ci = methods.add_rel_type(
+                    RelationshipType.RelationshipType("is storage of"))
+                rel_obj_ci = methods.create_relation(obj, ci, rel_type_obj_ci)
+                rel_obj_ci.title = str(obj.get_title()) + \
+                    " is storage of " + str(ci.get_title())
 
-            methods.add_rel(rel_ci_obj)
-            methods.add_rel(rel_obj_ci)
-            methods.add_ci(obj)
+                methods.add_rel(rel_ci_obj)
+                methods.add_rel(rel_obj_ci)
+                methods.add_ci(obj)
