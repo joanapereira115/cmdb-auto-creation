@@ -451,19 +451,28 @@ def process_itop():
 
             for ci_type in ci_types:
                 attrs = get_attributes(ci_type, db_name, cursor)
-                proc_attrs = {}
-                types_attrs = {}
-                types_attrs[ci_type] = {}
-                for a in attrs:
-                    if regex.search(r'_', a) == None:
-                        proc_attrs[a] = normalization.parse_text_to_store(
-                            " ".join(wordninja.split(a)))
-                    else:
-                        proc_attrs[a] = normalization.parse_text_to_store(a)
-                    types_attrs[ci_type][a] = get_type(
-                        "ci", ci_type, attrs.get(a), a)
-                cmdb_data_model["ci_attributes"][ci_type] = proc_attrs
-                cmdb_data_model["ci_attributes_data_types"][ci_type] = types_attrs
+                isAbstract = False
+                for at in attrs:
+                    if at == "finalclass":
+                        isAbstract = True
+                if isAbstract == False:
+                    proc_attrs = {}
+                    types_attrs = {}
+                    types_attrs[ci_type] = {}
+                    for a in attrs:
+                        if regex.search(r'_', a) == None:
+                            proc_attrs[a] = normalization.parse_text_to_store(
+                                " ".join(wordninja.split(a)))
+                        else:
+                            proc_attrs[a] = normalization.parse_text_to_store(
+                                a)
+                        types_attrs[ci_type][a] = get_type(
+                            "ci", ci_type, attrs.get(a), a)
+                    cmdb_data_model["ci_attributes"][ci_type] = proc_attrs
+                    cmdb_data_model["ci_attributes_data_types"][ci_type] = types_attrs
+                else:
+                    if ci_type in cmdb_data_model.get("ci_types"):
+                        cmdb_data_model["ci_types"].pop(ci_type, None)
 
             for rel_type in rel_types:
                 attrs = get_attributes(rel_type, db_name, cursor)

@@ -4,8 +4,11 @@ import requests
 from colored import fg, attr
 import json
 import stringcase
+import wordninja
+import re
 
 from similarity import similarity
+from cmdb_processor import cmdb_data_model
 
 """
     Color definition.
@@ -42,6 +45,14 @@ def calculate_value_from_dialog(original_value, dialog_values):
             res = pv
             mx = sim
     return res
+
+
+def hasOrgId(cmdb_type):
+    attrs = cmdb_data_model.cmdb_data_model.get("ci_attributes").get(cmdb_type)
+    if "org_id" in attrs:
+        return True
+    else:
+        return False
 
 
 def create_itop_ci(cmdb_info, cmdb_url, ci_type, ci_attrs, rules_ci_types, rules_ci_attributes, ci_attributes_data_types, ci_dialog_attributes):
@@ -92,11 +103,15 @@ def create_itop_ci(cmdb_info, cmdb_url, ci_type, ci_attrs, rules_ci_types, rules
     json_req["password"] = pwd
 
     if cmdb_type != None:
-        json_req["class"] = stringcase.capitalcase(cmdb_type)
+        json_req["class"] = re.sub(r' ', "", stringcase.titlecase(
+            " ".join(wordninja.split(cmdb_type))))
 
         at_types = ci_attributes_data_types.get(cmdb_type)
         fields = {}
-        fields["org_id"] = 'SELECT Organization WHERE name = \"My Company/Department\"'
+
+        has_org = hasOrgId(cmdb_type)
+        if has_org == True:
+            fields["org_id"] = 'SELECT Organization WHERE name = "My Company/Department"'
 
         for at in ci_attrs:
             cmdb_at = rules_ci_attributes.get(ci_type).get(at)
@@ -128,7 +143,11 @@ def create_itop_ci(cmdb_info, cmdb_url, ci_type, ci_attrs, rules_ci_types, rules
                               "Error converting string '" + str(value) + "' to float.")
 
         if ("name" in fields) == False:
-            fields["name"] = ci_type
+            title = ci_attrs.get("title")
+            if title != None:
+                fields["name"] = title
+            else:
+                fields["name"] = ci_type
 
         if cmdb_type == "person":
             if ('first_name' in fields) == False:
@@ -139,12 +158,36 @@ def create_itop_ci(cmdb_info, cmdb_url, ci_type, ci_attrs, rules_ci_types, rules
         payload = dict(json_data=json_data,)
         create_ci = requests.post(cmdb_url, data=payload, auth=(
             user, pwd), verify=False)
-        try:
-            cmdb_id = create_ci.json().get("objects").get(
-                list(create_ci.json().get("objects").keys())[0]).get("key")
-        except:
+        if create_ci.status_code == 200:
+            error = create_ci.json().get("message")
+            if error != None:
+                if re.search(r'Unexpected value for attribute \'org_id\'', error, re.IGNORECASE) != None:
+                    fields["org_id"] = 'SELECT Organization WHERE name = "My Company/Department"'
+                    json_req["fields"] = fields
+                    json_data = json.dumps(json_req)
+                    payload = dict(json_data=json_data,)
+                    create_ci = requests.post(
+                        cmdb_url, data=payload, auth=(user, pwd), verify=False)
+                    if create_ci.status_code == 200:
+                        try:
+                            cmdb_id = create_ci.json().get("objects").get(
+                                list(create_ci.json().get("objects").keys())[0]).get("key")
+                        except:
+                            print(red + "\n>>> " + reset + "Error creating the configuration item of type " +
+                                  str(cmdb_type) + ": " + str(create_ci.json().get("message")))
+                    else:
+                        print(red + "\n>>> " + reset +
+                              "Error creating the configuration item of type " + str(cmdb_type) + ".")
+
+            try:
+                cmdb_id = create_ci.json().get("objects").get(
+                    list(create_ci.json().get("objects").keys())[0]).get("key")
+            except:
+                print(red + "\n>>> " + reset + "Error creating the configuration item of type " +
+                      str(cmdb_type) + ": " + str(create_ci.json().get("message")))
+        else:
             print(red + "\n>>> " + reset +
-                  "Error creating the configuration item of type " + str(cmdb_type) + ": " + str(create_ci.json().get("message")))
+                  "Error creating the configuration item of type " + str(cmdb_type) + ".")
     if cmdb_id != None:
         print(green + "\n>>> " + reset + "Object of type " +
               str(cmdb_type) + " created successfully in the CMDB.")
@@ -214,7 +257,8 @@ def create_itop_relationship(cmdb_info, cmdb_url, rel_type, rel_attrs, rules_rel
     json_req["password"] = pwd
 
     if cmdb_type != None:
-        json_req["class"] = stringcase.capitalcase(cmdb_type)
+        json_req["class"] = re.sub(r' ', "", stringcase.titlecase(
+            " ".join(wordninja.split(cmdb_type))))
 
         at_types = rel_attributes_data_types.get(cmdb_type)
 
@@ -269,13 +313,16 @@ def create_itop_relationship(cmdb_info, cmdb_url, rel_type, rel_attrs, rules_rel
                     payload = dict(json_data=json_data,)
                     create_ci = requests.post(cmdb_url, data=payload, auth=(
                         user, pwd), verify=False)
-                    try:
-                        cmdb_id = create_ci.json().get("objects").get(
-                            list(create_ci.json().get("objects").keys())[0]).get("key")
-                    except:
+                    if create_ci.status_code == 200:
+                        try:
+                            cmdb_id = create_ci.json().get("objects").get(
+                                list(create_ci.json().get("objects").keys())[0]).get("key")
+                        except:
+                            print(red + "\n>>> " + reset +
+                                  "Error creating the configuration item of type " + str(cmdb_type) + ": " + str(create_ci.json().get("message")))
+                    else:
                         print(red + "\n>>> " + reset +
-                              "Error creating the configuration item of type " + str(cmdb_type) + ": " + str(create_ci.json().get("message")))
-
+                              "Error creating the relationship of type " + str(cmdb_type) + ".")
                 if cmdb_id != None:
                     print(green + "\n>>> " + reset + "Object of type " +
                           str(cmdb_type) + " created successfully in the CMDB.")
