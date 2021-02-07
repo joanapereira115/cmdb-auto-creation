@@ -65,14 +65,15 @@ def storage_discovery(client, ci):
                     attrs[names[i]] = memory[i]
 
             obj = ConfigurationItem.ConfigurationItem()
+            obj.set_title(name)
 
             mem_type = None
             for at in attrs:
                 if at == "RO":
-                    if attrs.get(at) == 0:
+                    if attrs.get(at) == '0':
                         mem_type = methods.add_ci_type(
                             ConfigurationItemType.ConfigurationItemType("SSD"))
-                    elif attrs.get(at) == 1:
+                    elif attrs.get(at) == '1':
                         mem_type = methods.add_ci_type(
                             ConfigurationItemType.ConfigurationItemType("HDD"))
 

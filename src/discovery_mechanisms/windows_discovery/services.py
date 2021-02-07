@@ -33,7 +33,10 @@ def services_discovery(client, ci):
     values = lines[1:]
     fields = [f for f in fields.split(
         " ") if f != "" and regex.search(r'\w', f) != None]
-    for vals in values:
+    # get only the first 10 services
+    i = 0
+    for vals in values and i < 10:
+        i = i + 1
         serv_type = methods.add_ci_type(
             ConfigurationItemType.ConfigurationItemType("Service"))
         obj = ConfigurationItem.ConfigurationItem()

@@ -616,6 +616,8 @@ def define_attribute(title, value, ci):
         The configuration item.
     """
     if title != None and title != "" and value != None and value != "":
+        if similarity.calculate_similarity(title, "title") > 0.9:
+            ci.set_title(value)
         if similarity.calculate_similarity(title, "uuid") > 0.85:
             ci.set_uuid(value)
         elif similarity.calculate_similarity(title, "serial_number") > 0.85:
