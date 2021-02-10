@@ -1,0 +1,70 @@
+============================================
+Test Case 2
+============================================
+
+- Discovery of an infrastructure - virtual - running on a physical machine;
+- Use of Vagrant and Virtualbox to run the infrastructure;
+- Physical machine characteristics:
+	- Type: Dell OptiPlex 7010
+	- Operating System: Ubuntu 18.04.5 LTS    
+	- IP address: 192.168.1.88
+	- RAM: 8 GB
+	- CPU: 2,9 GHz Intel Core i5-3470S quad-core 
+	- Virtualbox: 5.2.42_Ubuntur137960
+	- Vagrant: 2.2.14  
+	- GraphDB: 9.3.1
+	- CMDB: i-doit Open 1.14
+- Discovery running on a machine of the infrastructure - ubuntu;
+- Infrastructure characteristics:
+	- router:
+		- Vagrant Box: CumulusCommunity/VX-3.0
+		- Operating System: Cumulus Linux 3.3.0
+		- IP address: 192.168.10.10
+		- LLDP: 0.7.16-430-g9ed8a25
+		- SNMP: 5.7.3
+		- SSH: OpenSSH_6.7p1 Debian-5+deb8u3, OpenSSL 1.0.1t
+	- sw1:
+		- Vagrant Box: CumulusCommunity/VX-3.0
+		- Operating System: Cumulus Linux 3.3.0
+		- IP address: 192.168.10.20
+		- LLDP: 0.7.16-430-g9ed8a25
+		- SNMP: 5.7.3
+		- SSH: OpenSSH_6.7p1 Debian-5+deb8u3, OpenSSL 1.0.1t
+	- sw2:
+		- Vagrant Box: CumulusCommunity/VX-3.0
+		- Operating System: Cumulus Linux 3.3.0
+		- IP address: 192.168.10.30 
+		- LLDP: 0.7.16-430-g9ed8a25
+		- SNMP: 5.7.3
+		- SSH: OpenSSH_6.7p1 Debian-5+deb8u3, OpenSSL 1.0.1t
+	- ubuntu:
+		- Vagrant Box: generic/ubuntu1804
+		- Operating System: Ubuntu 18.04.5 LTS 
+		- IP address: 192.168.10.22
+		- LLDP: 0.9.9
+		- SNMP: 5.7.3
+		- SSH: OpenSSH_7.6p1 Ubuntu-4ubuntu0.3, OpenSSL 1.0.2n
+		- Python: 3.9.1
+		- Nmap: 7.60
+		- Wireshark: 2.6.10
+	- windows:
+		- Vagrant Box: gusztavvargadr/windows-10 
+		- Operating System: Microsoft Windows 10 Enterprise Evaluation 10.0.19042
+		- IP address: 192.168.10.21
+	- dbs:
+		- Vagrant Box: ubuntu/xenial64
+		- Operating System: Ubuntu 16.04.7 LTS 
+		- IP address: 192.168.10.31
+		- SNMP: 5.7.3
+		- SSH: OpenSSH_7.2p2 Ubuntu-4ubuntu2.10, OpenSSL 1.0.2g
+	- wbs:
+		- Vagrant Box: ubuntu/xenial64
+		- Operating System: Ubuntu 16.04.7 LTS 
+		- IP address: 192.168.10.32
+		- SNMP: 5.7.3
+		- SSH: OpenSSH_7.2p2 Ubuntu-4ubuntu2.10, OpenSSL 1.0.2g
+- Discovery based only on the IP address interval 192.168.10.10-32;
+- Selected Categories: operating system;
+- Detailed discovery using machines credentials;
+- Mapping threshold: 0.85;
+- CMDB: i-doit access via API.

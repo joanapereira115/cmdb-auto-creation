@@ -1,0 +1,92 @@
+WINDOWS="gusztavvargadr/windows-10"
+UBUNTU_1804="generic/ubuntu1804"
+UBUNTU_1604="ubuntu/xenial64"
+CUMULUS_VM="CumulusCommunity/VX-3.0"
+
+ENV['VAGRANT_DEFAULT_PROVIDER'] = 'virtualbox'
+
+Vagrant.configure("2") do |config|
+
+  config.vm.provider "virtualbox" do |v|
+    v.memory = 768
+    v.gui = false
+  end
+
+
+  config.vm.define "router" do |rtr|
+    rtr.vm.box = CUMULUS_VM
+    rtr.vm.hostname = "router"
+    rtr.vm.network "private_network", ip: "192.168.10.10"
+  end
+
+
+  config.vm.define "sw1" do |sw1|
+    sw1.vm.box = CUMULUS_VM
+    sw1.vm.hostname = "switch-of"
+    sw1.vm.network "private_network", ip: "192.168.10.20"
+  end
+
+
+  config.vm.define "windows" do |win|
+    win.vm.box = WINDOWS
+    win.vm.hostname = "windows-pc"
+    win.vm.communicator = "winrm"
+    win.vm.network "private_network", ip: "192.168.10.21"
+  end  
+
+
+  config.vm.define "ubuntu" do |ubu|
+    ubu.vm.box = UBUNTU_1804
+    ubu.vm.hostname = "ubuntu-pc"
+    ubu.vm.network "private_network", ip: "192.168.10.22"
+    ubu.vm.provision "shell", inline: <<-SHELL
+      sudo apt update
+      sudo apt install snmp snmp-mibs-downloader snmpd lldpad lldpd -y
+      sudo sed -i 's/mibs :/# mibs :/g' /etc/snmp/snmp.conf
+      lldpad -d
+      sudo lldptool set-lldp -i eth1 adminStatus=rxtx 
+      sudo lldptool -T -i eth1 -V sysName enableTx=yes
+      sudo lldptool -T -i eth1 -V portDesc enableTx=yes
+      sudo lldptool -T -i eth1 -V sysDesc enableTx=yes
+      sudo lldptool -T -i eth1 -V sysCap enableTx=yes
+      sudo lldptool -T -i eth1 -V mngAddr enableTx=yes
+    SHELL
+  end
+
+
+  config.vm.define "sw2" do |sw2|
+    sw2.vm.box = CUMULUS_VM
+    sw2.vm.hostname = "switch-dc"
+    sw2.vm.network "private_network", ip: "192.168.10.30"
+  end
+
+
+  config.vm.define "dbs" do |dbs|
+    dbs.vm.box = UBUNTU_1604
+    dbs.vm.hostname = "db-server"
+    dbs.vm.network "private_network", ip: "192.168.10.31"
+    dbs.vm.provision "shell", inline: <<-SHELL
+      sudo apt -y update
+      sudo apt install snmp snmp-mibs-downloader snmpd -y
+      sudo sed -i 's/mibs :/# mibs :/g' /etc/snmp/snmp.conf
+      sudo apt install curl build-essential python-software-properties -y
+      sudo debconf-set-selections <<< 'mysql-server mysql-server/root_password password root'
+      sudo debconf-set-selections <<< 'mysql-server mysql-server/root_password_again password root'
+      sudo apt-get -y install mysql-server
+    SHELL
+  end
+
+  config.vm.define "wbs" do |wbs|
+    wbs.vm.box = UBUNTU_1604
+    wbs.vm.hostname = "web-server"
+    wbs.vm.network "private_network", ip: "192.168.10.32"
+    wbs.vm.provision "shell", inline: <<-SHELL
+      sudo apt -y update
+      sudo apt install snmp snmp-mibs-downloader snmpd -y
+      sudo sed -i 's/mibs :/# mibs :/g' /etc/snmp/snmp.conf
+      sudo apt install -y nginx
+      sudo service nginx start
+    SHELL
+  end
+
+end
