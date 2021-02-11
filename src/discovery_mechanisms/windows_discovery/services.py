@@ -35,32 +35,33 @@ def services_discovery(client, ci):
         " ") if f != "" and regex.search(r'\w', f) != None]
     # get only the first 10 services
     i = 0
-    for vals in values and i < 10:
+    for vals in values:
         i = i + 1
-        serv_type = methods.add_ci_type(
-            ConfigurationItemType.ConfigurationItemType("Service"))
-        obj = ConfigurationItem.ConfigurationItem()
-        obj.set_type(serv_type.get_id())
+        if i < 10:
+            serv_type = methods.add_ci_type(
+                ConfigurationItemType.ConfigurationItemType("Service"))
+            obj = ConfigurationItem.ConfigurationItem()
+            obj.set_type(serv_type.get_id())
 
-        v = [t for t in vals.split(
-            "    ") if t != "" and regex.search(r'\w', t) != None]
-        for i in range(0, min(len(fields), len(v))):
-            field = fields[i].strip(" ")
-            value = v[i].strip(" ")
-            methods.define_attribute(field, value, obj)
+            v = [t for t in vals.split(
+                "    ") if t != "" and regex.search(r'\w', t) != None]
+            for i in range(0, min(len(fields), len(v))):
+                field = fields[i].strip(" ")
+                value = v[i].strip(" ")
+                methods.define_attribute(field, value, obj)
 
-        rel_type_ci_obj = methods.add_rel_type(
-            RelationshipType.RelationshipType("running service"))
-        rel_ci_obj = methods.create_relation(ci, obj, rel_type_ci_obj)
-        rel_ci_obj.title = str(ci.get_title()) + \
-            " running service " + str(obj.get_title())
+            rel_type_ci_obj = methods.add_rel_type(
+                RelationshipType.RelationshipType("running service"))
+            rel_ci_obj = methods.create_relation(ci, obj, rel_type_ci_obj)
+            rel_ci_obj.title = str(ci.get_title()) + \
+                " running service " + str(obj.get_title())
 
-        rel_type_obj_ci = methods.add_rel_type(
-            RelationshipType.RelationshipType("running on"))
-        rel_obj_ci = methods.create_relation(obj, ci, rel_type_obj_ci)
-        rel_obj_ci.title = str(obj.get_title()) + \
-            " running on " + str(ci.get_title())
+            rel_type_obj_ci = methods.add_rel_type(
+                RelationshipType.RelationshipType("running on"))
+            rel_obj_ci = methods.create_relation(obj, ci, rel_type_obj_ci)
+            rel_obj_ci.title = str(obj.get_title()) + \
+                " running on " + str(ci.get_title())
 
-        methods.add_ci(obj)
-        methods.add_rel(rel_ci_obj)
-        methods.add_rel(rel_obj_ci)
+            methods.add_ci(obj)
+            methods.add_rel(rel_ci_obj)
+            methods.add_rel(rel_obj_ci)
