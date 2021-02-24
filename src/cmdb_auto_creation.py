@@ -129,8 +129,8 @@ def main():
             pwd = define_vault_password()
             vault.define_master_key(pwd)
 
-        run_discovery()
-        db_info, cmdb_info = run_mapping()
+        db_info = run_discovery()
+        cmdb_info = run_mapping(db_info)
         run_population(db_info, cmdb_info)
 
         if delete_vault() == True:

@@ -7,11 +7,13 @@ import os
 import regex
 import pyfiglet
 from netaddr import IPNetwork
+import requests
 
 from password_vault import vault
 from db_population import population
 from discovery import basic_discovery, detailed_discovery, discovery_info
 from discovery_mechanisms import angry_ip_scanner
+from db_processor import db_info
 
 """
     Color definition.
@@ -286,19 +288,29 @@ def what2discover():
 
 def import_data():
     """
-    Asks the user if he imported the file into his GraphDB repository.
+    Imports the file into the GraphDB repository.
     """
-    print(orange + "\n>>> " + reset +
-          "Make sure that GraphDB is running and that you import the discovered information.")
-    import_question = [
-        {
-            'type': 'confirm',
-            'name': 'import',
-            'message': "Have you imported the file 'cmdb.ttl' stored in the folder 'graphdb-import' to your GraphDB repository?\n"
-        }]
-    import_answer = prompt(import_question, style=style).get("import")
-    if import_answer == False:
-        import_data()
+    db = db_info.get_db_info()
+
+    server = db.get("server")
+    port = db.get("port")
+    repository = db.get("repository")
+
+    url = 'http://' + server + ':' + port + \
+        '/repositories/' + repository + '/statements'
+    headers = {}
+    headers["Content-Type"] = "application/x-turtle"
+
+    with open('../graphdb-import/cmdb.ttl', 'rb') as f:
+        try:
+            requests.post(url, headers=headers, data=f)
+            print(green + "\n>>> " + reset +
+                  "Data imported into GraphDB.")
+        except:
+            print(red + "\n>>> " + reset +
+                  "Error importing data into GraphDB repository.")
+
+    return db
 
 
 def external_data():
@@ -380,4 +392,6 @@ def run_discovery():
     detailed_discovery.detailed_discovery(categories)
 
     population.run_population()
-    import_data()
+    db_info = import_data()
+
+    return db_info

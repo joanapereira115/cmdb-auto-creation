@@ -68,7 +68,7 @@ def define_snmp_community():
         more_community = [
             {
                 'type': 'list',
-                'message': 'Do you want to specify another SNMP community string? ("public" is the default)',
+                'message': 'Do you want to specify another SNMP community string?',
                 'name': 'more',
                 'choices': [{'name': 'Yes'}, {'name': 'No'}]
             }

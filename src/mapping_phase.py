@@ -89,7 +89,7 @@ def choose_connection_method(cmdb):
     return connection
 
 
-def run_mapping():
+def run_mapping(db):
     """
     Executes the mapping between the CMDB and the database data models. 
 
@@ -99,7 +99,6 @@ def run_mapping():
         Returns the information about the database and the CMDB information.
     """
     cmdb_info = {}
-    db = {}
 
     open_message = pyfiglet.figlet_format(
         "Mapping Phase", font="small")
@@ -110,7 +109,6 @@ def run_mapping():
     print(
         "\033[1m**********************************************************************\033[0m\n")
 
-    db = db_info.get_db_info()
     db_processor.process_db_data_model(db)
 
     cmdb = choose_software()
@@ -126,4 +124,4 @@ def run_mapping():
 
     mapper.run_mapper()
 
-    return db, cmdb_info
+    return cmdb_info

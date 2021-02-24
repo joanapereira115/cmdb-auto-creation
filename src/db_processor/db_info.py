@@ -65,7 +65,7 @@ def db_specification():
     db_specification_question = [
         {
             'type': 'input',
-            'message': 'Enter the IP address of the GraphDB server (use format yyx.yyx.yyx.yyx where \'y\' is optional):',
+            'message': '\nEnter the IP address of the GraphDB server (use format yyx.yyx.yyx.yyx where \'y\' is optional):',
             'name': 'server',
             'validate': AddressValidator
         },

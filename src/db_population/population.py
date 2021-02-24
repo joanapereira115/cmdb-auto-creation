@@ -30,8 +30,8 @@ def create_structure():
     """
     Writes the database structure to the .ttl file.
     """
-    f = open("../graphdb-import/cmdb.ttl", "w")
-    f.write("""
+    with open("../graphdb-import/cmdb.ttl", "w") as f:
+        f.write("""
 @prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
@@ -164,8 +164,7 @@ def create_structure():
 #    Instances
 #################################################################
 
-    """)
-    f.close()
+        """)
 
 
 def create_ci_type(obj):
@@ -187,12 +186,11 @@ def create_ci_type(obj):
         id_ = obj.get_id()
         title = str(regex.sub(r'[\\()/@"]', "", obj.get_title()))
         if id_ != "" and title != "":
-            f = open("../graphdb-import/cmdb.ttl", "a")
-            res += ":" + str(snakecase(title)) + str(id_) + \
-                " rdf:type :ConfigurationItemType ;\n\t :title \"" + \
-                str(title) + "\".\n"
-            f.write(res)
-            f.close()
+            with open("../graphdb-import/cmdb.ttl", "a") as f:
+                res += ":" + str(snakecase(title)) + str(id_) + \
+                    " rdf:type :ConfigurationItemType ;\n\t :title \"" + \
+                    str(title) + "\".\n"
+                f.write(res)
             return ":" + str(snakecase(title)) + str(id_)
     else:
         return None
@@ -217,12 +215,11 @@ def create_rel_type(obj):
         id_ = obj.get_id()
         title = str(regex.sub(r'[\\()/@"]', "", obj.get_title()))
         if id_ != "" and title != "":
-            f = open("../graphdb-import/cmdb.ttl", "a")
-            res += ":" + str(snakecase(title)) + str(id_) + \
-                " rdf:type :RelationshipType ;\n\t :title \"" + \
-                str(title) + "\".\n"
-            f.write(res)
-            f.close()
+            with open("../graphdb-import/cmdb.ttl", "a") as f:
+                res += ":" + str(snakecase(title)) + str(id_) + \
+                    " rdf:type :RelationshipType ;\n\t :title \"" + \
+                    str(title) + "\".\n"
+                f.write(res)
             return ":" + str(snakecase(title)) + str(id_)
     else:
         return None
@@ -249,14 +246,13 @@ def create_attribute(obj):
         value = str(regex.sub(r'[\\"]', "", obj.get_value()))
 
         if id_ != "" and title != "":
-            f = open("../graphdb-import/cmdb.ttl", "a")
-            res += ":" + str(id_) + str(snakecase(title)) + \
-                " rdf:type :Attribute ;\n"
-            res += "\t :title \"" + str(title) + "\";\n"
-            res += "\t :value \"" + str(value) + "\".\n"
+            with open("../graphdb-import/cmdb.ttl", "a") as f:
+                res += ":" + str(id_) + str(snakecase(title)) + \
+                    " rdf:type :Attribute ;\n"
+                res += "\t :title \"" + str(title) + "\";\n"
+                res += "\t :value \"" + str(value) + "\".\n"
 
-            f.write(res)
-            f.close()
+                f.write(res)
 
             return ":" + str(id_) + str(snakecase(title))
     else:
@@ -295,40 +291,41 @@ def create_ci(obj, ci_types):
         type_id = obj.get_type()
         attributes = obj.get_attributes()
         if id_ != "" and type_id != "":
-            f = open("../graphdb-import/cmdb.ttl", "a")
-            res += ":" + str(id_) + str(type_id) + str(snakecase(title)) + \
-                " rdf:type :ConfigurationItem "
-            if title != "":
-                res += ";\n\t :title \"" + str(title) + "\""
-            if uuid != "":
-                res += ";\n\t :uuid \"" + str(uuid) + "\""
-            if serial_number != "":
-                res += ";\n\t :serial_number \"" + str(serial_number) + "\""
-            if description != "":
-                res += ";\n\t :description \"" + str(description) + "\""
-            if status != "":
-                res += ";\n\t :cmdb_status \"" + str(status) + "\""
-            if os_family != "":
-                res += ";\n\t :os_family \"" + str(os_family) + "\""
-            if mac_address != "":
-                res += ";\n\t :mac_address \"" + str(mac_address) + "\""
-            for ipv4 in ipv4_addresses:
-                res += ";\n\t :has_ipv4 \"" + str(ipv4) + "\""
-            for ipv6 in ipv6_addresses:
-                res += ";\n\t :has_ipv6 \"" + str(ipv6) + "\""
-            for at_id in attributes:
-                at = methods.get_attribute_from_id(at_id)
-                at_db_id = create_attribute(at)
-                if at_db_id != None:
-                    res += ";\n\t :has_attribute " + str(at_db_id)
-            if type_id in ci_types:
-                if ci_types.get(type_id) != None:
-                    res += ";\n\t :has_ci_type " + \
-                        str(ci_types.get(type_id))
-            res += ".\n"
+            with open("../graphdb-import/cmdb.ttl", "a") as f:
+                res += ":" + str(id_) + str(type_id) + str(snakecase(title)) + \
+                    " rdf:type :ConfigurationItem "
+                if title != "":
+                    res += ";\n\t :title \"" + str(title) + "\""
+                if uuid != "":
+                    res += ";\n\t :uuid \"" + str(uuid) + "\""
+                if serial_number != "":
+                    res += ";\n\t :serial_number \"" + \
+                        str(serial_number) + "\""
+                if description != "":
+                    res += ";\n\t :description \"" + str(description) + "\""
+                if status != "":
+                    res += ";\n\t :cmdb_status \"" + str(status) + "\""
+                if os_family != "":
+                    res += ";\n\t :os_family \"" + str(os_family) + "\""
+                if mac_address != "":
+                    res += ";\n\t :mac_address \"" + str(mac_address) + "\""
+                for ipv4 in ipv4_addresses:
+                    res += ";\n\t :has_ipv4 \"" + str(ipv4) + "\""
+                for ipv6 in ipv6_addresses:
+                    res += ";\n\t :has_ipv6 \"" + str(ipv6) + "\""
+                for at_id in attributes:
+                    at = methods.get_attribute_from_id(at_id)
+                    at_db_id = create_attribute(at)
+                    if at_db_id != None:
+                        res += ";\n\t :has_attribute " + str(at_db_id)
+                if type_id in ci_types:
+                    if ci_types.get(type_id) != None:
+                        res += ";\n\t :has_ci_type " + \
+                            str(ci_types.get(type_id))
+                res += ".\n"
 
-            f.write(res)
-            f.close()
+                f.write(res)
+
             return ":" + str(id_) + str(type_id) + str(snakecase(title))
     else:
         return None
@@ -364,32 +361,32 @@ def create_rel(obj, rel_types, ci_ids):
         attributes = obj.get_attributes()
 
         if id_ != "" and type_id != "":
-            f = open("../graphdb-import/cmdb.ttl", "a")
-            res += ":" + str(id_) + str(type_id) + \
-                str(snakecase(title)) + " rdf:type :Relationship "
-            if title != "":
-                res += ";\n\t :title \"" + str(title) + "\""
-            if source_id != "":
-                if ci_ids.get(source_id) != None:
-                    res += ";\n\t :has_source " + \
-                        str(ci_ids.get(source_id))
-            if target_id != "":
-                if ci_ids.get(target_id) != None:
-                    res += ";\n\t :has_target " + \
-                        str(ci_ids.get(target_id))
-            for at_id in attributes:
-                at = methods.get_attribute_from_id(at_id)
-                at_db_id = create_attribute(at)
-                if at_db_id != None:
-                    res += ";\n\t :has_attribute " + str(at_db_id)
-            if type_id in rel_types:
-                if rel_types.get(type_id) != None:
-                    res += ";\n\t :has_rel_type " + \
-                        str(rel_types.get(type_id))
-            res += ".\n"
+            with open("../graphdb-import/cmdb.ttl", "a") as f:
+                res += ":" + str(id_) + str(type_id) + \
+                    str(snakecase(title)) + " rdf:type :Relationship "
+                if title != "":
+                    res += ";\n\t :title \"" + str(title) + "\""
+                if source_id != "":
+                    if ci_ids.get(source_id) != None:
+                        res += ";\n\t :has_source " + \
+                            str(ci_ids.get(source_id))
+                if target_id != "":
+                    if ci_ids.get(target_id) != None:
+                        res += ";\n\t :has_target " + \
+                            str(ci_ids.get(target_id))
+                for at_id in attributes:
+                    at = methods.get_attribute_from_id(at_id)
+                    at_db_id = create_attribute(at)
+                    if at_db_id != None:
+                        res += ";\n\t :has_attribute " + str(at_db_id)
+                if type_id in rel_types:
+                    if rel_types.get(type_id) != None:
+                        res += ";\n\t :has_rel_type " + \
+                            str(rel_types.get(type_id))
+                res += ".\n"
 
-            f.write(res)
-            f.close()
+                f.write(res)
+
             return ":" + str(id_) + str(type_id) + str(snakecase(title))
     else:
         return None
@@ -399,31 +396,29 @@ def parse_discovered():
     """
     Goes through the configuration item and relationship types, and configuration items and relationships created in the discovery.
     """
-    f = open("../graphdb-import/cmdb.ttl", "a")
+    with open("../graphdb-import/cmdb.ttl", "a") as f:
 
-    ci_types = {}
-    for o in objects.objects.get("configuration_item_types"):
-        db_id = create_ci_type(o)
-        ci_types[o.get_id()] = db_id
-    f.write("\n")
+        ci_types = {}
+        for o in objects.objects.get("configuration_item_types"):
+            db_id = create_ci_type(o)
+            ci_types[o.get_id()] = db_id
+        f.write("\n")
 
-    rel_types = {}
-    for o in objects.objects.get("relationship_types"):
-        db_id = create_rel_type(o)
-        rel_types[o.get_id()] = db_id
-    f.write("\n")
+        rel_types = {}
+        for o in objects.objects.get("relationship_types"):
+            db_id = create_rel_type(o)
+            rel_types[o.get_id()] = db_id
+        f.write("\n")
 
-    ci_ids = {}
-    for o in objects.objects.get("configuration_items"):
-        db_id = create_ci(o, ci_types)
-        ci_ids[o.get_id()] = db_id
-    f.write("\n")
+        ci_ids = {}
+        for o in objects.objects.get("configuration_items"):
+            db_id = create_ci(o, ci_types)
+            ci_ids[o.get_id()] = db_id
+        f.write("\n")
 
-    for o in objects.objects.get("relationships"):
-        create_rel(o, rel_types, ci_ids)
-    f.write("\n")
-
-    f.close()
+        for o in objects.objects.get("relationships"):
+            create_rel(o, rel_types, ci_ids)
+        f.write("\n")
 
 
 def run_population():
