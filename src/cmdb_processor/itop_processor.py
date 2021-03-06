@@ -259,7 +259,7 @@ def get_ci_types(tables):
     """
     res = []
     for t in tables:
-        if regex.search(r'view_', t) == None and regex.search(r'lnk', t) == None:
+        if regex.search(r'view_', t) == None and regex.search(r'lnk', t) == None and regex.search(r'priv_', t) == None:
             res.append(t)
     return res
 
@@ -280,7 +280,7 @@ def get_rel_types(tables):
     """
     res = []
     for t in tables:
-        if regex.search(r'lnk', t) != None and regex.search(r'view_', t) == None:
+        if regex.search(r'lnk', t) != None and regex.search(r'view_', t) == None and regex.search(r'priv_', t) == None:
             res.append(t)
     return res
 

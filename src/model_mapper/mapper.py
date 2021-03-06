@@ -163,7 +163,7 @@ def check_if_already_has_most_similar(key, option, value, selected_values):
             return True
 
 
-def select_most_similar(calculated_matches, selected_values, selected):
+def select_most_similar2(calculated_matches, selected_values, selected):
     """
     Selects the most similar terms between the similarity values calculated from the CMDB and the database terms.
 
@@ -254,6 +254,34 @@ def select_most_similar(calculated_matches, selected_values, selected):
             else:
                 selected.append(key)
                 return select_most_similar(calculated_matches, selected_values, selected)
+    print(selected_values)
+    return selected_values
+
+
+def select_most_similar(calculated_matches, selected_values, selected):
+    """
+    Selects the most similar terms between the similarity values calculated from the CMDB and the database terms.
+
+    Parameters
+    ----------
+    calculated_matches : dict
+        The similarity values calculated.
+
+    selected_values : dict
+        The most similar selected and the correspondent value.
+
+    m : list
+        The most similar selected.
+
+    Returns
+    -------
+    dict
+        Returns the most similar terms correspondence.
+    """
+    for key in calculated_matches:
+        if len(calculated_matches.get(key)) > 0:
+            fst = list(calculated_matches.get(key).keys())[0]
+            selected_values[fst] = {key: calculated_matches.get(key).get(fst)}
     return selected_values
 
 

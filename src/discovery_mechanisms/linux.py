@@ -5,7 +5,7 @@ from colored import fg, attr
 import paramiko
 
 from models import methods
-from .linux_discovery import operating_system, processing, storage, software, devices
+from .linux_discovery import operating_system, processing, storage, software
 
 blue = fg('#46B1C9')
 red = fg('#B54653')
