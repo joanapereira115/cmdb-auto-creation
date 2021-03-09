@@ -163,7 +163,7 @@ def check_if_already_has_most_similar(key, option, value, selected_values):
             return True
 
 
-def select_most_similar2(calculated_matches, selected_values, selected):
+def select_most_similar(calculated_matches, selected_values, selected):
     """
     Selects the most similar terms between the similarity values calculated from the CMDB and the database terms.
 
@@ -254,11 +254,10 @@ def select_most_similar2(calculated_matches, selected_values, selected):
             else:
                 selected.append(key)
                 return select_most_similar(calculated_matches, selected_values, selected)
-    print(selected_values)
     return selected_values
 
 
-def select_most_similar(calculated_matches, selected_values, selected):
+def select_most_similar_max_only(calculated_matches, selected_values, selected):
     """
     Selects the most similar terms between the similarity values calculated from the CMDB and the database terms.
 
@@ -278,10 +277,41 @@ def select_most_similar(calculated_matches, selected_values, selected):
     dict
         Returns the most similar terms correspondence.
     """
-    for key in calculated_matches:
-        if len(calculated_matches.get(key)) > 0:
-            fst = list(calculated_matches.get(key).keys())[0]
-            selected_values[fst] = {key: calculated_matches.get(key).get(fst)}
+
+    new_calculated_matches = {}
+    for cmdb in calculated_matches:
+        for db in calculated_matches.get(cmdb):
+            if db not in new_calculated_matches:
+                new_calculated_matches[db] = {}
+                new_calculated_matches[db][cmdb] = calculated_matches.get(
+                    cmdb).get(db)
+            else:
+                new_calculated_matches[db][cmdb] = calculated_matches.get(
+                    cmdb).get(db)
+
+    calculated_matches = {}
+    for key in new_calculated_matches:
+        calculated_matches[key] = {k: v for k, v in sorted(new_calculated_matches.get(
+            key).items(), key=lambda item: item[1], reverse=True)}
+
+    for db in calculated_matches:
+        if len(calculated_matches.get(db)) > 0:
+            values = list(calculated_matches.get(db).values())
+            fst = None
+            if len(values) > 0:
+                if values.count(values[0]) > 1:
+                    same = [x for x in calculated_matches.get(
+                        db) if calculated_matches.get(db).get(x) == values[0]]
+                    if len(same) > 1:
+                        fst = select_option(same, db)
+                    elif len(same) == 1:
+                        fst = same[0]
+                else:
+                    fst = list(calculated_matches.get(db).keys())[0]
+        selected_values[db] = {fst: calculated_matches.get(db).get(fst)}
+
+    print()
+    print(selected_values)
     return selected_values
 
 
@@ -546,7 +576,7 @@ def run_mapper():
     for key in order:
         ci_similarity[key] = new_ci_similarity.get(key)
 
-    similar_ci = select_most_similar(ci_similarity, {}, [])
+    similar_ci = select_most_similar_max_only(ci_similarity, {}, [])
     new_similar_ci = {}
     for key in similar_ci:
         if len(similar_ci.get(key)) > 0:
@@ -571,7 +601,7 @@ def run_mapper():
     for key in order:
         rel_similarity[key] = new_rel_similarity.get(key)
 
-    similar_rel = select_most_similar(rel_similarity, {}, [])
+    similar_rel = select_most_similar_max_only(rel_similarity, {}, [])
     new_similar_rel = {}
     for key in similar_rel:
         if len(similar_rel.get(key)) > 0:
