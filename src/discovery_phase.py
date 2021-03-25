@@ -296,8 +296,7 @@ def import_data():
     port = db.get("port")
     repository = db.get("repository")
 
-    url = 'http://' + server + ':' + port + \
-        '/repositories/' + repository + '/statements'
+    url = 'http://' + server + ':' + port + '/repositories/' + repository + '/statements'
     headers = {}
     headers["Content-Type"] = "application/x-turtle"
 
@@ -307,8 +306,7 @@ def import_data():
             print(green + "\n>>> " + reset +
                   "Data imported into GraphDB.")
         except:
-            print(red + "\n>>> " + reset +
-                  "Error importing data into GraphDB repository.")
+            print(red + "\n>>> " + reset + "Error importing data into GraphDB repository.")
 
     return db
 

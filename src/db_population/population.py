@@ -361,7 +361,7 @@ def create_rel(obj, rel_types, ci_ids):
     if obj != None:
         res = ""
         id_ = obj.get_id()
-        title = str(regex.sub(r'[()/@"]', "", obj.get_title()))
+        title = str(regex.sub(r'[()/@"]', "", str(obj.get_title())))
         source_id = obj.get_source_id()
         target_id = obj.get_target_id()
         type_id = obj.get_type()
