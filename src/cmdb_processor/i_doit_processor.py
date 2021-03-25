@@ -6,6 +6,8 @@ from colored import fg, attr
 from PyInquirer import style_from_dict, Token, prompt
 from PyInquirer import Validator, ValidationError
 import regex
+import mysql.connector
+from mysql.connector import errorcode
 
 from .cmdb_data_model import cmdb_data_model
 
@@ -43,6 +45,87 @@ class AddressValidator(Validator):
             raise ValidationError(
                 message='Please enter a valid IP address.',
                 cursor_position=len(document.text))  # Move cursor to end
+
+
+def db_specification():
+    """
+    Asks the user to enter the necessary information (server address, username, password and database name) to access the i-doit CMDB.
+
+    Returns
+    -------
+    dict
+        The database information (server address, username, password and database name).
+
+    """
+    db_specification_question = [
+        {
+            'type': 'input',
+            'message': 'Enter the IP address of your database server (use format yyx.yyx.yyx.yyx where \'y\' is optional):',
+            'name': 'server',
+            'validate': AddressValidator
+        },
+        {
+            'type': 'input',
+            'message': 'Enter your database name:',
+            'name': 'db_name',
+            'validate': NotEmpty
+        },
+        {
+            'type': 'input',
+            'message': 'Enter your database username:',
+            'name': 'username',
+            'validate': NotEmpty
+        },
+        {
+            'type': 'password',
+            'message': 'Enter your database password:',
+            'name': 'password'
+        }
+    ]
+    db_specification_answer = prompt(db_specification_question, style=style)
+    return db_specification_answer
+
+
+def test_db_connection(server, db_name, username, passwd):
+    """
+    Tests the access to the CMDB database.
+
+    Parameters
+    ----------
+    server : string
+        The IP address of the CMDB server.
+
+    db_name: string
+        The CMDB database name.
+
+    username : string
+        The CMDB username.
+
+    password : string
+        The CMDB password.
+
+    Returns
+    -------
+    boolean
+        Returns true if the connection was successful and false otherwise.
+
+    """
+    print(blue + "\n>>> " + reset + "Checking i-doit database connection...")
+    cnx = None
+    try:
+        cnx = mysql.connector.connect(
+            user=username, password=passwd, host=server, database=db_name)
+        print(green + "\n>>> " + reset +
+              "Successfully connected to the i-doit database.")
+    except mysql.connector.Error as err:
+        if err.errno == errorcode.ER_ACCESS_DENIED_ERROR:
+            print(red + "\n>>> " + reset +
+                  "Something is wrong with your username or password.")
+        elif err.errno == errorcode.ER_BAD_DB_ERROR:
+            print(red + "\n>>> " + reset + "Database does not exist.")
+        else:
+            print(red + "\n>>> " + reset + str(err))
+    return cnx
 
 
 def api_specification():
@@ -164,7 +247,22 @@ def api_constants():
         return None
 
 
-def api_category_info(category):
+def get_dialogs_from_table(table, db, cursor):
+    values = {}
+    if table != None:
+        name = str(table) + "__id"
+        desc = str(table) + "__title"
+        query = ("SELECT " + name + ", " + desc +
+                 " FROM " + db + "." + table + ";")
+        cursor.execute(query)
+        for t in cursor:
+            name, value = t
+            values[name] = value
+
+    return values
+
+
+def api_category_info(category, db_info, connection):
     """
     Executes the method 'cmdb.category_info' of the i-doit API for a given category.
     Gets the attributes associated with a category, its data types and the available values of the dialog type attributes.
@@ -186,6 +284,11 @@ def api_category_info(category):
     cat_body = json.loads("{\"version\": \"2.0\",\"method\": \"cmdb.category_info\",\"params\": {\"category\": \"" +
                           category + "\", \"apikey\": \"" + apikey + "\",\"language\": \"en\"},\"id\": 1}")
 
+    server = db_info.get("server")
+    username = db_info.get("username")
+    password = db_info.get("password")
+    db_name = db_info.get("db_name")
+
     try:
         s = requests.Session()
         cat_request = s.post(api_url, json=cat_body, headers=headers)
@@ -196,9 +299,12 @@ def api_category_info(category):
                     new_atr[cat_request.json()["result"][attr]["title"]] = attr
                     types[cat_request.json()["result"][attr]["title"]] = cat_request.json()[
                         "result"][attr]["data"]["type"]
-                    dialog = cat_request.json()["result"][attr]["info"]["type"]
+                    dialog = cat_request.json().get("result").get(attr).get("info").get("type")
+
+                    d = {}
+
                     if dialog == "dialog":
-                        d = {}
+
                         dialog_body = json.loads("{\"version\": \"2.0\",\"method\": \"cmdb.dialog.read\",\"params\": {\"category\": \"" +
                                                  category + "\", \"property\": \"" + attr + "\", \"apikey\": \"" + apikey + "\",\"language\": \"en\"},\"id\": 1}")
                         s = requests.Session()
@@ -215,8 +321,18 @@ def api_category_info(category):
                                             value = a.get("id")
                                             name = a.get("title")
                                             d[value] = name
-                        if len(d) > 0:
-                            dialogs[attr] = d
+
+                    elif dialog == "dialog_plus":
+                        cursor = connection.cursor()
+
+                        table = cat_request.json().get("result").get(attr).get(
+                            "data").get("sourceTable")
+
+                        values = get_dialogs_from_table(table, db_name, cursor)
+
+                    if len(d) > 0:
+                        dialogs[attr] = d
+
                     attributes.append(new_atr)
         res["attributes"] = attributes
         res["types"] = types
@@ -228,7 +344,7 @@ def api_category_info(category):
         return None
 
 
-def category_attributes_types(categories):
+def category_attributes_types(categories, db_info, connection):
     """
     Gets the attributes its data types and the available values of the dialog type attributes associated with all the categories in the CMDB.
 
@@ -245,7 +361,7 @@ def category_attributes_types(categories):
     attributes = {}
     for cat in categories:
         attributes[cat] = {}
-        category_info = api_category_info(cat)
+        category_info = api_category_info(cat, db_info, connection)
 
         attr = {}
         for a in category_info.get("attributes"):
@@ -348,54 +464,69 @@ def process_i_doit():
     if connection == False:
         return process_i_doit()
     else:
-        print(blue + "\n>>> " + reset + "Processing i-doit CMDB data model...")
-        constants = api_constants()
+        print(blue + "\n>>> " + reset + "Make sure that i-doit is running.\n")
+        db_info = db_specification()
+        server = db_info.get("server")
+        username = db_info.get("username")
+        password = db_info.get("password")
+        db_name = db_info.get("db_name")
 
-        if constants == None:
-            process_i_doit()
+        connection = test_db_connection(server, db_name, username, password)
+        if connection == None:
+            return process_i_doit()
+
         else:
-            ci_types = constants.get("objectTypes")
-            cmdb_data_model["ci_types"] = ci_types
-            rel_types = constants.get("relationTypes")
-            cmdb_data_model["rel_types"] = rel_types
 
-            categories = [c for c in {
-                **constants.get("categories").get("g"), **constants.get("categories").get("s")}]
-            cat_attr_types = category_attributes_types(categories)
+            print(blue + "\n>>> " + reset +
+                  "Processing i-doit CMDB data model...")
+            constants = api_constants()
 
-            ci_attributes_types = {}
+            if constants == None:
+                process_i_doit()
+            else:
+                ci_types = constants.get("objectTypes")
+                cmdb_data_model["ci_types"] = ci_types
+                rel_types = constants.get("relationTypes")
+                cmdb_data_model["rel_types"] = rel_types
 
-            for ci in ci_types:
-                attrs = get_object_attributes(ci, cat_attr_types)
+                categories = [c for c in {
+                    **constants.get("categories").get("g"), **constants.get("categories").get("s")}]
+                cat_attr_types = category_attributes_types(
+                    categories, db_info, connection)
+
+                ci_attributes_types = {}
+
+                for ci in ci_types:
+                    attrs = get_object_attributes(ci, cat_attr_types)
+                    if attrs == None:
+                        process_i_doit()
+                    else:
+                        ci_attributes_types[ci] = attrs
+
+                rel_attributes_types = {}
+
+                attrs = get_object_attributes(
+                    "C__OBJTYPE__RELATION", cat_attr_types)
+
                 if attrs == None:
                     process_i_doit()
                 else:
-                    ci_attributes_types[ci] = attrs
+                    for rel in rel_types:
+                        rel_attributes_types[rel] = attrs
 
-            rel_attributes_types = {}
+                cmdb_data_model["ci_attributes"] = {
+                    ci: ci_attributes_types[ci]["attributes"] for ci in ci_attributes_types}
 
-            attrs = get_object_attributes(
-                "C__OBJTYPE__RELATION", cat_attr_types)
+                cmdb_data_model["ci_attributes_data_types"] = {
+                    ci: ci_attributes_types[ci]["types"] for ci in ci_attributes_types}
 
-            if attrs == None:
-                process_i_doit()
-            else:
-                for rel in rel_types:
-                    rel_attributes_types[rel] = attrs
+                cmdb_data_model["ci_dialog_attributes"] = {
+                    ci: ci_attributes_types[ci]["dialogs"] for ci in ci_attributes_types}
 
-            cmdb_data_model["ci_attributes"] = {
-                ci: ci_attributes_types[ci]["attributes"] for ci in ci_attributes_types}
+                cmdb_data_model["rel_attributes"] = {
+                    rel: rel_attributes_types[rel]["attributes"] for rel in rel_attributes_types}
 
-            cmdb_data_model["ci_attributes_data_types"] = {
-                ci: ci_attributes_types[ci]["types"] for ci in ci_attributes_types}
-
-            cmdb_data_model["ci_dialog_attributes"] = {
-                ci: ci_attributes_types[ci]["dialogs"] for ci in ci_attributes_types}
-
-            cmdb_data_model["rel_attributes"] = {
-                rel: rel_attributes_types[rel]["attributes"] for rel in rel_attributes_types}
-
-            cmdb_data_model["rel_attributes_data_types"] = {
-                rel: rel_attributes_types[rel]["types"] for rel in rel_attributes_types}
+                cmdb_data_model["rel_attributes_data_types"] = {
+                    rel: rel_attributes_types[rel]["types"] for rel in rel_attributes_types}
 
     return api_info

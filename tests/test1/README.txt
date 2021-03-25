@@ -7,7 +7,7 @@ Test Case 1
 - Machine characteristics:
 	- Type: MacBook Pro
 	- Operating System: macOS Catalina 10.15.7
-	- IP address: 192.168.1.69;
+	- IP address: 192.168.1.73;
 	- RAM: 16 GB
 	- CPU: 2,2 GHz Intel Core i7 quad-core
 	- Nmap: 7.91
@@ -17,7 +17,7 @@ Test Case 1
 	- Python: 3.9.1
 	- GraphDB: 9.3.1
 - CMDB: i-doit Open 1.14, running on other machine;
-- Discovery based only on the IP address 192.168.1.69;
+- Discovery based only on the IP address 192.168.1.73;
 - Selected Categories: location, network, hardware, software, operating system, processing, storage;
 - Detailed discovery using machine credentials;
 - Mapping threshold: 0.85;

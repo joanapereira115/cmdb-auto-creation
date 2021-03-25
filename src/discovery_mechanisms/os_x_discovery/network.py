@@ -78,7 +78,7 @@ def network_discovery(client, ci):
             "".join(services)).get('SPNetworkDataType')
         for serv in services_info:
             net_type = methods.add_ci_type(
-                ConfigurationItemType.ConfigurationItemType("Network Service"))
+                ConfigurationItemType.ConfigurationItemType(serv.get("Network service")))
             obj = ConfigurationItem.ConfigurationItem()
             obj.set_type(net_type.get_id())
 
@@ -86,68 +86,56 @@ def network_discovery(client, ci):
             hw = serv.get("hardware")
             itfc = serv.get("interface")
 
-            obj.set_title(frwl.get("_name"))
+            obj.set_title(serv.get("_name"))
 
             hw_port_type = methods.add_ci_type(
                 ConfigurationItemType.ConfigurationItemType("Hardware Port"))
             port_obj = ConfigurationItem.ConfigurationItem()
             port_obj.set_type(hw_port_type.get_id())
-            port_obj.set_title(name)
+            port_obj.set_title(hw)
             methods.define_attribute("interface", itfc, port_obj)
-            methods.define_attribute("hardware", hw, port_obj)
 
             rel_type_obj_port = methods.add_rel_type(
                 RelationshipType.RelationshipType("associated port"))
             rel_obj_port = methods.create_relation(
-                obj, port_obj, rel_type_ci_obj)
+                obj, port_obj, rel_type_obj_port)
             rel_obj_port.title = str(obj.get_title()) + \
                 " associated port " + str(port_obj.get_title())
 
-            rel_type_port_obj = methods.add_rel_type(
-                RelationshipType.RelationshipType("associated network service"))
-            rel_port_obj = methods.create_relation(
-                port_obj, obj, rel_type_obj_ci)
-            rel_port_obj.title = str(port_obj.get_title()) + \
-                " associated network service " + str(obj.get_title())
-
-            methods.add_ci(obj)
             methods.add_ci(port_obj)
             methods.add_rel(rel_obj_port)
-            methods.add_rel(rel_obj_ci)
 
             #dhcp_info = serv.get("dhcp")
             #dns_info = serv.get("DNS")
             ethernet_info = serv.get("Ethernet")
             if ethernet_info != None:
                 mac = ethernet_info.get("MAC Address")
-                obj.set_mac_address(mac)
+                ci.set_mac_address(mac)
 
                 ipv4_info = serv.get("IPv4")
                 for ipv4 in ipv4_info.get("Addresses"):
                     ci.add_ipv4_address(ipv4)
-                    obj.add_ipv4_address(ipv4)
 
                 ipv6_info = serv.get("IPv6")
                 for ipv6 in ipv6_info.get("Addresses"):
                     ci.add_ipv6_address(ipv6)
-                    obj.add_ipv6_address(ipv6)
                 #proxies_info = serv.get("Proxies")
 
-                rel_type_ci_obj = methods.add_rel_type(
-                    RelationshipType.RelationshipType("has network service"))
-                rel_ci_obj = methods.create_relation(ci, obj, rel_type_ci_obj)
-                rel_ci_obj.title = str(ci.get_title()) + \
-                    " has network service " + str(obj.get_title())
+            rel_type_ci_obj = methods.add_rel_type(
+                RelationshipType.RelationshipType("has network service"))
+            rel_ci_obj = methods.create_relation(ci, obj, rel_type_ci_obj)
+            rel_ci_obj.title = str(ci.get_title()) + \
+                " has network service " + str(obj.get_title())
 
-                rel_type_obj_ci = methods.add_rel_type(
-                    RelationshipType.RelationshipType("running on"))
-                rel_obj_ci = methods.create_relation(obj, ci, rel_type_obj_ci)
-                rel_obj_ci.title = str(obj.get_title()) + \
-                    " running on " + str(ci.get_title())
+            rel_type_obj_ci = methods.add_rel_type(
+                RelationshipType.RelationshipType("associated network service"))
+            rel_obj_ci = methods.create_relation(obj, ci, rel_type_obj_ci)
+            rel_obj_ci.title = str(obj.get_title()) + \
+                " associated network service " + str(ci.get_title())
 
-                methods.add_ci(obj)
-                methods.add_rel(rel_ci_obj)
-                methods.add_rel(rel_obj_ci)
+            methods.add_ci(obj)
+            methods.add_rel(rel_ci_obj)
+            methods.add_rel(rel_obj_ci)
 ###########################################
 
     # TODO: $ system_profiler SPNetworkLocationDataType

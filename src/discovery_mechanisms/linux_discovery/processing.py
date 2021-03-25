@@ -47,6 +47,9 @@ def processing_discovery(client, ci):
             if at == "Model name":
                 obj.set_title(info.get(at))
                 methods.define_attribute("CPU", info.get(at), ci)
+            if at == "CPU(s)":
+                methods.define_attribute(at, info.get(at), obj)
+                methods.define_attribute("CPU cores", info.get(at), ci)
             else:
                 methods.define_attribute(at, info.get(at), obj)
 

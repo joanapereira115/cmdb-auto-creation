@@ -42,7 +42,9 @@ def os_discovery(client, ci):
         info[fields[i].strip("\"")] = values[i]
 
     obj.set_title(info.get("OS Name"))
-    methods.define_attribute("version", info.get("OS Version"), obj)
+    methods.define_attribute("os name", info.get("OS Name"), ci)
+    methods.define_attribute("version number", info.get("OS Version"), obj)
+    methods.define_attribute("os name", info.get("OS Version"), ci)
     methods.define_attribute(
         "configuration", info.get("OS Configuration"), obj)
     methods.define_attribute("build type", info.get("OS Build Type"), obj)
@@ -53,6 +55,7 @@ def os_discovery(client, ci):
     methods.define_attribute("BIOS version", info.get("BIOS Version"), obj)
 
     manufacturer = info.get("OS Manufacturer")
+    methods.define_attribute("manufacturer", manufacturer, obj)
 
     manufacturer_type = methods.add_ci_type(
         ConfigurationItemType.ConfigurationItemType("Manufacturer"))
@@ -80,16 +83,16 @@ def os_discovery(client, ci):
     methods.add_rel(rel_man_obj)
 
     rel_type_ci_obj = methods.add_rel_type(
-        RelationshipType.RelationshipType("running operating system"))
+        RelationshipType.RelationshipType("installed os"))
     rel_ci_obj = methods.create_relation(ci, obj, rel_type_ci_obj)
     rel_ci_obj.title = str(ci.get_title()) + \
-        " running operating system " + str(obj.get_title())
+        " installed os " + str(obj.get_title())
 
     rel_type_obj_ci = methods.add_rel_type(
-        RelationshipType.RelationshipType("installed operating system"))
+        RelationshipType.RelationshipType("running os"))
     rel_obj_ci = methods.create_relation(obj, ci, rel_type_obj_ci)
     rel_obj_ci.title = str(obj.get_title()) + \
-        " installed operating system " + str(ci.get_title())
+        " running os " + str(ci.get_title())
 
     methods.add_rel(rel_ci_obj)
     methods.add_rel(rel_obj_ci)

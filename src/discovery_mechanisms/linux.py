@@ -4,7 +4,7 @@ import regex
 from colored import fg, attr
 import paramiko
 
-from models import methods
+from models import methods, ConfigurationItemType
 from .linux_discovery import operating_system, processing, storage, software
 
 blue = fg('#46B1C9')
@@ -78,6 +78,23 @@ def run_linux_discovery(ci, user, pwd, ip, categories):
             else:
                 methods.define_attribute(at, info.get(at), ci)
 
+    _, stdout, stderr = client.exec_command("systemd-detect-virt")
+    error = stderr.read().decode('utf-8')
+    if error != "":
+        print(red + ">>> " + reset + str(error) + "\n")
+    else:
+        virtual = stdout.readlines()
+        info = None
+        if len(virtual) > 0:
+            info = regex.sub("\n|\"", "", virtual[0]).strip()
+
+        if info != None:
+            if info != "none":
+                # it means that is a virtual machine
+                tp = methods.add_ci_type(
+                    ConfigurationItemType.ConfigurationItemType("virtual host"))
+                ci.set_type(tp.get_id())
+
     if ok == True:
         if 'operating systems' in categories:
             operating_system.os_discovery(client, ci)
@@ -91,10 +108,7 @@ def run_linux_discovery(ci, user, pwd, ip, categories):
         if 'software' in categories:
             software.sw_discovery(client, ci)
 
-        if 'devices' in categories:
-            devices.devices_discovery(client, ci)
-
-        # TODO: implement the other discovery mechanisms ('services', 'virtual machines', 'databases', 'containers', 'cloud systems', 'documents', 'people', 'location', 'hardware', 'network')
+        # TODO: implement the other discovery mechanisms ('devices', 'services', 'virtual machines', 'databases', 'containers', 'cloud systems', 'documents', 'people', 'location', 'hardware', 'network')
 
     client.close()
     return ok

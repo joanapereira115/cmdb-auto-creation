@@ -483,8 +483,7 @@ def add_ci_type(ci_type):
     if ex_ci_type != None:
         return ex_ci_type
     else:
-        ci_type.set_title(
-            normalization.parse_text_to_store(ci_type.get_title()))
+        ci_type.set_title(ci_type.get_title())
         objects["configuration_item_types"].append(ci_type)
         return ci_type
 
@@ -507,8 +506,7 @@ def add_rel_type(rel_type):
     if ex_rel_type != None:
         return ex_rel_type
     else:
-        rel_type.set_title(
-            normalization.parse_text_to_store(rel_type.get_title()))
+        rel_type.set_title(rel_type.get_title())
         objects["relationship_types"].append(rel_type)
         return rel_type
 
@@ -633,6 +631,5 @@ def define_attribute(title, value, ci):
         elif similarity.calculate_similarity(title, "ipv6 address") > 0.85:
             ci.add_ipv6_address(value)
         else:
-            atr = create_attribute(
-                title, normalization.parse_text_to_store(value))
+            atr = create_attribute(title, value)
             add_attribute(atr, ci)

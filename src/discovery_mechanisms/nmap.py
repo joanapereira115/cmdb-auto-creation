@@ -57,6 +57,8 @@ def run_nmap(ip):
         v = list(nm[h].get("vendor").values())
         if len(v) > 0:
             vendor = list(nm[h].get("vendor").values())[0]
+            methods.define_attribute("vendor", vendor, host)
+
             vendor_type = methods.add_ci_type(
                 ConfigurationItemType.ConfigurationItemType("Vendor"))
             vendor_obj = ConfigurationItem.ConfigurationItem()

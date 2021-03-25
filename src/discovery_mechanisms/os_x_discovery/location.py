@@ -48,9 +48,10 @@ def location_discovery(client, ci):
         ConfigurationItemType.ConfigurationItemType("Location"))
 
     obj = ConfigurationItem.ConfigurationItem()
-    obj.set_title(loc_info.get("country_name"))
+    obj.set_title(loc_info.get("country_code"))
     obj.set_type(loc_type.get_id())
 
+    methods.define_attribute("country", loc_info.get("country_name"), obj)
     methods.define_attribute("region", loc_info.get("region_name"), obj)
     methods.define_attribute("city", loc_info.get("city"), obj)
     methods.define_attribute("zip_code", loc_info.get("zip_code"), obj)

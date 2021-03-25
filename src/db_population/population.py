@@ -99,7 +99,7 @@ def create_structure():
     rdfs:range xsd:string ;
     rdfs:comment "The textual description of the item.".
 
-:cmdb_status rdf:type owl:DatatypeProperty ;
+:status rdf:type owl:DatatypeProperty ;
     rdfs:domain :ConfigurationItem ;
     rdfs:range xsd:string ;
     rdfs:comment "The current status value for the operational condition of the item.".
@@ -184,14 +184,15 @@ def create_ci_type(obj):
     if obj != None:
         res = ""
         id_ = obj.get_id()
-        title = str(regex.sub(r'[\\()/@"]', "", obj.get_title()))
-        if id_ != "" and title != "":
-            with open("../graphdb-import/cmdb.ttl", "a") as f:
-                res += ":" + str(snakecase(title)) + str(id_) + \
-                    " rdf:type :ConfigurationItemType ;\n\t :title \"" + \
-                    str(title) + "\".\n"
-                f.write(res)
-            return ":" + str(snakecase(title)) + str(id_)
+        if obj.get_title() != None:
+            title = str(regex.sub(r'[\\()/@"]', "", obj.get_title()))
+            if id_ != "" and title != "":
+                with open("../graphdb-import/cmdb.ttl", "a") as f:
+                    res += ":" + str(snakecase(title)) + str(id_) + \
+                        " rdf:type :ConfigurationItemType ;\n\t :title \"" + \
+                        str(title) + "\".\n"
+                    f.write(res)
+                return ":" + str(snakecase(title)) + str(id_)
     else:
         return None
 
@@ -242,19 +243,25 @@ def create_attribute(obj):
     if obj != None:
         res = ""
         id_ = obj.get_id()
-        title = str(regex.sub(r'[\\()/@"]', "", obj.get_title()))
-        value = str(regex.sub(r'[\\"]', "", obj.get_value()))
+        title = str(obj.get_title())
+        value = str(obj.get_value())
 
-        if id_ != "" and title != "":
-            with open("../graphdb-import/cmdb.ttl", "a") as f:
-                res += ":" + str(id_) + str(snakecase(title)) + \
-                    " rdf:type :Attribute ;\n"
-                res += "\t :title \"" + str(title) + "\";\n"
-                res += "\t :value \"" + str(value) + "\".\n"
+        if title != None and value != None:
+            title = str(regex.sub(r'[\\()/@"]', "", title))
+            value = str(regex.sub(r'[\\"]', "", value))
 
-                f.write(res)
+            if id_ != "" and title != "":
+                with open("../graphdb-import/cmdb.ttl", "a") as f:
+                    res += ":" + str(id_) + str(snakecase(title)) + \
+                        " rdf:type :Attribute ;\n"
+                    res += "\t :title \"" + str(title) + "\";\n"
+                    res += "\t :value \"" + str(value) + "\".\n"
 
-            return ":" + str(id_) + str(snakecase(title))
+                    f.write(res)
+
+                return ":" + str(id_) + str(snakecase(title))
+        else:
+            return None
     else:
         return None
 
@@ -304,7 +311,7 @@ def create_ci(obj, ci_types):
                 if description != "":
                     res += ";\n\t :description \"" + str(description) + "\""
                 if status != "":
-                    res += ";\n\t :cmdb_status \"" + str(status) + "\""
+                    res += ";\n\t :status \"" + str(status) + "\""
                 if os_family != "":
                     res += ";\n\t :os_family \"" + str(os_family) + "\""
                 if mac_address != "":

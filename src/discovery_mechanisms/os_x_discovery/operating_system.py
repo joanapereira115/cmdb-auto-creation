@@ -37,6 +37,7 @@ def os_discovery(client, ci):
         os_name = stdout.readlines()
         if len(os_name) > 0:
             value = os_name[0].strip('\n')
+            methods.define_attribute("os name", value, ci)
             obj.set_title(value)
 ###########################################
     _, stdout, stderr = client.exec_command("sw_vers -productVersion")
@@ -47,7 +48,8 @@ def os_discovery(client, ci):
         os_version = stdout.readlines()
         if len(os_version) > 0:
             value = os_version[0].strip('\n')
-            methods.define_attribute("version", value, obj)
+            methods.define_attribute("os version", value, ci)
+            methods.define_attribute("version number", value, obj)
 ###########################################
     _, stdout, stderr = client.exec_command("sw_vers -buildVersion")
     error = stderr.read().decode('utf-8')
@@ -80,16 +82,16 @@ def os_discovery(client, ci):
         ci.set_title(os_info.get("local_host_name"))
 
         rel_type_ci_obj = methods.add_rel_type(
-            RelationshipType.RelationshipType("running operating system"))
+            RelationshipType.RelationshipType("installed os"))
         rel_ci_obj = methods.create_relation(ci, obj, rel_type_ci_obj)
         rel_ci_obj.title = str(ci.get_title()) + \
-            " running operating system " + str(obj.get_title())
+            " installed os " + str(obj.get_title())
 
         rel_type_obj_ci = methods.add_rel_type(
-            RelationshipType.RelationshipType("installed operating system"))
+            RelationshipType.RelationshipType("running os"))
         rel_obj_ci = methods.create_relation(obj, ci, rel_type_obj_ci)
         rel_obj_ci.title = str(obj.get_title()) + \
-            " installed operating system " + str(ci.get_title())
+            " running os " + str(ci.get_title())
 
         methods.add_ci(obj)
         methods.add_rel(rel_ci_obj)

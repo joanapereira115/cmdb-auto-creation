@@ -43,7 +43,7 @@ def sw_discovery(client, ci):
                     now = datetime.datetime.now()
                     diff = (now.year - new_date.year) * \
                         12 + now.month - new_date.month
-                    # consider only the apps that were last modified in the last month
+                    # consider only the apps that were modified in the last month
                     if diff < 2:
 
                         app_type = methods.add_ci_type(
@@ -99,7 +99,7 @@ def sw_discovery(client, ci):
                 now = datetime.datetime.now()
                 diff = (now.year - new_date.year) * \
                     12 + now.month - new_date.month
-                # consider only the frameworks that were last modified in the last month
+                # consider only the frameworks that were modified in the last month
                 if diff < 2:
                     frame_type = methods.add_ci_type(
                         ConfigurationItemType.ConfigurationItemType("Framework"))
@@ -157,7 +157,7 @@ def sw_discovery(client, ci):
                 now = datetime.datetime.now()
                 diff = (now.year - new_date.year) * \
                     12 + now.month - new_date.month
-                # consider only the extensions that were last modified in the last month
+                # consider only the extensions that were modified in the last month
                 if diff < 2:
                     ext_type = methods.add_ci_type(
                         ConfigurationItemType.ConfigurationItemType("Extension"))

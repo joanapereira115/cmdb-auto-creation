@@ -18,7 +18,7 @@ class ConfigurationItemType:
     def __init__(self, title):
         """Initialize the configuration item type with a generated identifier."""
         self.id = next(self.id_iter) + 1
-        self.title = normalization.parse_text_to_store(title)
+        self.title = title
 
     def get_id(self):
         """Get the configuration item type identifier."""
@@ -31,4 +31,4 @@ class ConfigurationItemType:
     def set_title(self, title):
         """Sets the configuration item type title."""
         if title != None and title != "":
-            self.title = normalization.parse_text_to_store(title)
+            self.title = title

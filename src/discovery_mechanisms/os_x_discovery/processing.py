@@ -41,13 +41,21 @@ def processing_discovery(client, ci):
 
         obj.set_title(hw_info.get("cpu_type"))
         methods.define_attribute("CPU", hw_info.get("cpu_type"), ci)
+        methods.define_attribute(
+            "Model", hw_info.get("machine_name"), ci)
         methods.define_attribute("Speed", hw_info.get(
             "current_processor_speed"), obj)
+        methods.define_attribute(
+            "CPU speed", hw_info.get("current_processor_speed"), ci)
         methods.define_attribute("Number of Cores",
                                  hw_info.get("number_processors"), obj)
+        methods.define_attribute(
+            "CPU cores", hw_info.get("number_processors"), ci)
         methods.define_attribute("L2 Cache",
                                  hw_info.get("l2_cache_core"), obj)
         methods.define_attribute("L3 Cache", hw_info.get("l3_cache"), obj)
+        methods.define_attribute(
+            "physical memory", hw_info.get("physical_memory"), ci)
         methods.define_attribute("SMC Version",
                                  hw_info.get("SMC_version_system"), obj)
 
@@ -99,6 +107,8 @@ def processing_discovery(client, ci):
                                      graph.get("spdisplays_vram_shared"), obj)
 
             vendor = graph.get("spdisplays_vendor")
+            methods.define_attribute(
+                "vendor", graph.get("spdisplays_vendor"), obj)
             vendor_type = methods.add_ci_type(
                 ConfigurationItemType.ConfigurationItemType("Vendor"))
             vendor_obj = ConfigurationItem.ConfigurationItem()

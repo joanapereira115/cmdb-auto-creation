@@ -62,16 +62,16 @@ def hw_discovery(client, ci):
                     obj.set_mac_address(address)
 
                 rel_type_ci_obj = methods.add_rel_type(
-                    RelationshipType.RelationshipType("port on device"))
+                    RelationshipType.RelationshipType("has hardware port"))
                 rel_ci_obj = methods.create_relation(ci, obj, rel_type_ci_obj)
                 rel_ci_obj.title = str(ci.get_title()) + \
-                    " port on device " + str(obj.get_title())
+                    " has hardware port " + str(obj.get_title())
 
                 rel_type_obj_ci = methods.add_rel_type(
-                    RelationshipType.RelationshipType("part of"))
+                    RelationshipType.RelationshipType("port on device"))
                 rel_obj_ci = methods.create_relation(obj, ci, rel_type_obj_ci)
                 rel_obj_ci.title = str(obj.get_title()) + \
-                    " part of " + str(ci.get_title())
+                    " port on device " + str(ci.get_title())
 
                 methods.add_ci(obj)
                 methods.add_rel(rel_ci_obj)
@@ -122,9 +122,11 @@ def hw_discovery(client, ci):
 
                 name = pinfo.get("sppower_battery_model_info").get(
                     "sppower_battery_device_name")
+                methods.define_attribute("battery", name, ci)
                 bat_obj.set_title(name)
                 manufacturer = pinfo.get("sppower_battery_model_info").get(
                     "sppower_battery_manufacturer")
+                methods.define_attribute("manufacturer", manufacturer, bat_obj)
 
                 manufacturer_type = methods.add_ci_type(
                     ConfigurationItemType.ConfigurationItemType("Manufacturer"))
@@ -157,11 +159,11 @@ def hw_discovery(client, ci):
                     "sppower_current_voltage"), bat_obj)
 
                 rel_type_ci_bat = methods.add_rel_type(
-                    RelationshipType.RelationshipType("associated battery"))
+                    RelationshipType.RelationshipType("has battery"))
                 rel_ci_bat = methods.create_relation(
                     ci, bat_obj, rel_type_ci_bat)
                 rel_ci_bat.title = str(ci.get_title()) + \
-                    " associated battery " + str(bat_obj.get_title())
+                    " has battery " + str(bat_obj.get_title())
 
                 rel_type_bat_ci = methods.add_rel_type(
                     RelationshipType.RelationshipType("battery of"))
@@ -269,6 +271,8 @@ def hw_discovery(client, ci):
                     "family", pinfo.get("sppower_ac_charger_family"), ac_obj)
                 ac_obj.set_title(pinfo.get("sppower_ac_charger_ID"))
                 methods.define_attribute(
+                    "charger", pinfo.get("sppower_ac_charger_ID"), ci)
+                methods.define_attribute(
                     "serial number", pinfo.get("sppower_ac_charger_serial_number"), ac_obj)
                 methods.define_attribute(
                     "watts", pinfo.get("sppower_ac_charger_watts"), ac_obj)
@@ -278,11 +282,11 @@ def hw_discovery(client, ci):
                     "charging", pinfo.get("sppower_battery_is_charging"), ac_obj)
 
                 rel_type_ci_ac = methods.add_rel_type(
-                    RelationshipType.RelationshipType("associated charger"))
+                    RelationshipType.RelationshipType("has charger"))
                 rel_ci_ac = methods.create_relation(
                     ci, ac_obj, rel_type_ci_ac)
                 rel_ci_ac.title = str(ci.get_title()) + \
-                    " associated charger " + str(ac_obj.get_title())
+                    " has charger " + str(ac_obj.get_title())
 
                 rel_type_ac_ci = methods.add_rel_type(
                     RelationshipType.RelationshipType("charger of"))
@@ -306,7 +310,7 @@ def hw_discovery(client, ci):
         audio_info = json.loads("".join(audio)).get('SPAudioDataType')[0]
         for aud in audio_info.get("_items"):
             audio_type = methods.add_ci_type(
-                ConfigurationItemType.ConfigurationItemType("Audio Device"))
+                ConfigurationItemType.ConfigurationItemType(aud.get("_name")))
             obj = ConfigurationItem.ConfigurationItem()
             obj.set_type(audio_type.get_id())
             obj.set_title(aud.get("_name"))
@@ -333,6 +337,7 @@ def hw_discovery(client, ci):
                 "coreaudio_output_source"), obj)
 
             manufacturer = aud.get("coreaudio_device_manufacturer")
+            methods.define_attribute("manufacturer", manufacturer, obj)
             manufacturer_type = methods.add_ci_type(
                 ConfigurationItemType.ConfigurationItemType("Manufacturer"))
             man_obj = ConfigurationItem.ConfigurationItem()
@@ -359,16 +364,17 @@ def hw_discovery(client, ci):
             methods.add_rel(rel_man_obj)
 
             rel_type_ci_obj = methods.add_rel_type(
-                RelationshipType.RelationshipType("associated audio"))
+                RelationshipType.RelationshipType("has " + str(aud.get("_name"))))
             rel_ci_obj = methods.create_relation(ci, obj, rel_type_ci_obj)
             rel_ci_obj.title = str(ci.get_title()) + \
-                " associated audio " + str(obj.get_title())
+                " associated " + str(aud.get("_name")) + \
+                " " + str(obj.get_title())
 
             rel_type_obj_ci = methods.add_rel_type(
-                RelationshipType.RelationshipType("audio of"))
+                RelationshipType.RelationshipType(str(aud.get("_name") + " of")))
             rel_obj_ci = methods.create_relation(obj, ci, rel_type_obj_ci)
-            rel_obj_ci.title = str(obj.get_title()) + \
-                " audio of " + str(ci.get_title())
+            rel_obj_ci.title = str(
+                obj.get_title()) + " " + str(aud.get("_name")) + " of " + str(ci.get_title())
 
             methods.add_rel(rel_ci_obj)
             methods.add_rel(rel_obj_ci)
@@ -388,6 +394,7 @@ def hw_discovery(client, ci):
         obj = ConfigurationItem.ConfigurationItem()
         obj.set_type(cam_type.get_id())
         obj.set_title(cam_info.get("_name"))
+        methods.define_attribute("camera", cam_info.get("_name"), ci)
 
         methods.define_attribute("model", cam_info.get(
             "spcamera_model-id"), obj)
@@ -420,7 +427,7 @@ def hw_discovery(client, ci):
         card_info = json.loads("".join(card)).get('SPCardReaderDataType')[0]
 
         card_type = methods.add_ci_type(
-            ConfigurationItemType.ConfigurationItemType("Card Reader"))
+            ConfigurationItemType.ConfigurationItemType(card_info.get("_name")))
         obj = ConfigurationItem.ConfigurationItem()
         obj.set_type(card_type.get_id())
         obj.set_title(card_info.get("_name"))
@@ -433,6 +440,37 @@ def hw_discovery(client, ci):
             "spcardreader_serialnumber"), obj)
         methods.define_attribute("vendor id", card_info.get(
             "spcardreader_vendor-id"), obj)
+
+        if len(card_info.get("_items")) > 0:
+            if len(card_info.get("_items")[0].get("volumes")) > 0:
+                volumes = card_info.get("_items")[0].get("volumes")
+                for vol in volumes:
+                    card_type = methods.add_ci_type(
+                        ConfigurationItemType.ConfigurationItemType(vol.get("_name")))
+                    card = ConfigurationItem.ConfigurationItem()
+                    for at in vol:
+                        if at == "_name":
+                            card.set_title(vol.get(at))
+                        else:
+                            methods.define_attribute(at, vol.get(at), card)
+
+                    rel_type_obj_card = methods.add_rel_type(
+                        RelationshipType.RelationshipType("reading card"))
+                    rel_obj_card = methods.create_relation(
+                        obj, card, rel_type_obj_card)
+                    rel_obj_card.title = str(obj.get_title()) + \
+                        " reading card " + str(card.get_title())
+
+                    rel_type_card_obj = methods.add_rel_type(
+                        RelationshipType.RelationshipType("card reading by"))
+                    rel_card_obj = methods.create_relation(
+                        card, obj, rel_type_card_obj)
+                    rel_card_obj.title = str(card.get_title()) + \
+                        " card reading by " + str(obj.get_title())
+
+                    methods.add_ci(card)
+                    methods.add_rel(rel_obj_card)
+                    methods.add_rel(rel_card_obj)
 
         rel_type_ci_obj = methods.add_rel_type(
             RelationshipType.RelationshipType("associated card reader"))
@@ -461,18 +499,19 @@ def hw_discovery(client, ci):
             'SPDisplaysDataType')[0].get("spdisplays_ndrvs")[0]
 
         display_type = methods.add_ci_type(
-            ConfigurationItemType.ConfigurationItemType("Display Device"))
+            ConfigurationItemType.ConfigurationItemType("Display"))
         obj = ConfigurationItem.ConfigurationItem()
         obj.set_type(display_type.get_id())
 
         obj.set_title(display_info.get("_name"))
+        methods.define_attribute("display", display_info.get("_name"), ci)
 
         methods.define_attribute("pixels", display_info.get(
             "_spdisplays_pixels"), obj)
         methods.define_attribute("year", display_info.get(
             "_spdisplays_display-year"), obj)
-        methods.define_attribute("_spdisplays_resolution", display_info.get(
-            "resolution"), obj)
+        methods.define_attribute("resolution", display_info.get(
+            "_spdisplays_resolution"), obj)
         methods.define_attribute("pixel resolution", display_info.get(
             "spdisplays_pixelresolution"), obj)
         methods.define_attribute("connection type", display_info.get(

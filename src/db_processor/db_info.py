@@ -62,10 +62,11 @@ def db_specification():
         The database information (server address, port number and repository name).
 
     """
+    print()
     db_specification_question = [
         {
             'type': 'input',
-            'message': '\nEnter the IP address of the GraphDB server (use format yyx.yyx.yyx.yyx where \'y\' is optional):',
+            'message': 'Enter the IP address of the GraphDB server (use format yyx.yyx.yyx.yyx where \'y\' is optional):',
             'name': 'server',
             'validate': AddressValidator
         },

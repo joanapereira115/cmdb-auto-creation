@@ -310,8 +310,6 @@ def select_most_similar_max_only(calculated_matches, selected_values, selected):
                     fst = list(calculated_matches.get(db).keys())[0]
         selected_values[db] = {fst: calculated_matches.get(db).get(fst)}
 
-    print()
-    print(selected_values)
     return selected_values
 
 
@@ -414,12 +412,13 @@ def present_map(cmdb_ci_types, db_ci_types, cmdb_rel_types, db_rel_types, cmdb_c
         print("**************************************************************************************************")
         print()
         atrs = similar_attr_ci.get(cmdb_ci)
-        for cmdb_at in atrs:
-            db_at = list(atrs.get(cmdb_at).keys())[0]
-            sim = atrs.get(cmdb_at).get(db_at)
-            row = [cmdb_at, cmdb_ci_attributes.get(
-                cmdb_ci).get(cmdb_at), db_at, db_ci_attributes.get(db_ci).get(db_at), sim]
-            data.append(row)
+        if atrs != None:
+            for cmdb_at in atrs:
+                db_at = list(atrs.get(cmdb_at).keys())[0]
+                sim = atrs.get(cmdb_at).get(db_at)
+                row = [cmdb_at, cmdb_ci_attributes.get(
+                    cmdb_ci).get(cmdb_at), db_at, db_ci_attributes.get(db_ci).get(db_at), sim]
+                data.append(row)
         print(tabulate(data, headers=["Attribute in CMDB", "Description",
                                       "Attribute in DB", "Description", "Similarity Coeficient"]))
         print()
@@ -576,7 +575,7 @@ def run_mapper():
     for key in order:
         ci_similarity[key] = new_ci_similarity.get(key)
 
-    similar_ci = select_most_similar_max_only(ci_similarity, {}, [])
+    similar_ci = select_most_similar(ci_similarity, {}, [])
     new_similar_ci = {}
     for key in similar_ci:
         if len(similar_ci.get(key)) > 0:
@@ -601,7 +600,7 @@ def run_mapper():
     for key in order:
         rel_similarity[key] = new_rel_similarity.get(key)
 
-    similar_rel = select_most_similar_max_only(rel_similarity, {}, [])
+    similar_rel = select_most_similar(rel_similarity, {}, [])
     new_similar_rel = {}
     for key in similar_rel:
         if len(similar_rel.get(key)) > 0:

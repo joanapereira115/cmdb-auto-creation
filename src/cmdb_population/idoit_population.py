@@ -66,6 +66,67 @@ def calculate_value_from_dialog(original_value, dialog_values):
     return res
 
 
+def define_attribute_categories(cmdb_type, attrs):
+
+    categories = []
+    categorie_attributes = {}
+    obj_categories_body = json.loads("{\"version\": \"2.0\",\"method\": \"cmdb.object_type_categories.read\",\"params\": {\"type\": \"" +
+                                     cmdb_type + "\", \"apikey\": \"" + apikey + "\",\"language\": \"en\"},\"id\": 1}")
+
+    try:
+        s = requests.Session()
+        obj_categories_request = s.post(
+            cmdb_url, json=obj_categories_body, headers=headers)
+
+        if obj_categories_request.text != "":
+            if "result" in obj_categories_request.json():
+                if "catg" in obj_categories_request.json().get("result"):
+                    for cat_g in obj_categories_request.json().get("result").get("catg"):
+                        cat = cat_g["const"]
+                        categories.append(cat)
+                if "cats" in obj_categories_request.json().get("result"):
+                    for cat_s in obj_categories_request.json().get("result").get("cats"):
+                        cat = cat_s["const"]
+                        categories.append(cat)
+
+        for cat in categories:
+            try:
+                categories_attributes_body = json.loads("{\"version\": \"2.0\",\"method\": \"cmdb.category_info\",\"params\": {\"category\": \"" +
+                                                        cat + "\", \"apikey\": \"" + apikey + "\",\"language\": \"en\"},\"id\": 1}")
+
+                s = requests.Session()
+                categories_attributes_request = s.post(
+                    cmdb_url, json=categories_attributes_body, headers=headers)
+
+                if categories_attributes_request.text != "":
+                    if "result" in categories_attributes_request.json():
+                        for attr in categories_attributes_request.json().get("result"):
+                            if attr in attrs:
+                                categorie_attributes[attr] = cat
+
+            except requests.exceptions.RequestException:
+                print(red + "\n>>> " + reset +
+                      "Unable to connect to the API. Please verify the connection information.\n")
+
+        if "title" in categorie_attributes:
+            categorie_attributes["title"] = "C__CATG__GLOBAL"
+
+        if "status" in categorie_attributes:
+            categorie_attributes["status"] = "C__CATG__GLOBAL"
+
+        if "cmdb_status" in categorie_attributes:
+            categorie_attributes["cmdb_status"] = "C__CATG__GLOBAL"
+
+        if "description" in categorie_attributes:
+            categorie_attributes["description"] = "C__CATG__GLOBAL"
+
+    except requests.exceptions.RequestException:
+        print(red + "\n>>> " + reset +
+              "Unable to connect to the API. Please verify the connection information.\n")
+
+    return categorie_attributes
+
+
 def create_idoit_ci(ci_type, ci_attrs, rules_ci_types, rules_ci_attributes, ci_attributes_data_types, ci_dialog_attributes):
     """
     Creates a configuration item into the CMDB.
@@ -97,11 +158,24 @@ def create_idoit_ci(ci_type, ci_attrs, rules_ci_types, rules_ci_attributes, ci_a
     """
     cmdb_id = None
     cmdb_type = rules_ci_types.get(ci_type)
+
+    body = {}
+    body["version"] = "2.0"
+    body["method"] = "cmdb.object.create"
+    body["params"] = {}
+    body["params"]["apikey"] = apikey
+    body["params"]["language"] = "en"
+    body["id"] = 1
+
     if cmdb_type != None:
-        cmdb_type_text = "\"type\": \"" + cmdb_type + "\", "
-        cmdb_at_text = ""
-        has_title = False
+        body["params"]["type"] = cmdb_type
+        body["params"]["title"] = cmdb_type
+
         at_types = ci_attributes_data_types.get(cmdb_type)
+        attrs = [rules_ci_attributes.get(ci_type).get(at) for at in ci_attrs]
+
+        categorie_attributes = define_attribute_categories(cmdb_type, attrs)
+        body["params"]["categories"] = {}
 
         for at in ci_attrs:
             cmdb_at = rules_ci_attributes.get(ci_type).get(at)
@@ -114,40 +188,29 @@ def create_idoit_ci(ci_type, ci_attrs, rules_ci_types, rules_ci_attributes, ci_a
 
             at_type = at_types.get(cmdb_at)
             if cmdb_at != None:
-                if cmdb_at == "title":
-                    has_title = True
+                cat = categorie_attributes.get(cmdb_at)
+                if cat not in body["params"]["categories"]:
+                    body["params"]["categories"][cat] = [{}]
                 if at_type == "text" or at_type == "text_area" or at_type == "date" or at_type == "date_time" or at_type == "json":
-                    cmdb_at_text += '\"' + \
-                        str(cmdb_at) + '\": \"' + str(value) + '\", '
+                    body["params"]["categories"][cat][0][str(
+                        cmdb_at)] = str(value)
                 elif at_type == "int":
                     try:
-                        cmdb_at_text += '\"' + \
-                            str(cmdb_at) + '\": \"' + str(int(value)) + '\", '
+                        body["params"]["categories"][cat][0][str(
+                            cmdb_at)] = int(value)
                     except ValueError:
                         print(red + "\n>>> " + reset +
                               "Error converting string '" + str(value) + "' to int.")
                 elif at_type == "float" or at_type == "double":
                     try:
-                        cmdb_at_text += '\"' + \
-                            str(cmdb_at) + '\": \"' + \
-                            str(float(value)) + '\", '
+                        body["params"]["categories"][cat][0][str(
+                            cmdb_at)] = float(value)
                     except ValueError:
                         print(red + "\n>>> " + reset +
                               "Error converting string '" + str(value) + "' to float.")
-            else:
-                cmdb_at_text += ""
 
-        if has_title == False:
-            cmdb_at_text += "\"title\": \"" + ci_type + "\","
-        body = json.loads("""{\"version\": \"2.0\",
-            \"method\": \"cmdb.object.create\",
-            \"params\": {
-                """ + cmdb_type_text + cmdb_at_text + """
-                \"apikey\": \"""" + apikey + """\",
-                \"language\": \"en\"
-            },
-            \"id\": 1
-        }""")
+        print()
+        print(body)
 
         s = requests.Session()
         create_ci_request = s.post(cmdb_url, json=body, headers=headers)
@@ -206,18 +269,34 @@ def create_idoit_relationship(rel_type, rel_attrs, rules_rel_types, rules_rel_at
 
     cmdb_id = None
     cmdb_type = rules_rel_types.get(rel_type)
+
+    body = {}
+    body["version"] = "2.0"
+    body["method"] = "cmdb.object.create"
+    body["params"] = {}
+    body["params"]["apikey"] = apikey
+    body["params"]["language"] = "en"
+    body["id"] = 1
+
     if cmdb_type != None:
-        cmdb_type_text = "\"type\": \"C__OBJTYPE__RELATION\", \"relation_type\": \"" + \
-            cmdb_type + "\", "
+        body["params"]["type"] = "C__OBJTYPE__RELATION"
+        body["params"]["title"] = cmdb_type
+        body["params"]["categories"] = {}
+        body["params"]["categories"]["C__CATG__RELATION"] = [{}]
+        body["params"]["categories"]["C__CATG__RELATION"][0]["relation_type"] = cmdb_type
 
         if ci_ids.get(source) != None and ci_ids.get(target) != None:
-            cmdb_source_target_text = "\"object1\": " + \
-                str(ci_ids.get(source)) + ", \"object2\": " + \
-                str(ci_ids.get(target)) + ", "
-            cmdb_at_text = ""
+            body["params"]["categories"]["C__CATG__RELATION"][0]["object1"] = int(
+                ci_ids.get(source))
+            body["params"]["categories"]["C__CATG__RELATION"][0]["object2"] = int(
+                ci_ids.get(target))
 
-            has_title = False
             at_types = rel_attributes_data_types.get(cmdb_type)
+            attrs = [rules_rel_attributes.get(
+                rel_type).get(at) for at in rel_attrs]
+
+            categorie_attributes = define_attribute_categories(
+                cmdb_type, attrs)
 
             for at in rel_attrs:
                 cmdb_at = rules_rel_attributes.get(rel_type).get(at)
@@ -230,41 +309,31 @@ def create_idoit_relationship(rel_type, rel_attrs, rules_rel_types, rules_rel_at
 
                 at_type = at_types.get(cmdb_at)
                 if cmdb_at != None:
-                    if cmdb_at == "title":
-                        has_title = True
+                    cat = categorie_attributes.get(cmdb_at)
+                    if cat not in body["params"]["categories"]:
+                        body["params"]["categories"][cat] = [{}]
                     if at_type == "text" or at_type == "text_area" or at_type == "date" or at_type == "date_time" or at_type == "json":
-                        cmdb_at_text += "\"" + cmdb_at + "\": \"" + value + "\","
+                        body["params"]["categories"][cat][0][str(
+                            cmdb_at)] = str(value)
                     elif at_type == "int":
                         try:
-                            cmdb_at_text += "\"" + str(cmdb_at) + \
-                                "\": " + str(int(value)) + ","
+                            body["params"]["categories"][cat][0][str(
+                                cmdb_at)] = int(value)
                         except ValueError:
                             print(red + "\n>>> " + reset +
                                   "Error converting string '" + str(value) + "' to int.")
                     elif at_type == "float" or at_type == "double":
                         try:
-                            cmdb_at_text += "\"" + str(cmdb_at) + \
-                                "\": " + str(float(value)) + ","
+                            body["params"]["categories"][cat][0][str(
+                                cmdb_at)] = float(value)
                         except ValueError:
                             print(red + "\n>>> " + reset +
                                   "Error converting string '" + str(value) + "' to float.")
-                else:
-                    cmdb_at_text += ""
 
-            if has_title == False:
-                cmdb_at_text += "\"title\": \"" + rel_type + "\","
+            body["params"]["categories"]["C__CATG__RELATION"][0]["weighting"] = 5
 
-            cmdb_weight_text = "\"weighting\": " + str(5) + ","
-
-            body = json.loads("""{"version\": \"2.0\",
-                \"method\": \"cmdb.object.create\",
-                \"params\": {
-                    """ + str(cmdb_type_text) + str(cmdb_weight_text) + str(cmdb_source_target_text) + str(cmdb_at_text) + """
-                    \"apikey\": \"""" + apikey + """\",
-                    \"language\": \"en\"
-                },
-                \"id\": 1
-            }""")
+            print()
+            print(body)
 
             s = requests.Session()
             create_rel_request = s.post(cmdb_url, json=body, headers=headers)

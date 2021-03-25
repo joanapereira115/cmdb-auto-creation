@@ -5,6 +5,7 @@ from colored import fg, attr
 from PyInquirer import style_from_dict, Token, prompt
 from PyInquirer import Validator, ValidationError
 import ipaddress
+import regex
 
 from password_vault import vault
 from discovery_mechanisms import nmap, snmp, packets
@@ -161,6 +162,16 @@ def define_networks():
         net_obj.set_title(net)
 
         for ip in discovery_info.get("networks").get(net):
+            ipv6 = regex.search(r'(([0-9a-fA-F]{1,4}:){7,7}[0-9a-fA-F]{1,4}|([0-9a-fA-F]{1,4}:){1,7}:|([0-9a-fA-F]{1,4}:){1,6}:[0-9a-fA-F]{1,4}|([0-9a-fA-F]{1,4}:){1,5}(:[0-9a-fA-F]{1,4}){1,2}|([0-9a-fA-F]{1,4}:){1,4}(:[0-9a-fA-F]{1,4}){1,3}|([0-9a-fA-F]{1,4}:){1,3}(:[0-9a-fA-F]{1,4}){1,4}|([0-9a-fA-F]{1,4}:){1,2}(:[0-9a-fA-F]{1,4}){1,5}|[0-9a-fA-F]{1,4}:((:[0-9a-fA-F]{1,4}){1,6})|:((:[0-9a-fA-F]{1,4}){1,7}|:)|fe80:(:[0-9a-fA-F]{0,4}){0,4}%[0-9a-zA-Z]{1,}|::(ffff(:0{1,4}){0,1}:){0,1}((25[0-5]|(2[0-4]|1{0,1}[0-9]){0,1}[0-9])\.){3,3}(25[0-5]|(2[0-4]|1{0,1}[0-9]){0,1}[0-9])|([0-9a-fA-F]{1,4}:){1,4}:((25[0-5]|(2[0-4]|1{0,1}[0-9]){0,1}[0-9])\.){3,3}(25[0-5]|(2[0-4]|1{0,1}[0-9]){0,1}[0-9]))', ip)
+            ipv4 = regex.search(
+                r'((25[0-5]|(2[0-4]|1{0,1}[0-9]){0,1}[0-9])\.){3,3}(25[0-5]|(2[0-4]|1{0,1}[0-9]){0,1}[0-9])', ip)
+
+            if ipv6 != None:
+                methods.define_attribute("net type", "IPv6", net_obj)
+
+            elif ipv4 != None:
+                methods.define_attribute("net type", "IPv4", net_obj)
+
             ci = ConfigurationItem.ConfigurationItem()
             ci.add_ipv4_address(ip)
 
@@ -171,9 +182,9 @@ def define_networks():
                                 " part of network " + str(net_obj.get_title()))
 
             rel_type_2 = methods.add_rel_type(
-                RelationshipType.RelationshipType("has address"))
+                RelationshipType.RelationshipType("network includes"))
             rel_obj_2 = methods.create_relation(net_obj, ci, rel_type_2)
-            rel_obj_2.set_title(str(net_obj.get_title()) + " has address " +
+            rel_obj_2.set_title(str(net_obj.get_title()) + " network includes " +
                                 str(ci.get_title()))
 
             methods.add_ci(ci)

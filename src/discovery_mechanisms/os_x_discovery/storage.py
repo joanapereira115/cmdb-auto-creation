@@ -114,6 +114,7 @@ def storage_discovery(client, ci):
                 "product", storage_info.get("spsata_product"), obj)
 
             vendor = storage_info.get("spsata_vendor")
+            methods.define_attribute("vendor", vendor, obj)
             vendor_type = methods.add_ci_type(
                 ConfigurationItemType.ConfigurationItemType("Vendor"))
             vendor_obj = ConfigurationItem.ConfigurationItem()

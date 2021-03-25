@@ -109,7 +109,14 @@ def get_ci_attributes(ci_type):
                 w = w[len("http://www.semanticweb.org/cmdb_auto_creation/2020/cmdb#"):]
             res.append(w)
 
-    query_string = "select ?s where { ?s rdfs:domain :ConfigurationItem . ?s rdfs:range xsd:string . }"
+    query_string = """
+    select distinct ?s where {
+        ?ci :has_ci_type ?x .
+        ?x :title \"""" + ci_type + """\" .
+        ?ci ?s ?h .
+        ?s rdfs:domain :ConfigurationItem .
+        ?s rdfs:range xsd:string .
+    }"""
     r = execQuery(query_string)
     for w in r.text.split('\n')[1:]:
         w = regex.sub(r"\r", "", w)

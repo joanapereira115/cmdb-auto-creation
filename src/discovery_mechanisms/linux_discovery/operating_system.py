@@ -43,20 +43,24 @@ def os_discovery(client, ci):
         for at in info:
             if at == "NAME":
                 obj.set_title(info.get(at))
+                methods.define_attribute("os name", info.get(at), ci)
+            elif at == "VERSION":
+                methods.define_attribute("version number", info.get(at), obj)
+                methods.define_attribute("os version", info.get(at), ci)
             else:
                 methods.define_attribute(at, info.get(at), obj)
 ###########################################
     rel_type_ci_obj = methods.add_rel_type(
-        RelationshipType.RelationshipType("running operating system"))
+        RelationshipType.RelationshipType("installed os"))
     rel_ci_obj = methods.create_relation(ci, obj, rel_type_ci_obj)
     rel_ci_obj.title = str(ci.get_title()) + \
-        " running operating system " + str(obj.get_title())
+        " installed os " + str(obj.get_title())
 
     rel_type_obj_ci = methods.add_rel_type(
-        RelationshipType.RelationshipType("installed operating system"))
+        RelationshipType.RelationshipType("running os"))
     rel_obj_ci = methods.create_relation(obj, ci, rel_type_obj_ci)
     rel_obj_ci.title = str(obj.get_title()) + \
-        " installed operating system " + str(ci.get_title())
+        " running os " + str(ci.get_title())
 
     methods.add_ci(obj)
     methods.add_rel(rel_ci_obj)

@@ -3,8 +3,9 @@
 from colored import fg, attr
 import winrm
 import requests
+import regex
 
-from models import methods
+from models import methods, ConfigurationItemType
 from .windows_discovery import operating_system, services
 
 
@@ -45,8 +46,7 @@ def run_windows_discovery(ci, user, pwd, ip, categories):
     s = winrm.Session(ip, auth=(user, pwd))
     try:
         r = s.run_cmd("whoami", [])
-    # TODO: verificar esta exceção
-    except ConnectionRefusedError:
+    except winrm.exceptions.InvalidCredentialsError:
         print(red + ">>> " + reset +
               "Wrong credentials! Unable to connect with the machine " + ip + " via WinRM.\n")
         ok = False
@@ -72,6 +72,14 @@ def run_windows_discovery(ci, user, pwd, ip, categories):
         serial = r.std_out.decode(
             "ISO-8859-1").split("\n")[1].strip("\n").strip(" "). strip("\r")
         methods.define_attribute("serial number", serial, ci)
+
+        r = s.run_cmd("systeminfo | find \"System Model\"", [])
+        virtual = r.std_out.decode("ISO-8859-1").split(":")[1].strip()
+        if regex.search("virtual", virtual, flags=regex.IGNORECASE) != None:
+            # it means that is a virtual machine
+            tp = methods.add_ci_type(
+                ConfigurationItemType.ConfigurationItemType("virtual host"))
+            ci.set_type(tp.get_id())
 
         if 'operating systems' in categories:
             operating_system.os_discovery(s, ci)

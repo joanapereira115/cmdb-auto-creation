@@ -164,7 +164,9 @@ acronyms_db = {
     'xdp': 'express data path',
     'xml': 'extensible markup language',
     'vrrp': 'virtual router redundancy protocol',
-    'net': 'network'
+    'net': 'network',
+    'gpu': 'graphics processing unit',
+    'sd': 'secure digital'
 }
 
 
@@ -305,28 +307,6 @@ def acronym(text):
     return result
 
 
-def parse_text_to_store(text):
-    """
-    Cleans the text without removing any of its content for storing.
-
-    Parameters
-    ----------
-    text : string
-        The text that we want to parse.
-
-    Returns
-    -------
-    string
-        Returns the text parsed.
-    """
-    text = str(text)
-    text = remove_style_case(text)
-    text = remove_special_chars(text)
-    text = text.lower()
-    text = acronym(text)
-    return text
-
-
 def parse_text_to_compare(text):
     """
     Cleans the text for comparasions.
@@ -348,170 +328,4 @@ def parse_text_to_compare(text):
     text = text.lower()
     text = acronym(text)
     text = remove_stop_words(text)
-    return text
-
-
-def unit_formatter(text):
-    """
-    Transforms the units names to its abbreviations.
-
-    Parameters
-    ----------
-    text : string
-        The text that we want to parse.
-
-    Returns
-    -------
-    string
-        Returns the text parsed.
-    """
-    # TODO: add more units
-    text = str(text)
-    # time
-    text = re.sub("yoctosecond(s)?", "ys", text)
-    text = re.sub("zeptosecond(s)?", "zs", text)
-    text = re.sub("attosecond(s)?", "as", text)
-    text = re.sub("femtosecond(s)?", "fs", text)
-    text = re.sub("picosecond(s)?", "ps", text)
-    text = re.sub("nanosecond(s)?", "ns", text)
-    text = re.sub("microsecond(s)?", "µs", text)
-    text = re.sub("millisecond(s)?", "ms", text)
-    text = re.sub("second(s)?", "s", text)
-    text = re.sub("minute(s)?", "min", text)
-    text = re.sub("hour(s)?", "h", text)
-    # measurement
-    text = re.sub("yoctometer(s)?", "ym", text)
-    text = re.sub("zeptometer(s)?", "zm", text)
-    text = re.sub("attometer(s)?", "am", text)
-    text = re.sub("femtometer(s)?", "fm", text)
-    text = re.sub("picometer(s)?", "pm", text)
-    text = re.sub("nanometer(s)?", "nm", text)
-    text = re.sub("micrometer(s)?", "µm", text)
-    text = re.sub("millimeter(s)?", "mm", text)
-    text = re.sub("centimeter(s)?", "cm", text)
-    text = re.sub("decimeter(s)?", "dm", text)
-    text = re.sub("decameter(s)?", "dam", text)
-    text = re.sub("hectometer(s)?", "hm", text)
-    text = re.sub("kilometer(s)?", "km", text)
-    text = re.sub("megameter(s)?", "Mm", text)
-    text = re.sub("gigameter(s)?", "Gm", text)
-    text = re.sub("terameter(s)?", "Tm", text)
-    text = re.sub("petameter(s)?", "Pm", text)
-    text = re.sub("exameter(s)?", "Em", text)
-    text = re.sub("zettameter(s)?", "Zm", text)
-    text = re.sub("yottameter(s)?", "Ym", text)
-    text = re.sub(" th$", "thou", text)
-    text = re.sub(" in$", "inch", text)
-    text = re.sub(" ft$", "foot", text)
-    text = re.sub(" yd$", "yard", text)
-    text = re.sub(" ch$", "chain", text)
-    text = re.sub(" fur$", "furlong", text)
-    text = re.sub(" ml$", "mile", text)
-    text = re.sub(" lea$", "league", text)
-    text = re.sub("meter(s)?", "m", text)
-    # mass
-    text = re.sub("yoctogram(s)?", "yg", text)
-    text = re.sub("zeptogram(s)?", "zg", text)
-    text = re.sub("attogram(s)?", "ag", text)
-    text = re.sub("femtogram(s)?", "fg", text)
-    text = re.sub("picogram(s)?", "pg", text)
-    text = re.sub("nanogram(s)?", "ng", text)
-    text = re.sub("microgram(s)?", "µg", text)
-    text = re.sub("milligram(s)?", "mg", text)
-    text = re.sub("centigram(s)?", "cg", text)
-    text = re.sub("decigram(s)?", "dg", text)
-    text = re.sub("decagram(s)?", "dag", text)
-    text = re.sub("hectogram(s)?", "hg", text)
-    text = re.sub("kilogram(s)?", "kg", text)
-    text = re.sub("megagram(s)?", "Mg", text)
-    text = re.sub("gigagram(s)?", "Gg", text)
-    text = re.sub("teragram(s)?", "Tg", text)
-    text = re.sub("petagram(s)?", "Pg", text)
-    text = re.sub("exagram(s)?", "Eg", text)
-    text = re.sub("zettagram(s)?", "Zg", text)
-    text = re.sub("yottagram(s)?", "Yg", text)
-    text = re.sub("gram(s)?", "g", text)
-    # speed
-    text = re.sub("yoctohertz(s)?", "yHz", text)
-    text = re.sub("zeptohertz(s)?", "zHz", text)
-    text = re.sub("attohertz(s)?", "aHz", text)
-    text = re.sub("femtohertz(s)?", "fHz", text)
-    text = re.sub("picohertz(s)?", "pHz", text)
-    text = re.sub("nanohertz(s)?", "nHz", text)
-    text = re.sub("microhertz(s)?", "µHz", text)
-    text = re.sub("millihertz(s)?", "mHz", text)
-    text = re.sub("centihertz(s)?", "cHz", text)
-    text = re.sub("decihertz(s)?", "dHz", text)
-    text = re.sub("decahertz(s)?", "daHz", text)
-    text = re.sub("hectohertz(s)?", "hHz", text)
-    text = re.sub("kilohertz(s)?", "kHz", text)
-    text = re.sub("megahertz(s)?", "MHz", text)
-    text = re.sub("gigahertz(s)?", "GHz", text)
-    text = re.sub("terahertz(s)?", "THz", text)
-    text = re.sub("petahertz(s)?", "PHz", text)
-    text = re.sub("exahertz(s)?", "EHz", text)
-    text = re.sub("zettahertz(s)?", "ZHz", text)
-    text = re.sub("yottahertz(s)?", "YHz", text)
-    text = re.sub("hertz(s)?", "Hz", text)
-    # thermodynamic temperature
-    text = re.sub("kelvin(s)?", "K", text)
-    text = re.sub("celsius(s)?", "°C", text)
-    text = re.sub("fahrenheit(s)?", "°F", text)
-    # other
-    text = re.sub("milliampere(s)?", "mA", text)
-    text = re.sub("centiampere(s)?", "cA", text)
-    text = re.sub("deciampere(s)?", "dA", text)
-    text = re.sub("decampere(s)?", "daA", text)
-    text = re.sub("hectoampere(s)?", "hA", text)
-    text = re.sub("kiloampere(s)?", "kA", text)
-    text = re.sub("megampere(s)?", "MA", text)
-    text = re.sub("gigampere(s)?", "GA", text)
-    text = re.sub("ampere(s)?", "A", text)
-
-    text = re.sub(" us$", " µs", text)
-
-    return text
-
-
-def conversion(text):
-    """
-    Converts unit values.
-
-    Parameters
-    ----------
-    text : string
-        The text that we want to convert.
-
-    Returns
-    -------
-    string
-        Returns the text converted.
-    """
-    # TODO: convert more units
-    text = re.sub(r"([0-9]+\.?|,?[0-9]+?)([a-zA-Z]+)[^:]",
-                  r"\1 \2", text, re.DOTALL)
-    text = unit_formatter(text)
-
-    measurement = re.search(r"[0-9]+(.|,[0-9]+)? ym|[0-9]+(.|,[0-9]+)? zm|[0-9]+(.|,[0-9]+)? am|[0-9]+(.|,[0-9]+)? fm|[0-9]+(.|,[0-9]+)? pm|[0-9]+(.|,[0-9]+)? nm|[0-9]+(.|,[0-9]+)? µm|[0-9]+(.|,[0-9]+)? mm|[0-9]+(.|,[0-9]+)? cm|[0-9]+(.|,[0-9]+)? dm|[0-9]+(.|,[0-9]+)? m|[0-9]+(.|,[0-9]+)? dam|[0-9]+(.|,[0-9]+)? hm|[0-9]+(.|,[0-9]+)? km|[0-9]+(.|,[0-9]+)? Mm|[0-9]+(.|,[0-9]+)? µm|[0-9]+(.|,[0-9]+)? Gm|[0-9]+(.|,[0-9]+)? Tm|[0-9]+(.|,[0-9]+)? Pm|[0-9]+(.|,[0-9]+)? Em|[0-9]+(.|,[0-9]+)? Zm|[0-9]+(.|,[0-9]+)? Ym|[0-9]+(.|,[0-9]+)? thou|[0-9]+(.|,[0-9]+)? inch|[0-9]+(.|,[0-9]+)? foot|[0-9]+(.|,[0-9]+)? yard|[0-9]+(.|,[0-9]+)? chain|[0-9]+(.|,[0-9]+)? furlong|[0-9]+(.|,[0-9]+)? mile|[0-9]+(.|,[0-9]+)? league", text)
-
-    temperature = re.search(
-        r"[0-9]+(.|,[0-9]+)? K|[0-9]+(.|,[0-9]+)? °C|[0-9]+(.|,[0-9]+)? °F", text)
-
-    time = re.search(r"[0-9]+(\.|,[0-9]+)?( )?(min|s|h|ms|µs|ns|ps)", text)
-
-    speed = re.search(
-        r"[0-9]+(\.|,[0-9]+)?( )?(yHz|zHz|aHz|fHz|pHz|nHz|µHz|mHz|cHz|dHz|Hz|daHz|hHz|kHz|MHz|GHz|THz|PHz|EHz|ZHz|YHz)", text)
-
-    if measurement != None:
-        return str(converts(measurement[0], 'm')) + ' m'
-
-    elif temperature != None:
-        return str(converts(temperature[0], 'K')) + ' K'
-
-    elif time != None:
-        return str(converts(time[0], 's')) + ' s'
-
-    elif speed != None:
-        return str(speed(time[0], 'Hz')) + ' Hz'
-
     return text
