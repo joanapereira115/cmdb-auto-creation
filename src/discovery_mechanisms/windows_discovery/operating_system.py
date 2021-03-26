@@ -44,7 +44,7 @@ def os_discovery(client, ci):
     obj.set_title(info.get("OS Name"))
     methods.define_attribute("os name", info.get("OS Name"), ci)
     methods.define_attribute("version number", info.get("OS Version"), obj)
-    methods.define_attribute("os name", info.get("OS Version"), ci)
+    methods.define_attribute("os version", info.get("OS Version"), ci)
     methods.define_attribute(
         "configuration", info.get("OS Configuration"), obj)
     methods.define_attribute("build type", info.get("OS Build Type"), obj)

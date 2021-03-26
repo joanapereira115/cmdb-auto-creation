@@ -43,7 +43,7 @@ class Relationship:
     def set_title(self, title):
         """Set the relationship title to the value passed."""
         if title != None:
-            self.title = title
+            self.title = normalization.parse_text_to_store(title)
 
     def get_type(self):
         """Get the relationship type identifier."""

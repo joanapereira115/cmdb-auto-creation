@@ -60,7 +60,7 @@ class ConfigurationItem:
     def set_uuid(self, uuid):
         """Set the configuration item universally unique identifier to the value passed."""
         if uuid != None:
-            self.uuid = uuid
+            self.uuid = normalization.parse_text_to_store(uuid)
 
     def get_serial_number(self):
         """Get the configuration item serial number."""
@@ -69,7 +69,8 @@ class ConfigurationItem:
     def set_serial_number(self, serial_number):
         """Set the configuration item serial number to the value passed."""
         if serial_number != None:
-            self.serial_number = serial_number
+            self.serial_number = normalization.parse_text_to_store(
+                serial_number)
 
     def get_title(self):
         """Get the configuration item title."""
@@ -78,7 +79,7 @@ class ConfigurationItem:
     def set_title(self, title):
         """Set the configuration item title to the value passed."""
         if title != None:
-            self.title = title
+            self.title = normalization.parse_text_to_store(title)
 
     def get_description(self):
         """Get the configuration item description."""
@@ -89,9 +90,12 @@ class ConfigurationItem:
         if description != None:
             old = self.description
             if old != "":
-                self.description = old + " " + description
+                if normalization.parse_text_to_store(description) != old:
+                    self.description = normalization.parse_text_to_store(
+                        old + " " + description)
             else:
-                self.description = description
+                self.description = normalization.parse_text_to_store(
+                    description)
 
     def get_status(self):
         """Get the configuration item status."""
@@ -100,7 +104,7 @@ class ConfigurationItem:
     def set_status(self, status):
         """Set the configuration item status to the value passed."""
         if status != None:
-            self.status = status
+            self.status = normalization.parse_text_to_store(status)
 
     def get_mac_address(self):
         """Get the configuration item mac address."""
@@ -109,7 +113,7 @@ class ConfigurationItem:
     def set_mac_address(self, mac_address):
         """Set the configuration item mac address to the value passed."""
         if mac_address != None:
-            self.mac_address = mac_address
+            self.mac_address = normalization.parse_text_to_store(mac_address)
 
     def get_os_family(self):
         """Get the configuration item operating system family."""
@@ -118,7 +122,7 @@ class ConfigurationItem:
     def set_os_family(self, os_family):
         """Set the configuration item operating system family to the value passed."""
         if os_family != None:
-            self.os_family = os_family
+            self.os_family = normalization.parse_text_to_store(os_family)
 
     def get_ipv4_addresses(self):
         """Get the list of IPv4 addresses associated with the configuration item."""
@@ -127,7 +131,7 @@ class ConfigurationItem:
     def add_ipv4_address(self, ipv4):
         """Adds a new IPv4 address to the list of IPv4 addresses of the configuration item."""
         if ipv4 not in self.ipv4_addresses and ipv4 != None and ipv4 != "127.0.0.1" and ipv4 != "":
-            self.ipv4_addresses.append(ipv4)
+            self.ipv4_addresses.append(normalization.parse_text_to_store(ipv4))
 
     def get_ipv6_addresses(self):
         """Get the list of IPv6 addresses associated with the configuration item."""
@@ -136,7 +140,7 @@ class ConfigurationItem:
     def add_ipv6_address(self, ipv6):
         """Adds a new IPv6 address to the list of IPv6 addresses of the configuration item."""
         if ipv6 not in self.ipv6_addresses and ipv6 != None:
-            self.ipv6_addresses.append(ipv6)
+            self.ipv6_addresses.append(normalization.parse_text_to_store(ipv6))
 
     def get_type(self):
         """Get the configuration item type identifier."""

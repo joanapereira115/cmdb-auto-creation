@@ -329,3 +329,22 @@ def parse_text_to_compare(text):
     text = acronym(text)
     text = remove_stop_words(text)
     return text
+
+
+def parse_text_to_store(text):
+    """
+    Cleans the text for comparasions.
+
+    Parameters
+    ----------
+    text : string
+        The text that we want to parse.
+
+    Returns
+    -------
+    string
+        Returns the text parsed.
+    """
+    text = str(text)
+    text = remove_special_chars(text)
+    return text

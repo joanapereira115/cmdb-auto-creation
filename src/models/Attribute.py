@@ -21,8 +21,8 @@ class Attribute:
     def __init__(self, title, value):
         """Initialize the attribute with a generated identifier."""
         self.id = next(self.id_iter) + 1
-        self.title = title
-        self.value = value
+        self.title = normalization.parse_text_to_store(title)
+        self.value = normalization.parse_text_to_store(value)
 
     def get_id(self):
         """Get the attribute identifier."""
@@ -38,4 +38,4 @@ class Attribute:
 
     def set_value(self, value):
         """Get the attribute value."""
-        self.value = value
+        self.value = normalization.parse_text_to_store(value)

@@ -443,10 +443,11 @@ def process_itop():
             rel_types = get_rel_types(table_names)
             for rel in rel_types:
                 if regex.search(r'_', rel) == None:
-                    cmdb_data_model["rel_types"][rel] = " ".join(
-                        wordninja.split(rel[len("lnk"):]))
+                    cmdb_data_model["rel_types"][rel] = normalization.parse_text_to_store(" ".join(
+                        wordninja.split(rel[len("lnk"):])))
                 else:
-                    cmdb_data_model["rel_types"][rel] = rel[len("lnk"):]
+                    cmdb_data_model["rel_types"][rel] = normalization.parse_text_to_store(
+                        rel[len("lnk"):])
 
             for ci_type in ci_types:
                 attrs = get_attributes(ci_type, db_name, cursor)
@@ -460,9 +461,11 @@ def process_itop():
                     types_attrs[ci_type] = {}
                     for a in attrs:
                         if regex.search(r'_', a) == None:
-                            proc_attrs[a] = " ".join(wordninja.split(a))
+                            proc_attrs[a] = normalization.parse_text_to_store(
+                                " ".join(wordninja.split(a)))
                         else:
-                            proc_attrs[a] = a
+                            proc_attrs[a] = normalization.parse_text_to_store(
+                                a)
                         types_attrs[ci_type][a] = get_type(
                             "ci", ci_type, attrs.get(a), a)
                     cmdb_data_model["ci_attributes"][ci_type] = proc_attrs
@@ -478,9 +481,10 @@ def process_itop():
                 types_attrs[rel_type] = {}
                 for a in attrs:
                     if regex.search(r'_', a) == None:
-                        proc_attrs[a] = " ".join(wordninja.split(a))
+                        proc_attrs[a] = normalization.parse_text_to_store(
+                            " ".join(wordninja.split(a)))
                     else:
-                        proc_attrs[a] = a
+                        proc_attrs[a] = normalization.parse_text_to_store(a)
                     types_attrs[rel_type][a] = get_type(
                         "rel", rel_type, attrs.get(a), a)
                 cmdb_data_model["rel_attributes"][rel_type] = proc_attrs
