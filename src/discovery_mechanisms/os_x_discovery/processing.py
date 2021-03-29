@@ -47,6 +47,13 @@ def processing_discovery(client, ci):
             "current_processor_speed"), obj)
         methods.define_attribute(
             "CPU speed", hw_info.get("current_processor_speed"), ci)
+        try:
+            methods.define_attribute(
+                "CPU frequency", hw_info.get("current_processor_speed").split(" ")[0], ci)
+            methods.define_attribute(
+                "CPU frequency unit", hw_info.get("current_processor_speed").split(" ")[1], ci)
+        except:
+            pass
         methods.define_attribute("Number of Cores",
                                  hw_info.get("number_processors"), obj)
         methods.define_attribute(
@@ -56,8 +63,16 @@ def processing_discovery(client, ci):
         methods.define_attribute("L3 Cache", hw_info.get("l3_cache"), obj)
         methods.define_attribute(
             "physical memory", hw_info.get("physical_memory"), ci)
+        try:
+            methods.define_attribute(
+                "memory ram", hw_info.get("physical_memory").split(" ")[0], ci)
+            methods.define_attribute(
+                "physical memory unit", hw_info.get("physical_memory").split(" ")[1], ci)
+        except:
+            pass
         methods.define_attribute("SMC Version",
                                  hw_info.get("SMC_version_system"), obj)
+        ci.set_uuid(hw_info.get("platform_UUID"))
 
         rel_type_ci_obj = methods.add_rel_type(
             RelationshipType.RelationshipType("associated processor"))

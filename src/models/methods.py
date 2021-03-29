@@ -388,7 +388,7 @@ def ci_type_already_exists(title):
             max_ratio = sim
             equal = t
 
-    if max_ratio > 0.9:
+    if max_ratio > 0.95:
         return equal
     else:
         return None
@@ -421,7 +421,7 @@ def rel_type_already_exists(title):
             max_ratio = sim
             equal = t
 
-    if max_ratio > 0.9:
+    if max_ratio > 0.95:
         return equal
     else:
         return None
@@ -539,7 +539,7 @@ def add_attribute(attr, obj):
             max_ratio = sim
             equal = a
 
-    if max_ratio > 0.9:
+    if max_ratio > 0.95:
         equal.set_value(attr.get_value())
     else:
         obj.add_attribute(attr.get_id())

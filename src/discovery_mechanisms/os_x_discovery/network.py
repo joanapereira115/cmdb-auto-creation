@@ -78,7 +78,7 @@ def network_discovery(client, ci):
             "".join(services)).get('SPNetworkDataType')
         for serv in services_info:
             net_type = methods.add_ci_type(
-                ConfigurationItemType.ConfigurationItemType(serv.get("Network service")))
+                ConfigurationItemType.ConfigurationItemType(serv.get("_name")))
             obj = ConfigurationItem.ConfigurationItem()
             obj.set_type(net_type.get_id())
 
@@ -86,7 +86,7 @@ def network_discovery(client, ci):
             hw = serv.get("hardware")
             itfc = serv.get("interface")
 
-            obj.set_title(serv.get("_name"))
+            obj.set_title(name)
 
             hw_port_type = methods.add_ci_type(
                 ConfigurationItemType.ConfigurationItemType("Hardware Port"))

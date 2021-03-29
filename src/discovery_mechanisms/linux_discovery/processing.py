@@ -47,9 +47,22 @@ def processing_discovery(client, ci):
             if at == "Model name":
                 obj.set_title(info.get(at))
                 methods.define_attribute("CPU", info.get(at), ci)
-            if at == "CPU(s)":
+            elif at == "CPU(s)":
                 methods.define_attribute(at, info.get(at), obj)
                 methods.define_attribute("CPU cores", info.get(at), ci)
+            elif at == "CPU MHz":
+                methods.define_attribute(
+                    "CPU frequency unit", "MHz", ci)
+                methods.define_attribute(
+                    "CPU frequency unit", "MHz", obj)
+                methods.define_attribute(
+                    "CPU frequency", info.get(at), ci)
+                methods.define_attribute(
+                    "CPU frequency", info.get(at), obj)
+                methods.define_attribute(
+                    "CPU speed", str(info.get(at)) + " MHz", ci)
+                methods.define_attribute(
+                    "CPU speed", str(info.get(at)) + " MHz", obj)
             else:
                 methods.define_attribute(at, info.get(at), obj)
 

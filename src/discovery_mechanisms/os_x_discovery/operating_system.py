@@ -38,7 +38,7 @@ def os_discovery(client, ci):
         if len(os_name) > 0:
             value = os_name[0].strip('\n')
             methods.define_attribute("os name", value, ci)
-            obj.set_title(value)
+            methods.define_attribute("os family", value, obj)
 ###########################################
     _, stdout, stderr = client.exec_command("sw_vers -productVersion")
     error = stderr.read().decode('utf-8')
@@ -73,7 +73,9 @@ def os_discovery(client, ci):
         methods.define_attribute(
             "kernel version", os_info.get("kernel_version"), ci)
         methods.define_attribute(
-            "boot volume", os_info.get("boot_volume"), ci)
+            "kernel version", os_info.get("kernel_version"), ci)
+        obj.set_title(os_info.get("os_version"))
+        methods.define_attribute("os", os_info.get("os_version"), ci)
         methods.define_attribute(
             "boot mode", os_info.get("boot_mode"), ci)
         methods.define_attribute(

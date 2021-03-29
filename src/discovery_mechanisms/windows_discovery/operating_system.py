@@ -41,7 +41,7 @@ def os_discovery(client, ci):
     for i in range(0, len(fields)-1):
         info[fields[i].strip("\"")] = values[i]
 
-    obj.set_title(info.get("OS Name"))
+    obj.set_title(str(info.get("OS Name")))
     methods.define_attribute("os name", info.get("OS Name"), ci)
     methods.define_attribute("version number", info.get("OS Version"), obj)
     methods.define_attribute("os version", info.get("OS Version"), ci)

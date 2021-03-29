@@ -41,10 +41,12 @@ def os_discovery(client, ci):
                 info[regex.sub("\n|\"", "", line.split("=")[0])] = regex.sub(
                     "\n|\"", "", line.split("=")[1])
         for at in info:
-            if at == "NAME":
+            if at == "PRETTY_NAME":
                 obj.set_title(info.get(at))
                 methods.define_attribute("os name", info.get(at), ci)
-            elif at == "VERSION":
+            elif at == "NAME":
+                methods.define_attribute("os family", info.get(at), ci)
+            elif at == "VERSION_ID":
                 methods.define_attribute("version number", info.get(at), obj)
                 methods.define_attribute("os version", info.get(at), ci)
             else:
