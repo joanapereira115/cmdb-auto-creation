@@ -29,7 +29,7 @@ def os_discovery(client, ci):
     obj = ConfigurationItem.ConfigurationItem()
     obj.set_type(os_type.get_id())
 ###########################################
-    _, stdout, stderr = client.exec_command("cat /etc/os-release")
+    _, stdout, stderr = client.exec_command("cat /etc/*-release")
     error = stderr.read().decode('utf-8')
     if error != "":
         print(red + ">>> " + reset + str(error) + "\n")
@@ -49,6 +49,8 @@ def os_discovery(client, ci):
             elif at == "VERSION_ID":
                 methods.define_attribute("version number", info.get(at), obj)
                 methods.define_attribute("os version", info.get(at), ci)
+            elif at == "DISTRIB_ID":
+                methods.define_attribute("vendor", info.get(at), obj)
             else:
                 methods.define_attribute(at, info.get(at), obj)
 ###########################################

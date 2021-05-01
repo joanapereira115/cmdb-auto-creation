@@ -122,7 +122,7 @@ def create_itop_ci(cmdb_info, cmdb_url, ci_type, ci_attrs, rules_ci_types, rules
                     value = calculate_value_from_dialog(
                         value, ci_dialog_attributes.get(cmdb_type).get(cmdb_at))
 
-            at_type = at_types.get(cmdb_at)
+            at_type = at_types.get(cmdb_type).get(cmdb_at)
             if cmdb_at != None:
 
                 if at_type == "string":
@@ -154,6 +154,10 @@ def create_itop_ci(cmdb_info, cmdb_url, ci_type, ci_attrs, rules_ci_types, rules
                 fields["first_name"] = ci_type
 
         json_req["fields"] = fields
+
+        print()
+        print(json_req)
+
         json_data = json.dumps(json_req)
         payload = dict(json_data=json_data,)
         create_ci = requests.post(cmdb_url, data=payload, auth=(
@@ -307,9 +311,11 @@ def create_itop_relationship(cmdb_info, cmdb_url, rel_type, rel_attrs, rules_rel
                         fields["name"] = cmdb_type
 
                     json_req["fields"] = fields
-                    json_data = json.dumps(json_req)
-                    print("json_data: " + str(json_data))
+
                     print()
+                    print(json_req)
+
+                    json_data = json.dumps(json_req)
                     payload = dict(json_data=json_data,)
                     create_ci = requests.post(cmdb_url, data=payload, auth=(
                         user, pwd), verify=False)

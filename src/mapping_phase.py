@@ -51,44 +51,6 @@ def choose_software():
     return cmdb
 
 
-def choose_connection_method(cmdb):
-    """
-    Asks the user which type of connection is going to be used to access to it's CMDB.
-
-    Parameters
-    ----------
-    cmdb : string
-        The CMDB software selected by the user.
-
-    Returns
-    -------
-    string
-        The type of connection selected by the user.
-    """
-    # TODO: handle other connections and software
-    if cmdb == 'i-doit':
-        connection_question = [
-            {
-                'type': 'list',
-                'message': 'How to connect to the CMDB?',
-                'name': 'connection',
-                'choices': [{'name': 'API'}]
-            }
-        ]
-    if cmdb == 'iTop':
-        connection_question = [
-            {
-                'type': 'list',
-                'message': 'How to connect to the CMDB?',
-                'name': 'connection',
-                'choices': [{'name': 'Database'}]
-            }
-        ]
-    connection_answer = prompt(connection_question, style=style)
-    connection = connection_answer["connection"]
-    return connection
-
-
 def run_mapping(db):
     """
     Executes the mapping between the CMDB and the database data models. 
@@ -112,14 +74,12 @@ def run_mapping(db):
     db_processor.process_db_data_model(db)
 
     cmdb = choose_software()
-    connection = choose_connection_method(cmdb)
 
     cmdb_info["software"] = cmdb
-    cmdb_info["connection"] = connection
 
-    if cmdb == "i-doit" and connection == "API":
+    if cmdb == "i-doit":
         cmdb_info["cmdb"] = i_doit_processor.process_i_doit()
-    if cmdb == "iTop" and connection == "Database":
+    if cmdb == "iTop":
         cmdb_info["cmdb"] = itop_processor.process_itop()
 
     mapper.run_mapper()

@@ -103,6 +103,7 @@ def calculate_class_similarity(cmdb_types, db_types):
     """
     cmdb_tp = {cmdb_types.get(x): x for x in cmdb_types}
     db_tp = {db_types.get(y): y for y in db_types}
+
     class_similarity = calc_similars(cmdb_tp, db_tp)
     return class_similarity
 
@@ -462,7 +463,6 @@ def present_map(cmdb_ci_types, db_ci_types, cmdb_rel_types, db_rel_types, cmdb_c
             data.append(row)
         print(tabulate(data, headers=["Attribute in CMDB", "Description",
                                       "Attribute in DB", "Description", "Similarity Coeficient"]))
-        print
     print()
 
 

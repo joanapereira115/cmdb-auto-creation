@@ -4,6 +4,7 @@ import re
 import string
 from nltk.corpus import stopwords
 from unit_converter.converter import convert, converts
+import wordninja
 
 acronyms_db = {
     'aci': 'application centric infrastructure',
@@ -73,9 +74,9 @@ acronyms_db = {
     'ieee': 'institute for electrical and electronic engineers',
     'ietf': 'internet engineering task force',
     'imap': 'internet message access protocol',
-    'ip': 'internet protocol',
     'ipv4': 'internet protocol version 4',
     'ipv6': 'internet protocol version 6',
+    'ip': 'internet protocol',
     'ipmi': 'intelligent platform management interface',
     'ips': 'intrusion prevention system',
     'is-is': 'intermediate system-intermediate system',
@@ -327,6 +328,7 @@ def parse_text_to_compare(text):
     text = remove_punctuation(text)
     text = text.lower()
     text = acronym(text)
+    text = " ".join(wordninja.split(text))
     text = remove_stop_words(text)
     return text
 

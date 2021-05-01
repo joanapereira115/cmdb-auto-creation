@@ -156,7 +156,7 @@ Thus, there is a need to store them safely.
 
 The password vault permits:
 
-* the creation of a vault, if there is none;
+* the creation of a vault;
 * the definition of the vault's password;
 * unlock and lock the vault;
 * store a new password, which is associated with a username and a domain;
@@ -183,7 +183,7 @@ Performs data transformations, namely:
 
 ### Reconciliation mechanism
 
-The reconciliation mechanisms ensures that there isn't duplicate data and all information about a physical entity is combined in the same object.
+The reconciliation mechanisms ensures that there isn't duplicate data and all information about an entity is combined in the same object.
 
 <img src="assets/reconciliation.png" style="width: 50%;">
 
@@ -239,7 +239,7 @@ All the discovered data is gathered and is generated in the RDF (Turtle) file th
 :11516 rdf:type :ConfigurationItem ;
 	 :status "up";
 	 :os_family "linux";
-	 :mac_address "52:54:00:f3:21:fc";
+	 :mac_address "52:54:00:f3:21:dc";
 	 :has_ipv4 "192.168.121.164";
 	 :has_attribute :221operating_system;
 	 :has_ci_type :host16.
@@ -263,7 +263,7 @@ All the discovered data is gathered and is generated in the RDF (Turtle) file th
 
 This mechanism generates the representation of the database data model, capturing the terminology associated with each element.
 The objective is to obtain the existing types of components and relationships and the attributes associated with them.
-Considering that the engine used was GraphDB, it executes queries SPARQL to obtain all the necessary information.
+Considering that the engine used was GraphDB, it executes SPARQL queries to obtain all the necessary information.
 
 <img src="assets/db_processor.png" style="width: 50%;">
 

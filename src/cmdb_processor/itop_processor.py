@@ -343,11 +343,11 @@ def get_type(what, table, text, at):
 
     if int_ != None:
         return "int"
-    if txt != None:
+    elif txt != None:
         return "string"
-    if dec != None:
+    elif dec != None:
         return "float"
-    if enum != None:
+    elif enum != None:
         enums = regex.findall(r'\'([^\']*)\'', text)
         proc_enums = {}
         for e in enums:
