@@ -1,0 +1,101 @@
+Id;Name;Type;Source;Target
+http://www.semanticweb.org/cmdb_auto_creation/2020/cmdb#9393macbookprojoana_associated_card_reader_spcardreader;macbookprojoana associated card reader spcardreader;associated card reader;macbookprojoana;spcardreader
+http://www.semanticweb.org/cmdb_auto_creation/2020/cmdb#9595macbookprojoana_associated_display__color__l_c_d;macbookprojoana associated display Color LCD;associated display;macbookprojoana;Color LCD
+http://www.semanticweb.org/cmdb_auto_creation/2020/cmdb#9797macbookprojoana_associated_firewall_spfirewall_settings;macbookprojoana associated firewall spfirewall_settings;associated firewall;macbookprojoana;spfirewall_settings
+http://www.semanticweb.org/cmdb_auto_creation/2020/cmdb#3129macbookprojoana_associated_memory__b_a_n_k_1_d_i_m_m0;macbookprojoana associated memory BANK 1DIMM0;associated memory;macbookprojoana;BANK 1DIMM0
+http://www.semanticweb.org/cmdb_auto_creation/2020/cmdb#101101wi__fi_associated_network_service_macbookprojoana;Wi-Fi associated network service macbookprojoana;associated network service;Wi-Fi;macbookprojoana
+http://www.semanticweb.org/cmdb_auto_creation/2020/cmdb#104101bluetooth__p_a_n_associated_network_service_macbookprojoana;Bluetooth PAN associated network service macbookprojoana;;Bluetooth PAN;macbookprojoana
+http://www.semanticweb.org/cmdb_auto_creation/2020/cmdb#107101thunderbolt__bridge_associated_network_service_macbookprojoana;Thunderbolt Bridge associated network service macbookprojoana;;Thunderbolt Bridge;macbookprojoana
+http://www.semanticweb.org/cmdb_auto_creation/2020/cmdb#110101thunderbolt__ethernet_associated_network_service_macbookprojoana;Thunderbolt Ethernet associated network service macbookprojoana;;Thunderbolt Ethernet;macbookprojoana
+http://www.semanticweb.org/cmdb_auto_creation/2020/cmdb#113101v_p_n__uminho_associated_network_service_macbookprojoana;VPN Uminho associated network service macbookprojoana;;VPN Uminho;macbookprojoana
+http://www.semanticweb.org/cmdb_auto_creation/2020/cmdb#10299bluetooth__p_a_n_associated_port__ethernet;Bluetooth PAN associated port Ethernet;associated port;Bluetooth PAN;Ethernet
+http://www.semanticweb.org/cmdb_auto_creation/2020/cmdb#10599thunderbolt__bridge_associated_port__ethernet;Thunderbolt Bridge associated port Ethernet;;Thunderbolt Bridge;Ethernet
+http://www.semanticweb.org/cmdb_auto_creation/2020/cmdb#10899thunderbolt__ethernet_associated_port__ethernet;Thunderbolt Ethernet associated port Ethernet;;Thunderbolt Ethernet;Ethernet
+http://www.semanticweb.org/cmdb_auto_creation/2020/cmdb#9999wi__fi_associated_port__air_port;Wi-Fi associated port AirPort;;Wi-Fi;AirPort
+http://www.semanticweb.org/cmdb_auto_creation/2020/cmdb#2121macbookprojoana_associated_processor__quad__core__intel__core_i7;macbookprojoana associated processor Quad-Core Intel Core i7;associated processor;macbookprojoana;Quad-Core Intel Core i7
+http://www.semanticweb.org/cmdb_auto_creation/2020/cmdb#2521macbookprojoana_associated_processor_k_h_w__intel_iris_pro_item;macbookprojoana associated processor kHW_IntelIrisProItem;;macbookprojoana;kHW_IntelIrisProItem
+http://www.semanticweb.org/cmdb_auto_creation/2020/cmdb#9494spcardreader_card_reader_of_macbookprojoana;spcardreader card reader of macbookprojoana;card reader of;spcardreader;macbookprojoana
+http://www.semanticweb.org/cmdb_auto_creation/2020/cmdb#9696color__l_c_d_display_of_macbookprojoana;Color LCD display of macbookprojoana;display of;Color LCD;macbookprojoana
+http://www.semanticweb.org/cmdb_auto_creation/2020/cmdb#9898spfirewall_settings_firewall_of_macbookprojoana;spfirewall_settings firewall of macbookprojoana;firewall of;spfirewall_settings;macbookprojoana
+http://www.semanticweb.org/cmdb_auto_creation/2020/cmdb#8787macbookprojoana_associated__built_in__microphone__built_in__microphone;macbookprojoana associated Built-in Microphone Built-in Microphone;has Built-in Microphone;macbookprojoana;Built-in Microphone
+http://www.semanticweb.org/cmdb_auto_creation/2020/cmdb#8887built_in__microphone__built_in__microphone_of_macbookprojoana;Built-in Microphone Built-in Microphone of macbookprojoana;;Built-in Microphone;macbookprojoana
+http://www.semanticweb.org/cmdb_auto_creation/2020/cmdb#9191macbookprojoana_associated__built_in__output__built_in__output;macbookprojoana associated Built-in Output Built-in Output;has Built-in Output;macbookprojoana;Built-in Output
+http://www.semanticweb.org/cmdb_auto_creation/2020/cmdb#9291built_in__output__built_in__output_of_macbookprojoana;Built-in Output Built-in Output of macbookprojoana;;Built-in Output;macbookprojoana
+http://www.semanticweb.org/cmdb_auto_creation/2020/cmdb#8181macbookprojoana_has_battery_bq20z451;macbookprojoana has battery bq20z451;has battery;macbookprojoana;bq20z451
+http://www.semanticweb.org/cmdb_auto_creation/2020/cmdb#8281bq20z451_battery_of_macbookprojoana;bq20z451 battery of macbookprojoana;;bq20z451;macbookprojoana
+http://www.semanticweb.org/cmdb_auto_creation/2020/cmdb#6969macbookprojoana_has_hardware_port__wi__fi;macbookprojoana has hardware port Wi-Fi;has hardware port;macbookprojoana;Wi-Fi
+http://www.semanticweb.org/cmdb_auto_creation/2020/cmdb#7169macbookprojoana_has_hardware_port__bluetooth__p_a_n;macbookprojoana has hardware port Bluetooth PAN;;macbookprojoana;Bluetooth PAN
+http://www.semanticweb.org/cmdb_auto_creation/2020/cmdb#7569macbookprojoana_has_hardware_port__thunderbolt_2;macbookprojoana has hardware port Thunderbolt 2;;macbookprojoana;Thunderbolt 2
+http://www.semanticweb.org/cmdb_auto_creation/2020/cmdb#7769macbookprojoana_has_hardware_port__thunderbolt__bridge;macbookprojoana has hardware port Thunderbolt Bridge;;macbookprojoana;Thunderbolt Bridge
+http://www.semanticweb.org/cmdb_auto_creation/2020/cmdb#4545macbookprojoana_has_installed_zoom;macbookprojoana has installed zoom;has installed;macbookprojoana;zoom
+http://www.semanticweb.org/cmdb_auto_creation/2020/cmdb#4645zoom_installed_on_macbookprojoana;zoom installed on macbookprojoana;;zoom;macbookprojoana
+http://www.semanticweb.org/cmdb_auto_creation/2020/cmdb#4745macbookprojoana_has_installed__postman;macbookprojoana has installed Postman;;macbookprojoana;Postman
+http://www.semanticweb.org/cmdb_auto_creation/2020/cmdb#4845postman_installed_on_macbookprojoana;Postman installed on macbookprojoana;;Postman;macbookprojoana
+http://www.semanticweb.org/cmdb_auto_creation/2020/cmdb#4945macbookprojoana_has_installed__adobe__acrobat__reader__d_c;macbookprojoana has installed Adobe Acrobat Reader DC;;macbookprojoana;Adobe Acrobat Reader DC
+http://www.semanticweb.org/cmdb_auto_creation/2020/cmdb#5045adobe__acrobat__reader__d_c_installed_on_macbookprojoana;Adobe Acrobat Reader DC installed on macbookprojoana;;Adobe Acrobat Reader DC;macbookprojoana
+http://www.semanticweb.org/cmdb_auto_creation/2020/cmdb#5145macbookprojoana_has_installed_i_movie;macbookprojoana has installed iMovie;;macbookprojoana;iMovie
+http://www.semanticweb.org/cmdb_auto_creation/2020/cmdb#5245i_movie_installed_on_macbookprojoana;iMovie installed on macbookprojoana;;iMovie;macbookprojoana
+http://www.semanticweb.org/cmdb_auto_creation/2020/cmdb#5345macbookprojoana_has_installed__firefox;macbookprojoana has installed Firefox;;macbookprojoana;Firefox
+http://www.semanticweb.org/cmdb_auto_creation/2020/cmdb#5445firefox_installed_on_macbookprojoana;Firefox installed on macbookprojoana;;Firefox;macbookprojoana
+http://www.semanticweb.org/cmdb_auto_creation/2020/cmdb#5545macbookprojoana_has_installed__py_charm;macbookprojoana has installed PyCharm;;macbookprojoana;PyCharm
+http://www.semanticweb.org/cmdb_auto_creation/2020/cmdb#5645py_charm_installed_on_macbookprojoana;PyCharm installed on macbookprojoana;;PyCharm;macbookprojoana
+http://www.semanticweb.org/cmdb_auto_creation/2020/cmdb#5745macbookprojoana_has_installed__visual__studio__code;macbookprojoana has installed Visual Studio Code;;macbookprojoana;Visual Studio Code
+http://www.semanticweb.org/cmdb_auto_creation/2020/cmdb#5845visual__studio__code_installed_on_macbookprojoana;Visual Studio Code installed on macbookprojoana;;Visual Studio Code;macbookprojoana
+http://www.semanticweb.org/cmdb_auto_creation/2020/cmdb#5945macbookprojoana_has_installed__spotify;macbookprojoana has installed Spotify;;macbookprojoana;Spotify
+http://www.semanticweb.org/cmdb_auto_creation/2020/cmdb#6045spotify_installed_on_macbookprojoana;Spotify installed on macbookprojoana;;Spotify;macbookprojoana
+http://www.semanticweb.org/cmdb_auto_creation/2020/cmdb#6145macbookprojoana_has_installed__google__chrome;macbookprojoana has installed Google Chrome;;macbookprojoana;Google Chrome
+http://www.semanticweb.org/cmdb_auto_creation/2020/cmdb#6245google__chrome_installed_on_macbookprojoana;Google Chrome installed on macbookprojoana;;Google Chrome;macbookprojoana
+http://www.semanticweb.org/cmdb_auto_creation/2020/cmdb#6345macbookprojoana_has_installed__file_zilla;macbookprojoana has installed FileZilla;;macbookprojoana;FileZilla
+http://www.semanticweb.org/cmdb_auto_creation/2020/cmdb#6445file_zilla_installed_on_macbookprojoana;FileZilla installed on macbookprojoana;;FileZilla;macbookprojoana
+http://www.semanticweb.org/cmdb_auto_creation/2020/cmdb#6545macbookprojoana_has_installed__m_r_t;macbookprojoana has installed MRT;;macbookprojoana;MRT
+http://www.semanticweb.org/cmdb_auto_creation/2020/cmdb#6645m_r_t_installed_on_macbookprojoana;MRT installed on macbookprojoana;;MRT;macbookprojoana
+http://www.semanticweb.org/cmdb_auto_creation/2020/cmdb#6745macbookprojoana_has_installed__slack;macbookprojoana has installed Slack;;macbookprojoana;Slack
+http://www.semanticweb.org/cmdb_auto_creation/2020/cmdb#6845slack_installed_on_macbookprojoana;Slack installed on macbookprojoana;;Slack;macbookprojoana
+http://www.semanticweb.org/cmdb_auto_creation/2020/cmdb#7979bq20z451_has_manufacturer__d_p;bq20z451 has manufacturer DP;has manufacturer;bq20z451;DP
+http://www.semanticweb.org/cmdb_auto_creation/2020/cmdb#8079d_p_manufacturer_of_bq20z451;DP manufacturer of bq20z451;;DP;bq20z451
+http://www.semanticweb.org/cmdb_auto_creation/2020/cmdb#8579built_in__microphone_has_manufacturer__apple__inc_;Built-in Microphone has manufacturer Apple Inc.;;Built-in Microphone;Apple Inc.
+http://www.semanticweb.org/cmdb_auto_creation/2020/cmdb#8679apple__inc__manufacturer_of__built_in__microphone;Apple Inc. manufacturer of Built-in Microphone;;Apple Inc.;Built-in Microphone
+http://www.semanticweb.org/cmdb_auto_creation/2020/cmdb#8979built_in__output_has_manufacturer__apple__inc_;Built-in Output has manufacturer Apple Inc.;;Built-in Output;Apple Inc.
+http://www.semanticweb.org/cmdb_auto_creation/2020/cmdb#9079apple__inc__manufacturer_of__built_in__output;Apple Inc. manufacturer of Built-in Output;;Apple Inc.;Built-in Output
+http://www.semanticweb.org/cmdb_auto_creation/2020/cmdb#100100macbookprojoana_has_network_service__wi__fi;macbookprojoana has network service Wi-Fi;has network service;macbookprojoana;Wi-Fi
+http://www.semanticweb.org/cmdb_auto_creation/2020/cmdb#103100macbookprojoana_has_network_service__bluetooth__p_a_n;macbookprojoana has network service Bluetooth PAN;;macbookprojoana;Bluetooth PAN
+http://www.semanticweb.org/cmdb_auto_creation/2020/cmdb#106100macbookprojoana_has_network_service__thunderbolt__bridge;macbookprojoana has network service Thunderbolt Bridge;;macbookprojoana;Thunderbolt Bridge
+http://www.semanticweb.org/cmdb_auto_creation/2020/cmdb#109100macbookprojoana_has_network_service__thunderbolt__ethernet;macbookprojoana has network service Thunderbolt Ethernet;;macbookprojoana;Thunderbolt Ethernet
+http://www.semanticweb.org/cmdb_auto_creation/2020/cmdb#112100macbookprojoana_has_network_service__v_p_n__uminho;macbookprojoana has network service VPN Uminho;;macbookprojoana;VPN Uminho
+http://www.semanticweb.org/cmdb_auto_creation/2020/cmdb#1122_has_protocol_tcp;22 has protocol tcp;has protocol;22;tcp
+http://www.semanticweb.org/cmdb_auto_creation/2020/cmdb#1317200_has_protocol_tcp;7200 has protocol tcp;;7200;tcp
+http://www.semanticweb.org/cmdb_auto_creation/2020/cmdb#141tcp_is_protocol_of_7200;tcp is protocol of 7200;;tcp;7200
+http://www.semanticweb.org/cmdb_auto_creation/2020/cmdb#21tcp_is_protocol_of_22;tcp is protocol of 22;;tcp;22
+http://www.semanticweb.org/cmdb_auto_creation/2020/cmdb#711110_has_protocol_tcp;1110 has protocol tcp;;1110;tcp
+http://www.semanticweb.org/cmdb_auto_creation/2020/cmdb#81tcp_is_protocol_of_1110;tcp is protocol of 1110;;tcp;1110
+http://www.semanticweb.org/cmdb_auto_creation/2020/cmdb#3939macbookprojoana_has_storage__a_p_p_l_e__s_s_d__s_m0256_g;macbookprojoana has storage APPLE SSD SM0256G;has storage;macbookprojoana;APPLE SSD SM0256G
+http://www.semanticweb.org/cmdb_auto_creation/2020/cmdb#4039a_p_p_l_e__s_s_d__s_m0256_g_is_storage_of_macbookprojoana;APPLE SSD SM0256G is storage of macbookprojoana;;APPLE SSD SM0256G;macbookprojoana
+http://www.semanticweb.org/cmdb_auto_creation/2020/cmdb#2323k_h_w__intel_iris_pro_item_has_vendor__intel;kHW_IntelIrisProItem has vendor Intel;has vendor;kHW_IntelIrisProItem;Intel
+http://www.semanticweb.org/cmdb_auto_creation/2020/cmdb#2423intel_is_vendor_of_k_h_w__intel_iris_pro_item;Intel is vendor of kHW_IntelIrisProItem;;Intel;kHW_IntelIrisProItem
+http://www.semanticweb.org/cmdb_auto_creation/2020/cmdb#4135macbookprojoana_has_volume__macintosh__h_d___dados;macbookprojoana has volume Macintosh HD - dados;has volume;macbookprojoana;Macintosh HD - dados
+http://www.semanticweb.org/cmdb_auto_creation/2020/cmdb#4235macintosh__h_d___dados_is_volume_of_macbookprojoana;Macintosh HD - dados is volume of macbookprojoana;;Macintosh HD - dados;macbookprojoana
+http://www.semanticweb.org/cmdb_auto_creation/2020/cmdb#4335macbookprojoana_has_volume__macintosh__h_d;macbookprojoana has volume Macintosh HD;;macbookprojoana;Macintosh HD
+http://www.semanticweb.org/cmdb_auto_creation/2020/cmdb#4435macintosh__h_d_is_volume_of_macbookprojoana;Macintosh HD is volume of macbookprojoana;;Macintosh HD;macbookprojoana
+http://www.semanticweb.org/cmdb_auto_creation/2020/cmdb#1919macbookprojoana_installed_os_mac_o_s_10_15_7_19_h15;macbookprojoana installed os macOS 10.15.7 19H15;installed os;macbookprojoana;macOS 10.15.7 19H15
+http://www.semanticweb.org/cmdb_auto_creation/2020/cmdb#3230b_a_n_k_1_d_i_m_m0_is_component_of_macbookprojoana;BANK 1DIMM0 is component of macbookprojoana;is component of;BANK 1DIMM0;macbookprojoana
+http://www.semanticweb.org/cmdb_auto_creation/2020/cmdb#104tcpwrapped_is_running_on_port_1110;tcpwrapped is running on port 1110;is running on port;tcpwrapped;1110
+http://www.semanticweb.org/cmdb_auto_creation/2020/cmdb#164fodms_is_running_on_port_7200;fodms is running on port 7200;;fodms;7200
+http://www.semanticweb.org/cmdb_auto_creation/2020/cmdb#44ssh_is_running_on_port_22;ssh is running on port 22;;ssh;22
+http://www.semanticweb.org/cmdb_auto_creation/2020/cmdb#2727macbookprojoana_located__p_t;macbookprojoana located PT;located;macbookprojoana;PT
+http://www.semanticweb.org/cmdb_auto_creation/2020/cmdb#2828p_t_location_of_macbookprojoana;PT location of macbookprojoana;location of;PT;macbookprojoana
+http://www.semanticweb.org/cmdb_auto_creation/2020/cmdb#1151110_port_from_;1110 port from ;port from;1110;macbookprojoana
+http://www.semanticweb.org/cmdb_auto_creation/2020/cmdb#125_has_port_1110; has port 1110;;macbookprojoana;1110
+http://www.semanticweb.org/cmdb_auto_creation/2020/cmdb#1757200_port_from_;7200 port from ;;7200;macbookprojoana
+http://www.semanticweb.org/cmdb_auto_creation/2020/cmdb#185_has_port_7200; has port 7200;;macbookprojoana;7200
+http://www.semanticweb.org/cmdb_auto_creation/2020/cmdb#5522_port_from_;22 port from ;;22;macbookprojoana
+http://www.semanticweb.org/cmdb_auto_creation/2020/cmdb#65_has_port_22; has port 22;;macbookprojoana;22
+http://www.semanticweb.org/cmdb_auto_creation/2020/cmdb#7070wi__fi_port_on_device_macbookprojoana;Wi-Fi port on device macbookprojoana;port on device;Wi-Fi;macbookprojoana
+http://www.semanticweb.org/cmdb_auto_creation/2020/cmdb#7270bluetooth__p_a_n_port_on_device_macbookprojoana;Bluetooth PAN port on device macbookprojoana;;Bluetooth PAN;macbookprojoana
+http://www.semanticweb.org/cmdb_auto_creation/2020/cmdb#7670thunderbolt_2_port_on_device_macbookprojoana;Thunderbolt 2 port on device macbookprojoana;;Thunderbolt 2;macbookprojoana
+http://www.semanticweb.org/cmdb_auto_creation/2020/cmdb#7870thunderbolt__bridge_port_on_device_macbookprojoana;Thunderbolt Bridge port on device macbookprojoana;;Thunderbolt Bridge;macbookprojoana
+http://www.semanticweb.org/cmdb_auto_creation/2020/cmdb#2222quad__core__intel__core_i7_processor_of_macbookprojoana;Quad-Core Intel Core i7 processor of macbookprojoana;processor of;Quad-Core Intel Core i7;macbookprojoana
+http://www.semanticweb.org/cmdb_auto_creation/2020/cmdb#2622k_h_w__intel_iris_pro_item_processor_of_macbookprojoana;kHW_IntelIrisProItem processor of macbookprojoana;;kHW_IntelIrisProItem;macbookprojoana
+http://www.semanticweb.org/cmdb_auto_creation/2020/cmdb#2020mac_o_s_10_15_7_19_h15_running_os_macbookprojoana;macOS 10.15.7 19H15 running os macbookprojoana;running os;macOS 10.15.7 19H15;macbookprojoana
+http://www.semanticweb.org/cmdb_auto_creation/2020/cmdb#1537200_running_product_fodms;7200 running product fodms;running product;7200;fodms
+http://www.semanticweb.org/cmdb_auto_creation/2020/cmdb#3322_running_product_ssh;22 running product ssh;;22;ssh
+http://www.semanticweb.org/cmdb_auto_creation/2020/cmdb#931110_running_product_tcpwrapped;1110 running product tcpwrapped;;1110;tcpwrapped

@@ -1,0 +1,427 @@
+id;attribute;value
+10058lldpd;Architecture;amd64
+10058lldpd;description;implementation 0.9.5-0-cl3u6 implementation 0.9.5-0-cl3u6implementation 0.9.5-0-cl3u6 implementation 0.9.5-0-cl3u6implementation 0.9.5-0-cl3u6
+10058lldpd;title;lldpd
+10158auditd;Architecture;amd64
+10158auditd;description;User 1:2.4-1+b1 User 1:2.4-1+b1User 1:2.4-1+b1 User 1:2.4-1+b1User 1:2.4-1+b1
+10158auditd;title;auditd
+10353microsoft__windows_10__enterprise__evaluation;version number;10.0.19042 N/A Build 19042
+10353microsoft__windows_10__enterprise__evaluation;configuration;Standalone Workstation
+10353microsoft__windows_10__enterprise__evaluation;build type;Multiprocessor Free
+10353microsoft__windows_10__enterprise__evaluation;product id;00329-20000-00001-AA186
+10353microsoft__windows_10__enterprise__evaluation;install date;"1/29/2021; 7:05:43 PM"
+10353microsoft__windows_10__enterprise__evaluation;boot device;DeviceHarddiskVolume2
+10353microsoft__windows_10__enterprise__evaluation;BIOS version;"innotek GmbH VirtualBox; 12/1/2006"
+10353microsoft__windows_10__enterprise__evaluation;manufacturer;Microsoft Corporation
+10353microsoft__windows_10__enterprise__evaluation;title;Microsoft Windows 10 Enterprise Evaluation
+10475microsoft__corporation;title;Microsoft Corporation
+10576audio_endpoint_builder;Caption;Windows Audio Endpoint Builder
+10576audio_endpoint_builder;DisplayName;Windows Audio Endpoint Builder
+10576audio_endpoint_builder;Name;AudioEndpointBuilder
+10576audio_endpoint_builder;ProcessId;1044
+10576audio_endpoint_builder;description;"Manages audio devices for the Windows Audio service. If this service is stopped; audio devices and effects will not function properly. If this service is disabled; any services that explicitly depend on it will fail to start"
+10576audio_endpoint_builder;status;OK
+10576audio_endpoint_builder;title;AudioEndpointBuilder
+10676audiosrv;Caption;Windows Audio
+10676audiosrv;DisplayName;Windows Audio
+10676audiosrv;Name;Audiosrv
+10676audiosrv;ProcessId;1752
+10676audiosrv;description;"Manages audio for Windows-based programs. If this service is stopped; audio devices and effects will not function properly. If this service is disabled; any services that explicitly depend on it will fail to start"
+10676audiosrv;status;OK
+10676audiosrv;title;Audiosrv
+10776b_f_e;Caption;Base Filtering Engine
+10776b_f_e;DisplayName;Base Filtering Engine
+10776b_f_e;Name;BFE
+10776b_f_e;ProcessId;1380
+10776b_f_e;description;The Base Filtering Engine (BFE) is a service that manages firewall and Internet Protocol security (IPsec) policies and implements user mode filtering. Stopping or disabling the BFE service will significantly reduce the security of the system. It will also result in unpredictable behavior in IPsec management and firewall applications.
+10776b_f_e;status;OK
+10776b_f_e;title;BFE
+10876broker_infrastructure;Caption;Background Tasks Infrastructure Service
+10876broker_infrastructure;DisplayName;Background Tasks Infrastructure Service
+10876broker_infrastructure;Name;BrokerInfrastructure
+10876broker_infrastructure;ProcessId;752
+10876broker_infrastructure;description;Windows infrastructure service that controls which background tasks can run on the system.
+10876broker_infrastructure;status;OK
+10876broker_infrastructure;title;BrokerInfrastructure
+10976c_d_p_svc;Caption;Connected Devices Platform Service
+10976c_d_p_svc;DisplayName;Connected Devices Platform Service
+10976c_d_p_svc;Name;CDPSvc
+10976c_d_p_svc;ProcessId;1140
+10976c_d_p_svc;description;This service is used for Connected Devices Platform scenarios
+10976c_d_p_svc;status;OK
+10976c_d_p_svc;title;CDPSvc
+11076cert_prop_svc;Caption;Certificate Propagation
+11076cert_prop_svc;DisplayName;Certificate Propagation
+11076cert_prop_svc;Name;CertPropSvc
+11076cert_prop_svc;ProcessId;1720
+11076cert_prop_svc;description;"Copies user certificates and root certificates from smart cards into the current user's certificate store; detects when a smart card is inserted into a smart card reader; and; if needed; installs the smart card Plug and Play minidriver."
+11076cert_prop_svc;status;OK
+11076cert_prop_svc;title;CertPropSvc
+11176core_messaging_registrar_496;Caption;CoreMessaging
+11176core_messaging_registrar_496;DisplayName;CoreMessaging
+11176core_messaging_registrar_496;Name;CoreMessagingRegistrar 496
+11176core_messaging_registrar_496;ProcessId;OK
+11176core_messaging_registrar_496;description;Manages communication between system components.
+11176core_messaging_registrar_496;title;CoreMessagingRegistrar 496
+11276crypt_svc;Caption;Cryptographic Services
+11276crypt_svc;DisplayName;Cryptographic Services
+11276crypt_svc;Name;CryptSvc
+11276crypt_svc;ProcessId;1396
+11276crypt_svc;description;"Provides three management services: Catalog Database Service; which confirms the signatures of Windows files and allows new programs to be installed; Protected Root Service; which adds and removes Trusted Root Certification Authority certificates from this computer; and Automatic Root Certificate Update Service; which retrieves root certificates from Windows Update and enable scenarios such as SSL. If this service is stopped; these management services will not function properly. If this service is disabled; any services that explicitly depend on it will fail to start."
+11276crypt_svc;status;OK
+11276crypt_svc;title;CryptSvc
+11376dcom_launch;Caption;DCOM Server Process Launcher
+11376dcom_launch;DisplayName;DCOM Server Process Launcher
+11376dcom_launch;Name;DcomLaunch
+11376dcom_launch;ProcessId;752
+11376dcom_launch;description;"The DCOMLAUNCH service launches COM and DCOM servers in response to object activation requests. If this service is stopped or disabled; programs using COM or DCOM will not function properly. It is strongly recommended that you have the DCOMLAUNCH service running."
+11376dcom_launch;status;OK
+11376dcom_launch;title;DcomLaunch
+11476dhcp;Caption;DHCP Client
+11476dhcp;DisplayName;DHCP Client
+11476dhcp;Name;Dhcp
+11476dhcp;ProcessId;1064
+11476dhcp;description;"Registers and updates IP addresses and DNS records for this computer. If this service is stopped; this computer will not receive dynamic IP addresses and DNS updates. If this service is disabled; any services that explicitly depend on it will fail to start."
+11476dhcp;status;OK
+11476dhcp;title;Dhcp
+11653ubuntu_18_04_5__l_t_s;ID;ubuntu
+11653ubuntu_18_04_5__l_t_s;ID_LIKE;debian
+11653ubuntu_18_04_5__l_t_s;version number;18.04
+11653ubuntu_18_04_5__l_t_s;HOME_URL;https://www.ubuntu.com/
+11653ubuntu_18_04_5__l_t_s;SUPPORT_URL;https://help.ubuntu.com/
+11653ubuntu_18_04_5__l_t_s;BUG_REPORT_URL;https://bugs.launchpad.net/ubuntu/
+11653ubuntu_18_04_5__l_t_s;PRIVACY_POLICY_URL;https://www.ubuntu.com/legal/terms-and-policies/privacy-policy
+11653ubuntu_18_04_5__l_t_s;VERSION_CODENAME;bionic
+11653ubuntu_18_04_5__l_t_s;UBUNTU_CODENAME;bionic
+11653ubuntu_18_04_5__l_t_s;description;18.04.5 LTS (Bionic Beaver)
+11653ubuntu_18_04_5__l_t_s;title;Ubuntu 18.04.5 LTS
+12055sda3;PARTUUID;814ae3a1-03
+12055sda3;Filesystem;/dev/sda3
+12055sda3;1K-blocks;129125532
+12055sda3;Used;6%
+12055sda3;Available;116058696
+12055sda3;Mounted on;/
+12055sda3;NAME;sda3
+12055sda3;MAJ:MIN;08:03
+12055sda3;RM;0
+12055sda3;SIZE;125.6G
+12055sda3;RO;0
+12055sda3;MOUNTPOINT;/
+12055sda3;description;part partpart partpart
+12055sda3;title;sda3
+12055sda3;uuid;b7edea04-0eb0-4606-af2f-9b74d393ad79
+12158python3;Architecture;amd64
+12158python3;description;interactive 3.6.7-1~18.04
+12158python3;title;python3
+12458irqbalance;Architecture;amd64
+12458irqbalance;description;Daemon 1.3.0-0.1ubuntu0.18.04.1
+12458irqbalance;title;irqbalance
+12955sdb;MOUNTPOINT;/
+12955sdb;Filesystem;udev
+12955sdb;1K-blocks;369544
+12955sdb;Used;0%
+12955sdb;Available;369544
+12955sdb;Mounted on;/dev
+12955sdb;NAME;sdb
+12955sdb;MAJ:MIN;08:16
+12955sdb;RM;0
+12955sdb;SIZE;10M
+12955sdb;RO;0
+12955sdb;description;cidata disk cidata diskcidata part
+12955sdb;title;sdb
+12955sdb;uuid;2021-01-05-08-24-18-00
+13553ubuntu_16_04_7__l_t_s;ID;ubuntu
+13553ubuntu_16_04_7__l_t_s;ID_LIKE;debian
+13553ubuntu_16_04_7__l_t_s;version number;16.04
+13553ubuntu_16_04_7__l_t_s;HOME_URL;http://www.ubuntu.com/
+13553ubuntu_16_04_7__l_t_s;SUPPORT_URL;http://help.ubuntu.com/
+13553ubuntu_16_04_7__l_t_s;BUG_REPORT_URL;http://bugs.launchpad.net/ubuntu/
+13553ubuntu_16_04_7__l_t_s;VERSION_CODENAME;xenial
+13553ubuntu_16_04_7__l_t_s;UBUNTU_CODENAME;xenial
+13553ubuntu_16_04_7__l_t_s;description;16.04.7 LTS (Xenial Xerus) 16.04.7 LTS (Xenial Xerus)16.04.7 LTS (Xenial Xerus)
+13553ubuntu_16_04_7__l_t_s;title;Ubuntu 16.04.7 LTS
+13654intel_r__core_t_m_i5_3470_s__c_p_u__2_90_g_hz;Architecture;x86_64
+13654intel_r__core_t_m_i5_3470_s__c_p_u__2_90_g_hz;CPU op-modes;"32-bit; 64-bit"
+13654intel_r__core_t_m_i5_3470_s__c_p_u__2_90_g_hz;Byte Order;Little Endian
+13654intel_r__core_t_m_i5_3470_s__c_p_u__2_90_g_hz;CPUs;1
+13654intel_r__core_t_m_i5_3470_s__c_p_u__2_90_g_hz;On-line CPUs list;"0;1"
+13654intel_r__core_t_m_i5_3470_s__c_p_u__2_90_g_hz;Threads per core;1
+13654intel_r__core_t_m_i5_3470_s__c_p_u__2_90_g_hz;Cores per socket;2
+13654intel_r__core_t_m_i5_3470_s__c_p_u__2_90_g_hz;NUMA nodes;"0;1"
+13654intel_r__core_t_m_i5_3470_s__c_p_u__2_90_g_hz;Vendor ID;GenuineIntel
+13654intel_r__core_t_m_i5_3470_s__c_p_u__2_90_g_hz;CPU family;6
+13654intel_r__core_t_m_i5_3470_s__c_p_u__2_90_g_hz;Stepping;9
+13654intel_r__core_t_m_i5_3470_s__c_p_u__2_90_g_hz;CPU frequency unit;MHz
+13654intel_r__core_t_m_i5_3470_s__c_p_u__2_90_g_hz;CPU frequency;2893.420
+13654intel_r__core_t_m_i5_3470_s__c_p_u__2_90_g_hz;CPU speed;2893.420 MHz
+13654intel_r__core_t_m_i5_3470_s__c_p_u__2_90_g_hz;BogoMIPS;5786.84
+13654intel_r__core_t_m_i5_3470_s__c_p_u__2_90_g_hz;Hypervisor vendor;KVM
+13654intel_r__core_t_m_i5_3470_s__c_p_u__2_90_g_hz;Virtualization type;full
+13654intel_r__core_t_m_i5_3470_s__c_p_u__2_90_g_hz;L1d cache;32K
+13654intel_r__core_t_m_i5_3470_s__c_p_u__2_90_g_hz;L2 cache;256K
+13654intel_r__core_t_m_i5_3470_s__c_p_u__2_90_g_hz;L3 cache;6144K
+13654intel_r__core_t_m_i5_3470_s__c_p_u__2_90_g_hz;Flags;fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush mmx fxsr sse sse2 ht syscall nx rdtscp lm constant_tsc rep_good nopl xtopology nonstop_tsc tsc_known_freq pni pclmulqdq ssse3 cx16 pcid sse4_1 sse4_2 x2apic popcnt aes xsave avx rdrand hypervisor lahf_lm kaiser fsgsbase md_clear flush_l1d
+13654intel_r__core_t_m_i5_3470_s__c_p_u__2_90_g_hz;description;5 858 585 858
+13654intel_r__core_t_m_i5_3470_s__c_p_u__2_90_g_hz;title;IntelR CoreTM i5-3470S CPU  2.90GHz
+13855sda1;PARTUUID;aab29ad1-01
+13855sda1;Filesystem;/dev/sda1
+13855sda1;1K-blocks;10098468
+13855sda1;Used;14%
+13855sda1;Available;8754488
+13855sda1;Mounted on;/
+13855sda1;NAME;sda1
+13855sda1;MAJ:MIN;08:01
+13855sda1;RM;0
+13855sda1;SIZE;10G
+13855sda1;RO;0
+13855sda1;MOUNTPOINT;/
+13855sda1;description;cloudimg-rootfs part cloudimg-rootfs partcloudimg-rootfs disk
+13855sda1;title;sda1
+13855sda1;uuid;fa207365-f64b-4111-a44a-d7eb252cc72f
+13958lxcfs;Architecture;amd64
+13958lxcfs;description;FUSE 2.0.8-0ubuntu1~16.04.2 FUSE 2.0.8-0ubuntu1~16.04.2FUSE 2.0.8-0ubuntu1~16.04.2 FUSE 2.0.8-0ubuntu1~16.04.2FUSE 3.0.3-0ubuntu1~18.04.2
+13958lxcfs;title;lxcfs
+14058systemd;Architecture;amd64
+14058systemd;description;system 229-4ubuntu21.29 system 229-4ubuntu21.29system 229-4ubuntu21.29 system 229-4ubuntu21.29system 237-3ubuntu10.43 system 237-3ubuntu10.43system 215-17+deb8u6 system 215-17+deb8u6system 215-17+deb8u6 system 215-17+deb8u6system 215-17+deb8u6
+14058systemd;title;systemd
+14158unattended_upgrades;Architecture;all
+14158unattended_upgrades;description;automatic 1.1ubuntu1.18.04.7~16.04.6 automatic 1.1ubuntu1.18.04.7~16.04.6automatic 1.1ubuntu1.18.04.7~16.04.6
+14158unattended_upgrades;title;unattended-upgrades
+14258nginx;Architecture;all
+14258nginx;description;"small; 1.10.3-0ubuntu0.16.04.5"
+14258nginx;title;nginx
+14358snmpd;Architecture;amd64
+14358snmpd;description;SNMP 5.7.3+dfsg-1ubuntu4.6 SNMP 5.7.3+dfsg-1ubuntu4.6SNMP 5.7.3+dfsg-1ubuntu4.6 SNMP 5.7.3+dfsg-1ubuntu4.6SNMP 5.7.3-cl3u3 SNMP 5.7.3-cl3u3SNMP 5.7.3-cl3u3 SNMP 5.7.3-cl3u3SNMP 5.7.3-cl3u3
+14358snmpd;title;snmpd
+3053389;protocol;tcp
+3053389;cpe;cpe:/o:microsoft:windows
+3053389;product;ms-wbt-server
+3053389;status;open
+3053389;title;3389
+327ms_wbt_server;description;Microsoft Terminal Services
+327ms_wbt_server;title;ms-wbt-server
+451oracle__virtual_box_virtual__n_i_c;title;Oracle VirtualBox virtual NIC
+46522;protocol;tcp
+46522;cpe;cpe:/o:linux:linux_kernel
+46522;product;ssh
+46522;status;open
+46522;title;22
+487ssh;description;OpenSSH 7.2p2 Ubuntu 4ubuntu2.10 OpenSSH 7.2p2 Ubuntu 4ubuntu2.10OpenSSH 7.2p2 Ubuntu 4ubuntu2.10 OpenSSH 7.2p2 Ubuntu 4ubuntu2.10OpenSSH 7.6p1 Ubuntu 4ubuntu0.3 OpenSSH 7.6p1 Ubuntu 4ubuntu0.3OpenSSH for_Windows_8.0 OpenSSH for_Windows_8.0OpenSSH 6.7p1 Debian 5+deb8u3 OpenSSH 6.7p1 Debian 5+deb8u3OpenSSH 6.7p1 Debian 5+deb8u3 OpenSSH 6.7p1 Debian 5+deb8u3OpenSSH 6.7p1 Debian 5+deb8u3
+487ssh;title;ssh
+49580;protocol;tcp
+49580;cpe;cpe:/o:linux:linux_kernel
+49580;product;http
+49580;status;open
+49580;title;80
+506tcp;title;tcp
+517http;description;nginx 1.10.3
+517http;title;http
+535010_0_2_024;net type;IPv4
+535010_0_2_024;title;10.0.2.024
+5550192_168_10_024;net type;IPv4
+5550192_168_10_024;title;192.168.10.024
+5652switch_of;Icon name;computer-vm
+5652switch_of;Chassis;vm
+5652switch_of;Machine ID;3978c602d3df4b6ea1647d8da435d96b
+5652switch_of;Boot ID;1657fffab4d342a4822ece0f5258c2ff
+5652switch_of;Virtualization;kvm
+5652switch_of;Operating System;Cumulus Linux
+5652switch_of;CPE OS Name;cpe
+5652switch_of;Kernel;Linux 4.1.0-cl-5-amd64
+5652switch_of;Architecture;x86-64
+5652switch_of;os family;Cumulus Linux
+5652switch_of;os version;3.3.0
+5652switch_of;os name;Cumulus Linux
+5652switch_of;CPU cores;1
+5652switch_of;CPU;Intel(R) Core(TM) i5-3470S CPU @ 2.90GHz
+5652switch_of;CPU frequency unit;MHz
+5652switch_of;CPU frequency;2893.482
+5652switch_of;CPU speed;2893.482 MHz
+5652switch_of;vendor;Oracle VirtualBox virtual NIC
+5652switch_of;has_ipv4;10.0.2.15
+5652switch_of;has_ipv4;192.168.10.20
+5652switch_of;mac_address;08:00:27:C7:45:8C
+5652switch_of;os_family;Linux
+5652switch_of;status;up
+5652switch_of;title;switch-of
+5752switch_dc;vendor;Oracle VirtualBox virtual NIC
+5752switch_dc;Icon name;computer-vm
+5752switch_dc;Chassis;vm
+5752switch_dc;Machine ID;3978c602d3df4b6ea1647d8da435d96b
+5752switch_dc;Boot ID;856270df55734440bd01dcb084f2c9fa
+5752switch_dc;Virtualization;kvm
+5752switch_dc;Operating System;Cumulus Linux
+5752switch_dc;CPE OS Name;cpe
+5752switch_dc;Kernel;Linux 4.1.0-cl-5-amd64
+5752switch_dc;Architecture;x86-64
+5752switch_dc;os family;Cumulus Linux
+5752switch_dc;os version;3.3.0
+5752switch_dc;os name;Cumulus Linux
+5752switch_dc;CPU cores;1
+5752switch_dc;CPU;Intel(R) Core(TM) i5-3470S CPU @ 2.90GHz
+5752switch_dc;CPU frequency unit;MHz
+5752switch_dc;CPU frequency;2892.518
+5752switch_dc;CPU speed;2892.518 MHz
+5752switch_dc;has_ipv4;10.0.2.15
+5752switch_dc;has_ipv4;192.168.10.30
+5752switch_dc;mac_address;08:00:27:9C:71:2B
+5752switch_dc;os_family;Linux
+5752switch_dc;status;up
+5752switch_dc;title;switch-dc
+5852ubuntu_pc;hostname;ubuntu-pc
+5852ubuntu_pc;Icon name;computer-vm
+5852ubuntu_pc;Chassis;vm
+5852ubuntu_pc;Machine ID;2ee2cdc15b964490aa29b72b9808a579
+5852ubuntu_pc;Boot ID;657798635c9e40978de53e21a44a053d
+5852ubuntu_pc;Virtualization;oracle
+5852ubuntu_pc;Operating System;Ubuntu 18.04.5 LTS
+5852ubuntu_pc;Kernel;Linux 4.15.0-130-generic
+5852ubuntu_pc;Architecture;x86-64
+5852ubuntu_pc;os family;Ubuntu
+5852ubuntu_pc;os name;Ubuntu 18.04.5 LTS
+5852ubuntu_pc;os version;18.04
+5852ubuntu_pc;CPU cores;2
+5852ubuntu_pc;CPU;Intel(R) Core(TM) i5-3470S CPU @ 2.90GHz
+5852ubuntu_pc;CPU frequency unit;MHz
+5852ubuntu_pc;CPU frequency;2893.420
+5852ubuntu_pc;CPU speed;2893.420 MHz
+5852ubuntu_pc;has_ipv4;10.0.2.15
+5852ubuntu_pc;has_ipv4;192.168.10.22
+5852ubuntu_pc;mac_address;08:00:27:73:B2:EB
+5852ubuntu_pc;os_family;Linux
+5852ubuntu_pc;status;up
+5852ubuntu_pc;title;ubuntu-pc
+5952db_server;vendor;Oracle VirtualBox virtual NIC
+5952db_server;Icon name;computer-vm
+5952db_server;Chassis;vm
+5952db_server;Machine ID;88193959944b46b0bb70526bbfb60bac
+5952db_server;Boot ID;0e20765c692e4e47b6f154a6b11a5b50
+5952db_server;Virtualization;oracle
+5952db_server;Operating System;Ubuntu 16.04.7 LTS
+5952db_server;Kernel;Linux 4.4.0-206-generic
+5952db_server;Architecture;x86-64
+5952db_server;os family;Ubuntu
+5952db_server;os name;Ubuntu 16.04.7 LTS
+5952db_server;os version;16.04
+5952db_server;CPU cores;2
+5952db_server;CPU;Intel(R) Core(TM) i5-3470S CPU @ 2.90GHz
+5952db_server;CPU frequency unit;MHz
+5952db_server;CPU frequency;2893.420
+5952db_server;CPU speed;2893.420 MHz
+5952db_server;has_ipv4;10.0.2.15
+5952db_server;has_ipv4;192.168.10.31
+5952db_server;mac_address;08:00:27:6B:4E:46
+5952db_server;os_family;Linux
+5952db_server;status;up
+5952db_server;title;db-server
+6052web_server;vendor;Oracle VirtualBox virtual NIC
+6052web_server;Icon name;computer-vm
+6052web_server;Chassis;vm
+6052web_server;Machine ID;95c61120e69a40c587ea5cbefad9e327
+6052web_server;Boot ID;ab4cc83be0d54c048bd72cb8b4271520
+6052web_server;Virtualization;oracle
+6052web_server;Operating System;Ubuntu 16.04.7 LTS
+6052web_server;Kernel;Linux 4.4.0-206-generic
+6052web_server;Architecture;x86-64
+6052web_server;os family;Ubuntu
+6052web_server;os name;Ubuntu 16.04.7 LTS
+6052web_server;os version;16.04
+6052web_server;CPU cores;2
+6052web_server;CPU;Intel(R) Core(TM) i5-3470S CPU @ 2.90GHz
+6052web_server;CPU frequency unit;MHz
+6052web_server;CPU frequency;2893.420
+6052web_server;CPU speed;2893.420 MHz
+6052web_server;has_ipv4;10.0.2.15
+6052web_server;has_ipv4;192.168.10.32
+6052web_server;mac_address;08:00:27:B5:5E:C9
+6052web_server;os_family;Linux
+6052web_server;status;up
+6052web_server;title;web-server
+6152router;Icon name;computer-vm
+6152router;Chassis;vm
+6152router;Machine ID;3978c602d3df4b6ea1647d8da435d96b
+6152router;Boot ID;20fbf9eb02bf43d38b65da0378b48df8
+6152router;vendor;Oracle VirtualBox virtual NIC
+6152router;Virtualization;kvm
+6152router;Operating System;Cumulus Linux
+6152router;CPE OS Name;cpe
+6152router;Kernel;Linux 4.1.0-cl-5-amd64
+6152router;Architecture;x86-64
+6152router;os family;Cumulus Linux
+6152router;os version;3.3.0
+6152router;os name;Cumulus Linux
+6152router;CPU cores;1
+6152router;CPU;Intel(R) Core(TM) i5-3470S CPU @ 2.90GHz
+6152router;CPU frequency unit;MHz
+6152router;CPU frequency;2893.695
+6152router;CPU speed;2893.695 MHz
+6152router;has_ipv4;192.168.10.10
+6152router;mac_address;08:00:27:12:F6:B5
+6152router;os_family;Linux
+6152router;status;up
+6152router;title;router
+61p_c_s__systemtechnik;title;PCS Systemtechnik
+6252windows_pc;vendor;Oracle VirtualBox virtual NIC
+6252windows_pc;hostname;windows-pc
+6252windows_pc;os name;Microsoft Windows 10 Enterprise Evaluation
+6252windows_pc;os version;10.0.19042 N/A Build 19042
+6252windows_pc;has_ipv4;192.168.10.21
+6252windows_pc;mac_address;08:00:27:4C:E3:56
+6252windows_pc;os_family;Windows
+6252windows_pc;serial_number;0
+6252windows_pc;status;up
+6252windows_pc;title;windows-pc
+9053cumulus__linux;version number;3.3.0
+9053cumulus__linux;ID;cumulus-linux
+9053cumulus__linux;ID_LIKE;debian
+9053cumulus__linux;CPE_NAME;cpe:/o:cumulusnetworks:cumulus_linux:3.3.0
+9053cumulus__linux;HOME_URL;http://www.cumulusnetworks.com/
+9053cumulus__linux;SUPPORT_URL;http://support.cumulusnetworks.com/
+9053cumulus__linux;description;Cumulus Linux 3.3.0 Cumulus Linux 3.3.0Cumulus Linux 3.3.0 Cumulus Linux 3.3.0Cumulus Linux 3.3.0
+9053cumulus__linux;title;Cumulus Linux
+9154intel_r__core_t_m_i5_3470_s__c_p_u__2_90_g_hz;Architecture;x86_64
+9154intel_r__core_t_m_i5_3470_s__c_p_u__2_90_g_hz;CPU op-modes;"32-bit; 64-bit"
+9154intel_r__core_t_m_i5_3470_s__c_p_u__2_90_g_hz;Byte Order;Little Endian
+9154intel_r__core_t_m_i5_3470_s__c_p_u__2_90_g_hz;CPUs;1
+9154intel_r__core_t_m_i5_3470_s__c_p_u__2_90_g_hz;On-line CPUs list;0
+9154intel_r__core_t_m_i5_3470_s__c_p_u__2_90_g_hz;Threads per core;1
+9154intel_r__core_t_m_i5_3470_s__c_p_u__2_90_g_hz;Cores per socket;1
+9154intel_r__core_t_m_i5_3470_s__c_p_u__2_90_g_hz;Vendor ID;GenuineIntel
+9154intel_r__core_t_m_i5_3470_s__c_p_u__2_90_g_hz;CPU family;6
+9154intel_r__core_t_m_i5_3470_s__c_p_u__2_90_g_hz;Stepping;9
+9154intel_r__core_t_m_i5_3470_s__c_p_u__2_90_g_hz;CPU frequency unit;MHz
+9154intel_r__core_t_m_i5_3470_s__c_p_u__2_90_g_hz;CPU frequency;2892.518
+9154intel_r__core_t_m_i5_3470_s__c_p_u__2_90_g_hz;CPU speed;2892.518 MHz
+9154intel_r__core_t_m_i5_3470_s__c_p_u__2_90_g_hz;BogoMIPS;5785.03
+9154intel_r__core_t_m_i5_3470_s__c_p_u__2_90_g_hz;Hypervisor vendor;KVM
+9154intel_r__core_t_m_i5_3470_s__c_p_u__2_90_g_hz;Virtualization type;full
+9154intel_r__core_t_m_i5_3470_s__c_p_u__2_90_g_hz;L1d cache;32K
+9154intel_r__core_t_m_i5_3470_s__c_p_u__2_90_g_hz;L2 cache;256K
+9154intel_r__core_t_m_i5_3470_s__c_p_u__2_90_g_hz;L3 cache;6144K
+9154intel_r__core_t_m_i5_3470_s__c_p_u__2_90_g_hz;description;5 858 585 858
+9154intel_r__core_t_m_i5_3470_s__c_p_u__2_90_g_hz;title;IntelR CoreTM i5-3470S CPU  2.90GHz
+9455sda4;PARTLABEL;CL-SYSTEM
+9455sda4;PARTUUID;66d4e76b-5ed9-4f6f-9276-0de078de411b
+9455sda4;Filesystem;/dev/sda4
+9455sda4;1K-blocks;3929068
+9455sda4;Used;25%
+9455sda4;Available;2732572
+9455sda4;Mounted on;/
+9455sda4;NAME;sda4
+9455sda4;MAJ:MIN;08:04
+9455sda4;RM;0
+9455sda4;SIZE;3.8G
+9455sda4;RO;0
+9455sda4;MOUNTPOINT;/boot/grub/i386-pc
+9455sda4;description;CL-SYSTEM part CL-SYSTEM partCL-SYSTEM part CL-SYSTEM partCL-SYSTEM part CL-SYSTEM partCL-SYSTEM part CL-SYSTEM partCL-SYSTEM part CL-SYSTEM partCL-SYSTEM part CL-SYSTEM partCL-SYSTEM part CL-SYSTEM partCL-SYSTEM part CL-SYSTEM partCL-SYSTEM part
+9455sda4;title;sda4
+9455sda4;uuid;296fa317-f8fe-46a1-9e30-a8d64a36d1f8
+9558python;Architecture;amd64
+9558python;description;interactive 2.7.9-1 interactive 2.7.9-1interactive 2.7.9-1 interactive 2.7.9-1interactive 2.7.9-1
+9558python;title;python
+9758switchd;Architecture;amd64
+9758switchd;description;Cumulus 1.0-cl3u12 Cumulus 1.0-cl3u12Cumulus 1.0-cl3u12 Cumulus 1.0-cl3u12Cumulus 1.0-cl3u12
+9758switchd;title;switchd
+9858portwd;Architecture;all
+9858portwd;description;Port 1.2-cl3u6 Port 1.2-cl3u6Port 1.2-cl3u6 Port 1.2-cl3u6Port 1.2-cl3u6
+9858portwd;title;portwd

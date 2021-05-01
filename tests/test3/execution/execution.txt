@@ -66,7 +66,7 @@
 
 >>> Password added to the vault.
 
-? Do you want to specify another SNMP community string? ("public" is the default)  No
+? Do you want to specify another SNMP community string?  No
 
 >>> Checking the availability of the IP address 192.168.10.10...
 
@@ -132,7 +132,7 @@
 
 >>> Basic discovery ended.
 
-? In which IT infrastructure categories would you want to make a more detailed discovery?  done (5 selections)
+? In which IT infrastructure categories would you want to make a more detailed discovery?  done (7 selections)
 
 ? Enter your vault password:  *********
 
@@ -180,9 +180,13 @@
 >>> Discovery in the Linux machine with the address 192.168.10.32...
 
 
->>> Make sure that GraphDB is running and that you import the discovered information.
-? Have you imported the file 'cmdb.ttl' stored in the folder 'graphdb-import' to your GraphDB repository?
-  Yes
+? Enter the IP address of the GraphDB server (use format yyx.yyx.yyx.yyx where 'y' is optional):  192.168.1.88
+? Enter the port number where GraphDB is running:  7200
+? Enter the name of the GraphDB repository:  cmdb
+
+>>> Successfully connected.
+
+>>> Data imported into GraphDB.
 
 **********************************************************************
  __  __                _             ___ _                 
@@ -193,48 +197,59 @@
 
 **********************************************************************
 
-? Enter the IP address of the GraphDB server (use format yyx.yyx.yyx.yyx where 'y' is optional):  192.168.1.88
-? Enter the port number where GraphDB is running:  7200
-? Enter the name of the GraphDB repository:  cmdb
-
->>> Successfully connected.
 
 >>> Processing GraphDB data model...
 
 >>> The database model was successfully processed.
-? What is the software of the CMDB?  iTop
-? How to connect to the CMDB?  Database
+? What is the software of the CMDB?  i-doit
+? How to connect to the CMDB?  API
 
->>> Make sure that iTop is running.
+>>> Make sure that i-doit is running.
+? Enter the IP address of your CMDB server (use format yyx.yyx.yyx.yyx where 'y' is optional):  192.168.1.88
+? Enter your CMDB username:  admin
+? Enter your CMDB password:  *****
+? Enter your API key:  cmdb-auto
+
+>>> Checking API connection...
+
+>>> Successfully connected.
+
+>>> Make sure that i-doit is running.
+
 ? Enter the IP address of your database server (use format yyx.yyx.yyx.yyx where 'y' is optional):  192.168.1.88
-? Enter your database name:  itop
+? Enter your database name:  idoit_data
 ? Enter your database username:  root
 ? Enter your database password:  ********
 
->>> Checking iTop database connection...
+>>> Checking i-doit database connection...
 
->>> Successfully connected to the iTop database.
+>>> Successfully connected to the i-doit database.
 
-? Enter the url of your iTop CMDB server:  192.168.1.88/itop
-? Enter your iTop username:  itop
-? Enter your iTop password:  *****************
-
->>> Successfully connected to the iTop API.
-
->>> Processing iTop CMDB data model...
+>>> Processing i-doit CMDB data model...
 
 >>> Executing the model mapper...
 
 >>> Calculating configuration item types similarity...
-? The similarities between 'central processing unit' with 'peripheral' and 'phone' are equal. Choose the one to consider.  peripheral
+? The similarities between 'Host' with 'C__OBJTYPE__SERVER' and 'C__OBJTYPE__HOST' are equal. Choose the one to consider.  C__OBJTYPE__HOST
+? The similarities between 'Layer 3 Network' with 'C__OBJTYPE__LAYER3_NET' and 'C__OBJTYPE__LAYER2_NET' are equal. Choose the one to consider.  C__OBJTYPE__LAYER3_NET
+? The similarities between 'CPU' with 'C__OBJTYPE__MONITOR' and 'C__OBJTYPE__PHONE' are equal. Choose the one to consider.  C__OBJTYPE__PHONE
+? The similarities between 'Product' with 'C__OBJTYPE__SERVER' and 'C__OBJTYPE__MONITOR' are equal. Choose the one to consider.  C__OBJTYPE__SERVER
+? The similarities between 'CPU' with 'C__OBJTYPE__PHONE' and 'C__OBJTYPE__AMPLIFIER' are equal. Choose the one to consider.  C__OBJTYPE__AMPLIFIER
+? The similarities between 'Product' with 'C__OBJTYPE__SERVER' and 'C__OBJTYPE__PHONE' are equal. Choose the one to consider.  C__OBJTYPE__SERVER
 
 >>> Calculating relationship types similarity...
+? The similarities between 'port from' with 'C__RELATION_TYPE__NETWORK_PORT' and 'C__RELATION_TYPE__UNIVERSAL_INTERFACE' are equal. Choose the one to consider.  C__RELATION_TYPE__NETWORK_PORT
+? The similarities between 'C__RELATION_TYPE__CONNECTORS' with 'processor of' and 'has storage' are equal. Choose the one to consider.  processor of
 
 >>> Calculating configuration item attributes similarity...
-? The similarities between 'boot id' with 'osfamily_id', 'osversion_id' and 'oslicence_id' are equal. Choose the one to consider.  oslicence_id
-? The similarities between 'id' with 'title' and 'description' are equal. Choose the one to consider.  title
-? The similarities between 'id' with 'title' and 'description' are equal. Choose the one to consider.  title
-? The similarities between 'id' with 'title' and 'description' are equal. Choose the one to consider.  title
+? The similarities between 'Architecture' with 'itservice' and 'object' are equal. Choose the one to consider.  itservice
+? The similarities between 'CPUs' with 'cable_connection', 'contact_list', 'option' and 'gps' are equal. Choose the one to consider.  option
+? The similarities between 'Flags' with 'account' and 'contact_list' are equal. Choose the one to consider.  account
+? The similarities between 'has_ipv4' with 'ipv4_address', 'ipv6_scope' and 'ipv6_address' are equal. Choose the one to consider.  ipv4_address
+? The similarities between 'id' with 'Machine ID' and 'Boot ID' are equal. Choose the one to consider.  Machine ID
+? The similarities between 'Boot ID' with 'productid' and 'cable' are equal. Choose the one to consider.  productid
+? The similarities between 'title' with 'first_name' and 'last_name' are equal. Choose the one to consider.  first_name
+? The similarities between 'protocol' with 'description', 'plug_type' and 'comment' are equal. Choose the one to consider.  description
 
 >>> Calculating relationship attributes similarity...
 
@@ -242,294 +257,360 @@
 CONFIGURATION ITEMS MAPPING
 ===============================================================================================================================================================================
 
-CI in CMDB           Description                  CI in DB                 Description                Similarity Coeficient
--------------------  ---------------------------  -----------------------  -----------------------  -----------------------
-server               server                       host                     host                                    1
-service              service                      service                  service                                 1
-software             software                     operating system         operating system                        0.941176
-peripheral           peripheral                   central processing unit  central processing unit                 0.888889
-applicationsolution  application solution         application              application                             0.871378
-osfamily             operating system family      solid state drive        solid state drive                       0.604595
-logicalinterface     logical interface            logical port             logical port                            0.785327
-sanswitch            storage area network switch  layer 3 network          layer 3 network                         0.726232
-printer              printer                      router                   router                                  0.842105
-model                model                        product                  product                                 0.8
-organization         organization                 manufacturer             manufacturer                            0.769231
-ipphone              internet protocol phone      protocol                 protocol                                0.704343
-person               person                       vendor                   vendor                                  0.666667
+CI in CMDB                        Description                   CI in DB          Description                Similarity Coeficient
+--------------------------------  ----------------------------  ----------------  -----------------------  -----------------------
+C__OBJTYPE__APPLICATION           Application                   Application       application                             1
+C__OBJTYPE__HOST                  Host                          Host              host                                    1
+C__OBJTYPE__ROUTER                Router                        Router            router                                  1
+C__OBJTYPE__OPERATING_SYSTEM      Operating System              Operating System  operating system                        1
+C__OBJTYPE__AMPLIFIER             Amplifier                     CPU               central processing unit                 0.888889
+C__OBJTYPE__IT_SERVICE            Service                       Service           service                                 1
+C__OBJTYPE__LAYER3_NET            Layer 3-net                   Layer 3 Network   layer 3 network                         1
+C__OBJTYPE__VIRTUAL_HOST          Virtual Host                  virtual host      virtual host                            1
+C__OBJTYPE__AIR_CONDITION_SYSTEM  Air Condition System          SSD               solid-state drive                       0.557261
+C__OBJTYPE__ORGANIZATION          Organization                  Manufacturer      manufacturer                            0.769231
+C__OBJTYPE__PERSON                Persons                       Vendor            vendor                                  0.666667
+C__OBJTYPE__APPLIANCE             Appliance                     Product           product                                 0.75
+C__OBJTYPE__RM_CONTROLLER         Remote Management Controller  Logical Port      logical port                            0.588253
+C__OBJTYPE__MAINTENANCE           Contract                      Protocol          protocol                                0.571429
 
 **************************************************************************************************
-server Attributes Mapping
-**************************************************************************************************
-
-Attribute in CMDB    Description              Attribute in DB          Description                     Similarity Coeficient
--------------------  -----------------------  -----------------------  ----------------------------  -----------------------
-cpu                  central processing unit  central processing unit  central processing unit                      1
-id                   id                       machine id               machine id                                   0.880476
-oslicence_id         oslicence id             boot id                  boot id                                      0.870139
-ram                  random access memory     mac_address              media access control address                 0.700371
-osfamily_id          osfamily id              has_ipv4                 internet protocol version 4                  0.376827
-osversion_id         osversion id             has_ipv6                 internet protocol version 6                  0.367485
-
-**************************************************************************************************
-service Attributes Mapping
-**************************************************************************************************
-
-Attribute in CMDB    Description       Attribute in DB    Description                                 Similarity Coeficient
--------------------  ----------------  -----------------  ----------------------------------------  -----------------------
-name                 name              name               name                                                     1
-description          description       description        description                                              1
-status               status            title              title                                                    0.833333
-servicefamily_id     servicefamily id  process id         process id                                               0.885801
-icon_data            icon data         cmdb_status        configuration management database status                 0.689902
-id                   id                caption            caption                                                  0.588235
-icon_filename        icon filename     display name       display name                                             0.593256
-org_id               org id            has_ipv4           internet protocol version 4                              0.423796
-icon_mimetype        icon mimetype     uuid               universally unique identifier                            0.305606
-
-**************************************************************************************************
-software Attributes Mapping
-**************************************************************************************************
-
-Attribute in CMDB    Description    Attribute in DB                   Description                         Similarity Coeficient
--------------------  -------------  --------------------------------  --------------------------------  -----------------------
-id                   id             id                                id                                               1
-name                 name           title                             title                                            0.923077
-type                 type           description                       description                                      0.9
-vendor               vendor         customer premises equipment name  customer premises equipment name                 0.580161
-version              version        version codename                  version codename                                 0.791955
-
-**************************************************************************************************
-peripheral Attributes Mapping
+C__OBJTYPE__APPLICATION Attributes Mapping
 **************************************************************************************************
 
 Attribute in CMDB    Description    Attribute in DB    Description      Similarity Coeficient
 -------------------  -------------  -----------------  -------------  -----------------------
-id                   id             vendor id          vendor id                     0.876197
+title                Title          title              title                         1
+description          Description    description        description                   1
+assigned_it_service  Service        Architecture       architecture                  0.777778
 
 **************************************************************************************************
-applicationsolution Attributes Mapping
+C__OBJTYPE__HOST Attributes Mapping
+**************************************************************************************************
+
+Attribute in CMDB    Description    Attribute in DB    Description    Similarity Coeficient
+-------------------  -------------  -----------------  -------------  -----------------------
+
+**************************************************************************************************
+C__OBJTYPE__ROUTER Attributes Mapping
+**************************************************************************************************
+
+Attribute in CMDB    Description    Attribute in DB    Description    Similarity Coeficient
+-------------------  -------------  -----------------  -------------  -----------------------
+
+**************************************************************************************************
+C__OBJTYPE__OPERATING_SYSTEM Attributes Mapping
+**************************************************************************************************
+
+Attribute in CMDB     Description           Attribute in DB     Description                                Similarity Coeficient
+--------------------  --------------------  ------------------  ---------------------------------------  -----------------------
+assigned_version      Version number        version number      version number                                          1
+id                    ID                    ID                  id                                                      1
+manufacturer          Manufacturer          manufacturer        manufacturer                                            1
+title                 Title                 title               title                                                   1
+description           Description           description         description                                             1
+application_type      Type                  build type          build type                                              0.788859
+object                Installed on          install date        install date                                            0.725485
+order_no              Order no.             configuration       configuration                                           0.666667
+invoice_no            Invoice no.           product id          product id                                              0.482563
+changed               Last change           ID_LIKE             id like                                                 0.503999
+manual                Manual file           BIOS version        basic input/output system version                       0.660974
+assigned_it_service   Service               CPE_NAME            customer premises equipment name                        0.657734
+reason                Access type           PRIVACY_POLICY_URL  privacy policy uniform resource locator                 0.621377
+variant               Variant               VERSION_CODENAME    version codename                                        0.487331
+primary_contact       Primary contact       SUPPORT_URL         support uniform resource locator                        0.567969
+assigned_license_key  Assigned license key  BUG_REPORT_URL      bug report uniform resource locator                     0.577882
+ram_unit              Memory unit           boot device         boot device                                             0.587864
+inventory_no          Inventory number      HOME_URL            home uniform resource locator                           0.565967
+kernel                Kernel                UBUNTU_CODENAME     ubuntu codename                                         0.481778
+
+**************************************************************************************************
+C__OBJTYPE__AMPLIFIER Attributes Mapping
+**************************************************************************************************
+
+Attribute in CMDB           Description               Attribute in DB      Description                               Similarity Coeficient
+--------------------------  ------------------------  -------------------  --------------------------------------  -----------------------
+title                       Title                     title                title                                                  1
+description                 Description               description          description                                            1
+cost_unit                   Cost unit                 CPU frequency unit   central processing unit frequency unit                 0.789613
+itservice                   Service                   Architecture         architecture                                           0.777778
+date                        Date                      Stepping             stepping                                               0.75
+operation_expense_interval  Operation expense (Unit)  CPU family           central processing unit family                         0.692383
+operation_expense           Operation expense         CPU speed            central processing unit speed                          0.654445
+wiring_system               Wiring system             CPU frequency        central processing unit frequency                      0.647111
+order_no                    Order no.                 Byte Order           byte order                                             0.707107
+id                          ID                        Vendor ID            vendor id                                              0.707107
+connector_sibling           Assigned Input/Output     CPU op-modes         central processing unit op modes                       0.617341
+option                      Assembly                  CPUs                 cpus                                                   0.666667
+account                     Account                   Flags                flags                                                  0.666667
+reason                      Access type               Virtualization type  virtualization type                                    0.616869
+connector                   Assigned to connector     Cores per socket     cores per socket                                       0.513778
+delivery_note_no            Delivery note number      On-line CPUs list    line cpus list                                         0.502904
+pos                         Position in the rack      Threads per core     threads per core                                       0.481885
+image                       File                      L1d cache            l1d cache                                              0.471203
+manual                      Manual file               L2 cache             l2 cache                                               0.357081
+user_name_static            User                      Hypervisor vendor    hypervisor vendor                                      0.359088
+interface                   Interface                 L3 cache             l3 cache                                               0.317094
+object                      Object                    NUMA nodes           numa nodes                                             0.329072
+snmp_syslocation            SNMP sysLocation          BogoMIPS             bogo mips                                              0.257054
+
+**************************************************************************************************
+C__OBJTYPE__IT_SERVICE Attributes Mapping
 **************************************************************************************************
 
 Attribute in CMDB    Description    Attribute in DB    Description      Similarity Coeficient
 -------------------  -------------  -----------------  -------------  -----------------------
-status               status         title              title                         0.833333
-redundancy           redundancy     architecture       architecture                  0.666667
-id                   id             description        description                   0.444444
+title                Title          title              title                         1
+description          Description    description        description                   1
+status               Condition      status             status                        1
+account              Account        Caption            caption                       0.75
+service_alias        Aliases        Name               name                          0.923077
+id                   ID             ProcessId          process id                    0.707107
+object_type          Object type    DisplayName        display name                  0.588817
 
 **************************************************************************************************
-osfamily Attributes Mapping
-**************************************************************************************************
-
-Attribute in CMDB    Description    Attribute in DB    Description      Similarity Coeficient
--------------------  -------------  -----------------  -------------  -----------------------
-id                   id             title              title                         0.444444
-
-**************************************************************************************************
-logicalinterface Attributes Mapping
-**************************************************************************************************
-
-Attribute in CMDB    Description        Attribute in DB    Description                    Similarity Coeficient
--------------------  -----------------  -----------------  ---------------------------  -----------------------
-id                   id                 protocol           protocol                                    0.5
-virtualmachine_id    virtualmachine id  has_ipv4           internet protocol version 4                 0.376827
-
-**************************************************************************************************
-sanswitch Attributes Mapping
+C__OBJTYPE__LAYER3_NET Attributes Mapping
 **************************************************************************************************
 
 Attribute in CMDB    Description    Attribute in DB    Description      Similarity Coeficient
 -------------------  -------------  -----------------  -------------  -----------------------
-id                   id             title              title                         0.444444
+title                Title          title              title                         1
+reason               Access type    net type           network type                  0.806284
 
 **************************************************************************************************
-printer Attributes Mapping
+C__OBJTYPE__VIRTUAL_HOST Attributes Mapping
+**************************************************************************************************
+
+Attribute in CMDB    Description                         Attribute in DB     Description                                          Similarity Coeficient
+-------------------  ----------------------------------  ------------------  -------------------------------------------------  -----------------------
+cores                CPU cores                           CPU cores           central processing unit cores                                     1
+frequency            CPU frequency                       CPU frequency       central processing unit frequency                                 1
+hostname             Hostname                            hostname            hostname                                                          1
+title                Title                               title               title                                                             1
+status               Condition                           status              status                                                            1
+frequency_unit       CPU frequency unit                  CPU frequency unit  central processing unit frequency unit                            1
+serial               Serial number                       serial_number       serial number                                                     1
+speed_unit           Speed unit                          CPU speed           central processing unit speed                                     0.877123
+memory               Memory                              CPU                 central processing unit                                           0.857143
+mac                  MAC                                 mac_address         media access control address                                      0.866025
+ipv4_address         IPv4 address                        has_ipv4            internet protocol version 4                                       0.866025
+controller           Controller                          vendor              vendor                                                            0.857143
+domain               Domain                              Architecture        architecture                                                      0.857143
+application          Application                         Operating System    operating system                                                  0.842105
+object               Object                              Kernel              kernel                                                            0.833333
+system_drive         System drive                        os_family           operating system family                                           0.766736
+ldev                 On device Logical devices (Client)  os name             operating system name                                             0.669005
+assigned_version     Version number                      os version          operating system version                                          0.68325
+speed_type           Unit                                Chassis             chassis                                                           0.727273
+id                   ID                                  Machine ID          machine id                                                        0.707107
+productid            Product ID                          Boot ID             boot id                                                           0.5
+connected_object     Guest systems                       CPE OS Name         customer premises equipment operating system name                 0.704981
+shares               Share name                          Icon name           icon name                                                         0.691366
+dns_server           DNS Server                          Virtualization      virtualization                                                    0.447887
+
+**************************************************************************************************
+C__OBJTYPE__AIR_CONDITION_SYSTEM Attributes Mapping
+**************************************************************************************************
+
+Attribute in CMDB    Description           Attribute in DB    Description                      Similarity Coeficient
+-------------------  --------------------  -----------------  -----------------------------  -----------------------
+title                Title                 title              title                                         1
+description          Description           description        description                                   1
+tag                  Tags                  NAME               name                                          0.857143
+order_no             Order no.             SIZE               size                                          0.833333
+itservice            Service               Mounted on         mounted                                       0.75
+object_type          Object type           uuid               universally unique identifier                 0.618472
+object               Object                RO                 ro                                            0.571429
+delivery_note_no     Delivery note number  Available          available                                     0.54744
+time_needed_unit     Time need (Unit)      Used               used                                          0.546549
+image                File                  Filesystem         filesystem                                    0.481605
+manual               Manual file           RM                 rm                                            0.332654
+threshold_unit       Memory-unit           1K-blocks          1k blocks                                     0.35597
+mtu                  MTU                   MOUNTPOINT         mountpoint                                    0.345918
+
+**************************************************************************************************
+C__OBJTYPE__ORGANIZATION Attributes Mapping
 **************************************************************************************************
 
 Attribute in CMDB    Description    Attribute in DB    Description      Similarity Coeficient
 -------------------  -------------  -----------------  -------------  -----------------------
-id                   id             machine id         machine id                    0.880476
+title                Title          title              title                                1
 
 **************************************************************************************************
-model Attributes Mapping
+C__OBJTYPE__PERSON Attributes Mapping
+**************************************************************************************************
+
+Attribute in CMDB    Description    Attribute in DB    Description      Similarity Coeficient
+-------------------  -------------  -----------------  -------------  -----------------------
+first_name           First name     title              title                         0.857143
+
+**************************************************************************************************
+C__OBJTYPE__APPLIANCE Attributes Mapping
+**************************************************************************************************
+
+Attribute in CMDB    Description    Attribute in DB    Description      Similarity Coeficient
+-------------------  -------------  -----------------  -------------  -----------------------
+title                Title          title              title                                1
+description          Description    description        description                          1
+
+**************************************************************************************************
+C__OBJTYPE__RM_CONTROLLER Attributes Mapping
 **************************************************************************************************
 
 Attribute in CMDB    Description    Attribute in DB    Description                    Similarity Coeficient
 -------------------  -------------  -----------------  ---------------------------  -----------------------
-type                 type           description        description                                 0.9
-id                   id             title              title                                       0.444444
-brand_id             brand id       has_ipv4           internet protocol version 4                 0.43887
+title                Title          title              title                                       1
+status               Condition      status             status                                      1
+event_static         Event          product            product                                     0.909091
+itservice            Service        cpe                customer premises equipment                 0.652566
+description          Description    protocol           protocol                                    0.615385
 
 **************************************************************************************************
-organization Attributes Mapping
-**************************************************************************************************
-
-Attribute in CMDB    Description        Attribute in DB    Description                                 Similarity Coeficient
--------------------  -----------------  -----------------  ----------------------------------------  -----------------------
-name                 name               title              title                                                    0.923077
-status               status             cmdb_status        configuration management database status                 0.674521
-code                 code               description        description                                              0.545455
-parent_id_right      parent id right    mac_address        media access control address                             0.489615
-parent_id            parent id          has_ipv4           internet protocol version 4                              0.394756
-parent_id_left       parent id left     os_family          operating system family                                  0.396439
-obsolescence_date    obsolescence date  uuid               universally unique identifier                            0.271993
-deliverymodel_id     deliverymodel id   has_ipv6           internet protocol version 6                              0.367485
-id                   id                 serial_number      serial number                                            0.255809
-
-**************************************************************************************************
-ipphone Attributes Mapping
+C__OBJTYPE__MAINTENANCE Attributes Mapping
 **************************************************************************************************
 
 Attribute in CMDB    Description    Attribute in DB    Description      Similarity Coeficient
 -------------------  -------------  -----------------  -------------  -----------------------
-id                   id             title              title                         0.444444
-
-**************************************************************************************************
-person Attributes Mapping
-**************************************************************************************************
-
-Attribute in CMDB    Description       Attribute in DB    Description                                 Similarity Coeficient
--------------------  ----------------  -----------------  ----------------------------------------  -----------------------
-first_name           first name        title              title                                                    0.857143
-picture_data         picture data      mac_address        media access control address                             0.628706
-employee_number      employee number   serial_number      serial number                                            0.624454
-manager_id           manager id        cmdb_status        configuration management database status                 0.457769
-mobile_phone         mobile phone      has_ipv4           internet protocol version 4                              0.489163
-location_id          location id       has_ipv6           internet protocol version 6                              0.42718
-picture_filename     picture filename  description        description                                              0.483822
-id                   id                os_family          operating system family                                  0.235171
-picture_mimetype     picture mimetype  uuid               universally unique identifier                            0.278669
+title                Title          title              title                                1
 
 
 ===============================================================================================================================================================================
 RELATIONSHIPS MAPPING
 ===============================================================================================================================================================================
 
-Relationship in CMDB                     Description                                            Relationship in DB        Description                 Similarity Coeficient
----------------------------------------  -----------------------------------------------------  ------------------------  ------------------------  -----------------------
-lnkdatacenterdevicetosan                 datacenter device to storage area network              has storage               storage                                  0.761779
-lnkcustomercontracttoservice             customer contract to service                           running service           running service                          0.736971
-lnkconnectablecitonetworkdevice          connect able configuration item to network device      part of network           part network                             0.728398
-lnkprovidercontracttoservice             provider contract to service                           has vendor                vendor                                   0.541587
-lnkdocumenttoservice                     document to service                                    has address               address                                  0.577457
-lnkapplicationsolutiontobusinessprocess  application solution to business process               running product           running product                          0.670362
-lnksoftwareinstancetosoftwarepatch       software instance to software patch                    running operating system  running operating system                 0.631337
-lnkservertovolume                        server to volume                                       is running on port        running port                             0.569121
-lnkfunctionalcitoprovidercontract        functional configuration item to provider contract     associated processor      associated processor                     0.581468
-lnkfunctionalcitoservice                 functional configuration item to service               has manufacturer          manufacturer                             0.407063
-lnkphysicalinterfacetovlan               physical interface to vl an                            has protocol              protocol                                 0.491997
-lnkapplicationsolutiontofunctionalci     application solution to functional configuration item  has installed             installed                                0.471598
-lnkvirtualdevicetovolume                 virtual device to volume                               port from                 port                                     0.4817
-lnkfunctionalcitoospatch                 functional configuration item too s patch              running on                running                                  0.42788
-lnkdocumenttofunctionalci                document to functional configuration item              processor of              processor                                0.406346
+Relationship in CMDB                    Description                   Relationship in DB    Description                   Similarity Coeficient
+--------------------------------------  ----------------------------  --------------------  --------------------------  -----------------------
+C__RELATION_TYPE__NETWORK_PORT          Ports                         port from             port                                       1
+C__RELATION_TYPE__LOCATION              Location                      has storage           storage                                    0.705882
+C__RELATION_TYPE__OPERATION_SYSTEM      Operating system              running os            running operating system                   0.942343
+C__RELATION_TYPE__ORGANIZATION          Organization                  running on            running                                    0.9
+C__RELATION_TYPE__NET_CONNECTIONS       Network connections           part of network       part network                               0.817846
+C__RELATION_TYPE__CONTROLLER_FC_PORT    FC port                       is running on port    running port                               0.672716
+C__RELATION_TYPE__CONNECTORS            Connectors                    processor of          processor                                  0.75
+C__RELATION_TYPE__CLUSTER_ADM_SERVICE   Administration service        running service       running service                            0.753982
+C__RELATION_TYPE__UNIVERSAL_INTERFACE   Interface                     associated processor  associated processor                       0.542761
+C__RELATION_TYPE__IT_SERVICE_COMPONENT  Service component             network includes      network includes                           0.665287
+C__RELATION_TYPE__RM_CONTROLLER         Remote Management Controller  installed os          installed operating system                 0.670873
+C__RELATION_TYPE__SOFTWARE              Software assignment           has vendor            vendor                                     0.531239
+C__RELATION_TYPE__BACKUP                Backup                        has manufacturer      manufacturer                               0.631579
+C__RELATION_TYPE__LDEV_CLIENT           Logical devices (Client)      has protocol          protocol                                   0.507409
+C__RELATION_TYPE__POWER_CONSUMER        Power consumer                running product       running product                            0.536939
+C__RELATION_TYPE__STACKING              Stacking                      has installed         installed                                  0.571429
 
 **************************************************************************************************
-lnkdatacenterdevicetosan Attributes Mapping
-**************************************************************************************************
-
-Attribute in CMDB    Description    Attribute in DB    Description      Similarity Coeficient
--------------------  -------------  -----------------  -------------  -----------------------
-id                   id             title              title                         0.444444
-**************************************************************************************************
-lnkcustomercontracttoservice Attributes Mapping
+C__RELATION_TYPE__NETWORK_PORT Attributes Mapping
 **************************************************************************************************
 
 Attribute in CMDB    Description    Attribute in DB    Description      Similarity Coeficient
 -------------------  -------------  -----------------  -------------  -----------------------
-id                   id             title              title                         0.444444
+title                Title          title              title                                1
 **************************************************************************************************
-lnkconnectablecitonetworkdevice Attributes Mapping
-**************************************************************************************************
-
-Attribute in CMDB    Description    Attribute in DB    Description      Similarity Coeficient
--------------------  -------------  -----------------  -------------  -----------------------
-id                   id             title              title                         0.444444
-**************************************************************************************************
-lnkprovidercontracttoservice Attributes Mapping
+C__RELATION_TYPE__LOCATION Attributes Mapping
 **************************************************************************************************
 
 Attribute in CMDB    Description    Attribute in DB    Description      Similarity Coeficient
 -------------------  -------------  -----------------  -------------  -----------------------
-id                   id             title              title                         0.444444
+title                Title          title              title                                1
 **************************************************************************************************
-lnkdocumenttoservice Attributes Mapping
-**************************************************************************************************
-
-Attribute in CMDB    Description    Attribute in DB    Description      Similarity Coeficient
--------------------  -------------  -----------------  -------------  -----------------------
-id                   id             title              title                         0.444444
-**************************************************************************************************
-lnkapplicationsolutiontobusinessprocess Attributes Mapping
+C__RELATION_TYPE__OPERATION_SYSTEM Attributes Mapping
 **************************************************************************************************
 
 Attribute in CMDB    Description    Attribute in DB    Description      Similarity Coeficient
 -------------------  -------------  -----------------  -------------  -----------------------
-id                   id             title              title                         0.444444
+title                Title          title              title                                1
 **************************************************************************************************
-lnksoftwareinstancetosoftwarepatch Attributes Mapping
-**************************************************************************************************
-
-Attribute in CMDB    Description    Attribute in DB    Description      Similarity Coeficient
--------------------  -------------  -----------------  -------------  -----------------------
-id                   id             title              title                         0.444444
-**************************************************************************************************
-lnkservertovolume Attributes Mapping
+C__RELATION_TYPE__ORGANIZATION Attributes Mapping
 **************************************************************************************************
 
 Attribute in CMDB    Description    Attribute in DB    Description      Similarity Coeficient
 -------------------  -------------  -----------------  -------------  -----------------------
-id                   id             title              title                         0.444444
+title                Title          title              title                                1
 **************************************************************************************************
-lnkfunctionalcitoprovidercontract Attributes Mapping
-**************************************************************************************************
-
-Attribute in CMDB    Description    Attribute in DB    Description      Similarity Coeficient
--------------------  -------------  -----------------  -------------  -----------------------
-id                   id             title              title                         0.444444
-**************************************************************************************************
-lnkfunctionalcitoservice Attributes Mapping
+C__RELATION_TYPE__NET_CONNECTIONS Attributes Mapping
 **************************************************************************************************
 
 Attribute in CMDB    Description    Attribute in DB    Description      Similarity Coeficient
 -------------------  -------------  -----------------  -------------  -----------------------
-id                   id             title              title                         0.444444
+title                Title          title              title                                1
 **************************************************************************************************
-lnkphysicalinterfacetovlan Attributes Mapping
-**************************************************************************************************
-
-Attribute in CMDB    Description    Attribute in DB    Description      Similarity Coeficient
--------------------  -------------  -----------------  -------------  -----------------------
-id                   id             title              title                         0.444444
-**************************************************************************************************
-lnkapplicationsolutiontofunctionalci Attributes Mapping
+C__RELATION_TYPE__CONTROLLER_FC_PORT Attributes Mapping
 **************************************************************************************************
 
 Attribute in CMDB    Description    Attribute in DB    Description      Similarity Coeficient
 -------------------  -------------  -----------------  -------------  -----------------------
-id                   id             title              title                         0.444444
+title                Title          title              title                                1
 **************************************************************************************************
-lnkvirtualdevicetovolume Attributes Mapping
-**************************************************************************************************
-
-Attribute in CMDB    Description    Attribute in DB    Description      Similarity Coeficient
--------------------  -------------  -----------------  -------------  -----------------------
-id                   id             title              title                         0.444444
-**************************************************************************************************
-lnkfunctionalcitoospatch Attributes Mapping
+C__RELATION_TYPE__CONNECTORS Attributes Mapping
 **************************************************************************************************
 
 Attribute in CMDB    Description    Attribute in DB    Description      Similarity Coeficient
 -------------------  -------------  -----------------  -------------  -----------------------
-id                   id             title              title                         0.444444
+title                Title          title              title                                1
 **************************************************************************************************
-lnkdocumenttofunctionalci Attributes Mapping
+C__RELATION_TYPE__CLUSTER_ADM_SERVICE Attributes Mapping
 **************************************************************************************************
 
 Attribute in CMDB    Description    Attribute in DB    Description      Similarity Coeficient
 -------------------  -------------  -----------------  -------------  -----------------------
-id                   id             title              title                         0.444444
+title                Title          title              title                                1
+**************************************************************************************************
+C__RELATION_TYPE__UNIVERSAL_INTERFACE Attributes Mapping
+**************************************************************************************************
 
-? Enter the threshold value that you want to consider (similarities below that value will not be considered):  0.85
+Attribute in CMDB    Description    Attribute in DB    Description      Similarity Coeficient
+-------------------  -------------  -----------------  -------------  -----------------------
+title                Title          title              title                                1
+**************************************************************************************************
+C__RELATION_TYPE__IT_SERVICE_COMPONENT Attributes Mapping
+**************************************************************************************************
+
+Attribute in CMDB    Description    Attribute in DB    Description      Similarity Coeficient
+-------------------  -------------  -----------------  -------------  -----------------------
+title                Title          title              title                                1
+**************************************************************************************************
+C__RELATION_TYPE__RM_CONTROLLER Attributes Mapping
+**************************************************************************************************
+
+Attribute in CMDB    Description    Attribute in DB    Description      Similarity Coeficient
+-------------------  -------------  -----------------  -------------  -----------------------
+title                Title          title              title                                1
+**************************************************************************************************
+C__RELATION_TYPE__SOFTWARE Attributes Mapping
+**************************************************************************************************
+
+Attribute in CMDB    Description    Attribute in DB    Description      Similarity Coeficient
+-------------------  -------------  -----------------  -------------  -----------------------
+title                Title          title              title                                1
+**************************************************************************************************
+C__RELATION_TYPE__BACKUP Attributes Mapping
+**************************************************************************************************
+
+Attribute in CMDB    Description    Attribute in DB    Description      Similarity Coeficient
+-------------------  -------------  -----------------  -------------  -----------------------
+title                Title          title              title                                1
+**************************************************************************************************
+C__RELATION_TYPE__LDEV_CLIENT Attributes Mapping
+**************************************************************************************************
+
+Attribute in CMDB    Description    Attribute in DB    Description      Similarity Coeficient
+-------------------  -------------  -----------------  -------------  -----------------------
+title                Title          title              title                                1
+**************************************************************************************************
+C__RELATION_TYPE__POWER_CONSUMER Attributes Mapping
+**************************************************************************************************
+
+Attribute in CMDB    Description    Attribute in DB    Description      Similarity Coeficient
+-------------------  -------------  -----------------  -------------  -----------------------
+title                Title          title              title                                1
+**************************************************************************************************
+C__RELATION_TYPE__STACKING Attributes Mapping
+**************************************************************************************************
+
+Attribute in CMDB    Description    Attribute in DB    Description      Similarity Coeficient
+-------------------  -------------  -----------------  -------------  -----------------------
+title                Title          title              title                                1
+
+? Enter the threshold value that you want to consider (similarities below that value will not be considered):  0.86
 
 **********************************************************************
  ___               _      _   _            ___ _                 
@@ -549,201 +630,207 @@ id                   id             title              title                    
 
 >>> Creating the configuration items...
 
->>> Error creating the configuration item of type software: Error: Unexpected value for attribute 'vendor': Null not allowed, Unexpected value for attribute 'version': Null not allowed: issues = {0=>Unexpected value for attribute 'vendor': Null not allowed; 1=>Unexpected value for attribute 'version': Null not allowed}, class = Software, id = 
+{'version': '2.0', 'method': 'cmdb.object.create', 'params': {'apikey': 'cmdb-auto', 'language': 'en', 'type': 'C__OBJTYPE__LAYER3_NET', 'title': 'C__OBJTYPE__LAYER3_NET', 'categories': {'C__CATG__GLOBAL': [{'title': '10.0.2.024'}]}}, 'id': 1}
+>>> Object of type C__OBJTYPE__LAYER3_NET created successfully in the CMDB.
 
->>> Error creating the configuration item of type software: Error: Unexpected value for attribute 'vendor': Null not allowed, Unexpected value for attribute 'version': Null not allowed: issues = {0=>Unexpected value for attribute 'vendor': Null not allowed; 1=>Unexpected value for attribute 'version': Null not allowed}, class = Software, id = 
+{'version': '2.0', 'method': 'cmdb.object.create', 'params': {'apikey': 'cmdb-auto', 'language': 'en', 'type': 'C__OBJTYPE__LAYER3_NET', 'title': 'C__OBJTYPE__LAYER3_NET', 'categories': {'C__CATG__GLOBAL': [{'title': '192.168.10.024'}]}}, 'id': 1}
+>>> Object of type C__OBJTYPE__LAYER3_NET created successfully in the CMDB.
 
->>> Error creating the configuration item of type software: Error: Unexpected value for attribute 'vendor': Null not allowed, Unexpected value for attribute 'version': Null not allowed: issues = {0=>Unexpected value for attribute 'vendor': Null not allowed; 1=>Unexpected value for attribute 'version': Null not allowed}, class = Software, id = 
+{'version': '2.0', 'method': 'cmdb.object.create', 'params': {'apikey': 'cmdb-auto', 'language': 'en', 'type': 'C__OBJTYPE__VIRTUAL_HOST', 'title': 'C__OBJTYPE__VIRTUAL_HOST', 'categories': {'C__CATG__CPU': [{'cores': 1, 'frequency_unit': 2, 'frequency': 2893.695}], 'C__CATG__CONTROLLER_FC_PORT': [{'speed_unit': 3}], 'C__CATG__GLOBAL': [{'title': 'router', 'status': 7}], 'C__CATG__NETWORK_LOG_PORT': [{'mac': '08:00:27:12:F6:B5'}], 'C__CATG__IP': [{'ipv4_address': '192.168.10.10'}]}}, 'id': 1}
+>>> Object of type C__OBJTYPE__VIRTUAL_HOST created successfully in the CMDB.
 
->>> Object of type peripheral created successfully in the CMDB.
+{'version': '2.0', 'method': 'cmdb.object.create', 'params': {'apikey': 'cmdb-auto', 'language': 'en', 'type': 'C__OBJTYPE__VIRTUAL_HOST', 'title': 'C__OBJTYPE__VIRTUAL_HOST', 'categories': {'C__CATG__CPU': [{'cores': 1, 'frequency_unit': 2, 'frequency': 2893.482}], 'C__CATG__CONTROLLER_FC_PORT': [{'speed_unit': 3}], 'C__CATG__GLOBAL': [{'title': 'switch-of', 'status': 7}], 'C__CATG__NETWORK_LOG_PORT': [{'mac': '08:00:27:C7:45:8C'}], 'C__CATG__IP': [{'ipv4_address': '192.168.10.20'}]}}, 'id': 1}
+>>> Object of type C__OBJTYPE__VIRTUAL_HOST created successfully in the CMDB.
 
->>> Object of type server created successfully in the CMDB.
+>>> Error converting string '3.3.0' to int.
 
->>> Error creating the configuration item of type software: Error: Unexpected value for attribute 'vendor': Null not allowed, Unexpected value for attribute 'version': Null not allowed: issues = {0=>Unexpected value for attribute 'vendor': Null not allowed; 1=>Unexpected value for attribute 'version': Null not allowed}, class = Software, id = 
+>>> Error converting string 'cumulus-linux' to int.
 
->>> Object of type peripheral created successfully in the CMDB.
+{'version': '2.0', 'method': 'cmdb.object.create', 'params': {'apikey': 'cmdb-auto', 'language': 'en', 'type': 'C__OBJTYPE__OPERATING_SYSTEM', 'title': 'C__OBJTYPE__OPERATING_SYSTEM', 'categories': {'C__CATS__APPLICATION_ASSIGNED_OBJ': [{}], 'C__CATG__GLOBAL': [{'title': 'Cumulus Linux', 'description': 'Cumulus Linux 3.3.0 Cumulus Linux 3.3.0Cumulus Linux 3.3.0 Cumulus Linux 3.3.0Cumulus Linux 3.3.0'}]}}, 'id': 1}
+>>> Object of type C__OBJTYPE__OPERATING_SYSTEM created successfully in the CMDB.
 
->>> Object of type server created successfully in the CMDB.
+{'version': '2.0', 'method': 'cmdb.object.create', 'params': {'apikey': 'cmdb-auto', 'language': 'en', 'type': 'C__OBJTYPE__AMPLIFIER', 'title': 'C__OBJTYPE__AMPLIFIER', 'categories': {'C__CATG__GLOBAL': [{'title': 'IntelR CoreTM i5-3470S CPU  2.90GHz', 'description': '58 5858 5858'}]}}, 'id': 1}
+>>> Object of type C__OBJTYPE__AMPLIFIER created successfully in the CMDB.
 
->>> Object of type server created successfully in the CMDB.
+{'version': '2.0', 'method': 'cmdb.object.create', 'params': {'apikey': 'cmdb-auto', 'language': 'en', 'type': 'C__OBJTYPE__APPLICATION', 'title': 'C__OBJTYPE__APPLICATION', 'categories': {'C__CATG__GLOBAL': [{'title': 'python', 'description': 'interactive 2.7.9-1 interactive 2.7.9-1interactive 2.7.9-1 interactive 2.7.9-1interactive 2.7.9-1'}]}}, 'id': 1}
+>>> Object of type C__OBJTYPE__APPLICATION created successfully in the CMDB.
 
->>> Object of type server created successfully in the CMDB.
+{'version': '2.0', 'method': 'cmdb.object.create', 'params': {'apikey': 'cmdb-auto', 'language': 'en', 'type': 'C__OBJTYPE__APPLICATION', 'title': 'C__OBJTYPE__APPLICATION', 'categories': {'C__CATG__GLOBAL': [{'title': 'switchd', 'description': 'Cumulus 1.0-cl3u12 Cumulus 1.0-cl3u12Cumulus 1.0-cl3u12 Cumulus 1.0-cl3u12Cumulus 1.0-cl3u12'}]}}, 'id': 1}
+>>> Object of type C__OBJTYPE__APPLICATION created successfully in the CMDB.
 
->>> Object of type server created successfully in the CMDB.
+{'version': '2.0', 'method': 'cmdb.object.create', 'params': {'apikey': 'cmdb-auto', 'language': 'en', 'type': 'C__OBJTYPE__APPLICATION', 'title': 'C__OBJTYPE__APPLICATION', 'categories': {'C__CATG__GLOBAL': [{'title': 'portwd', 'description': 'Port 1.2-cl3u6 Port 1.2-cl3u6Port 1.2-cl3u6 Port 1.2-cl3u6Port 1.2-cl3u6'}]}}, 'id': 1}
+>>> Object of type C__OBJTYPE__APPLICATION created successfully in the CMDB.
 
->>> Object of type server created successfully in the CMDB.
+{'version': '2.0', 'method': 'cmdb.object.create', 'params': {'apikey': 'cmdb-auto', 'language': 'en', 'type': 'C__OBJTYPE__APPLICATION', 'title': 'C__OBJTYPE__APPLICATION', 'categories': {'C__CATG__GLOBAL': [{'title': 'lldpd', 'description': 'implementation 0.9.5-0-cl3u6 implementation 0.9.5-0-cl3u6implementation 0.9.5-0-cl3u6 implementation 0.9.5-0-cl3u6implementation 0.9.5-0-cl3u6'}]}}, 'id': 1}
+>>> Object of type C__OBJTYPE__APPLICATION created successfully in the CMDB.
 
->>> Object of type applicationsolution created successfully in the CMDB.
+{'version': '2.0', 'method': 'cmdb.object.create', 'params': {'apikey': 'cmdb-auto', 'language': 'en', 'type': 'C__OBJTYPE__APPLICATION', 'title': 'C__OBJTYPE__APPLICATION', 'categories': {'C__CATG__GLOBAL': [{'title': 'auditd', 'description': 'User 1:2.4-1+b1 User 1:2.4-1+b1User 1:2.4-1+b1 User 1:2.4-1+b1User 1:2.4-1+b1'}]}}, 'id': 1}
+>>> Object of type C__OBJTYPE__APPLICATION created successfully in the CMDB.
 
->>> Object of type applicationsolution created successfully in the CMDB.
+{'version': '2.0', 'method': 'cmdb.object.create', 'params': {'apikey': 'cmdb-auto', 'language': 'en', 'type': 'C__OBJTYPE__VIRTUAL_HOST', 'title': 'C__OBJTYPE__VIRTUAL_HOST', 'categories': {'C__CATG__CPU': [{'cores': 1, 'frequency_unit': 2, 'frequency': 2892.518}], 'C__CATG__CONTROLLER_FC_PORT': [{'speed_unit': 3}], 'C__CATG__GLOBAL': [{'title': 'switch-dc', 'status': 7}], 'C__CATG__NETWORK_LOG_PORT': [{'mac': '08:00:27:9C:71:2B'}], 'C__CATG__IP': [{'ipv4_address': '192.168.10.30'}]}}, 'id': 1}
+>>> Object of type C__OBJTYPE__VIRTUAL_HOST created successfully in the CMDB.
 
->>> Object of type applicationsolution created successfully in the CMDB.
+>>> Error converting string '10.0.19042 N/A Build 19042' to int.
 
->>> Object of type applicationsolution created successfully in the CMDB.
+>>> Error converting string 'Microsoft Corporation' to int.
 
->>> Object of type applicationsolution created successfully in the CMDB.
+{'version': '2.0', 'method': 'cmdb.object.create', 'params': {'apikey': 'cmdb-auto', 'language': 'en', 'type': 'C__OBJTYPE__OPERATING_SYSTEM', 'title': 'C__OBJTYPE__OPERATING_SYSTEM', 'categories': {'C__CATS__APPLICATION_ASSIGNED_OBJ': [{}], 'C__CATS__OPERATING_SYSTEM': [{}], 'C__CATG__GLOBAL': [{'title': 'Microsoft Windows 10 Enterprise Evaluation'}]}}, 'id': 1}
+>>> Object of type C__OBJTYPE__OPERATING_SYSTEM created successfully in the CMDB.
 
->>> Object of type service created successfully in the CMDB.
+>>> Error converting string 'AudioEndpointBuilder' to int.
 
->>> Object of type service created successfully in the CMDB.
+{'version': '2.0', 'method': 'cmdb.object.create', 'params': {'apikey': 'cmdb-auto', 'language': 'en', 'type': 'C__OBJTYPE__IT_SERVICE', 'title': 'C__OBJTYPE__IT_SERVICE', 'categories': {'C__CATG__SERVICE': [{}], 'C__CATG__GLOBAL': [{'title': 'AudioEndpointBuilder', 'description': 'Manages audio devices for the Windows Audio service. If this service is stopped', 'status': 2}]}}, 'id': 1}
+>>> Object of type C__OBJTYPE__IT_SERVICE created successfully in the CMDB.
 
->>> Object of type service created successfully in the CMDB.
+>>> Error converting string 'Audiosrv' to int.
 
->>> Object of type service created successfully in the CMDB.
+{'version': '2.0', 'method': 'cmdb.object.create', 'params': {'apikey': 'cmdb-auto', 'language': 'en', 'type': 'C__OBJTYPE__IT_SERVICE', 'title': 'C__OBJTYPE__IT_SERVICE', 'categories': {'C__CATG__SERVICE': [{}], 'C__CATG__GLOBAL': [{'title': 'Audiosrv', 'description': 'Manages audio for Windows-based programs. If this service is stopped', 'status': 2}]}}, 'id': 1}
+>>> Object of type C__OBJTYPE__IT_SERVICE created successfully in the CMDB.
 
->>> Object of type service created successfully in the CMDB.
+>>> Error converting string 'BFE' to int.
 
->>> Object of type service created successfully in the CMDB.
+{'version': '2.0', 'method': 'cmdb.object.create', 'params': {'apikey': 'cmdb-auto', 'language': 'en', 'type': 'C__OBJTYPE__IT_SERVICE', 'title': 'C__OBJTYPE__IT_SERVICE', 'categories': {'C__CATG__SERVICE': [{}], 'C__CATG__GLOBAL': [{'title': 'BFE', 'description': 'The Base Filtering Engine (BFE) is a service that manages firewall and Internet Protocol security (IPsec) policies and implements user mode filtering. Stopping or disabling the BFE service will significantly reduce the security of the system. It will also result in unpredictable behavior in IPsec management and firewall applications.', 'status': 2}]}}, 'id': 1}
+>>> Object of type C__OBJTYPE__IT_SERVICE created successfully in the CMDB.
 
->>> Object of type service created successfully in the CMDB.
+>>> Error converting string 'BrokerInfrastructure' to int.
 
->>> Object of type service created successfully in the CMDB.
+{'version': '2.0', 'method': 'cmdb.object.create', 'params': {'apikey': 'cmdb-auto', 'language': 'en', 'type': 'C__OBJTYPE__IT_SERVICE', 'title': 'C__OBJTYPE__IT_SERVICE', 'categories': {'C__CATG__SERVICE': [{}], 'C__CATG__GLOBAL': [{'title': 'BrokerInfrastructure', 'description': 'Windows infrastructure service that controls which background tasks can run on the system.', 'status': 2}]}}, 'id': 1}
+>>> Object of type C__OBJTYPE__IT_SERVICE created successfully in the CMDB.
 
->>> Object of type service created successfully in the CMDB.
+>>> Error converting string 'CDPSvc' to int.
 
->>> Object of type service created successfully in the CMDB.
+{'version': '2.0', 'method': 'cmdb.object.create', 'params': {'apikey': 'cmdb-auto', 'language': 'en', 'type': 'C__OBJTYPE__IT_SERVICE', 'title': 'C__OBJTYPE__IT_SERVICE', 'categories': {'C__CATG__SERVICE': [{}], 'C__CATG__GLOBAL': [{'title': 'CDPSvc', 'description': 'This service is used for Connected Devices Platform scenarios', 'status': 2}]}}, 'id': 1}
+>>> Object of type C__OBJTYPE__IT_SERVICE created successfully in the CMDB.
 
->>> Object of type service created successfully in the CMDB.
+>>> Error converting string 'CertPropSvc' to int.
 
->>> Object of type service created successfully in the CMDB.
+{'version': '2.0', 'method': 'cmdb.object.create', 'params': {'apikey': 'cmdb-auto', 'language': 'en', 'type': 'C__OBJTYPE__IT_SERVICE', 'title': 'C__OBJTYPE__IT_SERVICE', 'categories': {'C__CATG__SERVICE': [{}], 'C__CATG__GLOBAL': [{'title': 'CertPropSvc', 'description': "Copies user certificates and root certificates from smart cards into the current user's certificate store", 'status': 2}]}}, 'id': 1}
+>>> Object of type C__OBJTYPE__IT_SERVICE created successfully in the CMDB.
 
->>> Object of type service created successfully in the CMDB.
+>>> Error converting string 'CoreMessagingRegistrar 496' to int.
 
->>> Object of type service created successfully in the CMDB.
+{'version': '2.0', 'method': 'cmdb.object.create', 'params': {'apikey': 'cmdb-auto', 'language': 'en', 'type': 'C__OBJTYPE__IT_SERVICE', 'title': 'C__OBJTYPE__IT_SERVICE', 'categories': {'C__CATG__SERVICE': [{}], 'C__CATG__GLOBAL': [{'title': 'CoreMessagingRegistrar 496', 'description': 'Manages communication between system components.'}]}}, 'id': 1}
+>>> Object of type C__OBJTYPE__IT_SERVICE created successfully in the CMDB.
 
->>> Object of type service created successfully in the CMDB.
+>>> Error converting string 'CryptSvc' to int.
 
->>> Object of type service created successfully in the CMDB.
+{'version': '2.0', 'method': 'cmdb.object.create', 'params': {'apikey': 'cmdb-auto', 'language': 'en', 'type': 'C__OBJTYPE__IT_SERVICE', 'title': 'C__OBJTYPE__IT_SERVICE', 'categories': {'C__CATG__SERVICE': [{}], 'C__CATG__GLOBAL': [{'title': 'CryptSvc', 'description': 'Provides three management services: Catalog Database Service', 'status': 2}]}}, 'id': 1}
+>>> Object of type C__OBJTYPE__IT_SERVICE created successfully in the CMDB.
 
->>> Object of type service created successfully in the CMDB.
+>>> Error converting string 'DcomLaunch' to int.
 
->>> Object of type service created successfully in the CMDB.
+{'version': '2.0', 'method': 'cmdb.object.create', 'params': {'apikey': 'cmdb-auto', 'language': 'en', 'type': 'C__OBJTYPE__IT_SERVICE', 'title': 'C__OBJTYPE__IT_SERVICE', 'categories': {'C__CATG__SERVICE': [{}], 'C__CATG__GLOBAL': [{'title': 'DcomLaunch', 'description': 'The DCOMLAUNCH service launches COM and DCOM servers in response to object activation requests. If this service is stopped or disabled', 'status': 2}]}}, 'id': 1}
+>>> Object of type C__OBJTYPE__IT_SERVICE created successfully in the CMDB.
 
->>> Object of type service created successfully in the CMDB.
+>>> Error converting string 'Dhcp' to int.
 
->>> Object of type service created successfully in the CMDB.
+{'version': '2.0', 'method': 'cmdb.object.create', 'params': {'apikey': 'cmdb-auto', 'language': 'en', 'type': 'C__OBJTYPE__IT_SERVICE', 'title': 'C__OBJTYPE__IT_SERVICE', 'categories': {'C__CATG__SERVICE': [{}], 'C__CATG__GLOBAL': [{'title': 'Dhcp', 'description': 'Registers and updates IP addresses and DNS records for this computer. If this service is stopped', 'status': 2}]}}, 'id': 1}
+>>> Object of type C__OBJTYPE__IT_SERVICE created successfully in the CMDB.
 
->>> Object of type service created successfully in the CMDB.
+{'version': '2.0', 'method': 'cmdb.object.create', 'params': {'apikey': 'cmdb-auto', 'language': 'en', 'type': 'C__OBJTYPE__VIRTUAL_HOST', 'title': 'C__OBJTYPE__VIRTUAL_HOST', 'categories': {'C__CATG__IP': [{'hostname': 'windows-pc', 'ipv4_address': '192.168.10.21'}], 'C__CATG__NETWORK': [{'serial': '0'}], 'C__CATG__GLOBAL': [{'title': 'windows-pc', 'status': 7}], 'C__CATG__NETWORK_LOG_PORT': [{'mac': '08:00:27:4C:E3:56'}]}}, 'id': 1}
+>>> Object of type C__OBJTYPE__VIRTUAL_HOST created successfully in the CMDB.
 
->>> Object of type service created successfully in the CMDB.
+{'version': '2.0', 'method': 'cmdb.object.create', 'params': {'apikey': 'cmdb-auto', 'language': 'en', 'type': 'C__OBJTYPE__APPLICATION', 'title': 'C__OBJTYPE__APPLICATION', 'categories': {'C__CATG__GLOBAL': [{'title': 'python3', 'description': 'interactive 3.6.7-1~18.04'}]}}, 'id': 1}
+>>> Object of type C__OBJTYPE__APPLICATION created successfully in the CMDB.
 
->>> Object of type service created successfully in the CMDB.
+{'version': '2.0', 'method': 'cmdb.object.create', 'params': {'apikey': 'cmdb-auto', 'language': 'en', 'type': 'C__OBJTYPE__APPLICATION', 'title': 'C__OBJTYPE__APPLICATION', 'categories': {'C__CATG__GLOBAL': [{'title': 'irqbalance', 'description': 'Daemon 1.3.0-0.1ubuntu0.18.04.1'}]}}, 'id': 1}
+>>> Object of type C__OBJTYPE__APPLICATION created successfully in the CMDB.
 
->>> Object of type service created successfully in the CMDB.
+{'version': '2.0', 'method': 'cmdb.object.create', 'params': {'apikey': 'cmdb-auto', 'language': 'en', 'type': 'C__OBJTYPE__VIRTUAL_HOST', 'title': 'C__OBJTYPE__VIRTUAL_HOST', 'categories': {'C__CATG__IP': [{'hostname': 'ubuntu-pc', 'ipv4_address': '192.168.10.22'}], 'C__CATG__CPU': [{'cores': 2, 'frequency_unit': 2, 'frequency': 2893.42}], 'C__CATG__CONTROLLER_FC_PORT': [{'speed_unit': 3}], 'C__CATG__GLOBAL': [{'title': 'ubuntu-pc', 'status': 7}], 'C__CATG__NETWORK_LOG_PORT': [{'mac': '08:00:27:73:B2:EB'}]}}, 'id': 1}
+>>> Object of type C__OBJTYPE__VIRTUAL_HOST created successfully in the CMDB.
 
->>> Object of type service created successfully in the CMDB.
+{'version': '2.0', 'method': 'cmdb.object.create', 'params': {'apikey': 'cmdb-auto', 'language': 'en', 'type': 'C__OBJTYPE__VIRTUAL_HOST', 'title': 'C__OBJTYPE__VIRTUAL_HOST', 'categories': {'C__CATG__CPU': [{'cores': 2, 'frequency_unit': 2, 'frequency': 2893.42}], 'C__CATG__CONTROLLER_FC_PORT': [{'speed_unit': 3}], 'C__CATG__GLOBAL': [{'title': 'db-server', 'status': 7}], 'C__CATG__NETWORK_LOG_PORT': [{'mac': '08:00:27:6B:4E:46'}], 'C__CATG__IP': [{'ipv4_address': '192.168.10.31'}]}}, 'id': 1}
+>>> Object of type C__OBJTYPE__VIRTUAL_HOST created successfully in the CMDB.
 
->>> Object of type service created successfully in the CMDB.
+{'version': '2.0', 'method': 'cmdb.object.create', 'params': {'apikey': 'cmdb-auto', 'language': 'en', 'type': 'C__OBJTYPE__AMPLIFIER', 'title': 'C__OBJTYPE__AMPLIFIER', 'categories': {'C__CATG__GLOBAL': [{'title': 'IntelR CoreTM i5-3470S CPU  2.90GHz', 'description': '58 5858 5858'}]}}, 'id': 1}
+>>> Object of type C__OBJTYPE__AMPLIFIER created successfully in the CMDB.
 
->>> Object of type service created successfully in the CMDB.
+{'version': '2.0', 'method': 'cmdb.object.create', 'params': {'apikey': 'cmdb-auto', 'language': 'en', 'type': 'C__OBJTYPE__APPLICATION', 'title': 'C__OBJTYPE__APPLICATION', 'categories': {'C__CATG__GLOBAL': [{'title': 'nginx', 'description': 'small'}]}}, 'id': 1}
+>>> Object of type C__OBJTYPE__APPLICATION created successfully in the CMDB.
 
->>> Object of type service created successfully in the CMDB.
+{'version': '2.0', 'method': 'cmdb.object.create', 'params': {'apikey': 'cmdb-auto', 'language': 'en', 'type': 'C__OBJTYPE__APPLICATION', 'title': 'C__OBJTYPE__APPLICATION', 'categories': {'C__CATG__GLOBAL': [{'title': 'snmpd', 'description': 'SNMP 5.7.3+dfsg-1ubuntu4.6 SNMP 5.7.3+dfsg-1ubuntu4.6SNMP 5.7.3+dfsg-1ubuntu4.6 SNMP 5.7.3+dfsg-1ubuntu4.6SNMP 5.7.3-cl3u3 SNMP 5.7.3-cl3u3SNMP 5.7.3-cl3u3 SNMP 5.7.3-cl3u3SNMP 5.7.3-cl3u3'}]}}, 'id': 1}
+>>> Object of type C__OBJTYPE__APPLICATION created successfully in the CMDB.
 
->>> Object of type service created successfully in the CMDB.
+{'version': '2.0', 'method': 'cmdb.object.create', 'params': {'apikey': 'cmdb-auto', 'language': 'en', 'type': 'C__OBJTYPE__VIRTUAL_HOST', 'title': 'C__OBJTYPE__VIRTUAL_HOST', 'categories': {'C__CATG__CPU': [{'cores': 2, 'frequency_unit': 2, 'frequency': 2893.42}], 'C__CATG__CONTROLLER_FC_PORT': [{'speed_unit': 3}], 'C__CATG__GLOBAL': [{'title': 'web-server', 'status': 7}], 'C__CATG__NETWORK_LOG_PORT': [{'mac': '08:00:27:B5:5E:C9'}], 'C__CATG__IP': [{'ipv4_address': '192.168.10.32'}]}}, 'id': 1}
+>>> Object of type C__OBJTYPE__VIRTUAL_HOST created successfully in the CMDB.
 
->>> Object of type service created successfully in the CMDB.
+>>> Error converting string 'ubuntu' to int.
 
->>> Object of type service created successfully in the CMDB.
+>>> Error converting string '18.04' to int.
 
->>> Object of type service created successfully in the CMDB.
+{'version': '2.0', 'method': 'cmdb.object.create', 'params': {'apikey': 'cmdb-auto', 'language': 'en', 'type': 'C__OBJTYPE__OPERATING_SYSTEM', 'title': 'C__OBJTYPE__OPERATING_SYSTEM', 'categories': {'C__CATG__GLOBAL': [{'title': 'Ubuntu 18.04.5 LTS', 'description': '18.04.5 LTS (Bionic Beaver)'}], 'C__CATS__APPLICATION_ASSIGNED_OBJ': [{}]}}, 'id': 1}
+>>> Object of type C__OBJTYPE__OPERATING_SYSTEM created successfully in the CMDB.
 
->>> Object of type service created successfully in the CMDB.
+>>> Error converting string 'ubuntu' to int.
 
->>> Object of type service created successfully in the CMDB.
+>>> Error converting string '16.04' to int.
 
->>> Object of type service created successfully in the CMDB.
+{'version': '2.0', 'method': 'cmdb.object.create', 'params': {'apikey': 'cmdb-auto', 'language': 'en', 'type': 'C__OBJTYPE__OPERATING_SYSTEM', 'title': 'C__OBJTYPE__OPERATING_SYSTEM', 'categories': {'C__CATG__GLOBAL': [{'title': 'Ubuntu 16.04.7 LTS', 'description': '16.04.7 LTS (Xenial Xerus) 16.04.7 LTS (Xenial Xerus)16.04.7 LTS (Xenial Xerus)'}], 'C__CATS__APPLICATION_ASSIGNED_OBJ': [{}]}}, 'id': 1}
+>>> Object of type C__OBJTYPE__OPERATING_SYSTEM created successfully in the CMDB.
 
->>> Object of type service created successfully in the CMDB.
+{'version': '2.0', 'method': 'cmdb.object.create', 'params': {'apikey': 'cmdb-auto', 'language': 'en', 'type': 'C__OBJTYPE__APPLICATION', 'title': 'C__OBJTYPE__APPLICATION', 'categories': {'C__CATG__GLOBAL': [{'title': 'lxcfs', 'description': 'FUSE 2.0.8-0ubuntu1~16.04.2 FUSE 2.0.8-0ubuntu1~16.04.2FUSE 2.0.8-0ubuntu1~16.04.2 FUSE 2.0.8-0ubuntu1~16.04.2FUSE 3.0.3-0ubuntu1~18.04.2'}]}}, 'id': 1}
+>>> Object of type C__OBJTYPE__APPLICATION created successfully in the CMDB.
 
->>> Object of type service created successfully in the CMDB.
+{'version': '2.0', 'method': 'cmdb.object.create', 'params': {'apikey': 'cmdb-auto', 'language': 'en', 'type': 'C__OBJTYPE__APPLICATION', 'title': 'C__OBJTYPE__APPLICATION', 'categories': {'C__CATG__GLOBAL': [{'title': 'systemd', 'description': 'system 229-4ubuntu21.29 system 229-4ubuntu21.29system 229-4ubuntu21.29 system 229-4ubuntu21.29system 237-3ubuntu10.43 system 237-3ubuntu10.43system 215-17+deb8u6 system 215-17+deb8u6system 215-17+deb8u6 system 215-17+deb8u6system 215-17+deb8u6'}]}}, 'id': 1}
+>>> Object of type C__OBJTYPE__APPLICATION created successfully in the CMDB.
 
->>> Object of type service created successfully in the CMDB.
-
->>> Object of type service created successfully in the CMDB.
-
->>> Object of type service created successfully in the CMDB.
-
->>> Object of type service created successfully in the CMDB.
-
->>> Object of type service created successfully in the CMDB.
-
->>> Object of type service created successfully in the CMDB.
-
->>> Object of type service created successfully in the CMDB.
-
->>> Object of type service created successfully in the CMDB.
-
->>> Object of type service created successfully in the CMDB.
-
->>> Object of type service created successfully in the CMDB.
-
->>> Object of type service created successfully in the CMDB.
-
->>> Object of type service created successfully in the CMDB.
-
->>> Object of type service created successfully in the CMDB.
-
->>> Object of type service created successfully in the CMDB.
-
->>> Object of type service created successfully in the CMDB.
-
->>> Object of type service created successfully in the CMDB.
-
->>> Object of type service created successfully in the CMDB.
-
->>> Object of type service created successfully in the CMDB.
-
->>> Object of type service created successfully in the CMDB.
-
->>> Object of type service created successfully in the CMDB.
-
->>> Object of type service created successfully in the CMDB.
-
->>> Object of type service created successfully in the CMDB.
-
->>> Object of type service created successfully in the CMDB.
-
->>> Object of type service created successfully in the CMDB.
-
->>> Object of type service created successfully in the CMDB.
-
->>> Object of type service created successfully in the CMDB.
-
->>> Object of type service created successfully in the CMDB.
-
->>> Object of type service created successfully in the CMDB.
-
->>> Object of type service created successfully in the CMDB.
-
->>> Object of type service created successfully in the CMDB.
-
->>> Object of type service created successfully in the CMDB.
-
->>> Object of type service created successfully in the CMDB.
-
->>> Object of type service created successfully in the CMDB.
-
->>> Object of type service created successfully in the CMDB.
-
->>> Object of type service created successfully in the CMDB.
-
->>> Object of type service created successfully in the CMDB.
-
->>> Object of type applicationsolution created successfully in the CMDB.
-
->>> Object of type applicationsolution created successfully in the CMDB.
-
->>> Object of type applicationsolution created successfully in the CMDB.
-
->>> Object of type applicationsolution created successfully in the CMDB.
-
->>> Object of type applicationsolution created successfully in the CMDB.
-
->>> Object of type applicationsolution created successfully in the CMDB.
-
->>> Object of type applicationsolution created successfully in the CMDB.
+{'version': '2.0', 'method': 'cmdb.object.create', 'params': {'apikey': 'cmdb-auto', 'language': 'en', 'type': 'C__OBJTYPE__APPLICATION', 'title': 'C__OBJTYPE__APPLICATION', 'categories': {'C__CATG__GLOBAL': [{'title': 'unattended-upgrades', 'description': 'automatic 1.1ubuntu1.18.04.7~16.04.6 automatic 1.1ubuntu1.18.04.7~16.04.6automatic 1.1ubuntu1.18.04.7~16.04.6'}]}}, 'id': 1}
+>>> Object of type C__OBJTYPE__APPLICATION created successfully in the CMDB.
 
 >>> Creating the relationships...
+
+{'version': '2.0', 'method': 'cmdb.object.create', 'params': {'apikey': 'cmdb-auto', 'language': 'en', 'type': 'C__OBJTYPE__RELATION', 'title': 'C__RELATION_TYPE__OPERATION_SYSTEM', 'categories': {'C__CATG__RELATION': [{'relation_type': 'C__RELATION_TYPE__OPERATION_SYSTEM', 'object1': 1055, 'object2': 1051, 'weighting': 5}], 'C__CATG__GLOBAL': [{'title': 'Cumulus Linux running os router'}]}}, 'id': 1}
+>>> Object of type C__RELATION_TYPE__OPERATION_SYSTEM created successfully in the CMDB.
+
+{'version': '2.0', 'method': 'cmdb.object.create', 'params': {'apikey': 'cmdb-auto', 'language': 'en', 'type': 'C__OBJTYPE__RELATION', 'title': 'C__RELATION_TYPE__OPERATION_SYSTEM', 'categories': {'C__CATG__RELATION': [{'relation_type': 'C__RELATION_TYPE__OPERATION_SYSTEM', 'object1': 1055, 'object2': 1053, 'weighting': 5}], 'C__CATG__GLOBAL': [{'title': 'Cumulus Linux running os switch-of'}]}}, 'id': 1}
+>>> Object of type C__RELATION_TYPE__OPERATION_SYSTEM created successfully in the CMDB.
+
+{'version': '2.0', 'method': 'cmdb.object.create', 'params': {'apikey': 'cmdb-auto', 'language': 'en', 'type': 'C__OBJTYPE__RELATION', 'title': 'C__RELATION_TYPE__OPERATION_SYSTEM', 'categories': {'C__CATG__RELATION': [{'relation_type': 'C__RELATION_TYPE__OPERATION_SYSTEM', 'object1': 1055, 'object2': 1062, 'weighting': 5}], 'C__CATG__GLOBAL': [{'title': 'Cumulus Linux running os switch-dc'}]}}, 'id': 1}
+>>> Object of type C__RELATION_TYPE__OPERATION_SYSTEM created successfully in the CMDB.
+
+{'version': '2.0', 'method': 'cmdb.object.create', 'params': {'apikey': 'cmdb-auto', 'language': 'en', 'type': 'C__OBJTYPE__RELATION', 'title': 'C__RELATION_TYPE__OPERATION_SYSTEM', 'categories': {'C__CATG__RELATION': [{'relation_type': 'C__RELATION_TYPE__OPERATION_SYSTEM', 'object1': 1064, 'object2': 1075, 'weighting': 5}], 'C__CATG__GLOBAL': [{'title': 'Microsoft Windows 10 Enterprise Evaluation running os windows-pc'}]}}, 'id': 1}
+>>> Object of type C__RELATION_TYPE__OPERATION_SYSTEM created successfully in the CMDB.
+
+{'version': '2.0', 'method': 'cmdb.object.create', 'params': {'apikey': 'cmdb-auto', 'language': 'en', 'type': 'C__OBJTYPE__RELATION', 'title': 'C__RELATION_TYPE__ORGANIZATION', 'categories': {'C__CATG__RELATION': [{'relation_type': 'C__RELATION_TYPE__ORGANIZATION', 'object1': 1065, 'object2': 1075, 'weighting': 5}], 'C__CATG__GLOBAL': [{'title': 'AudioEndpointBuilder running on windows-pc'}]}}, 'id': 1}
+>>> Object of type C__RELATION_TYPE__ORGANIZATION created successfully in the CMDB.
+
+{'version': '2.0', 'method': 'cmdb.object.create', 'params': {'apikey': 'cmdb-auto', 'language': 'en', 'type': 'C__OBJTYPE__RELATION', 'title': 'C__RELATION_TYPE__ORGANIZATION', 'categories': {'C__CATG__RELATION': [{'relation_type': 'C__RELATION_TYPE__ORGANIZATION', 'object1': 1066, 'object2': 1075, 'weighting': 5}], 'C__CATG__GLOBAL': [{'title': 'Audiosrv running on windows-pc'}]}}, 'id': 1}
+>>> Object of type C__RELATION_TYPE__ORGANIZATION created successfully in the CMDB.
+
+{'version': '2.0', 'method': 'cmdb.object.create', 'params': {'apikey': 'cmdb-auto', 'language': 'en', 'type': 'C__OBJTYPE__RELATION', 'title': 'C__RELATION_TYPE__ORGANIZATION', 'categories': {'C__CATG__RELATION': [{'relation_type': 'C__RELATION_TYPE__ORGANIZATION', 'object1': 1067, 'object2': 1075, 'weighting': 5}], 'C__CATG__GLOBAL': [{'title': 'BFE running on windows-pc'}]}}, 'id': 1}
+>>> Object of type C__RELATION_TYPE__ORGANIZATION created successfully in the CMDB.
+
+{'version': '2.0', 'method': 'cmdb.object.create', 'params': {'apikey': 'cmdb-auto', 'language': 'en', 'type': 'C__OBJTYPE__RELATION', 'title': 'C__RELATION_TYPE__ORGANIZATION', 'categories': {'C__CATG__RELATION': [{'relation_type': 'C__RELATION_TYPE__ORGANIZATION', 'object1': 1068, 'object2': 1075, 'weighting': 5}], 'C__CATG__GLOBAL': [{'title': 'BrokerInfrastructure running on windows-pc'}]}}, 'id': 1}
+>>> Object of type C__RELATION_TYPE__ORGANIZATION created successfully in the CMDB.
+
+{'version': '2.0', 'method': 'cmdb.object.create', 'params': {'apikey': 'cmdb-auto', 'language': 'en', 'type': 'C__OBJTYPE__RELATION', 'title': 'C__RELATION_TYPE__ORGANIZATION', 'categories': {'C__CATG__RELATION': [{'relation_type': 'C__RELATION_TYPE__ORGANIZATION', 'object1': 1069, 'object2': 1075, 'weighting': 5}], 'C__CATG__GLOBAL': [{'title': 'CDPSvc running on windows-pc'}]}}, 'id': 1}
+>>> Object of type C__RELATION_TYPE__ORGANIZATION created successfully in the CMDB.
+
+{'version': '2.0', 'method': 'cmdb.object.create', 'params': {'apikey': 'cmdb-auto', 'language': 'en', 'type': 'C__OBJTYPE__RELATION', 'title': 'C__RELATION_TYPE__ORGANIZATION', 'categories': {'C__CATG__RELATION': [{'relation_type': 'C__RELATION_TYPE__ORGANIZATION', 'object1': 1070, 'object2': 1075, 'weighting': 5}], 'C__CATG__GLOBAL': [{'title': 'CertPropSvc running on windows-pc'}]}}, 'id': 1}
+>>> Object of type C__RELATION_TYPE__ORGANIZATION created successfully in the CMDB.
+
+{'version': '2.0', 'method': 'cmdb.object.create', 'params': {'apikey': 'cmdb-auto', 'language': 'en', 'type': 'C__OBJTYPE__RELATION', 'title': 'C__RELATION_TYPE__ORGANIZATION', 'categories': {'C__CATG__RELATION': [{'relation_type': 'C__RELATION_TYPE__ORGANIZATION', 'object1': 1071, 'object2': 1075, 'weighting': 5}], 'C__CATG__GLOBAL': [{'title': 'CoreMessagingRegistrar 496 running on windows-pc'}]}}, 'id': 1}
+>>> Object of type C__RELATION_TYPE__ORGANIZATION created successfully in the CMDB.
+
+{'version': '2.0', 'method': 'cmdb.object.create', 'params': {'apikey': 'cmdb-auto', 'language': 'en', 'type': 'C__OBJTYPE__RELATION', 'title': 'C__RELATION_TYPE__ORGANIZATION', 'categories': {'C__CATG__RELATION': [{'relation_type': 'C__RELATION_TYPE__ORGANIZATION', 'object1': 1072, 'object2': 1075, 'weighting': 5}], 'C__CATG__GLOBAL': [{'title': 'CryptSvc running on windows-pc'}]}}, 'id': 1}
+>>> Object of type C__RELATION_TYPE__ORGANIZATION created successfully in the CMDB.
+
+{'version': '2.0', 'method': 'cmdb.object.create', 'params': {'apikey': 'cmdb-auto', 'language': 'en', 'type': 'C__OBJTYPE__RELATION', 'title': 'C__RELATION_TYPE__ORGANIZATION', 'categories': {'C__CATG__RELATION': [{'relation_type': 'C__RELATION_TYPE__ORGANIZATION', 'object1': 1073, 'object2': 1075, 'weighting': 5}], 'C__CATG__GLOBAL': [{'title': 'DcomLaunch running on windows-pc'}]}}, 'id': 1}
+>>> Object of type C__RELATION_TYPE__ORGANIZATION created successfully in the CMDB.
+
+{'version': '2.0', 'method': 'cmdb.object.create', 'params': {'apikey': 'cmdb-auto', 'language': 'en', 'type': 'C__OBJTYPE__RELATION', 'title': 'C__RELATION_TYPE__ORGANIZATION', 'categories': {'C__CATG__RELATION': [{'relation_type': 'C__RELATION_TYPE__ORGANIZATION', 'object1': 1074, 'object2': 1075, 'weighting': 5}], 'C__CATG__GLOBAL': [{'title': 'Dhcp running on windows-pc'}]}}, 'id': 1}
+>>> Object of type C__RELATION_TYPE__ORGANIZATION created successfully in the CMDB.
+
+{'version': '2.0', 'method': 'cmdb.object.create', 'params': {'apikey': 'cmdb-auto', 'language': 'en', 'type': 'C__OBJTYPE__RELATION', 'title': 'C__RELATION_TYPE__OPERATION_SYSTEM', 'categories': {'C__CATG__RELATION': [{'relation_type': 'C__RELATION_TYPE__OPERATION_SYSTEM', 'object1': 1088, 'object2': 1079, 'weighting': 5}], 'C__CATG__GLOBAL': [{'title': 'Ubuntu 18.04.5 LTS running os ubuntu-pc'}]}}, 'id': 1}
+>>> Object of type C__RELATION_TYPE__OPERATION_SYSTEM created successfully in the CMDB.
+
+{'version': '2.0', 'method': 'cmdb.object.create', 'params': {'apikey': 'cmdb-auto', 'language': 'en', 'type': 'C__OBJTYPE__RELATION', 'title': 'C__RELATION_TYPE__OPERATION_SYSTEM', 'categories': {'C__CATG__RELATION': [{'relation_type': 'C__RELATION_TYPE__OPERATION_SYSTEM', 'object1': 1089, 'object2': 1081, 'weighting': 5}], 'C__CATG__GLOBAL': [{'title': 'Ubuntu 16.04.7 LTS running os db-server'}]}}, 'id': 1}
+>>> Object of type C__RELATION_TYPE__OPERATION_SYSTEM created successfully in the CMDB.
+
+{'version': '2.0', 'method': 'cmdb.object.create', 'params': {'apikey': 'cmdb-auto', 'language': 'en', 'type': 'C__OBJTYPE__RELATION', 'title': 'C__RELATION_TYPE__OPERATION_SYSTEM', 'categories': {'C__CATG__RELATION': [{'relation_type': 'C__RELATION_TYPE__OPERATION_SYSTEM', 'object1': 1089, 'object2': 1086, 'weighting': 5}], 'C__CATG__GLOBAL': [{'title': 'Ubuntu 16.04.7 LTS running os web-server'}]}}, 'id': 1}
+>>> Object of type C__RELATION_TYPE__OPERATION_SYSTEM created successfully in the CMDB.
+
+>>> Successfully disconnected.
 
 >>> CMDB population completed.
 

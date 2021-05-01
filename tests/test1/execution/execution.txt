@@ -73,16 +73,10 @@ cover.  192.168.1.73
 >>> Password added to the vault.
 >>> Discovery in the OS X machine with the address 192.168.1.73...
 
->>> Error while collecting information about cameras: 2021-03-25 15:24:06.975 system_profiler[39952:35092939] Error loading /System/Library/Frameworks/CoreMediaIO.framework/Resources/AppleCamera.plugin/Contents/MacOS/AppleCamera:  dlopen(/System/Library/Frameworks/CoreMediaIO.framework/Resources/AppleCamera.plugin/Contents/MacOS/AppleCamera, 0x0106): open("/System/Library/Frameworks/CoreMediaIO.framework/Resources/AppleCamera.plugin/Contents/MacOS/AppleCamera", O_RDONLY) failed with errno=13
-2021-03-25 15:24:06.977 system_profiler[39952:35092939] Error loading /System/Library/Frameworks/CoreMediaIO.framework/Resources/VDC.plugin/Contents/MacOS/VDC:  dlopen(/System/Library/Frameworks/CoreMediaIO.framework/Resources/VDC.plugin/Contents/MacOS/VDC, 0x0106): open("/System/Library/Frameworks/CoreMediaIO.framework/Resources/VDC.plugin/Contents/MacOS/VDC", O_RDONLY) failed with errno=13
+>>> Error while collecting information about cameras: 2021-03-27 21:10:02.431 system_profiler[47903:1938852] Error loading /System/Library/Frameworks/CoreMediaIO.framework/Resources/AppleCamera.plugin/Contents/MacOS/AppleCamera:  dlopen(/System/Library/Frameworks/CoreMediaIO.framework/Resources/AppleCamera.plugin/Contents/MacOS/AppleCamera, 0x0106): open("/System/Library/Frameworks/CoreMediaIO.framework/Resources/AppleCamera.plugin/Contents/MacOS/AppleCamera", O_RDONLY) failed with errno=13
+2021-03-27 21:10:02.434 system_profiler[47903:1938852] Error loading /System/Library/Frameworks/CoreMediaIO.framework/Resources/VDC.plugin/Contents/MacOS/VDC:  dlopen(/System/Library/Frameworks/CoreMediaIO.framework/Resources/VDC.plugin/Contents/MacOS/VDC, 0x0106): open("/System/Library/Frameworks/CoreMediaIO.framework/Resources/VDC.plugin/Contents/MacOS/VDC", O_RDONLY) failed with errno=13
 
 
-
-? Enter the IP address of the GraphDB server (use format yyx.yyx.yyx.yyx where 'y' is optional):  192.168.1.88
-? Enter the port number where GraphDB is running:  324
-? Enter the name of the GraphDB repository:  ds
-
->>> Unable to connect to GraphDB. Please verify the connection information.
 
 ? Enter the IP address of the GraphDB server (use format yyx.yyx.yyx.yyx where 'y' is optional):  192.168.1.73
 ? Enter the port number where GraphDB is running:  7200
@@ -135,26 +129,38 @@ cover.  192.168.1.73
 
 >>> Calculating configuration item types similarity...
 ? The similarities between 'Host' with 'C__OBJTYPE__SERVER' and 'C__OBJTYPE__HOST' are equal. Choose the one to consider.  C__OBJTYPE__HOST
-? The similarities between 'Charger' with 'C__OBJTYPE__SERVER' and 'C__OBJTYPE__CLIENT' are equal. Choose the one to consider.  C__OBJTYPE__SERVER
-? The similarities between 'CPU' with 'C__OBJTYPE__PHONE' and 'C__OBJTYPE__AMPLIFIER' are equal. Choose the one to consider.  C__OBJTYPE__PHONE
-? The similarities between 'Firewall' with 'C__OBJTYPE__AMPLIFIER' and 'C__OBJTYPE__SERVER' are equal. Choose the one to consider.  C__OBJTYPE__AMPLIFIER
-? The similarities between 'RAM' with 'C__OBJTYPE__CLIENT' and 'C__OBJTYPE__SERVER' are equal. Choose the one to consider.  C__OBJTYPE__CLIENT
+? The similarities between 'Charger' with 'C__OBJTYPE__SERVER' and 'C__OBJTYPE__CLIENT' are equal. Choose the one to consider.  C__OBJTYPE__CLIENT
+? The similarities between 'CPU' with 'C__OBJTYPE__PHONE' and 'C__OBJTYPE__AMPLIFIER' are equal. Choose the one to consider.  C__OBJTYPE__AMPLIFIER
 ? The similarities between 'Charger' with 'C__OBJTYPE__ROUTER' and 'C__OBJTYPE__APPLIANCE' are equal. Choose the one to consider.  C__OBJTYPE__ROUTER
-? The similarities between 'Charger' with 'C__OBJTYPE__ROUTER' and 'C__OBJTYPE__CONVERTER' are equal. Choose the one to consider.  C__OBJTYPE__ROUTER
-? The similarities between 'Battery' with 'C__OBJTYPE__APPLIANCE' and 'C__OBJTYPE__CONVERTER' are equal. Choose the one to consider.  C__OBJTYPE__CONVERTER
-? The similarities between 'Firewall' with 'C__OBJTYPE__AMPLIFIER' and 'C__OBJTYPE__IT_SERVICE' are equal. Choose the one to consider.  C__OBJTYPE__IT_SERVICE
-? The similarities between 'RAM' with 'C__OBJTYPE__PRINTER' and 'C__OBJTYPE__ENCLOSURE' are equal. Choose the one to consider.  C__OBJTYPE__PRINTER
+? The similarities between 'Firewall' with 'C__OBJTYPE__SERVER' and 'C__OBJTYPE__PHONE' are equal. Choose the one to consider.  C__OBJTYPE__SERVER
+? The similarities between 'Charger' with 'C__OBJTYPE__ROUTER' and 'C__OBJTYPE__CONVERTER' are equal. Choose the one to consider.  C__OBJTYPE__CONVERTER
+? The similarities between 'Battery' with 'C__OBJTYPE__APPLIANCE' and 'C__OBJTYPE__ROUTER' are equal. Choose the one to consider.  C__OBJTYPE__APPLIANCE
+? The similarities between 'Firewall' with 'C__OBJTYPE__SERVER' and 'C__OBJTYPE__IT_SERVICE' are equal. Choose the one to consider.  C__OBJTYPE__IT_SERVICE
+? The similarities between 'Product' with 'C__OBJTYPE__PHONE' and 'C__OBJTYPE__SERVER' are equal. Choose the one to consider.  C__OBJTYPE__PHONE
+? The similarities between 'Firewall' with 'C__OBJTYPE__IT_SERVICE' and 'C__OBJTYPE__PRINTER' are equal. Choose the one to consider.  C__OBJTYPE__IT_SERVICE
+? The similarities between 'Product' with 'C__OBJTYPE__PHONE' and 'C__OBJTYPE__PRINTER' are equal. Choose the one to consider.  C__OBJTYPE__PHONE
+? The similarities between 'Volume' with 'C__OBJTYPE__SERVER' and 'C__OBJTYPE__PRINTER' are equal. Choose the one to consider.  C__OBJTYPE__SERVER
 ? The similarities between 'Firewall' with 'C__OBJTYPE__IT_SERVICE' and 'C__OBJTYPE__ENCLOSURE' are equal. Choose the one to consider.  C__OBJTYPE__IT_SERVICE
-? The similarities between 'RAM' with 'C__OBJTYPE__PRINTER' and 'C__OBJTYPE__CABLE' are equal. Choose the one to consider.  C__OBJTYPE__PRINTER
+? The similarities between 'Product' with 'C__OBJTYPE__PHONE' and 'C__OBJTYPE__ENCLOSURE' are equal. Choose the one to consider.  C__OBJTYPE__PHONE
+? The similarities between 'Volume' with 'C__OBJTYPE__SERVER' and 'C__OBJTYPE__ENCLOSURE' are equal. Choose the one to consider.  C__OBJTYPE__SERVER
+? The similarities between 'Product' with 'C__OBJTYPE__PHONE' and 'C__OBJTYPE__IT_SERVICE' are equal. Choose the one to consider.  C__OBJTYPE__PHONE
+? The similarities between 'Volume' with 'C__OBJTYPE__SERVER' and 'C__OBJTYPE__IT_SERVICE' are equal. Choose the one to consider.  C__OBJTYPE__SERVER
+? The similarities between 'Volume' with 'C__OBJTYPE__SERVER' and 'C__OBJTYPE__PHONE' are equal. Choose the one to consider.  C__OBJTYPE__SERVER
+? The similarities between 'Product' with 'C__OBJTYPE__SWITCH' and 'C__OBJTYPE__CABLE' are equal. Choose the one to consider.  C__OBJTYPE__SWITCH
+? The similarities between 'Volume' with 'C__OBJTYPE__CABLE' and 'C__OBJTYPE__SWITCH' are equal. Choose the one to consider.  C__OBJTYPE__SWITCH
+? The similarities between 'Product' with 'C__OBJTYPE__CONTAINER' and 'C__OBJTYPE__BUILDING' are equal. Choose the one to consider.  C__OBJTYPE__CONTAINER
 
 >>> Calculating relationship types similarity...
 ? The similarities between 'port from' with 'C__RELATION_TYPE__NETWORK_PORT' and 'C__RELATION_TYPE__UNIVERSAL_INTERFACE' are equal. Choose the one to consider.  C__RELATION_TYPE__NETWORK_PORT
 
 >>> Calculating configuration item attributes similarity...
+? The similarities between 'display' with 'device' and 'model' are equal. Choose the one to consider.  device
+? The similarities between 'id' with 'country' and 'city' are equal. Choose the one to consider.  city
+? The similarities between 'country' with 'itservice', 'object' and 'source' are equal. Choose the one to consider.  source
 ? The similarities between 'title' with 'first_name' and 'last_name' are equal. Choose the one to consider.  first_name
-? The similarities between 'vendor' with 'active' and 'user_name_static' are equal. Choose the one to consider.  user_name_static
 ? The similarities between 'Revision ID' with 'id' and 'revision' are equal. Choose the one to consider.  revision
 ? The similarities between 'vendor' with 'active' and 'user_name_static' are equal. Choose the one to consider.  user_name_static
+? The similarities between 'vendor' with 'active' and 'user_name_static' are equal. Choose the one to consider.  active
 
 >>> Calculating relationship attributes similarity...
 
@@ -162,29 +168,34 @@ cover.  192.168.1.73
 CONFIGURATION ITEMS MAPPING
 ===============================================================================================================================================================================
 
-CI in CMDB                    Description                   CI in DB             Description                     Similarity Coeficient
-----------------------------  ----------------------------  -------------------  ----------------------------  -----------------------
-C__OBJTYPE__APPLICATION       Application                   Application          application                                  1
-C__OBJTYPE__HOST              Host                          Host                 host                                         1
-C__OBJTYPE__OPERATING_SYSTEM  Operating System              Operating System     operating system                             1
-C__OBJTYPE__ROUTER            Router                        Charger              charger                                      0.875
-C__OBJTYPE__MONITOR           Monitor                       Display              display                                      0.947368
-C__OBJTYPE__WORKSTATION       Workplace                     Location             location                                     0.933333
-C__OBJTYPE__CONVERTER         Converter                     Battery              battery                                      0.823529
-C__OBJTYPE__ACCESS_POINT      Wireless Access Point         RAM                  random access memory                         0.71117
-C__OBJTYPE__PHONE             Phone                         CPU                  central processing unit                      0.888889
-C__OBJTYPE__TELEPHONE_SYSTEM  Telephone System              Firewall             firewall                                     0.777778
-C__OBJTYPE__MAINTENANCE       Contract                      Protocol             protocol                                     0.571429
-C__OBJTYPE__APPLIANCE         Appliance                     Product              product                                      0.75
-C__OBJTYPE__ORGANIZATION      Organization                  Manufacturer         manufacturer                                 0.769231
-C__OBJTYPE__PERSON            Persons                       Vendor               vendor                                       0.666667
-C__OBJTYPE__ESC               Electric Power Company        Built-in Output      built output                                 0.563235
-C__OBJTYPE__SAN               Storage System                Hardware Port        hardware port                                0.596646
-C__OBJTYPE__SERVICE           System Service                SD                   secure digital                               0.565891
-C__OBJTYPE__RM_CONTROLLER     Remote Management Controller  SSD Controller       solid-state drive controller                 0.663553
-C__OBJTYPE__PDU               Power Distribution Unit       GPU                  graphics processing unit                     0.687664
-C__OBJTYPE__AMPLIFIER         Amplifier                     Built-in Microphone  built microphone                             0.536381
-C__OBJTYPE__VIRTUAL_SERVER    Virtual Server                Logical Port         logical port                                 0.545136
+CI in CMDB                    Description                   CI in DB              Description                        Similarity Coeficient
+----------------------------  ----------------------------  --------------------  -------------------------------  -----------------------
+C__OBJTYPE__APPLICATION       Application                   Application           application                                     1
+C__OBJTYPE__HOST              Host                          Host                  host                                            1
+C__OBJTYPE__OPERATING_SYSTEM  Operating System              Operating System      operating system                                1
+C__OBJTYPE__CONVERTER         Converter                     Charger               charger                                         0.875
+C__OBJTYPE__MONITOR           Monitor                       Display               display                                         0.947368
+C__OBJTYPE__WORKSTATION       Workplace                     Location              location                                        0.933333
+C__OBJTYPE__APPLIANCE         Appliance                     Battery               battery                                         0.823529
+C__OBJTYPE__TELEPHONE_SYSTEM  Telephone System              Firewall              firewall                                        0.777778
+C__OBJTYPE__AMPLIFIER         Amplifier                     CPU                   central processing unit                         0.888889
+C__OBJTYPE__ORGANIZATION      Organization                  Manufacturer          manufacturer                                    0.769231
+C__OBJTYPE__MAINTENANCE       Contract                      Protocol              protocol                                        0.571429
+C__OBJTYPE__ROUTER            Router                        RAM                   random access memory                            0.736842
+C__OBJTYPE__CONTAINER         Container                     Product               product                                         0.714286
+C__OBJTYPE__PERSON            Persons                       Vendor                vendor                                          0.666667
+C__OBJTYPE__BUILDING          Building                      Volume                volume                                          0.666667
+C__OBJTYPE__VIRTUAL_CLIENT    Virtual Client                VPN Uminho            virtual private network uminho                  0.810816
+C__OBJTYPE__PDU               Power Distribution Unit       GPU                   graphics processing unit                        0.687664
+C__OBJTYPE__ACCESS_POINT      Wireless Access Point         Bluetooth PAN         bluetooth personal area network                 0.816175
+C__OBJTYPE__SAN               Storage System                Hardware Port         hardware port                                   0.596646
+C__OBJTYPE__RM_CONTROLLER     Remote Management Controller  SSD Controller        solid-state drive controller                    0.663553
+C__OBJTYPE__SWITCH_CHASSIS    Switch Chassis                Built-in Microphone   built microphone                                0.505548
+C__OBJTYPE__VIRTUAL_SERVER    Virtual Server                Logical Port          logical port                                    0.545136
+C__OBJTYPE__ESC               Electric Power Company        Built-in Output       built output                                    0.563235
+C__OBJTYPE__CABLE             Cable                         Thunderbolt Ethernet  thunderbolt ethernet                            0.465216
+C__OBJTYPE__FC_SWITCH         Fc Switch                     Thunderbolt Bridge    thunderbolt bridge                              0.340428
+C__OBJTYPE__WAN               Wan                           Wi-Fi                 wi fi                                           0.420159
 
 **************************************************************************************************
 C__OBJTYPE__APPLICATION Attributes Mapping
@@ -195,8 +206,8 @@ Attribute in CMDB    Description     Attribute in DB    Description      Similar
 title                Title           title              title                         1
 description          Description     description        description                   1
 account              Account         info               info                          0.833333
-source               Source          obtained from      obtained                      0.8
 changes              Changes         path               path                          0.8
+source               Source          obtained from      obtained                      0.8
 changed_by           Last change by  last modified      last modified                 0.715446
 relation_type        Relation type   arch kind          arch kind                     0.512197
 
@@ -204,72 +215,74 @@ relation_type        Relation type   arch kind          arch kind               
 C__OBJTYPE__HOST Attributes Mapping
 **************************************************************************************************
 
-Attribute in CMDB    Description                         Attribute in DB    Description                      Similarity Coeficient
--------------------  ----------------------------------  -----------------  -----------------------------  -----------------------
-cores                CPU cores                           CPU cores          central processing unit cores                 1
-title                Title                               title              title                                         1
-description          Description                         description        description                                   1
-status               Condition                           status             status                                        1
-serial               Serial number                       serial_number      serial number                                 1
-device               On device                           charger            charger                                       0.933333
-plug_type            Plug                                battery            battery                                       0.888889
-speed_unit           Speed unit                          CPU speed          central processing unit speed                 0.877123
-model                Model                               display            display                                       0.875
-frequency_unit       CPU frequency unit                  CPU                central processing unit                       0.872872
-memory               Memory                              physical memory    physical memory                               0.866201
-mac                  MAC                                 mac_address        media access control address                  0.866025
-port_mode            Mode                                boot mode          boot mode                                     0.795953
-system_drive         System drive                        os_family          operating system family                       0.766736
-system               Virtualization system               os version         operating system version                      0.693314
-unit                 Memory unit                         GPU                graphics processing unit                      0.751025
-ldev                 On device Logical devices (Client)  os name            operating system name                         0.669005
-time_needed          Time need                           time since boot    time since boot                               0.72518
-assigned_version     Version number                      has_ipv6           internet protocol version 6                   0.677148
-assigned_ldevserver  Logical devices (LDEV Server)       has_ipv4           internet protocol version 4                   0.657274
-firmware             Firmware                            kernel version     kernel version                                0.581027
-local_stor_device    Local storage device                boot volume        boot volume                                   0.508563
-wwn                  Node WWN                            hostname           hostname                                      0.450317
+Attribute in CMDB    Description                         Attribute in DB       Description                               Similarity Coeficient
+-------------------  ----------------------------------  --------------------  --------------------------------------  -----------------------
+frequency            CPU frequency                       CPU frequency         central processing unit frequency                      1
+cores                CPU cores                           CPU cores             central processing unit cores                          1
+title                Title                               title                 title                                                  1
+description          Description                         description           description                                            1
+status               Condition                           status                status                                                 1
+frequency_unit       CPU frequency unit                  CPU frequency unit    central processing unit frequency unit                 1
+serial               Serial number                       serial_number         serial number                                          1
+unit                 Memory unit                         physical memory unit  physical memory unit                                   0.928369
+memory               Memory                              memory ram            memory random access memory                            0.893177
+plug_type            Plug                                battery               battery                                                0.888889
+speed_unit           Speed unit                          CPU speed             central processing unit speed                          0.877123
+device               On device                           display               display                                                0.875
+speed_type           Unit                                CPU                   central processing unit                                0.799397
+ldev                 On device Logical devices (Client)  os name               operating system name                                  0.669005
+mac                  MAC                                 mac_address           media access control address                           0.866025
+application          Application                         os                    operating system                                       0.842105
+port_mode            Mode                                boot mode             boot mode                                              0.795953
+system_drive         System drive                        os_family             operating system family                                0.766736
+system               Virtualization system               os version            operating system version                               0.693314
+cost_unit            Cost unit                           GPU                   graphics processing unit                               0.67139
+local_stor_device    Local storage device                physical memory       physical memory                                        0.600421
+time_needed          Time need                           time since boot       time since boot                                        0.72518
+assigned_version     Version number                      has_ipv6              internet protocol version 6                            0.677148
+assigned_ldevserver  Logical devices (LDEV Server)       has_ipv4              internet protocol version 4                            0.657274
+firmware             Firmware                            kernel version        kernel version                                         0.581027
+object_type          Object type                         uuid                  universally unique identifier                          0.618472
+wwn                  Node WWN                            hostname              hostname                                               0.450317
 
 **************************************************************************************************
 C__OBJTYPE__OPERATING_SYSTEM Attributes Mapping
 **************************************************************************************************
 
-Attribute in CMDB    Description     Attribute in DB    Description       Similarity Coeficient
--------------------  --------------  -----------------  --------------  -----------------------
-assigned_version     Version number  version number     version number                 1
-title                Title           title              title                          1
-install_path         Install path    build version      build version                  0.568523
+Attribute in CMDB    Description        Attribute in DB    Description                Similarity Coeficient
+-------------------  -----------------  -----------------  -----------------------  -----------------------
+assigned_version     Version number     version number     version number                          1
+title                Title              title              title                                   1
+install_path         Install path       build version      build version                           0.568523
+operation_expense    Operation expense  os family          operating system family                 0.700423
 
 **************************************************************************************************
-C__OBJTYPE__ROUTER Attributes Mapping
+C__OBJTYPE__CONVERTER Attributes Mapping
 **************************************************************************************************
 
-Attribute in CMDB    Description              Attribute in DB                             Description                                      Similarity Coeficient
--------------------  -----------------------  ------------------------------------------  ---------------------------------------------  -----------------------
-category             Category                 family                                      family                                                        1
-watt                 Watt                     watts                                       watts                                                         1
-image                File                     charging                                    charging                                                      1
-title                Title                    title                                       title                                                         1
-serial               Serial number            serial_number                               serial number                                                 1
-interface            Connected interface      connected                                   connected                                                     0.824133
-source               Source                   Current Power Source                        current power source                                          0.782548
-port_mode            Mode                     Hibernate Mode                              hibernate mode                                                0.771541
-speed_type           Unit                     GPU Switch                                  graphics processing unit switch                               0.7177
-changed              Last change              Wake On AC Change                           wake ac change                                                0.679529
-default_vlan         Standard VLAN            Wake On LAN                                 wake local area network                                       0.67082
-alert_level          Alarm level              System Sleep Timer                          system sleep timer                                            0.667817
-routing_protocol     Routing protocol         TCP Keep Alive Pref                         transmission control protocol keep alive pref                 0.664222
-time_needed          Time need                Dark Wake Background Tasks                  dark wake background tasks                                    0.643094
-time_needed_unit     Time need (Unit)         Display Sleep Timer                         display sleep timer                                           0.524358
-connector_sibling    Assigned Input/Output    Standby Enabled                             standby enabled                                               0.528503
-ipv6_assignment      Address allocation IPv6  Prioritize Network Reachability Over Sleep  prioritize network reachability sleep                         0.558559
-operation_expense    Operation expense        Auto Power Off Delay                        auto power delay                                              0.59174
-cost_unit            Cost unit                High Standby Delay                          high standby delay                                            0.552277
-object_type          Object type              Display Sleep Uses Dim                      display sleep uses dim                                        0.578194
-volt                 Volt                     Standby Battery Threshold                   standby battery threshold                                     0.555865
-plug                 Plug type                Disk Sleep Timer                            disk sleep timer                                              0.492903
-location_path        Location path            Proximity Dark Wake                         proximity dark wake                                           0.535845
-pos                  Position in the rack     Wake On Clamshell Open                      wake clamshell open                                           0.490355
+Attribute in CMDB           Description               Attribute in DB                             Description                                      Similarity Coeficient
+--------------------------  ------------------------  ------------------------------------------  ---------------------------------------------  -----------------------
+assigned_connector          Connected to              connected                                   connected                                                     1
+image                       File                      charging                                    charging                                                      1
+cost_unit                   Cost unit                 GPU Switch                                  graphics processing unit switch                               0.687482
+changed                     Last change               Wake On AC Change                           wake ac change                                                0.679529
+alert_level                 Alarm level               System Sleep Timer                          system sleep timer                                            0.667817
+connection_type             Connection type           TCP Keep Alive Pref                         transmission control protocol keep alive pref                 0.638564
+reason                      Access type               Wake On LAN                                 wake local area network                                       0.600442
+connector_sibling           Assigned Input/Output     High Standby Delay                          high standby delay                                            0.547343
+operation_expense           Operation expense         Auto Power Off Delay                        auto power delay                                              0.59174
+object_type                 Object type               Display Sleep Uses Dim                      display sleep uses dim                                        0.578194
+pos                         Position in the rack      Wake On Clamshell Open                      wake clamshell open                                           0.490355
+order_no                    Order no.                 Dark Wake Background Tasks                  dark wake background tasks                                    0.55551
+wiring_system               Wiring system             Auto Power Off Enabled                      auto power enabled                                            0.571511
+operation_expense_interval  Operation expense (Unit)  Standby Battery Threshold                   standby battery threshold                                     0.505544
+guarantee_period            Period of warranty        Standby Delay                               standby delay                                                 0.447044
+plug                        Plug type                 Disk Sleep Timer                            disk sleep timer                                              0.492903
+location_path               Location path             Proximity Dark Wake                         proximity dark wake                                           0.535845
+connector                   Assigned to connector     Standby Enabled                             standby enabled                                               0.474989
+user_name_static            User                      Prioritize Network Reachability Over Sleep  prioritize network reachability sleep                         0.418704
+fiber_wave_lengths          Color / wave lengths      Display Sleep Timer                         display sleep timer                                           0.452111
+manual                      Manual file               Hibernate Mode                              hibernate mode                                                0.424583
 
 **************************************************************************************************
 C__OBJTYPE__MONITOR Attributes Mapping
@@ -295,77 +308,53 @@ Attribute in CMDB    Description    Attribute in DB    Description      Similari
 latitude             Latitude       latitude           latitude                      1
 longitude            Longitude      longitude          longitude                     1
 title                Title          title              title                         1
-parent               Location       country            country                       0.8
+parent               Location       region             region                        0.888889
 id                   ID             city               city                          0.777778
+source               Source         country            country                       0.666667
 changed              Last change    time_zone          time zone                     0.607834
-source               Source         zip_code           zip code                      0.533333
+insertion            Insertion      zip_code           zip code                      0.461538
 
 **************************************************************************************************
-C__OBJTYPE__CONVERTER Attributes Mapping
+C__OBJTYPE__APPLIANCE Attributes Mapping
 **************************************************************************************************
 
-Attribute in CMDB           Description               Attribute in DB             Description                                      Similarity Coeficient
---------------------------  ------------------------  --------------------------  ---------------------------------------------  -----------------------
-image                       File                      is charging                 charging                                                      1
-title                       Title                     title                       title                                                         1
-status                      Condition                 status                      status                                                        1
-cost_unit                   Cost unit                 GPU Switch                  graphics processing unit switch                               0.687482
-changed                     Last change               Wake On AC Change           wake ac change                                                0.679529
-alert_level                 Alarm level               System Sleep Timer          system sleep timer                                            0.667817
-connection_type             Connection type           TCP Keep Alive Pref         transmission control protocol keep alive pref                 0.638564
-connector_sibling           Assigned Input/Output     current voltage             current voltage                                               0.638209
-inventory_no                Inventory number          serial_number               serial number                                                 0.628146
-object_type                 Object type               Display Sleep Uses Dim      display sleep uses dim                                        0.578194
-operation_expense           Operation expense         current capacity            current capacity                                              0.60076
-order_no                    Order no.                 Pack Lot Code               pack lot code                                                 0.592995
-guarantee_period            Period of warranty        Auto Power Off Delay        auto power delay                                              0.557803
-operation_expense_interval  Operation expense (Unit)  High Standby Delay          high standby delay                                            0.53288
-reason                      Access type               Display Sleep Timer         display sleep timer                                           0.497462
-fiber_wave_lengths          Color / wave lengths      Dark Wake Background Tasks  dark wake background tasks                                    0.548922
-wiring_system               Wiring system             installed                   installed                                                     0.56869
-changed_by                  Last change by            cycle count                 cycle count                                                   0.502293
-guarantee_period_unit       Warranty period           Standby Battery Threshold   standby battery threshold                                     0.504007
-assigned_connector          Connected to              fully charged               fully charged                                                 0.541254
-manual                      Manual file               firmware version            firmware version                                              0.543262
-plug                        Plug type                 PCB Lot Code                pcb lot code                                                  0.520562
-location_path               Location path             Proximity Dark Wake         proximity dark wake                                           0.535845
-connector                   Assigned to connector     Standby Enabled             standby enabled                                               0.474989
-object2                     Object 2                  Disk Sleep Timer            disk sleep timer                                              0.453663
-changes                     Changes                   cell revision               cell revision                                                 0.511883
-interface                   Interface                 hardware revision           hardware revision                                             0.511681
-pos                         Position in the rack      Wake On Clamshell Open      wake clamshell open                                           0.490355
-price                       Investment costs          Reduce Brightness           reduce brightness                                             0.436663
-used_fiber_lead_tx          Used fiber/lead (TX)      max capacity                max capacity                                                  0.401435
-relation_type               Relation type             current amperage            current amperage                                              0.34723
-object                      Object                    Hibernate Mode              hibernate mode                                                0.397429
-
-**************************************************************************************************
-C__OBJTYPE__ACCESS_POINT Attributes Mapping
-**************************************************************************************************
-
-Attribute in CMDB    Description       Attribute in DB    Description      Similarity Coeficient
--------------------  ----------------  -----------------  -------------  -----------------------
-manufacturer         Manufacturer      manufacturer       manufacturer                  1
-speed                Speed             speed              speed                         1
-title                Title             title              title                         1
-status               Condition         status             status                        1
-serial               Serial number     serial_number      serial number                 1
-order_no             Order no.         size               size                          0.833333
-duplex               Duplex            architecture       architecture                  0.823529
-inventory_no         Inventory number  part number        part number                   0.722287
-
-**************************************************************************************************
-C__OBJTYPE__PHONE Attributes Mapping
-**************************************************************************************************
-
-Attribute in CMDB         Description       Attribute in DB    Description      Similarity Coeficient
-------------------------  ----------------  -----------------  -------------  -----------------------
-title                     Title             title              title                         1
-changes                   Changes           Speed              speed                         0.875
-inventory_no              Inventory number  Number of Cores    number cores                  0.619514
-assigned_version          Version number    SMC Version        smc version                   0.507691
-id                        ID                L2 Cache           l2 cache                      0.380745
-assigned_database_schema  Database schema   L3 Cache           l3 cache                      0.316283
+Attribute in CMDB    Description                   Attribute in DB             Description                                      Similarity Coeficient
+-------------------  ----------------------------  --------------------------  ---------------------------------------------  -----------------------
+image                File                          is charging                 charging                                                      1
+manufacturer         Manufacturer                  manufacturer                manufacturer                                                  1
+title                Title                         title                       title                                                         1
+status               Condition                     status                      status                                                        1
+serial               Serial number                 serial_number               serial number                                                 1
+firmware             Firmware                      firmware version            firmware version                                              0.873804
+capacity             Capacity                      current capacity            current capacity                                              0.863629
+cycle                Cycle                         cycle count                 cycle count                                                   0.853686
+total_capacity       Total capacity                max capacity                max capacity                                                  0.762776
+port_mode            Mode                          Hibernate Mode              hibernate mode                                                0.771541
+unit                 Memory unit                   GPU Switch                  graphics processing unit switch                               0.765807
+revision             Revision                      hardware revision           hardware revision                                             0.75856
+changes              Changes                       cell revision               cell revision                                                 0.511883
+changed              Last change                   Wake On AC Change           wake ac change                                                0.679529
+system_drive         System drive                  System Sleep Timer          system sleep timer                                            0.677313
+san_zones            SAN zone and connection type  TCP Keep Alive Pref         transmission control protocol keep alive pref                 0.666017
+frequency_unit       CPU frequency unit            current voltage             current voltage                                               0.651572
+backup_type          Backup type                   Disk Sleep Timer            disk sleep timer                                              0.571088
+category_const       Object type constant          Display Sleep Uses Dim      display sleep uses dim                                        0.645371
+time_needed          Time need                     Dark Wake Background Tasks  dark wake background tasks                                    0.643094
+speed_unit           Speed unit                    Auto Power Off Delay        auto power delay                                              0.628818
+alert_level          Alarm level                   Display Sleep Timer         display sleep timer                                           0.61248
+wiring_system        Wiring system                 Auto Power Off Enabled      auto power enabled                                            0.571511
+volt                 Volt                          Standby Battery Threshold   standby battery threshold                                     0.555865
+storages             Connected devices             Standby Enabled             standby enabled                                               0.529831
+operation_expense    Operation expense             High Standby Delay          high standby delay                                            0.586999
+order_no             Order no.                     Pack Lot Code               pack lot code                                                 0.592995
+ampere               Ampere                        current amperage            current amperage                                              0.581338
+plug_type            Plug                          installed                   installed                                                     0.571429
+emergency_plan       Assigned emergency plan       Standby Delay               standby delay                                                 0.51515
+cost_unit            Cost unit                     fully charged               fully charged                                                 0.543587
+location_path        Location path                 Proximity Dark Wake         proximity dark wake                                           0.535845
+frequency            CPU frequency                 Reduce Brightness           reduce brightness                                             0.503186
+plug                 Plug type                     PCB Lot Code                pcb lot code                                                  0.520562
+pos                  Position in the rack          Wake On Clamshell Open      wake clamshell open                                           0.490355
 
 **************************************************************************************************
 C__OBJTYPE__TELEPHONE_SYSTEM Attributes Mapping
@@ -380,32 +369,17 @@ port_mode            Mode           stealth mode        stealth mode            
 reason               Access type    Remote Login - SSH  remote login secure shell                 0.643573
 
 **************************************************************************************************
-C__OBJTYPE__MAINTENANCE Attributes Mapping
+C__OBJTYPE__AMPLIFIER Attributes Mapping
 **************************************************************************************************
 
-Attribute in CMDB    Description    Attribute in DB    Description      Similarity Coeficient
--------------------  -------------  -----------------  -------------  -----------------------
-title                Title          title              title                                1
-
-**************************************************************************************************
-C__OBJTYPE__APPLIANCE Attributes Mapping
-**************************************************************************************************
-
-Attribute in CMDB        Description              Attribute in DB      Description                      Similarity Coeficient
------------------------  -----------------------  -------------------  -----------------------------  -----------------------
-filesystem               Filesystem               filesystem           filesystem                                    1
-title                    Title                    title                title                                         1
-description              Description              description          description                                   1
-image                    File                     file_system          file system                                   0.847068
-order_no                 Order no.                size                 size                                          0.833333
-free_space               Free Diskspace           free_space           free space                                    0.814453
-segment_size             Segment size (kB)        size_in_bytes        size bytes                                    0.700036
-pos                      Position in the rack     mount_point          mount point                                   0.638809
-primary_url              Primary access URL       free_space_in_bytes  free space bytes                              0.545218
-object_type              Object type              uuid                 universally unique identifier                 0.618472
-wwn                      Node WWN                 writable             writable                                      0.353412
-price                    Investment costs         ignore ownership     ignore ownership                              0.551603
-bequest_nagios_services  Inherit nagios services  bsd_name             bsd name                                      0.409489
+Attribute in CMDB    Description       Attribute in DB    Description      Similarity Coeficient
+-------------------  ----------------  -----------------  -------------  -----------------------
+title                Title             title              title                         1
+changes              Changes           Speed              speed                         0.875
+inventory_no         Inventory number  Number of Cores    number cores                  0.619514
+manual               Manual file       SMC Version        smc version                   0.387293
+id                   ID                L2 Cache           l2 cache                      0.380745
+image                File              L3 Cache           l3 cache                      0.343233
 
 **************************************************************************************************
 C__OBJTYPE__ORGANIZATION Attributes Mapping
@@ -416,6 +390,38 @@ Attribute in CMDB    Description    Attribute in DB    Description      Similari
 title                Title          title              title                                1
 
 **************************************************************************************************
+C__OBJTYPE__MAINTENANCE Attributes Mapping
+**************************************************************************************************
+
+Attribute in CMDB    Description    Attribute in DB    Description      Similarity Coeficient
+-------------------  -------------  -----------------  -------------  -----------------------
+title                Title          title              title                                1
+
+**************************************************************************************************
+C__OBJTYPE__ROUTER Attributes Mapping
+**************************************************************************************************
+
+Attribute in CMDB    Description     Attribute in DB    Description      Similarity Coeficient
+-------------------  --------------  -----------------  -------------  -----------------------
+manufacturer         Manufacturer    manufacturer       manufacturer                  1
+speed                Speed           speed              speed                         1
+title                Title           title              title                         1
+status               Condition       status             status                        1
+serial               Serial number   serial_number      serial number                 1
+domain               Domain          architecture       architecture                  0.857143
+order_no             Order no.       size               size                          0.833333
+assigned_version     Version number  part number        part number                   0.732833
+
+**************************************************************************************************
+C__OBJTYPE__CONTAINER Attributes Mapping
+**************************************************************************************************
+
+Attribute in CMDB    Description    Attribute in DB    Description      Similarity Coeficient
+-------------------  -------------  -----------------  -------------  -----------------------
+title                Title          title              title                                1
+description          Description    description        description                          1
+
+**************************************************************************************************
 C__OBJTYPE__PERSON Attributes Mapping
 **************************************************************************************************
 
@@ -424,19 +430,52 @@ Attribute in CMDB    Description    Attribute in DB    Description      Similari
 first_name           First name     title              title                         0.857143
 
 **************************************************************************************************
-C__OBJTYPE__ESC Attributes Mapping
+C__OBJTYPE__BUILDING Attributes Mapping
 **************************************************************************************************
 
-Attribute in CMDB    Description            Attribute in DB              Description                    Similarity Coeficient
--------------------  ---------------------  ---------------------------  ---------------------------  -----------------------
-title                Title                  title                        title                                       1
-itservice            Service                transport                    transport                                   0.9
-source               Source                 manufacturer                 manufacturer                                0.9
-category             Category               properties                   properties                                  0.875
-connector_sibling    Assigned Input/Output  output source                output source                               0.779037
-interface            Interface              default audio system device  default audio system device                 0.707933
-connector            Assigned to connector  device output                device output                               0.604102
-manual               Manual file            default audio output_device  default audio output device                 0.630038
+Attribute in CMDB    Description           Attribute in DB    Description                      Similarity Coeficient
+-------------------  --------------------  -----------------  -----------------------------  -----------------------
+title                Title                 title              title                                         1
+order_no             Order no.             size               size                                          0.833333
+pos                  Position in the rack  mount point        mount point                                   0.638809
+object_type          Object type           uuid               universally unique identifier                 0.618472
+time_needed          Time need             free space         free space                                    0.563339
+price                Investment costs      ignore ownership   ignore ownership                              0.551603
+image                File                  filesystem         filesystem                                    0.481605
+object               Object                writable           writable                                      0.295661
+id                   ID                    bsd name           bsd name                                      0.393568
+
+**************************************************************************************************
+C__OBJTYPE__VIRTUAL_CLIENT Attributes Mapping
+**************************************************************************************************
+
+Attribute in CMDB    Description    Attribute in DB    Description      Similarity Coeficient
+-------------------  -------------  -----------------  -------------  -----------------------
+title                Title          title              title                                1
+
+**************************************************************************************************
+C__OBJTYPE__PDU Attributes Mapping
+**************************************************************************************************
+
+Attribute in CMDB    Description              Attribute in DB    Description      Similarity Coeficient
+-------------------  -----------------------  -----------------  -------------  -----------------------
+title                Title                    title              title                         1
+cable_connection     Cable                    Bus                bus                           0.888889
+model                Model                    Chipset Model      chipset model                 0.723555
+revision             Revision                 Revision ID        revision id                   0.707107
+user_name_static     User                     vendor             vendor                        0.631579
+ipv4_assignment      Address allocation IPv4  VRAM shared        vram shared                   0.375967
+mtu                  MTU                      VRAM               vram                          0.313094
+
+**************************************************************************************************
+C__OBJTYPE__ACCESS_POINT Attributes Mapping
+**************************************************************************************************
+
+Attribute in CMDB    Description          Attribute in DB    Description                     Similarity Coeficient
+-------------------  -------------------  -----------------  ----------------------------  -----------------------
+title                Title                title              title                                        1
+interface            Connected interface  interface          interface                                    0.885088
+mac                  MAC                  mac_address        media access control address                 0.866025
 
 **************************************************************************************************
 C__OBJTYPE__SAN Attributes Mapping
@@ -447,13 +486,6 @@ Attribute in CMDB    Description    Attribute in DB    Description              
 title                Title          title              title                                        1
 application          Application    interface          interface                                    0.9
 mac                  MAC            mac_address        media access control address                 0.866025
-
-**************************************************************************************************
-C__OBJTYPE__SERVICE Attributes Mapping
-**************************************************************************************************
-
-Attribute in CMDB    Description    Attribute in DB    Description    Similarity Coeficient
--------------------  -------------  -----------------  -------------  -----------------------
 
 **************************************************************************************************
 C__OBJTYPE__RM_CONTROLLER Attributes Mapping
@@ -471,7 +503,7 @@ assigned_logical_port  Assigned port          port description       port descri
 model                  Model                  device model           device model                          0.777921
 object_type            Object type            partition map type     partition map type                    0.684217
 interface              Connected interface    physical interconnect  physical interconnect                 0.645899
-user_name_static       User                   vendor                 vendor                                0.631579
+active                 Active                 vendor                 vendor                                0.631579
 firmware               Firmware               device revision        device revision                       0.542036
 primary_url            Primary access URL     link width             link width                            0.541207
 username               Username               bsd name               bsd name                              0.500361
@@ -480,30 +512,17 @@ reason                 Access type            removable media        removable m
 relation_direction     Relation direction     ncq depth              ncq depth                             0.428924
 
 **************************************************************************************************
-C__OBJTYPE__PDU Attributes Mapping
-**************************************************************************************************
-
-Attribute in CMDB    Description              Attribute in DB    Description      Similarity Coeficient
--------------------  -----------------------  -----------------  -------------  -----------------------
-title                Title                    title              title                         1
-cable_connection     Cable                    Bus                bus                           0.888889
-model                Model                    Chipset Model      chipset model                 0.723555
-revision             Revision                 Revision ID        revision id                   0.707107
-user_name_static     User                     vendor             vendor                        0.631579
-ipv4_assignment      Address allocation IPv4  VRAM shared        vram shared                   0.375967
-mtu                  MTU                      VRAM               vram                          0.313094
-
-**************************************************************************************************
-C__OBJTYPE__AMPLIFIER Attributes Mapping
+C__OBJTYPE__SWITCH_CHASSIS Attributes Mapping
 **************************************************************************************************
 
 Attribute in CMDB    Description            Attribute in DB             Description                   Similarity Coeficient
 -------------------  ---------------------  --------------------------  --------------------------  -----------------------
-title                Title                  title                       title                                      1
+manufacturer         Manufacturer           manufacturer                manufacturer                               1
 itservice            Service                transport                   transport                                  0.9
-source               Source                 manufacturer                manufacturer                               0.9
-connector_sibling    Assigned Input/Output  input source                input source                               0.800042
-interface            Interface              default audio input device  default audio input device                 0.716745
+source               Source                 input source                input source                               0.830482
+category             Category               title                       title                                      0.777778
+assigned_device      Device assignment      device input                device input                               0.793377
+connector_sibling    Assigned Input/Output  default audio input device  default audio input device                 0.782263
 
 **************************************************************************************************
 C__OBJTYPE__VIRTUAL_SERVER Attributes Mapping
@@ -517,44 +536,88 @@ quantity             Quantity            product            product             
 protocol_layer_5     Layer 5-7 Protocol  protocol           protocol                                    0.707107
 assigned_it_service  Service             cpe                customer premises equipment                 0.652566
 
+**************************************************************************************************
+C__OBJTYPE__ESC Attributes Mapping
+**************************************************************************************************
+
+Attribute in CMDB    Description            Attribute in DB              Description                    Similarity Coeficient
+-------------------  ---------------------  ---------------------------  ---------------------------  -----------------------
+title                Title                  title                        title                                       1
+itservice            Service                transport                    transport                                   0.9
+source               Source                 manufacturer                 manufacturer                                0.9
+category             Category               properties                   properties                                  0.875
+connector_sibling    Assigned Input/Output  output source                output source                               0.779037
+interface            Interface              default audio system device  default audio system device                 0.707933
+connector            Assigned to connector  device output                device output                               0.604102
+manual               Manual file            default audio output_device  default audio output device                 0.630038
+
+**************************************************************************************************
+C__OBJTYPE__CABLE Attributes Mapping
+**************************************************************************************************
+
+Attribute in CMDB    Description    Attribute in DB    Description      Similarity Coeficient
+-------------------  -------------  -----------------  -------------  -----------------------
+title                Title          title              title                                1
+
+**************************************************************************************************
+C__OBJTYPE__FC_SWITCH Attributes Mapping
+**************************************************************************************************
+
+Attribute in CMDB    Description    Attribute in DB    Description                     Similarity Coeficient
+-------------------  -------------  -----------------  ----------------------------  -----------------------
+title                Title          title              title                                        1
+application          Application    interface          interface                                    0.9
+mac                  MAC            mac_address        media access control address                 0.866025
+
+**************************************************************************************************
+C__OBJTYPE__WAN Attributes Mapping
+**************************************************************************************************
+
+Attribute in CMDB    Description          Attribute in DB    Description                     Similarity Coeficient
+-------------------  -------------------  -----------------  ----------------------------  -----------------------
+title                Title                title              title                                        1
+interface            Connected interface  interface          interface                                    0.885088
+mac                  MAC                  mac_address        media access control address                 0.866025
+
 
 ===============================================================================================================================================================================
 RELATIONSHIPS MAPPING
 ===============================================================================================================================================================================
 
-Relationship in CMDB                        Description                   Relationship in DB       Description                   Similarity Coeficient
-------------------------------------------  ----------------------------  -----------------------  --------------------------  -----------------------
-C__RELATION_TYPE__NETWORK_PORT              Ports                         port from                port                                       1
-C__RELATION_TYPE__LOCATION                  Location                      location of              location                                   1
-C__RELATION_TYPE__UNIVERSAL_INTERFACE       Interface                     has battery              battery                                    0.8
-C__RELATION_TYPE__OPERATION_SYSTEM          Operating system              running os               running operating system                   0.942343
-C__RELATION_TYPE__ORGANIZATION              Organization                  processor of             processor                                  0.769231
-C__RELATION_TYPE__NET_CONNECTIONS           Network connections           has network service      network service                            0.831634
-C__RELATION_TYPE__CONTROLLER_FC_PORT        FC port                       is running on port       running port                               0.672716
-C__RELATION_TYPE__CONNECTORS                Connectors                    has charger              charger                                    0.8
-C__RELATION_TYPE__LOGICAL_UNIT              Logical location              associated port          associated port                            0.523458
-C__RELATION_TYPE__IT_SERVICE_COMPONENT      Service component             is component of          component                                  0.789346
-C__RELATION_TYPE__BACKUP                    Backup                        display of               display                                    0.777778
-C__RELATION_TYPE__RM_CONTROLLER             Remote Management Controller  installed os             installed operating system                 0.670873
-C__RELATION_TYPE__DATABASE_GATEWAY          Database gateway              associated firewall      associated firewall                        0.590186
-C__RELATION_TYPE__DEFAULT                   Dependency                    has volume               volume                                     0.545455
-C__RELATION_TYPE__MOBILE_PHONE              Assigned cards                associated card reader   associated card reader                     0.721852
-C__RELATION_TYPE__POWER_CONSUMER            Power consumer                running product          running product                            0.536939
-C__RELATION_TYPE__SOFTWARE                  Software assignment           has vendor               vendor                                     0.531239
-C__RELATION_TYPE__CHASSIS                   Chassis                       firewall of              firewall                                   0.666667
-C__RELATION_TYPE__FILE                      Files                         has storage              storage                                    0.631579
-C__RELATION_TYPE__DATABASE_INSTANCE         Database instance             associated display       associated display                         0.533694
-C__RELATION_TYPE__IP_ADDRESS                Host address                  associated memory        associated memory                          0.483127
-C__RELATION_TYPE__LDEV_CLIENT               Logical devices (Client)      port on device           port device                                0.603521
-C__RELATION_TYPE__VIRTUAL_MACHINE           Virtual machine               has hardware port        hardware port                              0.521582
-C__RELATION_TYPE__VRRP                      VRRP                          has protocol             protocol                                   0.5
-C__RELATION_TYPE__STACKING                  Stacking                      has installed            installed                                  0.571429
-C__RELATION_TYPE__SHARE_ACCESS              Share Access                  reading card             reading card                               0.443905
-C__RELATION_TYPE__CLUSTER_SERVICE           Cluster service assignment    associated processor     associated processor                       0.48584
-C__RELATION_TYPE__LAYER2_TRANSPORT          Layer 2 Transport             has Built-in Output      built output                               0.407207
-C__RELATION_TYPE__VHOST_ADMIN_SERVICE       Virtual host                  has Built-in Microphone  built microphone                           0.343619
-C__RELATION_TYPE__ORGANIZATION_HEADQUARTER  Headquarter (Organization)    has manufacturer         manufacturer                               0.288834
-C__RELATION_TYPE__DATABASE_ACCESS           Database access               located                  located                                    0.353406
+Relationship in CMDB                        Description                   Relationship in DB          Description                   Similarity Coeficient
+------------------------------------------  ----------------------------  --------------------------  --------------------------  -----------------------
+C__RELATION_TYPE__NETWORK_PORT              Ports                         port from                   port                                       1
+C__RELATION_TYPE__LOCATION                  Location                      location of                 location                                   1
+C__RELATION_TYPE__UNIVERSAL_INTERFACE       Interface                     has battery                 battery                                    0.8
+C__RELATION_TYPE__OPERATION_SYSTEM          Operating system              running os                  running operating system                   0.942343
+C__RELATION_TYPE__ORGANIZATION              Organization                  processor of                processor                                  0.769231
+C__RELATION_TYPE__NET_CONNECTIONS           Network connections           has network service         network service                            0.831634
+C__RELATION_TYPE__IT_SERVICE_COMPONENT      Service component             associated network service  associated network service                 0.82244
+C__RELATION_TYPE__CONTROLLER_FC_PORT        FC port                       is running on port          running port                               0.672716
+C__RELATION_TYPE__CONNECTORS                Connectors                    has charger                 charger                                    0.8
+C__RELATION_TYPE__LOGICAL_UNIT              Logical location              associated port             associated port                            0.523458
+C__RELATION_TYPE__BACKUP                    Backup                        display of                  display                                    0.777778
+C__RELATION_TYPE__DATABASE_GATEWAY          Database gateway              associated firewall         associated firewall                        0.590186
+C__RELATION_TYPE__RM_CONTROLLER             Remote Management Controller  installed os                installed operating system                 0.670873
+C__RELATION_TYPE__DEFAULT                   Dependency                    has volume                  volume                                     0.545455
+C__RELATION_TYPE__MOBILE_PHONE              Assigned cards                associated card reader      associated card reader                     0.721852
+C__RELATION_TYPE__SOA_COMPONENTS            SOA-Component                 is component of             component                                  0.707107
+C__RELATION_TYPE__POWER_CONSUMER            Power consumer                running product             running product                            0.536939
+C__RELATION_TYPE__CHASSIS                   Chassis                       firewall of                 firewall                                   0.666667
+C__RELATION_TYPE__FILE                      Files                         has storage                 storage                                    0.631579
+C__RELATION_TYPE__DATABASE_INSTANCE         Database instance             associated display          associated display                         0.533694
+C__RELATION_TYPE__IP_ADDRESS                Host address                  associated memory           associated memory                          0.483127
+C__RELATION_TYPE__LDEV_CLIENT               Logical devices (Client)      port on device              port device                                0.603521
+C__RELATION_TYPE__VIRTUAL_MACHINE           Virtual machine               has hardware port           hardware port                              0.521582
+C__RELATION_TYPE__SHARE_ACCESS              Share Access                  card reader of              card reader                                0.433408
+C__RELATION_TYPE__VRRP                      VRRP                          has protocol                protocol                                   0.5
+C__RELATION_TYPE__CLUSTER_SERVICE           Cluster service assignment    associated processor        associated processor                       0.48584
+C__RELATION_TYPE__SOFTWARE                  Software assignment           has vendor                  vendor                                     0.531239
+C__RELATION_TYPE__LAYER2_TRANSPORT          Layer 2 Transport             has Built-in Output         built output                               0.407207
+C__RELATION_TYPE__STACKING                  Stacking                      has installed               installed                                  0.571429
+C__RELATION_TYPE__DATABASE_ACCESS           Database access               located                     located                                    0.353406
+C__RELATION_TYPE__VHOST_ADMIN_SERVICE       Virtual host                  has Built-in Microphone     built microphone                           0.343619
+C__RELATION_TYPE__ORGANIZATION_HEADQUARTER  Headquarter (Organization)    has manufacturer            manufacturer                               0.288834
 
 **************************************************************************************************
 C__RELATION_TYPE__NETWORK_PORT Attributes Mapping
@@ -599,6 +662,13 @@ Attribute in CMDB    Description    Attribute in DB    Description      Similari
 -------------------  -------------  -----------------  -------------  -----------------------
 title                Title          title              title                                1
 **************************************************************************************************
+C__RELATION_TYPE__IT_SERVICE_COMPONENT Attributes Mapping
+**************************************************************************************************
+
+Attribute in CMDB    Description    Attribute in DB    Description      Similarity Coeficient
+-------------------  -------------  -----------------  -------------  -----------------------
+title                Title          title              title                                1
+**************************************************************************************************
 C__RELATION_TYPE__CONTROLLER_FC_PORT Attributes Mapping
 **************************************************************************************************
 
@@ -620,13 +690,6 @@ Attribute in CMDB    Description    Attribute in DB    Description      Similari
 -------------------  -------------  -----------------  -------------  -----------------------
 title                Title          title              title                                1
 **************************************************************************************************
-C__RELATION_TYPE__IT_SERVICE_COMPONENT Attributes Mapping
-**************************************************************************************************
-
-Attribute in CMDB    Description    Attribute in DB    Description      Similarity Coeficient
--------------------  -------------  -----------------  -------------  -----------------------
-title                Title          title              title                                1
-**************************************************************************************************
 C__RELATION_TYPE__BACKUP Attributes Mapping
 **************************************************************************************************
 
@@ -634,14 +697,14 @@ Attribute in CMDB    Description    Attribute in DB    Description      Similari
 -------------------  -------------  -----------------  -------------  -----------------------
 title                Title          title              title                                1
 **************************************************************************************************
-C__RELATION_TYPE__RM_CONTROLLER Attributes Mapping
+C__RELATION_TYPE__DATABASE_GATEWAY Attributes Mapping
 **************************************************************************************************
 
 Attribute in CMDB    Description    Attribute in DB    Description      Similarity Coeficient
 -------------------  -------------  -----------------  -------------  -----------------------
 title                Title          title              title                                1
 **************************************************************************************************
-C__RELATION_TYPE__DATABASE_GATEWAY Attributes Mapping
+C__RELATION_TYPE__RM_CONTROLLER Attributes Mapping
 **************************************************************************************************
 
 Attribute in CMDB    Description    Attribute in DB    Description      Similarity Coeficient
@@ -662,14 +725,14 @@ Attribute in CMDB    Description    Attribute in DB    Description      Similari
 -------------------  -------------  -----------------  -------------  -----------------------
 title                Title          title              title                                1
 **************************************************************************************************
-C__RELATION_TYPE__POWER_CONSUMER Attributes Mapping
+C__RELATION_TYPE__SOA_COMPONENTS Attributes Mapping
 **************************************************************************************************
 
 Attribute in CMDB    Description    Attribute in DB    Description      Similarity Coeficient
 -------------------  -------------  -----------------  -------------  -----------------------
 title                Title          title              title                                1
 **************************************************************************************************
-C__RELATION_TYPE__SOFTWARE Attributes Mapping
+C__RELATION_TYPE__POWER_CONSUMER Attributes Mapping
 **************************************************************************************************
 
 Attribute in CMDB    Description    Attribute in DB    Description      Similarity Coeficient
@@ -718,21 +781,14 @@ Attribute in CMDB    Description    Attribute in DB    Description      Similari
 -------------------  -------------  -----------------  -------------  -----------------------
 title                Title          title              title                                1
 **************************************************************************************************
-C__RELATION_TYPE__VRRP Attributes Mapping
-**************************************************************************************************
-
-Attribute in CMDB    Description    Attribute in DB    Description      Similarity Coeficient
--------------------  -------------  -----------------  -------------  -----------------------
-title                Title          title              title                                1
-**************************************************************************************************
-C__RELATION_TYPE__STACKING Attributes Mapping
-**************************************************************************************************
-
-Attribute in CMDB    Description    Attribute in DB    Description      Similarity Coeficient
--------------------  -------------  -----------------  -------------  -----------------------
-title                Title          title              title                                1
-**************************************************************************************************
 C__RELATION_TYPE__SHARE_ACCESS Attributes Mapping
+**************************************************************************************************
+
+Attribute in CMDB    Description    Attribute in DB    Description      Similarity Coeficient
+-------------------  -------------  -----------------  -------------  -----------------------
+title                Title          title              title                                1
+**************************************************************************************************
+C__RELATION_TYPE__VRRP Attributes Mapping
 **************************************************************************************************
 
 Attribute in CMDB    Description    Attribute in DB    Description      Similarity Coeficient
@@ -746,7 +802,28 @@ Attribute in CMDB    Description    Attribute in DB    Description      Similari
 -------------------  -------------  -----------------  -------------  -----------------------
 title                Title          title              title                                1
 **************************************************************************************************
+C__RELATION_TYPE__SOFTWARE Attributes Mapping
+**************************************************************************************************
+
+Attribute in CMDB    Description    Attribute in DB    Description      Similarity Coeficient
+-------------------  -------------  -----------------  -------------  -----------------------
+title                Title          title              title                                1
+**************************************************************************************************
 C__RELATION_TYPE__LAYER2_TRANSPORT Attributes Mapping
+**************************************************************************************************
+
+Attribute in CMDB    Description    Attribute in DB    Description      Similarity Coeficient
+-------------------  -------------  -----------------  -------------  -----------------------
+title                Title          title              title                                1
+**************************************************************************************************
+C__RELATION_TYPE__STACKING Attributes Mapping
+**************************************************************************************************
+
+Attribute in CMDB    Description    Attribute in DB    Description      Similarity Coeficient
+-------------------  -------------  -----------------  -------------  -----------------------
+title                Title          title              title                                1
+**************************************************************************************************
+C__RELATION_TYPE__DATABASE_ACCESS Attributes Mapping
 **************************************************************************************************
 
 Attribute in CMDB    Description    Attribute in DB    Description      Similarity Coeficient
@@ -766,15 +843,8 @@ C__RELATION_TYPE__ORGANIZATION_HEADQUARTER Attributes Mapping
 Attribute in CMDB    Description    Attribute in DB    Description      Similarity Coeficient
 -------------------  -------------  -----------------  -------------  -----------------------
 title                Title          title              title                                1
-**************************************************************************************************
-C__RELATION_TYPE__DATABASE_ACCESS Attributes Mapping
-**************************************************************************************************
 
-Attribute in CMDB    Description    Attribute in DB    Description      Similarity Coeficient
--------------------  -------------  -----------------  -------------  -----------------------
-title                Title          title              title                                1
-
-? Enter the threshold value that you want to consider (similarities below that value will not be considered):  0.86
+? Enter the threshold value that you want to consider (similarities below that value will not be considered):  0.85
 
 **********************************************************************
  ___               _      _   _            ___ _                 
@@ -794,27 +864,55 @@ title                Title          title              title                    
 
 >>> Creating the configuration items...
 
->>> Error converting string 'Color LCD' to int.
-
->>> Error converting string '16 GB' to float.
+{'version': '2.0', 'method': 'cmdb.object.create', 'params': {'apikey': 'cmdb-auto', 'language': 'en', 'type': 'C__OBJTYPE__APPLICATION', 'title': 'C__OBJTYPE__APPLICATION', 'categories': {'C__CATG__GLOBAL': [{'title': 'Firefox', 'description': '86.0.1'}]}}, 'id': 1}
+>>> Object of type C__OBJTYPE__APPLICATION created successfully in the CMDB.
 
 >>> Error converting string 'bq20z451' to int.
 
->>> Error converting string '0x0aa1' to int.
+>>> Error converting string 'Color LCD' to int.
 
-{'version': '2.0', 'method': 'cmdb.object.create', 'params': {'apikey': 'cmdb-auto', 'language': 'en', 'type': 'C__OBJTYPE__HOST', 'title': 'C__OBJTYPE__HOST', 'categories': {'C__CATG__NETWORK': [{'serial': 'C02S80K6G8WN'}], 'C__CATG__CONTROLLER_FC_PORT': [{'speed_unit': 1}], 'C__CATG__CPU': [{'cores': 4, 'frequency_unit': 3}], 'C__CATG__GRAPHIC': [{}], 'C__CATG__NETWORK_PORT': [{}], 'C__CATG__DRIVE': [{}], 'C__CATG__GLOBAL': [{'title': 'macbookprojoana', 'description': 'MacBook Pro MacBook ProMacBook Pro', 'status': 7}], 'C__CATG__NETWORK_LOG_PORT': [{'mac': 'c4:b3:01:c0:1a:d3'}]}}, 'id': 1}
+{'version': '2.0', 'method': 'cmdb.object.create', 'params': {'apikey': 'cmdb-auto', 'language': 'en', 'type': 'C__OBJTYPE__HOST', 'title': 'C__OBJTYPE__HOST', 'categories': {'C__CATG__CONTROLLER_FC_PORT': [{'speed_unit': 1}], 'C__CATG__CPU': [{'frequency': 2.0, 'cores': 4, 'frequency_unit': 3}], 'C__CATG__GRAPHIC': [{'memory': 16.0}], 'C__CATG__NETWORK_PORT': [{}], 'C__CATG__DRIVE': [{}], 'C__CATG__MEMORY': [{'unit': 3}], 'C__CATG__NETWORK': [{'serial': 'C02S80K6G8WN'}], 'C__CATG__GLOBAL': [{'title': 'macbookprojoana', 'description': 'MacBook Pro MacBook ProMacBook Pro', 'status': 7}], 'C__CATG__NETWORK_LOG_PORT': [{'mac': 'c4:b3:01:c0:1a:d3'}]}}, 'id': 1}
 >>> Object of type C__OBJTYPE__HOST created successfully in the CMDB.
 
->>> Error converting string '10.15.7' to int.
+{'version': '2.0', 'method': 'cmdb.object.create', 'params': {'apikey': 'cmdb-auto', 'language': 'en', 'type': 'C__OBJTYPE__AMPLIFIER', 'title': 'C__OBJTYPE__AMPLIFIER', 'categories': {'C__CATG__LOGBOOK': [{'changes': '2'}], 'C__CATG__GLOBAL': [{'title': 'Quad-Core Intel Core i7'}]}}, 'id': 1}
+>>> Object of type C__OBJTYPE__AMPLIFIER created successfully in the CMDB.
 
-{'version': '2.0', 'method': 'cmdb.object.create', 'params': {'apikey': 'cmdb-auto', 'language': 'en', 'type': 'C__OBJTYPE__OPERATING_SYSTEM', 'title': 'C__OBJTYPE__OPERATING_SYSTEM', 'categories': {'C__CATS__APPLICATION_ASSIGNED_OBJ': [{}], 'C__CATG__GLOBAL': [{'title': 'Mac OS X'}]}}, 'id': 1}
->>> Object of type C__OBJTYPE__OPERATING_SYSTEM created successfully in the CMDB.
-
-{'version': '2.0', 'method': 'cmdb.object.create', 'params': {'apikey': 'cmdb-auto', 'language': 'en', 'type': 'C__OBJTYPE__PHONE', 'title': 'C__OBJTYPE__PHONE', 'categories': {'C__CATG__LOGBOOK': [{'changes': '2'}], 'C__CATG__GLOBAL': [{'title': 'Quad-Core Intel Core i7'}]}}, 'id': 1}
->>> Object of type C__OBJTYPE__PHONE created successfully in the CMDB.
+>>> Error converting string 'Braga' to int.
 
 {'version': '2.0', 'method': 'cmdb.object.create', 'params': {'apikey': 'cmdb-auto', 'language': 'en', 'type': 'C__OBJTYPE__WORKSTATION', 'title': 'C__OBJTYPE__WORKSTATION', 'categories': {'C__CATG__LOCATION': [{'latitude': '41.5388', 'longitude': '-8.6171'}], 'C__CATG__GLOBAL': [{'title': 'PT'}]}}, 'id': 1}
 >>> Object of type C__OBJTYPE__WORKSTATION created successfully in the CMDB.
+
+{'version': '2.0', 'method': 'cmdb.object.create', 'params': {'apikey': 'cmdb-auto', 'language': 'en', 'type': 'C__OBJTYPE__APPLICATION', 'title': 'C__OBJTYPE__APPLICATION', 'categories': {'C__CATG__GLOBAL': [{'title': 'Postman', 'description': '8.0.7'}]}}, 'id': 1}
+>>> Object of type C__OBJTYPE__APPLICATION created successfully in the CMDB.
+
+{'version': '2.0', 'method': 'cmdb.object.create', 'params': {'apikey': 'cmdb-auto', 'language': 'en', 'type': 'C__OBJTYPE__APPLICATION', 'title': 'C__OBJTYPE__APPLICATION', 'categories': {'C__CATG__GLOBAL': [{'title': 'Slack', 'description': '4.13.0'}]}}, 'id': 1}
+>>> Object of type C__OBJTYPE__APPLICATION created successfully in the CMDB.
+
+>>> Error converting string '10.15.7' to int.
+
+{'version': '2.0', 'method': 'cmdb.object.create', 'params': {'apikey': 'cmdb-auto', 'language': 'en', 'type': 'C__OBJTYPE__OPERATING_SYSTEM', 'title': 'C__OBJTYPE__OPERATING_SYSTEM', 'categories': {'C__CATS__APPLICATION_ASSIGNED_OBJ': [{}], 'C__CATG__GLOBAL': [{'title': 'macOS 10.15.7 19H15'}]}}, 'id': 1}
+>>> Object of type C__OBJTYPE__OPERATING_SYSTEM created successfully in the CMDB.
+
+{'version': '2.0', 'method': 'cmdb.object.create', 'params': {'apikey': 'cmdb-auto', 'language': 'en', 'type': 'C__OBJTYPE__APPLICATION', 'title': 'C__OBJTYPE__APPLICATION', 'categories': {'C__CATG__GLOBAL': [{'title': 'zoom', 'description': '5.6.0 (536)'}]}}, 'id': 1}
+>>> Object of type C__OBJTYPE__APPLICATION created successfully in the CMDB.
+
+{'version': '2.0', 'method': 'cmdb.object.create', 'params': {'apikey': 'cmdb-auto', 'language': 'en', 'type': 'C__OBJTYPE__APPLICATION', 'title': 'C__OBJTYPE__APPLICATION', 'categories': {'C__CATG__GLOBAL': [{'title': 'Adobe Acrobat Reader DC', 'description': '21.001.20145'}]}}, 'id': 1}
+>>> Object of type C__OBJTYPE__APPLICATION created successfully in the CMDB.
+
+{'version': '2.0', 'method': 'cmdb.object.create', 'params': {'apikey': 'cmdb-auto', 'language': 'en', 'type': 'C__OBJTYPE__APPLICATION', 'title': 'C__OBJTYPE__APPLICATION', 'categories': {'C__CATG__GLOBAL': [{'title': 'iMovie', 'description': '10.2.3'}]}}, 'id': 1}
+>>> Object of type C__OBJTYPE__APPLICATION created successfully in the CMDB.
+
+{'version': '2.0', 'method': 'cmdb.object.create', 'params': {'apikey': 'cmdb-auto', 'language': 'en', 'type': 'C__OBJTYPE__APPLICATION', 'title': 'C__OBJTYPE__APPLICATION', 'categories': {'C__CATG__GLOBAL': [{'title': 'PyCharm', 'description': '2020.3.4'}]}}, 'id': 1}
+>>> Object of type C__OBJTYPE__APPLICATION created successfully in the CMDB.
+
+{'version': '2.0', 'method': 'cmdb.object.create', 'params': {'apikey': 'cmdb-auto', 'language': 'en', 'type': 'C__OBJTYPE__APPLICATION', 'title': 'C__OBJTYPE__APPLICATION', 'categories': {'C__CATG__GLOBAL': [{'title': 'Visual Studio Code', 'description': '1.54.3'}]}}, 'id': 1}
+>>> Object of type C__OBJTYPE__APPLICATION created successfully in the CMDB.
+
+{'version': '2.0', 'method': 'cmdb.object.create', 'params': {'apikey': 'cmdb-auto', 'language': 'en', 'type': 'C__OBJTYPE__APPLICATION', 'title': 'C__OBJTYPE__APPLICATION', 'categories': {'C__CATG__GLOBAL': [{'title': 'Spotify', 'description': '1.1.54.592.gc0b20638'}]}}, 'id': 1}
+>>> Object of type C__OBJTYPE__APPLICATION created successfully in the CMDB.
+
+{'version': '2.0', 'method': 'cmdb.object.create', 'params': {'apikey': 'cmdb-auto', 'language': 'en', 'type': 'C__OBJTYPE__APPLICATION', 'title': 'C__OBJTYPE__APPLICATION', 'categories': {'C__CATG__GLOBAL': [{'title': 'Google Chrome', 'description': '89.0.4389.90'}]}}, 'id': 1}
+>>> Object of type C__OBJTYPE__APPLICATION created successfully in the CMDB.
 
 {'version': '2.0', 'method': 'cmdb.object.create', 'params': {'apikey': 'cmdb-auto', 'language': 'en', 'type': 'C__OBJTYPE__APPLICATION', 'title': 'C__OBJTYPE__APPLICATION', 'categories': {'C__CATG__GLOBAL': [{'title': 'FileZilla', 'description': '3.53.0'}]}}, 'id': 1}
 >>> Object of type C__OBJTYPE__APPLICATION created successfully in the CMDB.
@@ -822,17 +920,10 @@ title                Title          title              title                    
 {'version': '2.0', 'method': 'cmdb.object.create', 'params': {'apikey': 'cmdb-auto', 'language': 'en', 'type': 'C__OBJTYPE__APPLICATION', 'title': 'C__OBJTYPE__APPLICATION', 'categories': {'C__CATG__GLOBAL': [{'title': 'MRT', 'description': '1.76'}]}}, 'id': 1}
 >>> Object of type C__OBJTYPE__APPLICATION created successfully in the CMDB.
 
-{'version': '2.0', 'method': 'cmdb.object.create', 'params': {'apikey': 'cmdb-auto', 'language': 'en', 'type': 'C__OBJTYPE__APPLICATION', 'title': 'C__OBJTYPE__APPLICATION', 'categories': {'C__CATG__GLOBAL': [{'title': 'iMovie', 'description': '10.2.3'}]}}, 'id': 1}
->>> Object of type C__OBJTYPE__APPLICATION created successfully in the CMDB.
+>>> Error converting string 'FALSE' to int.
 
-{'version': '2.0', 'method': 'cmdb.object.create', 'params': {'apikey': 'cmdb-auto', 'language': 'en', 'type': 'C__OBJTYPE__APPLICATION', 'title': 'C__OBJTYPE__APPLICATION', 'categories': {'C__CATG__GLOBAL': [{'title': 'Adobe Acrobat Reader DC', 'description': '21.001.20145'}]}}, 'id': 1}
->>> Object of type C__OBJTYPE__APPLICATION created successfully in the CMDB.
-
-{'version': '2.0', 'method': 'cmdb.object.create', 'params': {'apikey': 'cmdb-auto', 'language': 'en', 'type': 'C__OBJTYPE__APPLICATION', 'title': 'C__OBJTYPE__APPLICATION', 'categories': {'C__CATG__GLOBAL': [{'title': 'Slack', 'description': '4.13.0'}]}}, 'id': 1}
->>> Object of type C__OBJTYPE__APPLICATION created successfully in the CMDB.
-
-{'version': '2.0', 'method': 'cmdb.object.create', 'params': {'apikey': 'cmdb-auto', 'language': 'en', 'type': 'C__OBJTYPE__ROUTER', 'title': 'C__OBJTYPE__ROUTER', 'categories': {'C__CATG__LOGBOOK': [{'category': '0x0085'}], 'C__CATG__POWER_CONSUMER': [{'watt': 85.0}], 'C__CATG__IMAGE': [{'image': 'FALSE'}], 'C__CATG__NETWORK': [{'serial': '0x00c7fba1'}], 'C__CATG__GLOBAL': [{'title': '0x0aa1'}]}}, 'id': 1}
->>> Object of type C__OBJTYPE__ROUTER created successfully in the CMDB.
+{'version': '2.0', 'method': 'cmdb.object.create', 'params': {'apikey': 'cmdb-auto', 'language': 'en', 'type': 'C__OBJTYPE__CONVERTER', 'title': 'C__OBJTYPE__CONVERTER', 'categories': {'C__CATG__UNIVERSAL_INTERFACE': [{}], 'C__CATG__IMAGE': [{'image': 'FALSE'}]}}, 'id': 1}
+>>> Object of type C__OBJTYPE__CONVERTER created successfully in the CMDB.
 
 >>> Error converting string '1440 x 900' to int.
 
@@ -840,34 +931,18 @@ title                Title          title              title                    
 
 >>> Error converting string 'CGSThirtytwoBitColor' to float.
 
-{'version': '2.0', 'method': 'cmdb.object.create', 'params': {'apikey': 'cmdb-auto', 'language': 'en', 'type': 'C__OBJTYPE__MONITOR', 'title': 'C__OBJTYPE__MONITOR', 'categories': {'C__CATS__MONITOR': [{}], 'C__CATG__CONNECTOR': [{}], 'C__CATG__FORMFACTOR': [{}], 'C__CATG__GLOBAL': [{'title': 'Color LCD'}]}}, 'id': 1}
+>>> Error converting string 'spdisplays_built-in_retinaLCD' to float.
+
+{'version': '2.0', 'method': 'cmdb.object.create', 'params': {'apikey': 'cmdb-auto', 'language': 'en', 'type': 'C__OBJTYPE__MONITOR', 'title': 'C__OBJTYPE__MONITOR', 'categories': {'C__CATG__LOGBOOK': [{'date': '2015'}], 'C__CATS__MONITOR': [{}], 'C__CATG__CONNECTOR': [{}], 'C__CATG__FORMFACTOR': [{}], 'C__CATG__GLOBAL': [{'title': 'Color LCD'}]}}, 'id': 1}
 >>> Object of type C__OBJTYPE__MONITOR created successfully in the CMDB.
-
-{'version': '2.0', 'method': 'cmdb.object.create', 'params': {'apikey': 'cmdb-auto', 'language': 'en', 'type': 'C__OBJTYPE__APPLICATION', 'title': 'C__OBJTYPE__APPLICATION', 'categories': {'C__CATG__GLOBAL': [{'title': 'Firefox', 'description': '86.0.1'}]}}, 'id': 1}
->>> Object of type C__OBJTYPE__APPLICATION created successfully in the CMDB.
-
-{'version': '2.0', 'method': 'cmdb.object.create', 'params': {'apikey': 'cmdb-auto', 'language': 'en', 'type': 'C__OBJTYPE__APPLICATION', 'title': 'C__OBJTYPE__APPLICATION', 'categories': {'C__CATG__GLOBAL': [{'title': 'Postman', 'description': '8.0.7'}]}}, 'id': 1}
->>> Object of type C__OBJTYPE__APPLICATION created successfully in the CMDB.
-
-{'version': '2.0', 'method': 'cmdb.object.create', 'params': {'apikey': 'cmdb-auto', 'language': 'en', 'type': 'C__OBJTYPE__APPLICATION', 'title': 'C__OBJTYPE__APPLICATION', 'categories': {'C__CATG__GLOBAL': [{'title': 'Visual Studio Code', 'description': '1.54.3'}]}}, 'id': 1}
->>> Object of type C__OBJTYPE__APPLICATION created successfully in the CMDB.
-
-{'version': '2.0', 'method': 'cmdb.object.create', 'params': {'apikey': 'cmdb-auto', 'language': 'en', 'type': 'C__OBJTYPE__APPLICATION', 'title': 'C__OBJTYPE__APPLICATION', 'categories': {'C__CATG__GLOBAL': [{'title': 'zoom', 'description': '5.6.0 (536)'}]}}, 'id': 1}
->>> Object of type C__OBJTYPE__APPLICATION created successfully in the CMDB.
-
-{'version': '2.0', 'method': 'cmdb.object.create', 'params': {'apikey': 'cmdb-auto', 'language': 'en', 'type': 'C__OBJTYPE__APPLICATION', 'title': 'C__OBJTYPE__APPLICATION', 'categories': {'C__CATG__GLOBAL': [{'title': 'Google Chrome', 'description': '89.0.4389.90'}]}}, 'id': 1}
->>> Object of type C__OBJTYPE__APPLICATION created successfully in the CMDB.
-
-{'version': '2.0', 'method': 'cmdb.object.create', 'params': {'apikey': 'cmdb-auto', 'language': 'en', 'type': 'C__OBJTYPE__APPLICATION', 'title': 'C__OBJTYPE__APPLICATION', 'categories': {'C__CATG__GLOBAL': [{'title': 'Spotify', 'description': '1.1.54.592.gc0b20638'}]}}, 'id': 1}
->>> Object of type C__OBJTYPE__APPLICATION created successfully in the CMDB.
 
 >>> Creating the relationships...
 
-{'version': '2.0', 'method': 'cmdb.object.create', 'params': {'apikey': 'cmdb-auto', 'language': 'en', 'type': 'C__OBJTYPE__RELATION', 'title': 'C__RELATION_TYPE__OPERATION_SYSTEM', 'categories': {'C__CATG__RELATION': [{'relation_type': 'C__RELATION_TYPE__OPERATION_SYSTEM', 'object1': 902, 'object2': 901, 'weighting': 5}], 'C__CATG__GLOBAL': [{'title': 'Mac OS X running os macbookprojoana'}]}}, 'id': 1}
->>> Object of type C__RELATION_TYPE__OPERATION_SYSTEM created successfully in the CMDB.
-
-{'version': '2.0', 'method': 'cmdb.object.create', 'params': {'apikey': 'cmdb-auto', 'language': 'en', 'type': 'C__OBJTYPE__RELATION', 'title': 'C__RELATION_TYPE__LOCATION', 'categories': {'C__CATG__RELATION': [{'relation_type': 'C__RELATION_TYPE__LOCATION', 'object1': 904, 'object2': 901, 'weighting': 5}], 'C__CATG__GLOBAL': [{'title': 'PT location of macbookprojoana'}]}}, 'id': 1}
+{'version': '2.0', 'method': 'cmdb.object.create', 'params': {'apikey': 'cmdb-auto', 'language': 'en', 'type': 'C__OBJTYPE__RELATION', 'title': 'C__RELATION_TYPE__LOCATION', 'categories': {'C__CATG__RELATION': [{'relation_type': 'C__RELATION_TYPE__LOCATION', 'object1': 1030, 'object2': 1028, 'weighting': 5}], 'C__CATG__GLOBAL': [{'title': 'PT location of macbookprojoana'}]}}, 'id': 1}
 >>> Object of type C__RELATION_TYPE__LOCATION created successfully in the CMDB.
+
+{'version': '2.0', 'method': 'cmdb.object.create', 'params': {'apikey': 'cmdb-auto', 'language': 'en', 'type': 'C__OBJTYPE__RELATION', 'title': 'C__RELATION_TYPE__OPERATION_SYSTEM', 'categories': {'C__CATG__RELATION': [{'relation_type': 'C__RELATION_TYPE__OPERATION_SYSTEM', 'object1': 1033, 'object2': 1028, 'weighting': 5}], 'C__CATG__GLOBAL': [{'title': 'macOS 10.15.7 19H15 running os macbookprojoana'}]}}, 'id': 1}
+>>> Object of type C__RELATION_TYPE__OPERATION_SYSTEM created successfully in the CMDB.
 
 >>> Successfully disconnected.
 

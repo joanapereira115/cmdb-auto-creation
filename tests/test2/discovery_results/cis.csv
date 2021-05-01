@@ -1,0 +1,105 @@
+Id;Name;Type;Attribute;Value
+1817ubuntu_pc;ubuntu-pc;Host;Icon name;computer-desktop
+;;;Chassis;desktop
+;;;Machine ID;93b6da13546247df9c2c4e89abccfea3
+;;;Boot ID;d17d71c7440943af87c6abc7a6db7822
+;;;Operating System;Ubuntu 18.04.5 LTS
+;;;vendor;Dell
+;;;Kernel;Linux 5.4.0-70-generic
+;;;Architecture;x86-64
+;;;os family;Ubuntu
+;;;os name;Ubuntu 18.04.5 LTS
+;;;os version;18.04
+;;;CPU cores;4
+;;;CPU;Intel(R) Core(TM) i5-3470S CPU @ 2.90GHz
+;;;CPU frequency unit;MHz
+;;;CPU frequency;1596.396
+;;;CPU speed;1596.396 MHz
+;;;has_ipv4;192.168.1.88
+;;;mac_address;F8:B1:56:AD:16:2F
+;;;os_family;Linux
+;;;status;up
+2019ubuntu_18_04_5__l_t_s;Ubuntu 18.04.5 LTS;Operating System;vendor;Ubuntu
+;;;DISTRIB_RELEASE;18.04
+;;;DISTRIB_CODENAME;bionic
+;;;DISTRIB_DESCRIPTION;Ubuntu 18.04.5 LTS
+;;;ID;ubuntu
+;;;ID_LIKE;debian
+;;;version number;18.04
+;;;HOME_URL;https://www.ubuntu.com/
+;;;SUPPORT_URL;https://help.ubuntu.com/
+;;;BUG_REPORT_URL;https://bugs.launchpad.net/ubuntu/
+;;;PRIVACY_POLICY_URL;https://www.ubuntu.com/legal/terms-and-policies/privacy-policy
+;;;VERSION_CODENAME;bionic
+;;;UBUNTU_CODENAME;bionic
+;;;description;18.04.5 LTS (Bionic Beaver)
+2120intel_r__core_t_m_i5_3470_s__c_p_u__2_90_g_hz;IntelR CoreTM i5-3470S CPU  2.90GHz;CPU;Architecture;x86_64
+;;;CPU op-modes;"32-bit; 64-bit"
+;;;Byte Order;Little Endian
+;;;CPUs;1
+;;;On-line CPUs list;0-3
+;;;Threads per core;1
+;;;Cores per socket;4
+;;;NUMA nodes;0-3
+;;;Vendor ID;GenuineIntel
+;;;CPU family;6
+;;;Stepping;9
+;;;CPU frequency unit;MHz
+;;;CPU frequency;1596.396
+;;;CPU speed;1596.396 MHz
+;;;CPU max MHz;"3600;0000"
+;;;CPU min MHz;"1600;0000"
+;;;BogoMIPS;5787.05
+;;;Virtualization;VT-x
+;;;L1d cache;6144K
+;;;Flags;fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush dts acpi mmx fxsr sse sse2 ss ht tm pbe syscall nx rdtscp lm constant_tsc arch_perfmon pebs bts rep_good nopl xtopology nonstop_tsc cpuid aperfmperf pni pclmulqdq dtes64 monitor ds_cpl vmx smx est tm2 ssse3 cx16 xtpr pdcm pcid sse4_1 sse4_2 x2apic popcnt tsc_deadline_timer aes xsave avx f16c rdrand lahf_lm cpuid_fault epb pti ssbd ibrs ibpb stibp tpr_shadow vnmi flexpriority ept vpid fsgsbase smep erms xsaveopt dtherm ida arat pln pts md_clear flush_l1d
+;;;description;58
+21dell;Dell;Vendor;;
+2521sda4;sda4;SSD;PARTUUID;0780dcb0-04
+;;;Filesystem;/dev/sda4
+;;;1K-blocks;177521492
+;;;Used;96%
+;;;Available;7430508
+;;;Mounted on;/
+;;;NAME;sda4
+;;;MAJ:MIN;08:04
+;;;RM;0
+;;;SIZE;173G
+;;;RO;0
+;;;MOUNTPOINT;/
+;;;description;part partpart partpart partpart
+;;;uuid;57170c8d-8978-48f5-8c8e-ed4e1f32f182
+2625graphdb_free;graphdb-free;Application;Architecture;amd64
+;;;description;GraphDB 9.3.1
+2725gnome_shell;gnome-shell;;Architecture;amd64
+;;;description;graphical 3.28.4-0ubuntu18.04.3
+2825firefox;firefox;;Architecture;amd64
+;;;description;Safe 87.0+build3-0ubuntu0.18.04.2
+2925snapd;snapd;;Architecture;amd64
+;;;description;Daemon 2.48.3+18.04
+3025evolution_data_server;evolution-data-server;;Architecture;amd64
+;;;description;evolution 3.28.5-0ubuntu0.18.04.3
+163tcp;tcp;Protocol;;
+114rpcbind;rpcbind;Product;description;02/abr
+144mysql;mysql;;description;MySQL 5.7.33-0ubuntu0.18.04.1
+174fodms;fodms;;;
+54ssh;ssh;;description;OpenSSH 7.6p1 Ubuntu 4ubuntu0.3
+84http;http;;description;Apache httpd 2.4.29
+1223306;3306;Logical Port;protocol;tcp
+;;;cpe;cpe:/a:mysql:mysql:5.7.33-0ubuntu0.18.04.1
+;;;product;mysql
+;;;status;open
+1527200;7200;;protocol;tcp
+;;;product;fodms
+;;;status;open
+3222;22;;protocol;tcp
+;;;cpe;cpe:/o:linux:linux_kernel
+;;;product;ssh
+;;;status;open
+6280;80;;protocol;tcp
+;;;cpe;cpe:/a:apache:http_server:2.4.29
+;;;product;http
+;;;status;open
+92111;111;;protocol;tcp
+;;;product;rpcbind
+;;;status;open

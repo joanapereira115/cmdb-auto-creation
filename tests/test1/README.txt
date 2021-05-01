@@ -16,9 +16,9 @@ Test Case 1
 	- SSH: OpenSSH_8.1p1, LibreSSL 2.7.3
 	- Python: 3.9.1
 	- GraphDB: 9.3.1
+- DB: running in the same machine;
 - CMDB: i-doit Open 1.14, running on other machine;
 - Discovery based only on the IP address 192.168.1.73;
 - Selected Categories: location, network, hardware, software, operating system, processing, storage;
 - Detailed discovery using machine credentials;
-- Mapping threshold: 0.85;
-- CMDB: i-doit access via API.
+- Mapping threshold: 0.85.

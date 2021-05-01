@@ -1,0 +1,2773 @@
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+@prefix : <http://www.semanticweb.org/cmdb_auto_creation/2020/cmdb#> .
+@base <http://www.semanticweb.org/cmdb_auto_creation/2020/cmdb> .
+
+<http://www.semanticweb.org/cmdb_auto_creation/2020/cmdb#> rdf:type owl:Ontology .
+
+#################################################################
+#    Classes
+#################################################################
+
+###  http://www.semanticweb.org/cmdb_auto_creation/2020/cmdb#ConfigurationItem
+:ConfigurationItem rdf:type owl:Class ;
+    rdfs:label "Configuration Item" ;
+    rdfs:comment "Represents an organization's infrastructure component." .
+
+###  http://www.semanticweb.org/cmdb_auto_creation/2020/cmdb#Relationship
+:Relationship rdf:type owl:Class ;
+    rdfs:label "Relationship" ;
+    rdfs:comment "Represents the relationship between two organization's infrastructure components." .
+
+###  http://www.semanticweb.org/cmdb_auto_creation/2020/cmdb#ConfigurationItemType
+:ConfigurationItemType rdf:type owl:Class ;
+    rdfs:label "Configuration Item Type" ;
+    rdfs:comment "Represents the type of a configuration item." .
+
+###  http://www.semanticweb.org/cmdb_auto_creation/2020/cmdb#RelationshipType
+:RelationshipType rdf:type owl:Class ;
+    rdfs:label "Relationship Type" ;
+    rdfs:comment "Represents the type of a relationship." .
+
+###  http://www.semanticweb.org/cmdb_auto_creation/2020/cmdb#Attribute
+:Attribute rdf:type owl:Class ;
+    rdfs:label "Attribute" ;
+    rdfs:comment "Represents an attribute of a configuration item or relationship." .
+
+#################################################################
+#    Data Properties
+#################################################################
+
+:uuid rdf:type owl:DatatypeProperty ;
+    rdfs:domain :ConfigurationItem ;
+    rdfs:range xsd:string ;
+    rdfs:comment "The universally unique identifier (128-bit number) assigned to the item.".
+
+:serial_number rdf:type owl:DatatypeProperty ;
+    rdfs:domain :ConfigurationItem ;
+    rdfs:range xsd:string ;
+    rdfs:comment "The manufacturer-allocated number used to identify the item.".
+
+:title rdf:type owl:DatatypeProperty ;
+    rdfs:domain :ConfigurationItem ,
+                :Relationship ,
+                :ConfigurationItemType ,
+                :RelationshipType ,
+                :Attribute ; 
+    rdfs:range xsd:string ;
+    rdfs:comment "The label by which the item is known.".
+
+:description rdf:type owl:DatatypeProperty ;
+    rdfs:domain :ConfigurationItem ;
+    rdfs:range xsd:string ;
+    rdfs:comment "The textual description of the item.".
+
+:status rdf:type owl:DatatypeProperty ;
+    rdfs:domain :ConfigurationItem ;
+    rdfs:range xsd:string ;
+    rdfs:comment "The current status value for the operational condition of the item.".
+
+:mac_address rdf:type owl:DatatypeProperty ;
+    rdfs:domain :ConfigurationItem ;
+    rdfs:range xsd:string ;
+    rdfs:comment "The media access control address assigned to the item.".
+
+:value rdf:type owl:DatatypeProperty ;
+    rdfs:domain :Attribute ; 
+    rdfs:range xsd:string ;
+    rdfs:comment "The value of the attribute.".
+
+:has_ipv4 rdf:type owl:DatatypeProperty ;
+    rdfs:domain :ConfigurationItem ; 
+    rdfs:range xsd:string ;
+    rdfs:comment "The associated IPv4 address.".
+
+:os_family rdf:type owl:DatatypeProperty ;
+    rdfs:domain :ConfigurationItem ; 
+    rdfs:range xsd:string ;
+    rdfs:comment "The associated operating system family.".
+
+:has_ipv6 rdf:type owl:DatatypeProperty ;
+    rdfs:domain :ConfigurationItem ; 
+    rdfs:range xsd:string ;
+    rdfs:comment "The associated IPv6 address.".
+
+#################################################################
+#    Object Properties
+#################################################################
+
+:has_ci_type rdf:type owl:ObjectProperty ;
+    rdfs:domain :ConfigurationItem ;
+    rdfs:range :ConfigurationItemType .
+
+:has_rel_type rdf:type owl:ObjectProperty ;
+    rdfs:domain :Relationship ;
+    rdfs:range :RelationshipType .
+
+:has_source rdf:type owl:ObjectProperty ;
+    rdfs:domain :Relationship ;
+    rdfs:range [rdf:type owl:Restriction;
+                owl:onProperty :has_source;
+                owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger;
+                owl:onClass :ConfigurationItem ] .
+
+:has_target rdf:type owl:ObjectProperty ;
+    rdfs:domain :Relationship ;
+    rdfs:range [rdf:type owl:Restriction;
+                owl:onProperty :has_target;
+                owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger;
+                owl:onClass :ConfigurationItem ] .
+
+:has_attribute rdf:type owl:ObjectProperty ;
+    rdfs:domain :Relationship , 
+                :ConfigurationItem ;
+    rdfs:range :Attribute .
+
+#################################################################
+#    Instances
+#################################################################
+
+        :vendor1 rdf:type :ConfigurationItemType ;
+	 :title "Vendor".
+:logical__port5 rdf:type :ConfigurationItemType ;
+	 :title "Logical Port".
+:protocol6 rdf:type :ConfigurationItemType ;
+	 :title "Protocol".
+:product7 rdf:type :ConfigurationItemType ;
+	 :title "Product".
+:host8 rdf:type :ConfigurationItemType ;
+	 :title "Host".
+:router9 rdf:type :ConfigurationItemType ;
+	 :title "Router".
+:layer_3__network50 rdf:type :ConfigurationItemType ;
+	 :title "Layer 3 Network".
+:virtual_host52 rdf:type :ConfigurationItemType ;
+	 :title "virtual host".
+:operating__system53 rdf:type :ConfigurationItemType ;
+	 :title "Operating System".
+:c_p_u54 rdf:type :ConfigurationItemType ;
+	 :title "CPU".
+:s_s_d55 rdf:type :ConfigurationItemType ;
+	 :title "SSD".
+:application58 rdf:type :ConfigurationItemType ;
+	 :title "Application".
+:manufacturer75 rdf:type :ConfigurationItemType ;
+	 :title "Manufacturer".
+:service76 rdf:type :ConfigurationItemType ;
+	 :title "Service".
+:has_vendor1 rdf:type :RelationshipType ;
+	 :title "has vendor".
+:has_protocol9 rdf:type :RelationshipType ;
+	 :title "has protocol".
+:running_product11 rdf:type :RelationshipType ;
+	 :title "running product".
+:is_running_on_port12 rdf:type :RelationshipType ;
+	 :title "is running on port".
+:port_from13 rdf:type :RelationshipType ;
+	 :title "port from".
+:part_of_network73 rdf:type :RelationshipType ;
+	 :title "part of network".
+:network_includes74 rdf:type :RelationshipType ;
+	 :title "network includes".
+:installed_os89 rdf:type :RelationshipType ;
+	 :title "installed os".
+:running_os90 rdf:type :RelationshipType ;
+	 :title "running os".
+:associated_processor91 rdf:type :RelationshipType ;
+	 :title "associated processor".
+:processor_of92 rdf:type :RelationshipType ;
+	 :title "processor of".
+:has_storage93 rdf:type :RelationshipType ;
+	 :title "has storage".
+:has_installed99 rdf:type :RelationshipType ;
+	 :title "has installed".
+:has_manufacturer161 rdf:type :RelationshipType ;
+	 :title "has manufacturer".
+:running_service165 rdf:type :RelationshipType ;
+	 :title "running service".
+:running_on166 rdf:type :RelationshipType ;
+	 :title "running on".
+:61p_c_s__systemtechnik rdf:type :ConfigurationItem ;
+	 :title "PCS Systemtechnik";
+	 :has_ci_type :vendor1.
+:327ms_wbt_server rdf:type :ConfigurationItem ;
+	 :title "ms-wbt-server";
+	 :description "Microsoft Terminal Services";
+	 :has_ci_type :product7.
+:20protocol rdf:type :Attribute ;
+	 :title "protocol";
+	 :value "tcp".
+:21cpe rdf:type :Attribute ;
+	 :title "cpe";
+	 :value "cpe:/o:microsoft:windows".
+:22product rdf:type :Attribute ;
+	 :title "product";
+	 :value "ms-wbt-server".
+:3053389 rdf:type :ConfigurationItem ;
+	 :title "3389";
+	 :status "open";
+	 :has_attribute :20protocol;
+	 :has_attribute :21cpe;
+	 :has_attribute :22product;
+	 :has_ci_type :logical__port5.
+:451oracle__virtual_box_virtual__n_i_c rdf:type :ConfigurationItem ;
+	 :title "Oracle VirtualBox virtual NIC";
+	 :has_ci_type :vendor1.
+:487ssh rdf:type :ConfigurationItem ;
+	 :title "ssh";
+	 :description "OpenSSH 7.2p2 Ubuntu 4ubuntu2.10 OpenSSH 7.2p2 Ubuntu 4ubuntu2.10OpenSSH 7.2p2 Ubuntu 4ubuntu2.10 OpenSSH 7.2p2 Ubuntu 4ubuntu2.10OpenSSH 7.6p1 Ubuntu 4ubuntu0.3 OpenSSH 7.6p1 Ubuntu 4ubuntu0.3OpenSSH for_Windows_8.0 OpenSSH for_Windows_8.0OpenSSH 6.7p1 Debian 5+deb8u3 OpenSSH 6.7p1 Debian 5+deb8u3OpenSSH 6.7p1 Debian 5+deb8u3 OpenSSH 6.7p1 Debian 5+deb8u3OpenSSH 6.7p1 Debian 5+deb8u3";
+	 :has_ci_type :product7.
+:32protocol rdf:type :Attribute ;
+	 :title "protocol";
+	 :value "tcp".
+:33cpe rdf:type :Attribute ;
+	 :title "cpe";
+	 :value "cpe:/o:linux:linux_kernel".
+:34product rdf:type :Attribute ;
+	 :title "product";
+	 :value "ssh".
+:46522 rdf:type :ConfigurationItem ;
+	 :title "22";
+	 :status "open";
+	 :has_attribute :32protocol;
+	 :has_attribute :33cpe;
+	 :has_attribute :34product;
+	 :has_ci_type :logical__port5.
+:506tcp rdf:type :ConfigurationItem ;
+	 :title "tcp";
+	 :has_ci_type :protocol6.
+:517http rdf:type :ConfigurationItem ;
+	 :title "http";
+	 :description "nginx 1.10.3";
+	 :has_ci_type :product7.
+:35protocol rdf:type :Attribute ;
+	 :title "protocol";
+	 :value "tcp".
+:36cpe rdf:type :Attribute ;
+	 :title "cpe";
+	 :value "cpe:/o:linux:linux_kernel".
+:37product rdf:type :Attribute ;
+	 :title "product";
+	 :value "http".
+:49580 rdf:type :ConfigurationItem ;
+	 :title "80";
+	 :status "open";
+	 :has_attribute :35protocol;
+	 :has_attribute :36cpe;
+	 :has_attribute :37product;
+	 :has_ci_type :logical__port5.
+:38net_type rdf:type :Attribute ;
+	 :title "net type";
+	 :value "IPv4".
+:535010_0_2_024 rdf:type :ConfigurationItem ;
+	 :title "10.0.2.024";
+	 :has_attribute :38net_type;
+	 :has_ci_type :layer_3__network50.
+:39net_type rdf:type :Attribute ;
+	 :title "net type";
+	 :value "IPv4".
+:5550192_168_10_024 rdf:type :ConfigurationItem ;
+	 :title "192.168.10.024";
+	 :has_attribute :39net_type;
+	 :has_ci_type :layer_3__network50.
+:4vendor rdf:type :Attribute ;
+	 :title "vendor";
+	 :value "Oracle VirtualBox virtual NIC".
+:46icon_name rdf:type :Attribute ;
+	 :title "Icon name";
+	 :value "computer-vm".
+:47chassis rdf:type :Attribute ;
+	 :title "Chassis";
+	 :value "vm".
+:48machine__i_d rdf:type :Attribute ;
+	 :title "Machine ID";
+	 :value "3978c602d3df4b6ea1647d8da435d96b".
+:49boot__i_d rdf:type :Attribute ;
+	 :title "Boot ID";
+	 :value "20fbf9eb02bf43d38b65da0378b48df8".
+:50virtualization rdf:type :Attribute ;
+	 :title "Virtualization";
+	 :value "kvm".
+:51operating__system rdf:type :Attribute ;
+	 :title "Operating System";
+	 :value "Cumulus Linux".
+:52c_p_e__o_s__name rdf:type :Attribute ;
+	 :title "CPE OS Name";
+	 :value "cpe".
+:53kernel rdf:type :Attribute ;
+	 :title "Kernel";
+	 :value "Linux 4.1.0-cl-5-amd64".
+:54architecture rdf:type :Attribute ;
+	 :title "Architecture";
+	 :value "x86-64".
+:55os_family rdf:type :Attribute ;
+	 :title "os family";
+	 :value "Cumulus Linux".
+:57os_version rdf:type :Attribute ;
+	 :title "os version";
+	 :value "3.3.0".
+:58os_name rdf:type :Attribute ;
+	 :title "os name";
+	 :value "Cumulus Linux".
+:68c_p_u_cores rdf:type :Attribute ;
+	 :title "CPU cores";
+	 :value "1".
+:75c_p_u rdf:type :Attribute ;
+	 :title "CPU";
+	 :value "Intel(R) Core(TM) i5-3470S CPU @ 2.90GHz".
+:77c_p_u_frequency_unit rdf:type :Attribute ;
+	 :title "CPU frequency unit";
+	 :value "MHz".
+:79c_p_u_frequency rdf:type :Attribute ;
+	 :title "CPU frequency";
+	 :value "2893.695".
+:81c_p_u_speed rdf:type :Attribute ;
+	 :title "CPU speed";
+	 :value "2893.695 MHz".
+:6152router rdf:type :ConfigurationItem ;
+	 :title "router";
+	 :status "up";
+	 :os_family "Linux";
+	 :mac_address "08:00:27:12:F6:B5";
+	 :has_ipv4 "192.168.10.10";
+	 :has_attribute :4vendor;
+	 :has_attribute :46icon_name;
+	 :has_attribute :47chassis;
+	 :has_attribute :48machine__i_d;
+	 :has_attribute :49boot__i_d;
+	 :has_attribute :50virtualization;
+	 :has_attribute :51operating__system;
+	 :has_attribute :52c_p_e__o_s__name;
+	 :has_attribute :53kernel;
+	 :has_attribute :54architecture;
+	 :has_attribute :55os_family;
+	 :has_attribute :57os_version;
+	 :has_attribute :58os_name;
+	 :has_attribute :68c_p_u_cores;
+	 :has_attribute :75c_p_u;
+	 :has_attribute :77c_p_u_frequency_unit;
+	 :has_attribute :79c_p_u_frequency;
+	 :has_attribute :81c_p_u_speed;
+	 :has_ci_type :virtual_host52.
+:8vendor rdf:type :Attribute ;
+	 :title "vendor";
+	 :value "Oracle VirtualBox virtual NIC".
+:137icon_name rdf:type :Attribute ;
+	 :title "Icon name";
+	 :value "computer-vm".
+:138chassis rdf:type :Attribute ;
+	 :title "Chassis";
+	 :value "vm".
+:139machine__i_d rdf:type :Attribute ;
+	 :title "Machine ID";
+	 :value "3978c602d3df4b6ea1647d8da435d96b".
+:140boot__i_d rdf:type :Attribute ;
+	 :title "Boot ID";
+	 :value "1657fffab4d342a4822ece0f5258c2ff".
+:141virtualization rdf:type :Attribute ;
+	 :title "Virtualization";
+	 :value "kvm".
+:142operating__system rdf:type :Attribute ;
+	 :title "Operating System";
+	 :value "Cumulus Linux".
+:143c_p_e__o_s__name rdf:type :Attribute ;
+	 :title "CPE OS Name";
+	 :value "cpe".
+:144kernel rdf:type :Attribute ;
+	 :title "Kernel";
+	 :value "Linux 4.1.0-cl-5-amd64".
+:145architecture rdf:type :Attribute ;
+	 :title "Architecture";
+	 :value "x86-64".
+:146os_family rdf:type :Attribute ;
+	 :title "os family";
+	 :value "Cumulus Linux".
+:148os_version rdf:type :Attribute ;
+	 :title "os version";
+	 :value "3.3.0".
+:149os_name rdf:type :Attribute ;
+	 :title "os name";
+	 :value "Cumulus Linux".
+:159c_p_u_cores rdf:type :Attribute ;
+	 :title "CPU cores";
+	 :value "1".
+:166c_p_u rdf:type :Attribute ;
+	 :title "CPU";
+	 :value "Intel(R) Core(TM) i5-3470S CPU @ 2.90GHz".
+:168c_p_u_frequency_unit rdf:type :Attribute ;
+	 :title "CPU frequency unit";
+	 :value "MHz".
+:170c_p_u_frequency rdf:type :Attribute ;
+	 :title "CPU frequency";
+	 :value "2893.482".
+:172c_p_u_speed rdf:type :Attribute ;
+	 :title "CPU speed";
+	 :value "2893.482 MHz".
+:5652switch_of rdf:type :ConfigurationItem ;
+	 :title "switch-of";
+	 :status "up";
+	 :os_family "Linux";
+	 :mac_address "08:00:27:C7:45:8C";
+	 :has_ipv4 "192.168.10.20";
+	 :has_ipv4 "10.0.2.15";
+	 :has_attribute :8vendor;
+	 :has_attribute :137icon_name;
+	 :has_attribute :138chassis;
+	 :has_attribute :139machine__i_d;
+	 :has_attribute :140boot__i_d;
+	 :has_attribute :141virtualization;
+	 :has_attribute :142operating__system;
+	 :has_attribute :143c_p_e__o_s__name;
+	 :has_attribute :144kernel;
+	 :has_attribute :145architecture;
+	 :has_attribute :146os_family;
+	 :has_attribute :148os_version;
+	 :has_attribute :149os_name;
+	 :has_attribute :159c_p_u_cores;
+	 :has_attribute :166c_p_u;
+	 :has_attribute :168c_p_u_frequency_unit;
+	 :has_attribute :170c_p_u_frequency;
+	 :has_attribute :172c_p_u_speed;
+	 :has_ci_type :virtual_host52.
+:238version_number rdf:type :Attribute ;
+	 :title "version number";
+	 :value "3.3.0".
+:241i_d rdf:type :Attribute ;
+	 :title "ID";
+	 :value "cumulus-linux".
+:242i_d__l_i_k_e rdf:type :Attribute ;
+	 :title "ID_LIKE";
+	 :value "debian".
+:243c_p_e__n_a_m_e rdf:type :Attribute ;
+	 :title "CPE_NAME";
+	 :value "cpe:/o:cumulusnetworks:cumulus_linux:3.3.0".
+:244h_o_m_e__u_r_l rdf:type :Attribute ;
+	 :title "HOME_URL";
+	 :value "http://www.cumulusnetworks.com/".
+:245s_u_p_p_o_r_t__u_r_l rdf:type :Attribute ;
+	 :title "SUPPORT_URL";
+	 :value "http://support.cumulusnetworks.com/".
+:9053cumulus__linux rdf:type :ConfigurationItem ;
+	 :title "Cumulus Linux";
+	 :description "Cumulus Linux 3.3.0 Cumulus Linux 3.3.0Cumulus Linux 3.3.0 Cumulus Linux 3.3.0Cumulus Linux 3.3.0";
+	 :has_attribute :238version_number;
+	 :has_attribute :241i_d;
+	 :has_attribute :242i_d__l_i_k_e;
+	 :has_attribute :243c_p_e__n_a_m_e;
+	 :has_attribute :244h_o_m_e__u_r_l;
+	 :has_attribute :245s_u_p_p_o_r_t__u_r_l;
+	 :has_ci_type :operating__system53.
+:246architecture rdf:type :Attribute ;
+	 :title "Architecture";
+	 :value "x86_64".
+:247c_p_u_op_modes rdf:type :Attribute ;
+	 :title "CPU op-modes";
+	 :value "32-bit, 64-bit".
+:248byte__order rdf:type :Attribute ;
+	 :title "Byte Order";
+	 :value "Little Endian".
+:249c_p_us rdf:type :Attribute ;
+	 :title "CPUs";
+	 :value "1".
+:251on_line__c_p_us_list rdf:type :Attribute ;
+	 :title "On-line CPUs list";
+	 :value "0".
+:252threads_per_core rdf:type :Attribute ;
+	 :title "Threads per core";
+	 :value "1".
+:253cores_per_socket rdf:type :Attribute ;
+	 :title "Cores per socket";
+	 :value "1".
+:255vendor__i_d rdf:type :Attribute ;
+	 :title "Vendor ID";
+	 :value "GenuineIntel".
+:256c_p_u_family rdf:type :Attribute ;
+	 :title "CPU family";
+	 :value "6".
+:258stepping rdf:type :Attribute ;
+	 :title "Stepping";
+	 :value "9".
+:260c_p_u_frequency_unit rdf:type :Attribute ;
+	 :title "CPU frequency unit";
+	 :value "MHz".
+:262c_p_u_frequency rdf:type :Attribute ;
+	 :title "CPU frequency";
+	 :value "2892.518".
+:264c_p_u_speed rdf:type :Attribute ;
+	 :title "CPU speed";
+	 :value "2892.518 MHz".
+:265bogo_m_i_p_s rdf:type :Attribute ;
+	 :title "BogoMIPS";
+	 :value "5785.03".
+:266hypervisor_vendor rdf:type :Attribute ;
+	 :title "Hypervisor vendor";
+	 :value "KVM".
+:267virtualization_type rdf:type :Attribute ;
+	 :title "Virtualization type";
+	 :value "full".
+:268l1d_cache rdf:type :Attribute ;
+	 :title "L1d cache";
+	 :value "32K".
+:270l2_cache rdf:type :Attribute ;
+	 :title "L2 cache";
+	 :value "256K".
+:271l3_cache rdf:type :Attribute ;
+	 :title "L3 cache";
+	 :value "6144K".
+:9154intel_r__core_t_m_i5_3470_s__c_p_u__2_90_g_hz rdf:type :ConfigurationItem ;
+	 :title "IntelR CoreTM i5-3470S CPU  2.90GHz";
+	 :description "58 5858 5858";
+	 :has_attribute :246architecture;
+	 :has_attribute :247c_p_u_op_modes;
+	 :has_attribute :248byte__order;
+	 :has_attribute :249c_p_us;
+	 :has_attribute :251on_line__c_p_us_list;
+	 :has_attribute :252threads_per_core;
+	 :has_attribute :253cores_per_socket;
+	 :has_attribute :255vendor__i_d;
+	 :has_attribute :256c_p_u_family;
+	 :has_attribute :258stepping;
+	 :has_attribute :260c_p_u_frequency_unit;
+	 :has_attribute :262c_p_u_frequency;
+	 :has_attribute :264c_p_u_speed;
+	 :has_attribute :265bogo_m_i_p_s;
+	 :has_attribute :266hypervisor_vendor;
+	 :has_attribute :267virtualization_type;
+	 :has_attribute :268l1d_cache;
+	 :has_attribute :270l2_cache;
+	 :has_attribute :271l3_cache;
+	 :has_ci_type :c_p_u54.
+:298p_a_r_t_l_a_b_e_l rdf:type :Attribute ;
+	 :title "PARTLABEL";
+	 :value "CL-SYSTEM".
+:299p_a_r_t_u_u_i_d rdf:type :Attribute ;
+	 :title "PARTUUID";
+	 :value "66d4e76b-5ed9-4f6f-9276-0de078de411b".
+:300filesystem rdf:type :Attribute ;
+	 :title "Filesystem";
+	 :value "/dev/sda4".
+:3011_k_blocks rdf:type :Attribute ;
+	 :title "1K-blocks";
+	 :value "3929068".
+:302used rdf:type :Attribute ;
+	 :title "Used";
+	 :value "25%".
+:303available rdf:type :Attribute ;
+	 :title "Available";
+	 :value "2732572".
+:305mounted_on rdf:type :Attribute ;
+	 :title "Mounted on";
+	 :value "/".
+:306n_a_m_e rdf:type :Attribute ;
+	 :title "NAME";
+	 :value "sda4".
+:307m_a_j:_m_i_n rdf:type :Attribute ;
+	 :title "MAJ:MIN";
+	 :value "8:4".
+:308r_m rdf:type :Attribute ;
+	 :title "RM";
+	 :value "0".
+:309s_i_z_e rdf:type :Attribute ;
+	 :title "SIZE";
+	 :value "3.8G".
+:310r_o rdf:type :Attribute ;
+	 :title "RO";
+	 :value "0".
+:311m_o_u_n_t_p_o_i_n_t rdf:type :Attribute ;
+	 :title "MOUNTPOINT";
+	 :value "/boot/grub/i386-pc".
+:9455sda4 rdf:type :ConfigurationItem ;
+	 :title "sda4";
+	 :uuid "296fa317-f8fe-46a1-9e30-a8d64a36d1f8";
+	 :description "CL-SYSTEM part CL-SYSTEM partCL-SYSTEM part CL-SYSTEM partCL-SYSTEM part CL-SYSTEM partCL-SYSTEM part CL-SYSTEM partCL-SYSTEM part CL-SYSTEM partCL-SYSTEM part CL-SYSTEM partCL-SYSTEM part CL-SYSTEM partCL-SYSTEM part CL-SYSTEM partCL-SYSTEM part";
+	 :has_attribute :298p_a_r_t_l_a_b_e_l;
+	 :has_attribute :299p_a_r_t_u_u_i_d;
+	 :has_attribute :300filesystem;
+	 :has_attribute :3011_k_blocks;
+	 :has_attribute :302used;
+	 :has_attribute :303available;
+	 :has_attribute :305mounted_on;
+	 :has_attribute :306n_a_m_e;
+	 :has_attribute :307m_a_j:_m_i_n;
+	 :has_attribute :308r_m;
+	 :has_attribute :309s_i_z_e;
+	 :has_attribute :310r_o;
+	 :has_attribute :311m_o_u_n_t_p_o_i_n_t;
+	 :has_ci_type :s_s_d55.
+:312architecture rdf:type :Attribute ;
+	 :title "Architecture";
+	 :value "amd64".
+:9558python rdf:type :ConfigurationItem ;
+	 :title "python";
+	 :description "interactive 2.7.9-1 interactive 2.7.9-1interactive 2.7.9-1 interactive 2.7.9-1interactive 2.7.9-1";
+	 :has_attribute :312architecture;
+	 :has_ci_type :application58.
+:314architecture rdf:type :Attribute ;
+	 :title "Architecture";
+	 :value "amd64".
+:9758switchd rdf:type :ConfigurationItem ;
+	 :title "switchd";
+	 :description "Cumulus 1.0-cl3u12 Cumulus 1.0-cl3u12Cumulus 1.0-cl3u12 Cumulus 1.0-cl3u12Cumulus 1.0-cl3u12";
+	 :has_attribute :314architecture;
+	 :has_ci_type :application58.
+:315architecture rdf:type :Attribute ;
+	 :title "Architecture";
+	 :value "all".
+:9858portwd rdf:type :ConfigurationItem ;
+	 :title "portwd";
+	 :description "Port 1.2-cl3u6 Port 1.2-cl3u6Port 1.2-cl3u6 Port 1.2-cl3u6Port 1.2-cl3u6";
+	 :has_attribute :315architecture;
+	 :has_ci_type :application58.
+:317architecture rdf:type :Attribute ;
+	 :title "Architecture";
+	 :value "amd64".
+:10058lldpd rdf:type :ConfigurationItem ;
+	 :title "lldpd";
+	 :description "implementation 0.9.5-0-cl3u6 implementation 0.9.5-0-cl3u6implementation 0.9.5-0-cl3u6 implementation 0.9.5-0-cl3u6implementation 0.9.5-0-cl3u6";
+	 :has_attribute :317architecture;
+	 :has_ci_type :application58.
+:318architecture rdf:type :Attribute ;
+	 :title "Architecture";
+	 :value "amd64".
+:10158auditd rdf:type :ConfigurationItem ;
+	 :title "auditd";
+	 :description "User 1:2.4-1+b1 User 1:2.4-1+b1User 1:2.4-1+b1 User 1:2.4-1+b1User 1:2.4-1+b1";
+	 :has_attribute :318architecture;
+	 :has_ci_type :application58.
+:12vendor rdf:type :Attribute ;
+	 :title "vendor";
+	 :value "Oracle VirtualBox virtual NIC".
+:228icon_name rdf:type :Attribute ;
+	 :title "Icon name";
+	 :value "computer-vm".
+:229chassis rdf:type :Attribute ;
+	 :title "Chassis";
+	 :value "vm".
+:230machine__i_d rdf:type :Attribute ;
+	 :title "Machine ID";
+	 :value "3978c602d3df4b6ea1647d8da435d96b".
+:231boot__i_d rdf:type :Attribute ;
+	 :title "Boot ID";
+	 :value "856270df55734440bd01dcb084f2c9fa".
+:232virtualization rdf:type :Attribute ;
+	 :title "Virtualization";
+	 :value "kvm".
+:233operating__system rdf:type :Attribute ;
+	 :title "Operating System";
+	 :value "Cumulus Linux".
+:234c_p_e__o_s__name rdf:type :Attribute ;
+	 :title "CPE OS Name";
+	 :value "cpe".
+:235kernel rdf:type :Attribute ;
+	 :title "Kernel";
+	 :value "Linux 4.1.0-cl-5-amd64".
+:236architecture rdf:type :Attribute ;
+	 :title "Architecture";
+	 :value "x86-64".
+:237os_family rdf:type :Attribute ;
+	 :title "os family";
+	 :value "Cumulus Linux".
+:239os_version rdf:type :Attribute ;
+	 :title "os version";
+	 :value "3.3.0".
+:240os_name rdf:type :Attribute ;
+	 :title "os name";
+	 :value "Cumulus Linux".
+:250c_p_u_cores rdf:type :Attribute ;
+	 :title "CPU cores";
+	 :value "1".
+:257c_p_u rdf:type :Attribute ;
+	 :title "CPU";
+	 :value "Intel(R) Core(TM) i5-3470S CPU @ 2.90GHz".
+:259c_p_u_frequency_unit rdf:type :Attribute ;
+	 :title "CPU frequency unit";
+	 :value "MHz".
+:261c_p_u_frequency rdf:type :Attribute ;
+	 :title "CPU frequency";
+	 :value "2892.518".
+:263c_p_u_speed rdf:type :Attribute ;
+	 :title "CPU speed";
+	 :value "2892.518 MHz".
+:5752switch_dc rdf:type :ConfigurationItem ;
+	 :title "switch-dc";
+	 :status "up";
+	 :os_family "Linux";
+	 :mac_address "08:00:27:9C:71:2B";
+	 :has_ipv4 "192.168.10.30";
+	 :has_ipv4 "10.0.2.15";
+	 :has_attribute :12vendor;
+	 :has_attribute :228icon_name;
+	 :has_attribute :229chassis;
+	 :has_attribute :230machine__i_d;
+	 :has_attribute :231boot__i_d;
+	 :has_attribute :232virtualization;
+	 :has_attribute :233operating__system;
+	 :has_attribute :234c_p_e__o_s__name;
+	 :has_attribute :235kernel;
+	 :has_attribute :236architecture;
+	 :has_attribute :237os_family;
+	 :has_attribute :239os_version;
+	 :has_attribute :240os_name;
+	 :has_attribute :250c_p_u_cores;
+	 :has_attribute :257c_p_u;
+	 :has_attribute :259c_p_u_frequency_unit;
+	 :has_attribute :261c_p_u_frequency;
+	 :has_attribute :263c_p_u_speed;
+	 :has_ci_type :virtual_host52.
+:321version_number rdf:type :Attribute ;
+	 :title "version number";
+	 :value "10.0.19042 N/A Build 19042".
+:323configuration rdf:type :Attribute ;
+	 :title "configuration";
+	 :value "Standalone Workstation".
+:324build_type rdf:type :Attribute ;
+	 :title "build type";
+	 :value "Multiprocessor Free".
+:325product_id rdf:type :Attribute ;
+	 :title "product id";
+	 :value "00329-20000-00001-AA186".
+:326install_date rdf:type :Attribute ;
+	 :title "install date";
+	 :value "1/29/2021, 7:05:43 PM".
+:327boot_device rdf:type :Attribute ;
+	 :title "boot device";
+	 :value "DeviceHarddiskVolume2".
+:328b_i_o_s_version rdf:type :Attribute ;
+	 :title "BIOS version";
+	 :value "innotek GmbH VirtualBox, 12/1/2006".
+:329manufacturer rdf:type :Attribute ;
+	 :title "manufacturer";
+	 :value "Microsoft Corporation".
+:10353microsoft__windows_10__enterprise__evaluation rdf:type :ConfigurationItem ;
+	 :title "Microsoft Windows 10 Enterprise Evaluation";
+	 :has_attribute :321version_number;
+	 :has_attribute :323configuration;
+	 :has_attribute :324build_type;
+	 :has_attribute :325product_id;
+	 :has_attribute :326install_date;
+	 :has_attribute :327boot_device;
+	 :has_attribute :328b_i_o_s_version;
+	 :has_attribute :329manufacturer;
+	 :has_ci_type :operating__system53.
+:10475microsoft__corporation rdf:type :ConfigurationItem ;
+	 :title "Microsoft Corporation";
+	 :has_ci_type :manufacturer75.
+:330caption rdf:type :Attribute ;
+	 :title "Caption";
+	 :value "Windows Audio Endpoint Builder".
+:331display_name rdf:type :Attribute ;
+	 :title "DisplayName";
+	 :value "Windows Audio Endpoint Builder".
+:332name rdf:type :Attribute ;
+	 :title "Name";
+	 :value "AudioEndpointBuilder".
+:333process_id rdf:type :Attribute ;
+	 :title "ProcessId";
+	 :value "1044".
+:10576audio_endpoint_builder rdf:type :ConfigurationItem ;
+	 :title "AudioEndpointBuilder";
+	 :description "Manages audio devices for the Windows Audio service. If this service is stopped, audio devices and effects will not function properly. If this service is disabled, any services that explicitly depend on it will fail to start";
+	 :status "OK";
+	 :has_attribute :330caption;
+	 :has_attribute :331display_name;
+	 :has_attribute :332name;
+	 :has_attribute :333process_id;
+	 :has_ci_type :service76.
+:334caption rdf:type :Attribute ;
+	 :title "Caption";
+	 :value "Windows Audio".
+:335display_name rdf:type :Attribute ;
+	 :title "DisplayName";
+	 :value "Windows Audio".
+:336name rdf:type :Attribute ;
+	 :title "Name";
+	 :value "Audiosrv".
+:337process_id rdf:type :Attribute ;
+	 :title "ProcessId";
+	 :value "1752".
+:10676audiosrv rdf:type :ConfigurationItem ;
+	 :title "Audiosrv";
+	 :description "Manages audio for Windows-based programs. If this service is stopped, audio devices and effects will not function properly. If this service is disabled, any services that explicitly depend on it will fail to start";
+	 :status "OK";
+	 :has_attribute :334caption;
+	 :has_attribute :335display_name;
+	 :has_attribute :336name;
+	 :has_attribute :337process_id;
+	 :has_ci_type :service76.
+:338caption rdf:type :Attribute ;
+	 :title "Caption";
+	 :value "Base Filtering Engine".
+:339display_name rdf:type :Attribute ;
+	 :title "DisplayName";
+	 :value "Base Filtering Engine".
+:340name rdf:type :Attribute ;
+	 :title "Name";
+	 :value "BFE".
+:341process_id rdf:type :Attribute ;
+	 :title "ProcessId";
+	 :value "1380".
+:10776b_f_e rdf:type :ConfigurationItem ;
+	 :title "BFE";
+	 :description "The Base Filtering Engine (BFE) is a service that manages firewall and Internet Protocol security (IPsec) policies and implements user mode filtering. Stopping or disabling the BFE service will significantly reduce the security of the system. It will also result in unpredictable behavior in IPsec management and firewall applications.";
+	 :status "OK";
+	 :has_attribute :338caption;
+	 :has_attribute :339display_name;
+	 :has_attribute :340name;
+	 :has_attribute :341process_id;
+	 :has_ci_type :service76.
+:342caption rdf:type :Attribute ;
+	 :title "Caption";
+	 :value "Background Tasks Infrastructure Service".
+:343display_name rdf:type :Attribute ;
+	 :title "DisplayName";
+	 :value "Background Tasks Infrastructure Service".
+:344name rdf:type :Attribute ;
+	 :title "Name";
+	 :value "BrokerInfrastructure".
+:345process_id rdf:type :Attribute ;
+	 :title "ProcessId";
+	 :value "752".
+:10876broker_infrastructure rdf:type :ConfigurationItem ;
+	 :title "BrokerInfrastructure";
+	 :description "Windows infrastructure service that controls which background tasks can run on the system.";
+	 :status "OK";
+	 :has_attribute :342caption;
+	 :has_attribute :343display_name;
+	 :has_attribute :344name;
+	 :has_attribute :345process_id;
+	 :has_ci_type :service76.
+:346caption rdf:type :Attribute ;
+	 :title "Caption";
+	 :value "Connected Devices Platform Service".
+:347display_name rdf:type :Attribute ;
+	 :title "DisplayName";
+	 :value "Connected Devices Platform Service".
+:348name rdf:type :Attribute ;
+	 :title "Name";
+	 :value "CDPSvc".
+:349process_id rdf:type :Attribute ;
+	 :title "ProcessId";
+	 :value "1140".
+:10976c_d_p_svc rdf:type :ConfigurationItem ;
+	 :title "CDPSvc";
+	 :description "This service is used for Connected Devices Platform scenarios";
+	 :status "OK";
+	 :has_attribute :346caption;
+	 :has_attribute :347display_name;
+	 :has_attribute :348name;
+	 :has_attribute :349process_id;
+	 :has_ci_type :service76.
+:350caption rdf:type :Attribute ;
+	 :title "Caption";
+	 :value "Certificate Propagation".
+:351display_name rdf:type :Attribute ;
+	 :title "DisplayName";
+	 :value "Certificate Propagation".
+:352name rdf:type :Attribute ;
+	 :title "Name";
+	 :value "CertPropSvc".
+:353process_id rdf:type :Attribute ;
+	 :title "ProcessId";
+	 :value "1720".
+:11076cert_prop_svc rdf:type :ConfigurationItem ;
+	 :title "CertPropSvc";
+	 :description "Copies user certificates and root certificates from smart cards into the current user's certificate store, detects when a smart card is inserted into a smart card reader, and, if needed, installs the smart card Plug and Play minidriver.";
+	 :status "OK";
+	 :has_attribute :350caption;
+	 :has_attribute :351display_name;
+	 :has_attribute :352name;
+	 :has_attribute :353process_id;
+	 :has_ci_type :service76.
+:354caption rdf:type :Attribute ;
+	 :title "Caption";
+	 :value "CoreMessaging".
+:355display_name rdf:type :Attribute ;
+	 :title "DisplayName";
+	 :value "CoreMessaging".
+:356name rdf:type :Attribute ;
+	 :title "Name";
+	 :value "CoreMessagingRegistrar 496".
+:357process_id rdf:type :Attribute ;
+	 :title "ProcessId";
+	 :value "OK".
+:11176core_messaging_registrar_496 rdf:type :ConfigurationItem ;
+	 :title "CoreMessagingRegistrar 496";
+	 :description "Manages communication between system components.";
+	 :has_attribute :354caption;
+	 :has_attribute :355display_name;
+	 :has_attribute :356name;
+	 :has_attribute :357process_id;
+	 :has_ci_type :service76.
+:358caption rdf:type :Attribute ;
+	 :title "Caption";
+	 :value "Cryptographic Services".
+:359display_name rdf:type :Attribute ;
+	 :title "DisplayName";
+	 :value "Cryptographic Services".
+:360name rdf:type :Attribute ;
+	 :title "Name";
+	 :value "CryptSvc".
+:361process_id rdf:type :Attribute ;
+	 :title "ProcessId";
+	 :value "1396".
+:11276crypt_svc rdf:type :ConfigurationItem ;
+	 :title "CryptSvc";
+	 :description "Provides three management services: Catalog Database Service, which confirms the signatures of Windows files and allows new programs to be installed; Protected Root Service, which adds and removes Trusted Root Certification Authority certificates from this computer; and Automatic Root Certificate Update Service, which retrieves root certificates from Windows Update and enable scenarios such as SSL. If this service is stopped, these management services will not function properly. If this service is disabled, any services that explicitly depend on it will fail to start.";
+	 :status "OK";
+	 :has_attribute :358caption;
+	 :has_attribute :359display_name;
+	 :has_attribute :360name;
+	 :has_attribute :361process_id;
+	 :has_ci_type :service76.
+:362caption rdf:type :Attribute ;
+	 :title "Caption";
+	 :value "DCOM Server Process Launcher".
+:363display_name rdf:type :Attribute ;
+	 :title "DisplayName";
+	 :value "DCOM Server Process Launcher".
+:364name rdf:type :Attribute ;
+	 :title "Name";
+	 :value "DcomLaunch".
+:365process_id rdf:type :Attribute ;
+	 :title "ProcessId";
+	 :value "752".
+:11376dcom_launch rdf:type :ConfigurationItem ;
+	 :title "DcomLaunch";
+	 :description "The DCOMLAUNCH service launches COM and DCOM servers in response to object activation requests. If this service is stopped or disabled, programs using COM or DCOM will not function properly. It is strongly recommended that you have the DCOMLAUNCH service running.";
+	 :status "OK";
+	 :has_attribute :362caption;
+	 :has_attribute :363display_name;
+	 :has_attribute :364name;
+	 :has_attribute :365process_id;
+	 :has_ci_type :service76.
+:366caption rdf:type :Attribute ;
+	 :title "Caption";
+	 :value "DHCP Client".
+:367display_name rdf:type :Attribute ;
+	 :title "DisplayName";
+	 :value "DHCP Client".
+:368name rdf:type :Attribute ;
+	 :title "Name";
+	 :value "Dhcp".
+:369process_id rdf:type :Attribute ;
+	 :title "ProcessId";
+	 :value "1064".
+:11476dhcp rdf:type :ConfigurationItem ;
+	 :title "Dhcp";
+	 :description "Registers and updates IP addresses and DNS records for this computer. If this service is stopped, this computer will not receive dynamic IP addresses and DNS updates. If this service is disabled, any services that explicitly depend on it will fail to start.";
+	 :status "OK";
+	 :has_attribute :366caption;
+	 :has_attribute :367display_name;
+	 :has_attribute :368name;
+	 :has_attribute :369process_id;
+	 :has_ci_type :service76.
+:16vendor rdf:type :Attribute ;
+	 :title "vendor";
+	 :value "Oracle VirtualBox virtual NIC".
+:319hostname rdf:type :Attribute ;
+	 :title "hostname";
+	 :value "windows-pc".
+:320os_name rdf:type :Attribute ;
+	 :title "os name";
+	 :value "Microsoft Windows 10 Enterprise Evaluation".
+:322os_version rdf:type :Attribute ;
+	 :title "os version";
+	 :value "10.0.19042 N/A Build 19042".
+:6252windows_pc rdf:type :ConfigurationItem ;
+	 :title "windows-pc";
+	 :serial_number "0";
+	 :status "up";
+	 :os_family "Windows";
+	 :mac_address "08:00:27:4C:E3:56";
+	 :has_ipv4 "192.168.10.21";
+	 :has_attribute :16vendor;
+	 :has_attribute :319hostname;
+	 :has_attribute :320os_name;
+	 :has_attribute :322os_version;
+	 :has_ci_type :virtual_host52.
+:379i_d rdf:type :Attribute ;
+	 :title "ID";
+	 :value "ubuntu".
+:380i_d__l_i_k_e rdf:type :Attribute ;
+	 :title "ID_LIKE";
+	 :value "debian".
+:382version_number rdf:type :Attribute ;
+	 :title "version number";
+	 :value "18.04".
+:384h_o_m_e__u_r_l rdf:type :Attribute ;
+	 :title "HOME_URL";
+	 :value "https://www.ubuntu.com/".
+:385s_u_p_p_o_r_t__u_r_l rdf:type :Attribute ;
+	 :title "SUPPORT_URL";
+	 :value "https://help.ubuntu.com/".
+:386b_u_g__r_e_p_o_r_t__u_r_l rdf:type :Attribute ;
+	 :title "BUG_REPORT_URL";
+	 :value "https://bugs.launchpad.net/ubuntu/".
+:387p_r_i_v_a_c_y__p_o_l_i_c_y__u_r_l rdf:type :Attribute ;
+	 :title "PRIVACY_POLICY_URL";
+	 :value "https://www.ubuntu.com/legal/terms-and-policies/privacy-policy".
+:388v_e_r_s_i_o_n__c_o_d_e_n_a_m_e rdf:type :Attribute ;
+	 :title "VERSION_CODENAME";
+	 :value "bionic".
+:389u_b_u_n_t_u__c_o_d_e_n_a_m_e rdf:type :Attribute ;
+	 :title "UBUNTU_CODENAME";
+	 :value "bionic".
+:11653ubuntu_18_04_5__l_t_s rdf:type :ConfigurationItem ;
+	 :title "Ubuntu 18.04.5 LTS";
+	 :description "18.04.5 LTS (Bionic Beaver)";
+	 :has_attribute :379i_d;
+	 :has_attribute :380i_d__l_i_k_e;
+	 :has_attribute :382version_number;
+	 :has_attribute :384h_o_m_e__u_r_l;
+	 :has_attribute :385s_u_p_p_o_r_t__u_r_l;
+	 :has_attribute :386b_u_g__r_e_p_o_r_t__u_r_l;
+	 :has_attribute :387p_r_i_v_a_c_y__p_o_l_i_c_y__u_r_l;
+	 :has_attribute :388v_e_r_s_i_o_n__c_o_d_e_n_a_m_e;
+	 :has_attribute :389u_b_u_n_t_u__c_o_d_e_n_a_m_e;
+	 :has_ci_type :operating__system53.
+:445p_a_r_t_u_u_i_d rdf:type :Attribute ;
+	 :title "PARTUUID";
+	 :value "814ae3a1-03".
+:446filesystem rdf:type :Attribute ;
+	 :title "Filesystem";
+	 :value "/dev/sda3".
+:4471_k_blocks rdf:type :Attribute ;
+	 :title "1K-blocks";
+	 :value "129125532".
+:448used rdf:type :Attribute ;
+	 :title "Used";
+	 :value "6%".
+:449available rdf:type :Attribute ;
+	 :title "Available";
+	 :value "116058696".
+:451mounted_on rdf:type :Attribute ;
+	 :title "Mounted on";
+	 :value "/".
+:452n_a_m_e rdf:type :Attribute ;
+	 :title "NAME";
+	 :value "sda3".
+:453m_a_j:_m_i_n rdf:type :Attribute ;
+	 :title "MAJ:MIN";
+	 :value "8:3".
+:454r_m rdf:type :Attribute ;
+	 :title "RM";
+	 :value "0".
+:455s_i_z_e rdf:type :Attribute ;
+	 :title "SIZE";
+	 :value "125.6G".
+:456r_o rdf:type :Attribute ;
+	 :title "RO";
+	 :value "0".
+:457m_o_u_n_t_p_o_i_n_t rdf:type :Attribute ;
+	 :title "MOUNTPOINT";
+	 :value "/".
+:12055sda3 rdf:type :ConfigurationItem ;
+	 :title "sda3";
+	 :uuid "b7edea04-0eb0-4606-af2f-9b74d393ad79";
+	 :description "part partpart partpart";
+	 :has_attribute :445p_a_r_t_u_u_i_d;
+	 :has_attribute :446filesystem;
+	 :has_attribute :4471_k_blocks;
+	 :has_attribute :448used;
+	 :has_attribute :449available;
+	 :has_attribute :451mounted_on;
+	 :has_attribute :452n_a_m_e;
+	 :has_attribute :453m_a_j:_m_i_n;
+	 :has_attribute :454r_m;
+	 :has_attribute :455s_i_z_e;
+	 :has_attribute :456r_o;
+	 :has_attribute :457m_o_u_n_t_p_o_i_n_t;
+	 :has_ci_type :s_s_d55.
+:458architecture rdf:type :Attribute ;
+	 :title "Architecture";
+	 :value "amd64".
+:12158python3 rdf:type :ConfigurationItem ;
+	 :title "python3";
+	 :description "interactive 3.6.7-1~18.04";
+	 :has_attribute :458architecture;
+	 :has_ci_type :application58.
+:461architecture rdf:type :Attribute ;
+	 :title "Architecture";
+	 :value "amd64".
+:12458irqbalance rdf:type :ConfigurationItem ;
+	 :title "irqbalance";
+	 :description "Daemon 1.3.0-0.1ubuntu0.18.04.1";
+	 :has_attribute :461architecture;
+	 :has_ci_type :application58.
+:23hostname rdf:type :Attribute ;
+	 :title "hostname";
+	 :value "ubuntu-pc".
+:370icon_name rdf:type :Attribute ;
+	 :title "Icon name";
+	 :value "computer-vm".
+:371chassis rdf:type :Attribute ;
+	 :title "Chassis";
+	 :value "vm".
+:372machine__i_d rdf:type :Attribute ;
+	 :title "Machine ID";
+	 :value "2ee2cdc15b964490aa29b72b9808a579".
+:373boot__i_d rdf:type :Attribute ;
+	 :title "Boot ID";
+	 :value "657798635c9e40978de53e21a44a053d".
+:374virtualization rdf:type :Attribute ;
+	 :title "Virtualization";
+	 :value "oracle".
+:375operating__system rdf:type :Attribute ;
+	 :title "Operating System";
+	 :value "Ubuntu 18.04.5 LTS".
+:376kernel rdf:type :Attribute ;
+	 :title "Kernel";
+	 :value "Linux 4.15.0-130-generic".
+:377architecture rdf:type :Attribute ;
+	 :title "Architecture";
+	 :value "x86-64".
+:378os_family rdf:type :Attribute ;
+	 :title "os family";
+	 :value "Ubuntu".
+:381os_name rdf:type :Attribute ;
+	 :title "os name";
+	 :value "Ubuntu 18.04.5 LTS".
+:383os_version rdf:type :Attribute ;
+	 :title "os version";
+	 :value "18.04".
+:394c_p_u_cores rdf:type :Attribute ;
+	 :title "CPU cores";
+	 :value "2".
+:402c_p_u rdf:type :Attribute ;
+	 :title "CPU";
+	 :value "Intel(R) Core(TM) i5-3470S CPU @ 2.90GHz".
+:404c_p_u_frequency_unit rdf:type :Attribute ;
+	 :title "CPU frequency unit";
+	 :value "MHz".
+:406c_p_u_frequency rdf:type :Attribute ;
+	 :title "CPU frequency";
+	 :value "2893.420".
+:408c_p_u_speed rdf:type :Attribute ;
+	 :title "CPU speed";
+	 :value "2893.420 MHz".
+:5852ubuntu_pc rdf:type :ConfigurationItem ;
+	 :title "ubuntu-pc";
+	 :status "up";
+	 :os_family "Linux";
+	 :mac_address "08:00:27:73:B2:EB";
+	 :has_ipv4 "192.168.10.22";
+	 :has_ipv4 "10.0.2.15";
+	 :has_attribute :23hostname;
+	 :has_attribute :370icon_name;
+	 :has_attribute :371chassis;
+	 :has_attribute :372machine__i_d;
+	 :has_attribute :373boot__i_d;
+	 :has_attribute :374virtualization;
+	 :has_attribute :375operating__system;
+	 :has_attribute :376kernel;
+	 :has_attribute :377architecture;
+	 :has_attribute :378os_family;
+	 :has_attribute :381os_name;
+	 :has_attribute :383os_version;
+	 :has_attribute :394c_p_u_cores;
+	 :has_attribute :402c_p_u;
+	 :has_attribute :404c_p_u_frequency_unit;
+	 :has_attribute :406c_p_u_frequency;
+	 :has_attribute :408c_p_u_speed;
+	 :has_ci_type :virtual_host52.
+:522filesystem rdf:type :Attribute ;
+	 :title "Filesystem";
+	 :value "udev".
+:5231_k_blocks rdf:type :Attribute ;
+	 :title "1K-blocks";
+	 :value "369544".
+:524used rdf:type :Attribute ;
+	 :title "Used";
+	 :value "0%".
+:525available rdf:type :Attribute ;
+	 :title "Available";
+	 :value "369544".
+:527mounted_on rdf:type :Attribute ;
+	 :title "Mounted on";
+	 :value "/dev".
+:528n_a_m_e rdf:type :Attribute ;
+	 :title "NAME";
+	 :value "sdb".
+:529m_a_j:_m_i_n rdf:type :Attribute ;
+	 :title "MAJ:MIN";
+	 :value "8:16".
+:530r_m rdf:type :Attribute ;
+	 :title "RM";
+	 :value "0".
+:531s_i_z_e rdf:type :Attribute ;
+	 :title "SIZE";
+	 :value "10M".
+:532r_o rdf:type :Attribute ;
+	 :title "RO";
+	 :value "0".
+:521m_o_u_n_t_p_o_i_n_t rdf:type :Attribute ;
+	 :title "MOUNTPOINT";
+	 :value "/".
+:12955sdb rdf:type :ConfigurationItem ;
+	 :title "sdb";
+	 :uuid "2021-01-05-08-24-18-00";
+	 :description "cidata disk cidata diskcidata part";
+	 :has_attribute :522filesystem;
+	 :has_attribute :5231_k_blocks;
+	 :has_attribute :524used;
+	 :has_attribute :525available;
+	 :has_attribute :527mounted_on;
+	 :has_attribute :528n_a_m_e;
+	 :has_attribute :529m_a_j:_m_i_n;
+	 :has_attribute :530r_m;
+	 :has_attribute :531s_i_z_e;
+	 :has_attribute :532r_o;
+	 :has_attribute :521m_o_u_n_t_p_o_i_n_t;
+	 :has_ci_type :s_s_d55.
+:27vendor rdf:type :Attribute ;
+	 :title "vendor";
+	 :value "Oracle VirtualBox virtual NIC".
+:462icon_name rdf:type :Attribute ;
+	 :title "Icon name";
+	 :value "computer-vm".
+:463chassis rdf:type :Attribute ;
+	 :title "Chassis";
+	 :value "vm".
+:464machine__i_d rdf:type :Attribute ;
+	 :title "Machine ID";
+	 :value "88193959944b46b0bb70526bbfb60bac".
+:465boot__i_d rdf:type :Attribute ;
+	 :title "Boot ID";
+	 :value "0e20765c692e4e47b6f154a6b11a5b50".
+:466virtualization rdf:type :Attribute ;
+	 :title "Virtualization";
+	 :value "oracle".
+:467operating__system rdf:type :Attribute ;
+	 :title "Operating System";
+	 :value "Ubuntu 16.04.7 LTS".
+:468kernel rdf:type :Attribute ;
+	 :title "Kernel";
+	 :value "Linux 4.4.0-206-generic".
+:469architecture rdf:type :Attribute ;
+	 :title "Architecture";
+	 :value "x86-64".
+:470os_family rdf:type :Attribute ;
+	 :title "os family";
+	 :value "Ubuntu".
+:473os_name rdf:type :Attribute ;
+	 :title "os name";
+	 :value "Ubuntu 16.04.7 LTS".
+:475os_version rdf:type :Attribute ;
+	 :title "os version";
+	 :value "16.04".
+:485c_p_u_cores rdf:type :Attribute ;
+	 :title "CPU cores";
+	 :value "2".
+:493c_p_u rdf:type :Attribute ;
+	 :title "CPU";
+	 :value "Intel(R) Core(TM) i5-3470S CPU @ 2.90GHz".
+:495c_p_u_frequency_unit rdf:type :Attribute ;
+	 :title "CPU frequency unit";
+	 :value "MHz".
+:497c_p_u_frequency rdf:type :Attribute ;
+	 :title "CPU frequency";
+	 :value "2893.420".
+:499c_p_u_speed rdf:type :Attribute ;
+	 :title "CPU speed";
+	 :value "2893.420 MHz".
+:5952db_server rdf:type :ConfigurationItem ;
+	 :title "db-server";
+	 :status "up";
+	 :os_family "Linux";
+	 :mac_address "08:00:27:6B:4E:46";
+	 :has_ipv4 "192.168.10.31";
+	 :has_ipv4 "10.0.2.15";
+	 :has_attribute :27vendor;
+	 :has_attribute :462icon_name;
+	 :has_attribute :463chassis;
+	 :has_attribute :464machine__i_d;
+	 :has_attribute :465boot__i_d;
+	 :has_attribute :466virtualization;
+	 :has_attribute :467operating__system;
+	 :has_attribute :468kernel;
+	 :has_attribute :469architecture;
+	 :has_attribute :470os_family;
+	 :has_attribute :473os_name;
+	 :has_attribute :475os_version;
+	 :has_attribute :485c_p_u_cores;
+	 :has_attribute :493c_p_u;
+	 :has_attribute :495c_p_u_frequency_unit;
+	 :has_attribute :497c_p_u_frequency;
+	 :has_attribute :499c_p_u_speed;
+	 :has_ci_type :virtual_host52.
+:546i_d rdf:type :Attribute ;
+	 :title "ID";
+	 :value "ubuntu".
+:547i_d__l_i_k_e rdf:type :Attribute ;
+	 :title "ID_LIKE";
+	 :value "debian".
+:549version_number rdf:type :Attribute ;
+	 :title "version number";
+	 :value "16.04".
+:551h_o_m_e__u_r_l rdf:type :Attribute ;
+	 :title "HOME_URL";
+	 :value "http://www.ubuntu.com/".
+:552s_u_p_p_o_r_t__u_r_l rdf:type :Attribute ;
+	 :title "SUPPORT_URL";
+	 :value "http://help.ubuntu.com/".
+:553b_u_g__r_e_p_o_r_t__u_r_l rdf:type :Attribute ;
+	 :title "BUG_REPORT_URL";
+	 :value "http://bugs.launchpad.net/ubuntu/".
+:554v_e_r_s_i_o_n__c_o_d_e_n_a_m_e rdf:type :Attribute ;
+	 :title "VERSION_CODENAME";
+	 :value "xenial".
+:555u_b_u_n_t_u__c_o_d_e_n_a_m_e rdf:type :Attribute ;
+	 :title "UBUNTU_CODENAME";
+	 :value "xenial".
+:13553ubuntu_16_04_7__l_t_s rdf:type :ConfigurationItem ;
+	 :title "Ubuntu 16.04.7 LTS";
+	 :description "16.04.7 LTS (Xenial Xerus) 16.04.7 LTS (Xenial Xerus)16.04.7 LTS (Xenial Xerus)";
+	 :has_attribute :546i_d;
+	 :has_attribute :547i_d__l_i_k_e;
+	 :has_attribute :549version_number;
+	 :has_attribute :551h_o_m_e__u_r_l;
+	 :has_attribute :552s_u_p_p_o_r_t__u_r_l;
+	 :has_attribute :553b_u_g__r_e_p_o_r_t__u_r_l;
+	 :has_attribute :554v_e_r_s_i_o_n__c_o_d_e_n_a_m_e;
+	 :has_attribute :555u_b_u_n_t_u__c_o_d_e_n_a_m_e;
+	 :has_ci_type :operating__system53.
+:556architecture rdf:type :Attribute ;
+	 :title "Architecture";
+	 :value "x86_64".
+:557c_p_u_op_modes rdf:type :Attribute ;
+	 :title "CPU op-modes";
+	 :value "32-bit, 64-bit".
+:558byte__order rdf:type :Attribute ;
+	 :title "Byte Order";
+	 :value "Little Endian".
+:559c_p_us rdf:type :Attribute ;
+	 :title "CPUs";
+	 :value "1".
+:561on_line__c_p_us_list rdf:type :Attribute ;
+	 :title "On-line CPUs list";
+	 :value "0,1".
+:562threads_per_core rdf:type :Attribute ;
+	 :title "Threads per core";
+	 :value "1".
+:563cores_per_socket rdf:type :Attribute ;
+	 :title "Cores per socket";
+	 :value "2".
+:565n_u_m_a_nodes rdf:type :Attribute ;
+	 :title "NUMA nodes";
+	 :value "0,1".
+:566vendor__i_d rdf:type :Attribute ;
+	 :title "Vendor ID";
+	 :value "GenuineIntel".
+:567c_p_u_family rdf:type :Attribute ;
+	 :title "CPU family";
+	 :value "6".
+:569stepping rdf:type :Attribute ;
+	 :title "Stepping";
+	 :value "9".
+:571c_p_u_frequency_unit rdf:type :Attribute ;
+	 :title "CPU frequency unit";
+	 :value "MHz".
+:573c_p_u_frequency rdf:type :Attribute ;
+	 :title "CPU frequency";
+	 :value "2893.420".
+:575c_p_u_speed rdf:type :Attribute ;
+	 :title "CPU speed";
+	 :value "2893.420 MHz".
+:576bogo_m_i_p_s rdf:type :Attribute ;
+	 :title "BogoMIPS";
+	 :value "5786.84".
+:577hypervisor_vendor rdf:type :Attribute ;
+	 :title "Hypervisor vendor";
+	 :value "KVM".
+:578virtualization_type rdf:type :Attribute ;
+	 :title "Virtualization type";
+	 :value "full".
+:579l1d_cache rdf:type :Attribute ;
+	 :title "L1d cache";
+	 :value "32K".
+:581l2_cache rdf:type :Attribute ;
+	 :title "L2 cache";
+	 :value "256K".
+:582l3_cache rdf:type :Attribute ;
+	 :title "L3 cache";
+	 :value "6144K".
+:584flags rdf:type :Attribute ;
+	 :title "Flags";
+	 :value "fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush mmx fxsr sse sse2 ht syscall nx rdtscp lm constant_tsc rep_good nopl xtopology nonstop_tsc tsc_known_freq pni pclmulqdq ssse3 cx16 pcid sse4_1 sse4_2 x2apic popcnt aes xsave avx rdrand hypervisor lahf_lm kaiser fsgsbase md_clear flush_l1d".
+:13654intel_r__core_t_m_i5_3470_s__c_p_u__2_90_g_hz rdf:type :ConfigurationItem ;
+	 :title "IntelR CoreTM i5-3470S CPU  2.90GHz";
+	 :description "58 5858 5858";
+	 :has_attribute :556architecture;
+	 :has_attribute :557c_p_u_op_modes;
+	 :has_attribute :558byte__order;
+	 :has_attribute :559c_p_us;
+	 :has_attribute :561on_line__c_p_us_list;
+	 :has_attribute :562threads_per_core;
+	 :has_attribute :563cores_per_socket;
+	 :has_attribute :565n_u_m_a_nodes;
+	 :has_attribute :566vendor__i_d;
+	 :has_attribute :567c_p_u_family;
+	 :has_attribute :569stepping;
+	 :has_attribute :571c_p_u_frequency_unit;
+	 :has_attribute :573c_p_u_frequency;
+	 :has_attribute :575c_p_u_speed;
+	 :has_attribute :576bogo_m_i_p_s;
+	 :has_attribute :577hypervisor_vendor;
+	 :has_attribute :578virtualization_type;
+	 :has_attribute :579l1d_cache;
+	 :has_attribute :581l2_cache;
+	 :has_attribute :582l3_cache;
+	 :has_attribute :584flags;
+	 :has_ci_type :c_p_u54.
+:597p_a_r_t_u_u_i_d rdf:type :Attribute ;
+	 :title "PARTUUID";
+	 :value "aab29ad1-01".
+:598filesystem rdf:type :Attribute ;
+	 :title "Filesystem";
+	 :value "/dev/sda1".
+:5991_k_blocks rdf:type :Attribute ;
+	 :title "1K-blocks";
+	 :value "10098468".
+:600used rdf:type :Attribute ;
+	 :title "Used";
+	 :value "14%".
+:601available rdf:type :Attribute ;
+	 :title "Available";
+	 :value "8754488".
+:603mounted_on rdf:type :Attribute ;
+	 :title "Mounted on";
+	 :value "/".
+:604n_a_m_e rdf:type :Attribute ;
+	 :title "NAME";
+	 :value "sda1".
+:605m_a_j:_m_i_n rdf:type :Attribute ;
+	 :title "MAJ:MIN";
+	 :value "8:1".
+:606r_m rdf:type :Attribute ;
+	 :title "RM";
+	 :value "0".
+:607s_i_z_e rdf:type :Attribute ;
+	 :title "SIZE";
+	 :value "10G".
+:608r_o rdf:type :Attribute ;
+	 :title "RO";
+	 :value "0".
+:609m_o_u_n_t_p_o_i_n_t rdf:type :Attribute ;
+	 :title "MOUNTPOINT";
+	 :value "/".
+:13855sda1 rdf:type :ConfigurationItem ;
+	 :title "sda1";
+	 :uuid "fa207365-f64b-4111-a44a-d7eb252cc72f";
+	 :description "cloudimg-rootfs part cloudimg-rootfs partcloudimg-rootfs disk";
+	 :has_attribute :597p_a_r_t_u_u_i_d;
+	 :has_attribute :598filesystem;
+	 :has_attribute :5991_k_blocks;
+	 :has_attribute :600used;
+	 :has_attribute :601available;
+	 :has_attribute :603mounted_on;
+	 :has_attribute :604n_a_m_e;
+	 :has_attribute :605m_a_j:_m_i_n;
+	 :has_attribute :606r_m;
+	 :has_attribute :607s_i_z_e;
+	 :has_attribute :608r_o;
+	 :has_attribute :609m_o_u_n_t_p_o_i_n_t;
+	 :has_ci_type :s_s_d55.
+:610architecture rdf:type :Attribute ;
+	 :title "Architecture";
+	 :value "amd64".
+:13958lxcfs rdf:type :ConfigurationItem ;
+	 :title "lxcfs";
+	 :description "FUSE 2.0.8-0ubuntu1~16.04.2 FUSE 2.0.8-0ubuntu1~16.04.2FUSE 2.0.8-0ubuntu1~16.04.2 FUSE 2.0.8-0ubuntu1~16.04.2FUSE 3.0.3-0ubuntu1~18.04.2";
+	 :has_attribute :610architecture;
+	 :has_ci_type :application58.
+:611architecture rdf:type :Attribute ;
+	 :title "Architecture";
+	 :value "amd64".
+:14058systemd rdf:type :ConfigurationItem ;
+	 :title "systemd";
+	 :description "system 229-4ubuntu21.29 system 229-4ubuntu21.29system 229-4ubuntu21.29 system 229-4ubuntu21.29system 237-3ubuntu10.43 system 237-3ubuntu10.43system 215-17+deb8u6 system 215-17+deb8u6system 215-17+deb8u6 system 215-17+deb8u6system 215-17+deb8u6";
+	 :has_attribute :611architecture;
+	 :has_ci_type :application58.
+:612architecture rdf:type :Attribute ;
+	 :title "Architecture";
+	 :value "all".
+:14158unattended_upgrades rdf:type :ConfigurationItem ;
+	 :title "unattended-upgrades";
+	 :description "automatic 1.1ubuntu1.18.04.7~16.04.6 automatic 1.1ubuntu1.18.04.7~16.04.6automatic 1.1ubuntu1.18.04.7~16.04.6";
+	 :has_attribute :612architecture;
+	 :has_ci_type :application58.
+:613architecture rdf:type :Attribute ;
+	 :title "Architecture";
+	 :value "all".
+:14258nginx rdf:type :ConfigurationItem ;
+	 :title "nginx";
+	 :description "small, 1.10.3-0ubuntu0.16.04.5";
+	 :has_attribute :613architecture;
+	 :has_ci_type :application58.
+:614architecture rdf:type :Attribute ;
+	 :title "Architecture";
+	 :value "amd64".
+:14358snmpd rdf:type :ConfigurationItem ;
+	 :title "snmpd";
+	 :description "SNMP 5.7.3+dfsg-1ubuntu4.6 SNMP 5.7.3+dfsg-1ubuntu4.6SNMP 5.7.3+dfsg-1ubuntu4.6 SNMP 5.7.3+dfsg-1ubuntu4.6SNMP 5.7.3-cl3u3 SNMP 5.7.3-cl3u3SNMP 5.7.3-cl3u3 SNMP 5.7.3-cl3u3SNMP 5.7.3-cl3u3";
+	 :has_attribute :614architecture;
+	 :has_ci_type :application58.
+:31vendor rdf:type :Attribute ;
+	 :title "vendor";
+	 :value "Oracle VirtualBox virtual NIC".
+:537icon_name rdf:type :Attribute ;
+	 :title "Icon name";
+	 :value "computer-vm".
+:538chassis rdf:type :Attribute ;
+	 :title "Chassis";
+	 :value "vm".
+:539machine__i_d rdf:type :Attribute ;
+	 :title "Machine ID";
+	 :value "95c61120e69a40c587ea5cbefad9e327".
+:540boot__i_d rdf:type :Attribute ;
+	 :title "Boot ID";
+	 :value "ab4cc83be0d54c048bd72cb8b4271520".
+:541virtualization rdf:type :Attribute ;
+	 :title "Virtualization";
+	 :value "oracle".
+:542operating__system rdf:type :Attribute ;
+	 :title "Operating System";
+	 :value "Ubuntu 16.04.7 LTS".
+:543kernel rdf:type :Attribute ;
+	 :title "Kernel";
+	 :value "Linux 4.4.0-206-generic".
+:544architecture rdf:type :Attribute ;
+	 :title "Architecture";
+	 :value "x86-64".
+:545os_family rdf:type :Attribute ;
+	 :title "os family";
+	 :value "Ubuntu".
+:548os_name rdf:type :Attribute ;
+	 :title "os name";
+	 :value "Ubuntu 16.04.7 LTS".
+:550os_version rdf:type :Attribute ;
+	 :title "os version";
+	 :value "16.04".
+:560c_p_u_cores rdf:type :Attribute ;
+	 :title "CPU cores";
+	 :value "2".
+:568c_p_u rdf:type :Attribute ;
+	 :title "CPU";
+	 :value "Intel(R) Core(TM) i5-3470S CPU @ 2.90GHz".
+:570c_p_u_frequency_unit rdf:type :Attribute ;
+	 :title "CPU frequency unit";
+	 :value "MHz".
+:572c_p_u_frequency rdf:type :Attribute ;
+	 :title "CPU frequency";
+	 :value "2893.420".
+:574c_p_u_speed rdf:type :Attribute ;
+	 :title "CPU speed";
+	 :value "2893.420 MHz".
+:6052web_server rdf:type :ConfigurationItem ;
+	 :title "web-server";
+	 :status "up";
+	 :os_family "Linux";
+	 :mac_address "08:00:27:B5:5E:C9";
+	 :has_ipv4 "192.168.10.32";
+	 :has_ipv4 "10.0.2.15";
+	 :has_attribute :31vendor;
+	 :has_attribute :537icon_name;
+	 :has_attribute :538chassis;
+	 :has_attribute :539machine__i_d;
+	 :has_attribute :540boot__i_d;
+	 :has_attribute :541virtualization;
+	 :has_attribute :542operating__system;
+	 :has_attribute :543kernel;
+	 :has_attribute :544architecture;
+	 :has_attribute :545os_family;
+	 :has_attribute :548os_name;
+	 :has_attribute :550os_version;
+	 :has_attribute :560c_p_u_cores;
+	 :has_attribute :568c_p_u;
+	 :has_attribute :570c_p_u_frequency_unit;
+	 :has_attribute :572c_p_u_frequency;
+	 :has_attribute :574c_p_u_speed;
+	 :has_ci_type :virtual_host52.
+:11_has_vendor__p_c_s__systemtechnik rdf:type :Relationship ;
+	 :title " has vendor PCS Systemtechnik";
+	 :has_source :6152router;
+	 :has_target :61p_c_s__systemtechnik;
+	 :has_rel_type :has_vendor1.
+:21p_c_s__systemtechnik_is_vendor_of_ rdf:type :Relationship ;
+	 :title "PCS Systemtechnik is vendor of ";
+	 :has_source :61p_c_s__systemtechnik;
+	 :has_target :6152router;
+	 :has_rel_type :has_vendor1.
+:31_has_vendor__p_c_s__systemtechnik rdf:type :Relationship ;
+	 :title " has vendor PCS Systemtechnik";
+	 :has_source :5652switch_of;
+	 :has_target :61p_c_s__systemtechnik;
+	 :has_rel_type :has_vendor1.
+:41p_c_s__systemtechnik_is_vendor_of_ rdf:type :Relationship ;
+	 :title "PCS Systemtechnik is vendor of ";
+	 :has_source :61p_c_s__systemtechnik;
+	 :has_target :5652switch_of;
+	 :has_rel_type :has_vendor1.
+:51_has_vendor__p_c_s__systemtechnik rdf:type :Relationship ;
+	 :title " has vendor PCS Systemtechnik";
+	 :has_source :5752switch_dc;
+	 :has_target :61p_c_s__systemtechnik;
+	 :has_rel_type :has_vendor1.
+:61p_c_s__systemtechnik_is_vendor_of_ rdf:type :Relationship ;
+	 :title "PCS Systemtechnik is vendor of ";
+	 :has_source :61p_c_s__systemtechnik;
+	 :has_target :5752switch_dc;
+	 :has_rel_type :has_vendor1.
+:71_has_vendor__oracle__virtual_box_virtual__n_i_c rdf:type :Relationship ;
+	 :title " has vendor Oracle VirtualBox virtual NIC";
+	 :has_source :6152router;
+	 :has_target :451oracle__virtual_box_virtual__n_i_c;
+	 :has_rel_type :has_vendor1.
+:81oracle__virtual_box_virtual__n_i_c_is_vendor_of_ rdf:type :Relationship ;
+	 :title "Oracle VirtualBox virtual NIC is vendor of ";
+	 :has_source :451oracle__virtual_box_virtual__n_i_c;
+	 :has_target :6152router;
+	 :has_rel_type :has_vendor1.
+:9922_has_protocol_tcp rdf:type :Relationship ;
+	 :title "22 has protocol tcp";
+	 :has_source :46522;
+	 :has_target :506tcp;
+	 :has_rel_type :has_protocol9.
+:109tcp_is_protocol_of_22 rdf:type :Relationship ;
+	 :title "tcp is protocol of 22";
+	 :has_source :506tcp;
+	 :has_target :46522;
+	 :has_rel_type :has_protocol9.
+:111122_running_product_ssh rdf:type :Relationship ;
+	 :title "22 running product ssh";
+	 :has_source :46522;
+	 :has_target :487ssh;
+	 :has_rel_type :running_product11.
+:1212ssh_is_running_on_port_22 rdf:type :Relationship ;
+	 :title "ssh is running on port 22";
+	 :has_source :487ssh;
+	 :has_target :46522;
+	 :has_rel_type :is_running_on_port12.
+:131322_port_from_ rdf:type :Relationship ;
+	 :title "22 port from ";
+	 :has_source :46522;
+	 :has_target :6152router;
+	 :has_rel_type :port_from13.
+:1413_has_port_22 rdf:type :Relationship ;
+	 :title " has port 22";
+	 :has_source :6152router;
+	 :has_target :46522;
+	 :has_rel_type :port_from13.
+:151_has_vendor__oracle__virtual_box_virtual__n_i_c rdf:type :Relationship ;
+	 :title " has vendor Oracle VirtualBox virtual NIC";
+	 :has_source :5652switch_of;
+	 :has_target :451oracle__virtual_box_virtual__n_i_c;
+	 :has_rel_type :has_vendor1.
+:161oracle__virtual_box_virtual__n_i_c_is_vendor_of_ rdf:type :Relationship ;
+	 :title "Oracle VirtualBox virtual NIC is vendor of ";
+	 :has_source :451oracle__virtual_box_virtual__n_i_c;
+	 :has_target :5652switch_of;
+	 :has_rel_type :has_vendor1.
+:17922_has_protocol_tcp rdf:type :Relationship ;
+	 :title "22 has protocol tcp";
+	 :has_source :46522;
+	 :has_target :506tcp;
+	 :has_rel_type :has_protocol9.
+:189tcp_is_protocol_of_22 rdf:type :Relationship ;
+	 :title "tcp is protocol of 22";
+	 :has_source :506tcp;
+	 :has_target :46522;
+	 :has_rel_type :has_protocol9.
+:191122_running_product_ssh rdf:type :Relationship ;
+	 :title "22 running product ssh";
+	 :has_source :46522;
+	 :has_target :487ssh;
+	 :has_rel_type :running_product11.
+:2012ssh_is_running_on_port_22 rdf:type :Relationship ;
+	 :title "ssh is running on port 22";
+	 :has_source :487ssh;
+	 :has_target :46522;
+	 :has_rel_type :is_running_on_port12.
+:211322_port_from_ rdf:type :Relationship ;
+	 :title "22 port from ";
+	 :has_source :46522;
+	 :has_target :5652switch_of;
+	 :has_rel_type :port_from13.
+:2213_has_port_22 rdf:type :Relationship ;
+	 :title " has port 22";
+	 :has_source :5652switch_of;
+	 :has_target :46522;
+	 :has_rel_type :port_from13.
+:231_has_vendor__oracle__virtual_box_virtual__n_i_c rdf:type :Relationship ;
+	 :title " has vendor Oracle VirtualBox virtual NIC";
+	 :has_source :5752switch_dc;
+	 :has_target :451oracle__virtual_box_virtual__n_i_c;
+	 :has_rel_type :has_vendor1.
+:241oracle__virtual_box_virtual__n_i_c_is_vendor_of_ rdf:type :Relationship ;
+	 :title "Oracle VirtualBox virtual NIC is vendor of ";
+	 :has_source :451oracle__virtual_box_virtual__n_i_c;
+	 :has_target :5752switch_dc;
+	 :has_rel_type :has_vendor1.
+:25922_has_protocol_tcp rdf:type :Relationship ;
+	 :title "22 has protocol tcp";
+	 :has_source :46522;
+	 :has_target :506tcp;
+	 :has_rel_type :has_protocol9.
+:269tcp_is_protocol_of_22 rdf:type :Relationship ;
+	 :title "tcp is protocol of 22";
+	 :has_source :506tcp;
+	 :has_target :46522;
+	 :has_rel_type :has_protocol9.
+:271122_running_product_ssh rdf:type :Relationship ;
+	 :title "22 running product ssh";
+	 :has_source :46522;
+	 :has_target :487ssh;
+	 :has_rel_type :running_product11.
+:2812ssh_is_running_on_port_22 rdf:type :Relationship ;
+	 :title "ssh is running on port 22";
+	 :has_source :487ssh;
+	 :has_target :46522;
+	 :has_rel_type :is_running_on_port12.
+:291322_port_from_ rdf:type :Relationship ;
+	 :title "22 port from ";
+	 :has_source :46522;
+	 :has_target :5752switch_dc;
+	 :has_rel_type :port_from13.
+:3013_has_port_22 rdf:type :Relationship ;
+	 :title " has port 22";
+	 :has_source :5752switch_dc;
+	 :has_target :46522;
+	 :has_rel_type :port_from13.
+:311_has_vendor__oracle__virtual_box_virtual__n_i_c rdf:type :Relationship ;
+	 :title " has vendor Oracle VirtualBox virtual NIC";
+	 :has_source :6252windows_pc;
+	 :has_target :451oracle__virtual_box_virtual__n_i_c;
+	 :has_rel_type :has_vendor1.
+:321oracle__virtual_box_virtual__n_i_c_is_vendor_of_ rdf:type :Relationship ;
+	 :title "Oracle VirtualBox virtual NIC is vendor of ";
+	 :has_source :451oracle__virtual_box_virtual__n_i_c;
+	 :has_target :6252windows_pc;
+	 :has_rel_type :has_vendor1.
+:33922_has_protocol_tcp rdf:type :Relationship ;
+	 :title "22 has protocol tcp";
+	 :has_source :46522;
+	 :has_target :506tcp;
+	 :has_rel_type :has_protocol9.
+:349tcp_is_protocol_of_22 rdf:type :Relationship ;
+	 :title "tcp is protocol of 22";
+	 :has_source :506tcp;
+	 :has_target :46522;
+	 :has_rel_type :has_protocol9.
+:351122_running_product_ssh rdf:type :Relationship ;
+	 :title "22 running product ssh";
+	 :has_source :46522;
+	 :has_target :487ssh;
+	 :has_rel_type :running_product11.
+:3612ssh_is_running_on_port_22 rdf:type :Relationship ;
+	 :title "ssh is running on port 22";
+	 :has_source :487ssh;
+	 :has_target :46522;
+	 :has_rel_type :is_running_on_port12.
+:371322_port_from_ rdf:type :Relationship ;
+	 :title "22 port from ";
+	 :has_source :46522;
+	 :has_target :6252windows_pc;
+	 :has_rel_type :port_from13.
+:3813_has_port_22 rdf:type :Relationship ;
+	 :title " has port 22";
+	 :has_source :6252windows_pc;
+	 :has_target :46522;
+	 :has_rel_type :port_from13.
+:3993389_has_protocol_tcp rdf:type :Relationship ;
+	 :title "3389 has protocol tcp";
+	 :has_source :3053389;
+	 :has_target :506tcp;
+	 :has_rel_type :has_protocol9.
+:409tcp_is_protocol_of_3389 rdf:type :Relationship ;
+	 :title "tcp is protocol of 3389";
+	 :has_source :506tcp;
+	 :has_target :3053389;
+	 :has_rel_type :has_protocol9.
+:41113389_running_product_ms_wbt_server rdf:type :Relationship ;
+	 :title "3389 running product ms-wbt-server";
+	 :has_source :3053389;
+	 :has_target :327ms_wbt_server;
+	 :has_rel_type :running_product11.
+:4212ms_wbt_server_is_running_on_port_3389 rdf:type :Relationship ;
+	 :title "ms-wbt-server is running on port 3389";
+	 :has_source :327ms_wbt_server;
+	 :has_target :3053389;
+	 :has_rel_type :is_running_on_port12.
+:43133389_port_from_ rdf:type :Relationship ;
+	 :title "3389 port from ";
+	 :has_source :3053389;
+	 :has_target :6252windows_pc;
+	 :has_rel_type :port_from13.
+:4413_has_port_3389 rdf:type :Relationship ;
+	 :title " has port 3389";
+	 :has_source :6252windows_pc;
+	 :has_target :3053389;
+	 :has_rel_type :port_from13.
+:45922_has_protocol_tcp rdf:type :Relationship ;
+	 :title "22 has protocol tcp";
+	 :has_source :46522;
+	 :has_target :506tcp;
+	 :has_rel_type :has_protocol9.
+:469tcp_is_protocol_of_22 rdf:type :Relationship ;
+	 :title "tcp is protocol of 22";
+	 :has_source :506tcp;
+	 :has_target :46522;
+	 :has_rel_type :has_protocol9.
+:471122_running_product_ssh rdf:type :Relationship ;
+	 :title "22 running product ssh";
+	 :has_source :46522;
+	 :has_target :487ssh;
+	 :has_rel_type :running_product11.
+:4812ssh_is_running_on_port_22 rdf:type :Relationship ;
+	 :title "ssh is running on port 22";
+	 :has_source :487ssh;
+	 :has_target :46522;
+	 :has_rel_type :is_running_on_port12.
+:491322_port_from_ rdf:type :Relationship ;
+	 :title "22 port from ";
+	 :has_source :46522;
+	 :has_target :5852ubuntu_pc;
+	 :has_rel_type :port_from13.
+:5013_has_port_22 rdf:type :Relationship ;
+	 :title " has port 22";
+	 :has_source :5852ubuntu_pc;
+	 :has_target :46522;
+	 :has_rel_type :port_from13.
+:511_has_vendor__oracle__virtual_box_virtual__n_i_c rdf:type :Relationship ;
+	 :title " has vendor Oracle VirtualBox virtual NIC";
+	 :has_source :5952db_server;
+	 :has_target :451oracle__virtual_box_virtual__n_i_c;
+	 :has_rel_type :has_vendor1.
+:521oracle__virtual_box_virtual__n_i_c_is_vendor_of_ rdf:type :Relationship ;
+	 :title "Oracle VirtualBox virtual NIC is vendor of ";
+	 :has_source :451oracle__virtual_box_virtual__n_i_c;
+	 :has_target :5952db_server;
+	 :has_rel_type :has_vendor1.
+:53922_has_protocol_tcp rdf:type :Relationship ;
+	 :title "22 has protocol tcp";
+	 :has_source :46522;
+	 :has_target :506tcp;
+	 :has_rel_type :has_protocol9.
+:549tcp_is_protocol_of_22 rdf:type :Relationship ;
+	 :title "tcp is protocol of 22";
+	 :has_source :506tcp;
+	 :has_target :46522;
+	 :has_rel_type :has_protocol9.
+:551122_running_product_ssh rdf:type :Relationship ;
+	 :title "22 running product ssh";
+	 :has_source :46522;
+	 :has_target :487ssh;
+	 :has_rel_type :running_product11.
+:5612ssh_is_running_on_port_22 rdf:type :Relationship ;
+	 :title "ssh is running on port 22";
+	 :has_source :487ssh;
+	 :has_target :46522;
+	 :has_rel_type :is_running_on_port12.
+:571322_port_from_ rdf:type :Relationship ;
+	 :title "22 port from ";
+	 :has_source :46522;
+	 :has_target :5952db_server;
+	 :has_rel_type :port_from13.
+:5813_has_port_22 rdf:type :Relationship ;
+	 :title " has port 22";
+	 :has_source :5952db_server;
+	 :has_target :46522;
+	 :has_rel_type :port_from13.
+:591_has_vendor__oracle__virtual_box_virtual__n_i_c rdf:type :Relationship ;
+	 :title " has vendor Oracle VirtualBox virtual NIC";
+	 :has_source :6052web_server;
+	 :has_target :451oracle__virtual_box_virtual__n_i_c;
+	 :has_rel_type :has_vendor1.
+:601oracle__virtual_box_virtual__n_i_c_is_vendor_of_ rdf:type :Relationship ;
+	 :title "Oracle VirtualBox virtual NIC is vendor of ";
+	 :has_source :451oracle__virtual_box_virtual__n_i_c;
+	 :has_target :6052web_server;
+	 :has_rel_type :has_vendor1.
+:61922_has_protocol_tcp rdf:type :Relationship ;
+	 :title "22 has protocol tcp";
+	 :has_source :46522;
+	 :has_target :506tcp;
+	 :has_rel_type :has_protocol9.
+:629tcp_is_protocol_of_22 rdf:type :Relationship ;
+	 :title "tcp is protocol of 22";
+	 :has_source :506tcp;
+	 :has_target :46522;
+	 :has_rel_type :has_protocol9.
+:631122_running_product_ssh rdf:type :Relationship ;
+	 :title "22 running product ssh";
+	 :has_source :46522;
+	 :has_target :487ssh;
+	 :has_rel_type :running_product11.
+:6412ssh_is_running_on_port_22 rdf:type :Relationship ;
+	 :title "ssh is running on port 22";
+	 :has_source :487ssh;
+	 :has_target :46522;
+	 :has_rel_type :is_running_on_port12.
+:651322_port_from_ rdf:type :Relationship ;
+	 :title "22 port from ";
+	 :has_source :46522;
+	 :has_target :6052web_server;
+	 :has_rel_type :port_from13.
+:6613_has_port_22 rdf:type :Relationship ;
+	 :title " has port 22";
+	 :has_source :6052web_server;
+	 :has_target :46522;
+	 :has_rel_type :port_from13.
+:67980_has_protocol_tcp rdf:type :Relationship ;
+	 :title "80 has protocol tcp";
+	 :has_source :49580;
+	 :has_target :506tcp;
+	 :has_rel_type :has_protocol9.
+:689tcp_is_protocol_of_80 rdf:type :Relationship ;
+	 :title "tcp is protocol of 80";
+	 :has_source :506tcp;
+	 :has_target :49580;
+	 :has_rel_type :has_protocol9.
+:691180_running_product_http rdf:type :Relationship ;
+	 :title "80 running product http";
+	 :has_source :49580;
+	 :has_target :517http;
+	 :has_rel_type :running_product11.
+:7012http_is_running_on_port_80 rdf:type :Relationship ;
+	 :title "http is running on port 80";
+	 :has_source :517http;
+	 :has_target :49580;
+	 :has_rel_type :is_running_on_port12.
+:711380_port_from_ rdf:type :Relationship ;
+	 :title "80 port from ";
+	 :has_source :49580;
+	 :has_target :6052web_server;
+	 :has_rel_type :port_from13.
+:7213_has_port_80 rdf:type :Relationship ;
+	 :title " has port 80";
+	 :has_source :6052web_server;
+	 :has_target :49580;
+	 :has_rel_type :port_from13.
+:7373part_of_network_10_0_2_024 rdf:type :Relationship ;
+	 :title "part of network 10.0.2.024";
+	 :has_source :5652switch_of;
+	 :has_target :535010_0_2_024;
+	 :has_rel_type :part_of_network73.
+:747410_0_2_024_network_includes rdf:type :Relationship ;
+	 :title "10.0.2.024 network includes";
+	 :has_source :535010_0_2_024;
+	 :has_target :5652switch_of;
+	 :has_rel_type :network_includes74.
+:7573part_of_network_192_168_10_024 rdf:type :Relationship ;
+	 :title "part of network 192.168.10.024";
+	 :has_source :5652switch_of;
+	 :has_target :5550192_168_10_024;
+	 :has_rel_type :part_of_network73.
+:7674192_168_10_024_network_includes rdf:type :Relationship ;
+	 :title "192.168.10.024 network includes";
+	 :has_source :5550192_168_10_024;
+	 :has_target :5652switch_of;
+	 :has_rel_type :network_includes74.
+:7773part_of_network_192_168_10_024 rdf:type :Relationship ;
+	 :title "part of network 192.168.10.024";
+	 :has_source :5752switch_dc;
+	 :has_target :5550192_168_10_024;
+	 :has_rel_type :part_of_network73.
+:7874192_168_10_024_network_includes rdf:type :Relationship ;
+	 :title "192.168.10.024 network includes";
+	 :has_source :5550192_168_10_024;
+	 :has_target :5752switch_dc;
+	 :has_rel_type :network_includes74.
+:7973part_of_network_192_168_10_024 rdf:type :Relationship ;
+	 :title "part of network 192.168.10.024";
+	 :has_source :5852ubuntu_pc;
+	 :has_target :5550192_168_10_024;
+	 :has_rel_type :part_of_network73.
+:8074192_168_10_024_network_includes rdf:type :Relationship ;
+	 :title "192.168.10.024 network includes";
+	 :has_source :5550192_168_10_024;
+	 :has_target :5852ubuntu_pc;
+	 :has_rel_type :network_includes74.
+:8173part_of_network_192_168_10_024 rdf:type :Relationship ;
+	 :title "part of network 192.168.10.024";
+	 :has_source :5952db_server;
+	 :has_target :5550192_168_10_024;
+	 :has_rel_type :part_of_network73.
+:8274192_168_10_024_network_includes rdf:type :Relationship ;
+	 :title "192.168.10.024 network includes";
+	 :has_source :5550192_168_10_024;
+	 :has_target :5952db_server;
+	 :has_rel_type :network_includes74.
+:8373part_of_network_192_168_10_024 rdf:type :Relationship ;
+	 :title "part of network 192.168.10.024";
+	 :has_source :6052web_server;
+	 :has_target :5550192_168_10_024;
+	 :has_rel_type :part_of_network73.
+:8474192_168_10_024_network_includes rdf:type :Relationship ;
+	 :title "192.168.10.024 network includes";
+	 :has_source :5550192_168_10_024;
+	 :has_target :6052web_server;
+	 :has_rel_type :network_includes74.
+:8573part_of_network_192_168_10_024 rdf:type :Relationship ;
+	 :title "part of network 192.168.10.024";
+	 :has_source :6152router;
+	 :has_target :5550192_168_10_024;
+	 :has_rel_type :part_of_network73.
+:8674192_168_10_024_network_includes rdf:type :Relationship ;
+	 :title "192.168.10.024 network includes";
+	 :has_source :5550192_168_10_024;
+	 :has_target :6152router;
+	 :has_rel_type :network_includes74.
+:8773part_of_network_192_168_10_024 rdf:type :Relationship ;
+	 :title "part of network 192.168.10.024";
+	 :has_source :6252windows_pc;
+	 :has_target :5550192_168_10_024;
+	 :has_rel_type :part_of_network73.
+:8874192_168_10_024_network_includes rdf:type :Relationship ;
+	 :title "192.168.10.024 network includes";
+	 :has_source :5550192_168_10_024;
+	 :has_target :6252windows_pc;
+	 :has_rel_type :network_includes74.
+:8989router_installed_os__cumulus__linux rdf:type :Relationship ;
+	 :title "router installed os Cumulus Linux";
+	 :has_source :6152router;
+	 :has_target :9053cumulus__linux;
+	 :has_rel_type :installed_os89.
+:9090cumulus__linux_running_os_router rdf:type :Relationship ;
+	 :title "Cumulus Linux running os router";
+	 :has_source :9053cumulus__linux;
+	 :has_target :6152router;
+	 :has_rel_type :running_os90.
+:9191router_associated_processor__intel_r__core_t_m_i5_3470_s__c_p_u__2_90_g_hz rdf:type :Relationship ;
+	 :title "router associated processor IntelR CoreTM i5-3470S CPU  2.90GHz";
+	 :has_source :6152router;
+	 :has_target :9154intel_r__core_t_m_i5_3470_s__c_p_u__2_90_g_hz;
+	 :has_rel_type :associated_processor91.
+:9292intel_r__core_t_m_i5_3470_s__c_p_u__2_90_g_hz_processor_of_router rdf:type :Relationship ;
+	 :title "IntelR CoreTM i5-3470S CPU  2.90GHz processor of router";
+	 :has_source :9154intel_r__core_t_m_i5_3470_s__c_p_u__2_90_g_hz;
+	 :has_target :6152router;
+	 :has_rel_type :processor_of92.
+:9393router_has_storage_sda2 rdf:type :Relationship ;
+	 :title "router has storage sda2";
+	 :has_source :6152router;
+	 :has_target :9455sda4;
+	 :has_rel_type :has_storage93.
+:9493sda2_is_storage_of_router rdf:type :Relationship ;
+	 :title "sda2 is storage of router";
+	 :has_source :9455sda4;
+	 :has_target :6152router;
+	 :has_rel_type :has_storage93.
+:9593router_has_storage_sda3 rdf:type :Relationship ;
+	 :title "router has storage sda3";
+	 :has_source :6152router;
+	 :has_target :9455sda4;
+	 :has_rel_type :has_storage93.
+:9693sda3_is_storage_of_router rdf:type :Relationship ;
+	 :title "sda3 is storage of router";
+	 :has_source :9455sda4;
+	 :has_target :6152router;
+	 :has_rel_type :has_storage93.
+:9793router_has_storage_sda4 rdf:type :Relationship ;
+	 :title "router has storage sda4";
+	 :has_source :6152router;
+	 :has_target :9455sda4;
+	 :has_rel_type :has_storage93.
+:9893sda4_is_storage_of_router rdf:type :Relationship ;
+	 :title "sda4 is storage of router";
+	 :has_source :9455sda4;
+	 :has_target :6152router;
+	 :has_rel_type :has_storage93.
+:9999router_has_installed_python rdf:type :Relationship ;
+	 :title "router has installed python";
+	 :has_source :6152router;
+	 :has_target :9558python;
+	 :has_rel_type :has_installed99.
+:10099python_installed_on_router rdf:type :Relationship ;
+	 :title "python installed on router";
+	 :has_source :9558python;
+	 :has_target :6152router;
+	 :has_rel_type :has_installed99.
+:10199router_has_installed_systemd rdf:type :Relationship ;
+	 :title "router has installed systemd";
+	 :has_source :6152router;
+	 :has_target :14058systemd;
+	 :has_rel_type :has_installed99.
+:10299systemd_installed_on_router rdf:type :Relationship ;
+	 :title "systemd installed on router";
+	 :has_source :14058systemd;
+	 :has_target :6152router;
+	 :has_rel_type :has_installed99.
+:10399router_has_installed_switchd rdf:type :Relationship ;
+	 :title "router has installed switchd";
+	 :has_source :6152router;
+	 :has_target :9758switchd;
+	 :has_rel_type :has_installed99.
+:10499switchd_installed_on_router rdf:type :Relationship ;
+	 :title "switchd installed on router";
+	 :has_source :9758switchd;
+	 :has_target :6152router;
+	 :has_rel_type :has_installed99.
+:10599router_has_installed_portwd rdf:type :Relationship ;
+	 :title "router has installed portwd";
+	 :has_source :6152router;
+	 :has_target :9858portwd;
+	 :has_rel_type :has_installed99.
+:10699portwd_installed_on_router rdf:type :Relationship ;
+	 :title "portwd installed on router";
+	 :has_source :9858portwd;
+	 :has_target :6152router;
+	 :has_rel_type :has_installed99.
+:10799router_has_installed_snmpd rdf:type :Relationship ;
+	 :title "router has installed snmpd";
+	 :has_source :6152router;
+	 :has_target :14358snmpd;
+	 :has_rel_type :has_installed99.
+:10899snmpd_installed_on_router rdf:type :Relationship ;
+	 :title "snmpd installed on router";
+	 :has_source :14358snmpd;
+	 :has_target :6152router;
+	 :has_rel_type :has_installed99.
+:10999router_has_installed_lldpd rdf:type :Relationship ;
+	 :title "router has installed lldpd";
+	 :has_source :6152router;
+	 :has_target :10058lldpd;
+	 :has_rel_type :has_installed99.
+:11099lldpd_installed_on_router rdf:type :Relationship ;
+	 :title "lldpd installed on router";
+	 :has_source :10058lldpd;
+	 :has_target :6152router;
+	 :has_rel_type :has_installed99.
+:11199router_has_installed_auditd rdf:type :Relationship ;
+	 :title "router has installed auditd";
+	 :has_source :6152router;
+	 :has_target :10158auditd;
+	 :has_rel_type :has_installed99.
+:11299auditd_installed_on_router rdf:type :Relationship ;
+	 :title "auditd installed on router";
+	 :has_source :10158auditd;
+	 :has_target :6152router;
+	 :has_rel_type :has_installed99.
+:11389switch_of_installed_os__cumulus__linux rdf:type :Relationship ;
+	 :title "switch-of installed os Cumulus Linux";
+	 :has_source :5652switch_of;
+	 :has_target :9053cumulus__linux;
+	 :has_rel_type :installed_os89.
+:11490cumulus__linux_running_os_switch_of rdf:type :Relationship ;
+	 :title "Cumulus Linux running os switch-of";
+	 :has_source :9053cumulus__linux;
+	 :has_target :5652switch_of;
+	 :has_rel_type :running_os90.
+:11591switch_of_associated_processor__intel_r__core_t_m_i5_3470_s__c_p_u__2_90_g_hz rdf:type :Relationship ;
+	 :title "switch-of associated processor IntelR CoreTM i5-3470S CPU  2.90GHz";
+	 :has_source :5652switch_of;
+	 :has_target :9154intel_r__core_t_m_i5_3470_s__c_p_u__2_90_g_hz;
+	 :has_rel_type :associated_processor91.
+:11692intel_r__core_t_m_i5_3470_s__c_p_u__2_90_g_hz_processor_of_switch_of rdf:type :Relationship ;
+	 :title "IntelR CoreTM i5-3470S CPU  2.90GHz processor of switch-of";
+	 :has_source :9154intel_r__core_t_m_i5_3470_s__c_p_u__2_90_g_hz;
+	 :has_target :5652switch_of;
+	 :has_rel_type :processor_of92.
+:11793switch_of_has_storage_sda2 rdf:type :Relationship ;
+	 :title "switch-of has storage sda2";
+	 :has_source :5652switch_of;
+	 :has_target :9455sda4;
+	 :has_rel_type :has_storage93.
+:11893sda2_is_storage_of_switch_of rdf:type :Relationship ;
+	 :title "sda2 is storage of switch-of";
+	 :has_source :9455sda4;
+	 :has_target :5652switch_of;
+	 :has_rel_type :has_storage93.
+:11993switch_of_has_storage_sda3 rdf:type :Relationship ;
+	 :title "switch-of has storage sda3";
+	 :has_source :5652switch_of;
+	 :has_target :9455sda4;
+	 :has_rel_type :has_storage93.
+:12093sda3_is_storage_of_switch_of rdf:type :Relationship ;
+	 :title "sda3 is storage of switch-of";
+	 :has_source :9455sda4;
+	 :has_target :5652switch_of;
+	 :has_rel_type :has_storage93.
+:12193switch_of_has_storage_sda4 rdf:type :Relationship ;
+	 :title "switch-of has storage sda4";
+	 :has_source :5652switch_of;
+	 :has_target :9455sda4;
+	 :has_rel_type :has_storage93.
+:12293sda4_is_storage_of_switch_of rdf:type :Relationship ;
+	 :title "sda4 is storage of switch-of";
+	 :has_source :9455sda4;
+	 :has_target :5652switch_of;
+	 :has_rel_type :has_storage93.
+:12399switch_of_has_installed_python rdf:type :Relationship ;
+	 :title "switch-of has installed python";
+	 :has_source :5652switch_of;
+	 :has_target :9558python;
+	 :has_rel_type :has_installed99.
+:12499python_installed_on_switch_of rdf:type :Relationship ;
+	 :title "python installed on switch-of";
+	 :has_source :9558python;
+	 :has_target :5652switch_of;
+	 :has_rel_type :has_installed99.
+:12599switch_of_has_installed_systemd rdf:type :Relationship ;
+	 :title "switch-of has installed systemd";
+	 :has_source :5652switch_of;
+	 :has_target :14058systemd;
+	 :has_rel_type :has_installed99.
+:12699systemd_installed_on_switch_of rdf:type :Relationship ;
+	 :title "systemd installed on switch-of";
+	 :has_source :14058systemd;
+	 :has_target :5652switch_of;
+	 :has_rel_type :has_installed99.
+:12799switch_of_has_installed_switchd rdf:type :Relationship ;
+	 :title "switch-of has installed switchd";
+	 :has_source :5652switch_of;
+	 :has_target :9758switchd;
+	 :has_rel_type :has_installed99.
+:12899switchd_installed_on_switch_of rdf:type :Relationship ;
+	 :title "switchd installed on switch-of";
+	 :has_source :9758switchd;
+	 :has_target :5652switch_of;
+	 :has_rel_type :has_installed99.
+:12999switch_of_has_installed_portwd rdf:type :Relationship ;
+	 :title "switch-of has installed portwd";
+	 :has_source :5652switch_of;
+	 :has_target :9858portwd;
+	 :has_rel_type :has_installed99.
+:13099portwd_installed_on_switch_of rdf:type :Relationship ;
+	 :title "portwd installed on switch-of";
+	 :has_source :9858portwd;
+	 :has_target :5652switch_of;
+	 :has_rel_type :has_installed99.
+:13199switch_of_has_installed_snmpd rdf:type :Relationship ;
+	 :title "switch-of has installed snmpd";
+	 :has_source :5652switch_of;
+	 :has_target :14358snmpd;
+	 :has_rel_type :has_installed99.
+:13299snmpd_installed_on_switch_of rdf:type :Relationship ;
+	 :title "snmpd installed on switch-of";
+	 :has_source :14358snmpd;
+	 :has_target :5652switch_of;
+	 :has_rel_type :has_installed99.
+:13399switch_of_has_installed_lldpd rdf:type :Relationship ;
+	 :title "switch-of has installed lldpd";
+	 :has_source :5652switch_of;
+	 :has_target :10058lldpd;
+	 :has_rel_type :has_installed99.
+:13499lldpd_installed_on_switch_of rdf:type :Relationship ;
+	 :title "lldpd installed on switch-of";
+	 :has_source :10058lldpd;
+	 :has_target :5652switch_of;
+	 :has_rel_type :has_installed99.
+:13599switch_of_has_installed_auditd rdf:type :Relationship ;
+	 :title "switch-of has installed auditd";
+	 :has_source :5652switch_of;
+	 :has_target :10158auditd;
+	 :has_rel_type :has_installed99.
+:13699auditd_installed_on_switch_of rdf:type :Relationship ;
+	 :title "auditd installed on switch-of";
+	 :has_source :10158auditd;
+	 :has_target :5652switch_of;
+	 :has_rel_type :has_installed99.
+:13789switch_dc_installed_os__cumulus__linux rdf:type :Relationship ;
+	 :title "switch-dc installed os Cumulus Linux";
+	 :has_source :5752switch_dc;
+	 :has_target :9053cumulus__linux;
+	 :has_rel_type :installed_os89.
+:13890cumulus__linux_running_os_switch_dc rdf:type :Relationship ;
+	 :title "Cumulus Linux running os switch-dc";
+	 :has_source :9053cumulus__linux;
+	 :has_target :5752switch_dc;
+	 :has_rel_type :running_os90.
+:13991switch_dc_associated_processor__intel_r__core_t_m_i5_3470_s__c_p_u__2_90_g_hz rdf:type :Relationship ;
+	 :title "switch-dc associated processor IntelR CoreTM i5-3470S CPU  2.90GHz";
+	 :has_source :5752switch_dc;
+	 :has_target :9154intel_r__core_t_m_i5_3470_s__c_p_u__2_90_g_hz;
+	 :has_rel_type :associated_processor91.
+:14092intel_r__core_t_m_i5_3470_s__c_p_u__2_90_g_hz_processor_of_switch_dc rdf:type :Relationship ;
+	 :title "IntelR CoreTM i5-3470S CPU  2.90GHz processor of switch-dc";
+	 :has_source :9154intel_r__core_t_m_i5_3470_s__c_p_u__2_90_g_hz;
+	 :has_target :5752switch_dc;
+	 :has_rel_type :processor_of92.
+:14193switch_dc_has_storage_sda2 rdf:type :Relationship ;
+	 :title "switch-dc has storage sda2";
+	 :has_source :5752switch_dc;
+	 :has_target :9455sda4;
+	 :has_rel_type :has_storage93.
+:14293sda2_is_storage_of_switch_dc rdf:type :Relationship ;
+	 :title "sda2 is storage of switch-dc";
+	 :has_source :9455sda4;
+	 :has_target :5752switch_dc;
+	 :has_rel_type :has_storage93.
+:14393switch_dc_has_storage_sda3 rdf:type :Relationship ;
+	 :title "switch-dc has storage sda3";
+	 :has_source :5752switch_dc;
+	 :has_target :9455sda4;
+	 :has_rel_type :has_storage93.
+:14493sda3_is_storage_of_switch_dc rdf:type :Relationship ;
+	 :title "sda3 is storage of switch-dc";
+	 :has_source :9455sda4;
+	 :has_target :5752switch_dc;
+	 :has_rel_type :has_storage93.
+:14593switch_dc_has_storage_sda4 rdf:type :Relationship ;
+	 :title "switch-dc has storage sda4";
+	 :has_source :5752switch_dc;
+	 :has_target :9455sda4;
+	 :has_rel_type :has_storage93.
+:14693sda4_is_storage_of_switch_dc rdf:type :Relationship ;
+	 :title "sda4 is storage of switch-dc";
+	 :has_source :9455sda4;
+	 :has_target :5752switch_dc;
+	 :has_rel_type :has_storage93.
+:14799switch_dc_has_installed_python rdf:type :Relationship ;
+	 :title "switch-dc has installed python";
+	 :has_source :5752switch_dc;
+	 :has_target :9558python;
+	 :has_rel_type :has_installed99.
+:14899python_installed_on_switch_dc rdf:type :Relationship ;
+	 :title "python installed on switch-dc";
+	 :has_source :9558python;
+	 :has_target :5752switch_dc;
+	 :has_rel_type :has_installed99.
+:14999switch_dc_has_installed_systemd rdf:type :Relationship ;
+	 :title "switch-dc has installed systemd";
+	 :has_source :5752switch_dc;
+	 :has_target :14058systemd;
+	 :has_rel_type :has_installed99.
+:15099systemd_installed_on_switch_dc rdf:type :Relationship ;
+	 :title "systemd installed on switch-dc";
+	 :has_source :14058systemd;
+	 :has_target :5752switch_dc;
+	 :has_rel_type :has_installed99.
+:15199switch_dc_has_installed_switchd rdf:type :Relationship ;
+	 :title "switch-dc has installed switchd";
+	 :has_source :5752switch_dc;
+	 :has_target :9758switchd;
+	 :has_rel_type :has_installed99.
+:15299switchd_installed_on_switch_dc rdf:type :Relationship ;
+	 :title "switchd installed on switch-dc";
+	 :has_source :9758switchd;
+	 :has_target :5752switch_dc;
+	 :has_rel_type :has_installed99.
+:15399switch_dc_has_installed_portwd rdf:type :Relationship ;
+	 :title "switch-dc has installed portwd";
+	 :has_source :5752switch_dc;
+	 :has_target :9858portwd;
+	 :has_rel_type :has_installed99.
+:15499portwd_installed_on_switch_dc rdf:type :Relationship ;
+	 :title "portwd installed on switch-dc";
+	 :has_source :9858portwd;
+	 :has_target :5752switch_dc;
+	 :has_rel_type :has_installed99.
+:15599switch_dc_has_installed_snmpd rdf:type :Relationship ;
+	 :title "switch-dc has installed snmpd";
+	 :has_source :5752switch_dc;
+	 :has_target :14358snmpd;
+	 :has_rel_type :has_installed99.
+:15699snmpd_installed_on_switch_dc rdf:type :Relationship ;
+	 :title "snmpd installed on switch-dc";
+	 :has_source :14358snmpd;
+	 :has_target :5752switch_dc;
+	 :has_rel_type :has_installed99.
+:15799switch_dc_has_installed_lldpd rdf:type :Relationship ;
+	 :title "switch-dc has installed lldpd";
+	 :has_source :5752switch_dc;
+	 :has_target :10058lldpd;
+	 :has_rel_type :has_installed99.
+:15899lldpd_installed_on_switch_dc rdf:type :Relationship ;
+	 :title "lldpd installed on switch-dc";
+	 :has_source :10058lldpd;
+	 :has_target :5752switch_dc;
+	 :has_rel_type :has_installed99.
+:15999switch_dc_has_installed_auditd rdf:type :Relationship ;
+	 :title "switch-dc has installed auditd";
+	 :has_source :5752switch_dc;
+	 :has_target :10158auditd;
+	 :has_rel_type :has_installed99.
+:16099auditd_installed_on_switch_dc rdf:type :Relationship ;
+	 :title "auditd installed on switch-dc";
+	 :has_source :10158auditd;
+	 :has_target :5752switch_dc;
+	 :has_rel_type :has_installed99.
+:161161microsoft__windows_10__enterprise__evaluation_has_manufacturer__microsoft__corporation rdf:type :Relationship ;
+	 :title "Microsoft Windows 10 Enterprise Evaluation has manufacturer Microsoft Corporation";
+	 :has_source :10353microsoft__windows_10__enterprise__evaluation;
+	 :has_target :10475microsoft__corporation;
+	 :has_rel_type :has_manufacturer161.
+:162161microsoft__corporation_manufacturer_of__microsoft__windows_10__enterprise__evaluation rdf:type :Relationship ;
+	 :title "Microsoft Corporation manufacturer of Microsoft Windows 10 Enterprise Evaluation";
+	 :has_source :10475microsoft__corporation;
+	 :has_target :10353microsoft__windows_10__enterprise__evaluation;
+	 :has_rel_type :has_manufacturer161.
+:16389windows_pc_installed_os__microsoft__windows_10__enterprise__evaluation rdf:type :Relationship ;
+	 :title "windows-pc installed os Microsoft Windows 10 Enterprise Evaluation";
+	 :has_source :6252windows_pc;
+	 :has_target :10353microsoft__windows_10__enterprise__evaluation;
+	 :has_rel_type :installed_os89.
+:16490microsoft__windows_10__enterprise__evaluation_running_os_windows_pc rdf:type :Relationship ;
+	 :title "Microsoft Windows 10 Enterprise Evaluation running os windows-pc";
+	 :has_source :10353microsoft__windows_10__enterprise__evaluation;
+	 :has_target :6252windows_pc;
+	 :has_rel_type :running_os90.
+:165165windows_pc_running_service__audio_endpoint_builder rdf:type :Relationship ;
+	 :title "windows-pc running service AudioEndpointBuilder";
+	 :has_source :6252windows_pc;
+	 :has_target :10576audio_endpoint_builder;
+	 :has_rel_type :running_service165.
+:166166audio_endpoint_builder_running_on_windows_pc rdf:type :Relationship ;
+	 :title "AudioEndpointBuilder running on windows-pc";
+	 :has_source :10576audio_endpoint_builder;
+	 :has_target :6252windows_pc;
+	 :has_rel_type :running_on166.
+:167165windows_pc_running_service__audiosrv rdf:type :Relationship ;
+	 :title "windows-pc running service Audiosrv";
+	 :has_source :6252windows_pc;
+	 :has_target :10676audiosrv;
+	 :has_rel_type :running_service165.
+:168166audiosrv_running_on_windows_pc rdf:type :Relationship ;
+	 :title "Audiosrv running on windows-pc";
+	 :has_source :10676audiosrv;
+	 :has_target :6252windows_pc;
+	 :has_rel_type :running_on166.
+:169165windows_pc_running_service__b_f_e rdf:type :Relationship ;
+	 :title "windows-pc running service BFE";
+	 :has_source :6252windows_pc;
+	 :has_target :10776b_f_e;
+	 :has_rel_type :running_service165.
+:170166b_f_e_running_on_windows_pc rdf:type :Relationship ;
+	 :title "BFE running on windows-pc";
+	 :has_source :10776b_f_e;
+	 :has_target :6252windows_pc;
+	 :has_rel_type :running_on166.
+:171165windows_pc_running_service__broker_infrastructure rdf:type :Relationship ;
+	 :title "windows-pc running service BrokerInfrastructure";
+	 :has_source :6252windows_pc;
+	 :has_target :10876broker_infrastructure;
+	 :has_rel_type :running_service165.
+:172166broker_infrastructure_running_on_windows_pc rdf:type :Relationship ;
+	 :title "BrokerInfrastructure running on windows-pc";
+	 :has_source :10876broker_infrastructure;
+	 :has_target :6252windows_pc;
+	 :has_rel_type :running_on166.
+:173165windows_pc_running_service__c_d_p_svc rdf:type :Relationship ;
+	 :title "windows-pc running service CDPSvc";
+	 :has_source :6252windows_pc;
+	 :has_target :10976c_d_p_svc;
+	 :has_rel_type :running_service165.
+:174166c_d_p_svc_running_on_windows_pc rdf:type :Relationship ;
+	 :title "CDPSvc running on windows-pc";
+	 :has_source :10976c_d_p_svc;
+	 :has_target :6252windows_pc;
+	 :has_rel_type :running_on166.
+:175165windows_pc_running_service__cert_prop_svc rdf:type :Relationship ;
+	 :title "windows-pc running service CertPropSvc";
+	 :has_source :6252windows_pc;
+	 :has_target :11076cert_prop_svc;
+	 :has_rel_type :running_service165.
+:176166cert_prop_svc_running_on_windows_pc rdf:type :Relationship ;
+	 :title "CertPropSvc running on windows-pc";
+	 :has_source :11076cert_prop_svc;
+	 :has_target :6252windows_pc;
+	 :has_rel_type :running_on166.
+:177165windows_pc_running_service__core_messaging_registrar_496 rdf:type :Relationship ;
+	 :title "windows-pc running service CoreMessagingRegistrar 496";
+	 :has_source :6252windows_pc;
+	 :has_target :11176core_messaging_registrar_496;
+	 :has_rel_type :running_service165.
+:178166core_messaging_registrar_496_running_on_windows_pc rdf:type :Relationship ;
+	 :title "CoreMessagingRegistrar 496 running on windows-pc";
+	 :has_source :11176core_messaging_registrar_496;
+	 :has_target :6252windows_pc;
+	 :has_rel_type :running_on166.
+:179165windows_pc_running_service__crypt_svc rdf:type :Relationship ;
+	 :title "windows-pc running service CryptSvc";
+	 :has_source :6252windows_pc;
+	 :has_target :11276crypt_svc;
+	 :has_rel_type :running_service165.
+:180166crypt_svc_running_on_windows_pc rdf:type :Relationship ;
+	 :title "CryptSvc running on windows-pc";
+	 :has_source :11276crypt_svc;
+	 :has_target :6252windows_pc;
+	 :has_rel_type :running_on166.
+:181165windows_pc_running_service__dcom_launch rdf:type :Relationship ;
+	 :title "windows-pc running service DcomLaunch";
+	 :has_source :6252windows_pc;
+	 :has_target :11376dcom_launch;
+	 :has_rel_type :running_service165.
+:182166dcom_launch_running_on_windows_pc rdf:type :Relationship ;
+	 :title "DcomLaunch running on windows-pc";
+	 :has_source :11376dcom_launch;
+	 :has_target :6252windows_pc;
+	 :has_rel_type :running_on166.
+:183165windows_pc_running_service__dhcp rdf:type :Relationship ;
+	 :title "windows-pc running service Dhcp";
+	 :has_source :6252windows_pc;
+	 :has_target :11476dhcp;
+	 :has_rel_type :running_service165.
+:184166dhcp_running_on_windows_pc rdf:type :Relationship ;
+	 :title "Dhcp running on windows-pc";
+	 :has_source :11476dhcp;
+	 :has_target :6252windows_pc;
+	 :has_rel_type :running_on166.
+:18589ubuntu_pc_installed_os__ubuntu_18_04_5__l_t_s rdf:type :Relationship ;
+	 :title "ubuntu-pc installed os Ubuntu 18.04.5 LTS";
+	 :has_source :5852ubuntu_pc;
+	 :has_target :11653ubuntu_18_04_5__l_t_s;
+	 :has_rel_type :installed_os89.
+:18690ubuntu_18_04_5__l_t_s_running_os_ubuntu_pc rdf:type :Relationship ;
+	 :title "Ubuntu 18.04.5 LTS running os ubuntu-pc";
+	 :has_source :11653ubuntu_18_04_5__l_t_s;
+	 :has_target :5852ubuntu_pc;
+	 :has_rel_type :running_os90.
+:18791ubuntu_pc_associated_processor__intel_r__core_t_m_i5_3470_s__c_p_u__2_90_g_hz rdf:type :Relationship ;
+	 :title "ubuntu-pc associated processor IntelR CoreTM i5-3470S CPU  2.90GHz";
+	 :has_source :5852ubuntu_pc;
+	 :has_target :13654intel_r__core_t_m_i5_3470_s__c_p_u__2_90_g_hz;
+	 :has_rel_type :associated_processor91.
+:18892intel_r__core_t_m_i5_3470_s__c_p_u__2_90_g_hz_processor_of_ubuntu_pc rdf:type :Relationship ;
+	 :title "IntelR CoreTM i5-3470S CPU  2.90GHz processor of ubuntu-pc";
+	 :has_source :13654intel_r__core_t_m_i5_3470_s__c_p_u__2_90_g_hz;
+	 :has_target :5852ubuntu_pc;
+	 :has_rel_type :processor_of92.
+:18993ubuntu_pc_has_storage_sda1 rdf:type :Relationship ;
+	 :title "ubuntu-pc has storage sda1";
+	 :has_source :5852ubuntu_pc;
+	 :has_target :12055sda3;
+	 :has_rel_type :has_storage93.
+:19093sda1_is_storage_of_ubuntu_pc rdf:type :Relationship ;
+	 :title "sda1 is storage of ubuntu-pc";
+	 :has_source :12055sda3;
+	 :has_target :5852ubuntu_pc;
+	 :has_rel_type :has_storage93.
+:19193ubuntu_pc_has_storage_sda2 rdf:type :Relationship ;
+	 :title "ubuntu-pc has storage sda2";
+	 :has_source :5852ubuntu_pc;
+	 :has_target :12055sda3;
+	 :has_rel_type :has_storage93.
+:19293sda2_is_storage_of_ubuntu_pc rdf:type :Relationship ;
+	 :title "sda2 is storage of ubuntu-pc";
+	 :has_source :12055sda3;
+	 :has_target :5852ubuntu_pc;
+	 :has_rel_type :has_storage93.
+:19393ubuntu_pc_has_storage_sda3 rdf:type :Relationship ;
+	 :title "ubuntu-pc has storage sda3";
+	 :has_source :5852ubuntu_pc;
+	 :has_target :12055sda3;
+	 :has_rel_type :has_storage93.
+:19493sda3_is_storage_of_ubuntu_pc rdf:type :Relationship ;
+	 :title "sda3 is storage of ubuntu-pc";
+	 :has_source :12055sda3;
+	 :has_target :5852ubuntu_pc;
+	 :has_rel_type :has_storage93.
+:19599ubuntu_pc_has_installed_python3 rdf:type :Relationship ;
+	 :title "ubuntu-pc has installed python3";
+	 :has_source :5852ubuntu_pc;
+	 :has_target :12158python3;
+	 :has_rel_type :has_installed99.
+:19699python3_installed_on_ubuntu_pc rdf:type :Relationship ;
+	 :title "python3 installed on ubuntu-pc";
+	 :has_source :12158python3;
+	 :has_target :5852ubuntu_pc;
+	 :has_rel_type :has_installed99.
+:19799ubuntu_pc_has_installed_lxcfs rdf:type :Relationship ;
+	 :title "ubuntu-pc has installed lxcfs";
+	 :has_source :5852ubuntu_pc;
+	 :has_target :13958lxcfs;
+	 :has_rel_type :has_installed99.
+:19899lxcfs_installed_on_ubuntu_pc rdf:type :Relationship ;
+	 :title "lxcfs installed on ubuntu-pc";
+	 :has_source :13958lxcfs;
+	 :has_target :5852ubuntu_pc;
+	 :has_rel_type :has_installed99.
+:19999ubuntu_pc_has_installed_systemd rdf:type :Relationship ;
+	 :title "ubuntu-pc has installed systemd";
+	 :has_source :5852ubuntu_pc;
+	 :has_target :14058systemd;
+	 :has_rel_type :has_installed99.
+:20099systemd_installed_on_ubuntu_pc rdf:type :Relationship ;
+	 :title "systemd installed on ubuntu-pc";
+	 :has_source :14058systemd;
+	 :has_target :5852ubuntu_pc;
+	 :has_rel_type :has_installed99.
+:20199ubuntu_pc_has_installed_irqbalance rdf:type :Relationship ;
+	 :title "ubuntu-pc has installed irqbalance";
+	 :has_source :5852ubuntu_pc;
+	 :has_target :12458irqbalance;
+	 :has_rel_type :has_installed99.
+:20299irqbalance_installed_on_ubuntu_pc rdf:type :Relationship ;
+	 :title "irqbalance installed on ubuntu-pc";
+	 :has_source :12458irqbalance;
+	 :has_target :5852ubuntu_pc;
+	 :has_rel_type :has_installed99.
+:20389db_server_installed_os__ubuntu_16_04_7__l_t_s rdf:type :Relationship ;
+	 :title "db-server installed os Ubuntu 16.04.7 LTS";
+	 :has_source :5952db_server;
+	 :has_target :13553ubuntu_16_04_7__l_t_s;
+	 :has_rel_type :installed_os89.
+:20490ubuntu_16_04_7__l_t_s_running_os_db_server rdf:type :Relationship ;
+	 :title "Ubuntu 16.04.7 LTS running os db-server";
+	 :has_source :13553ubuntu_16_04_7__l_t_s;
+	 :has_target :5952db_server;
+	 :has_rel_type :running_os90.
+:20591db_server_associated_processor__intel_r__core_t_m_i5_3470_s__c_p_u__2_90_g_hz rdf:type :Relationship ;
+	 :title "db-server associated processor IntelR CoreTM i5-3470S CPU  2.90GHz";
+	 :has_source :5952db_server;
+	 :has_target :13654intel_r__core_t_m_i5_3470_s__c_p_u__2_90_g_hz;
+	 :has_rel_type :associated_processor91.
+:20692intel_r__core_t_m_i5_3470_s__c_p_u__2_90_g_hz_processor_of_db_server rdf:type :Relationship ;
+	 :title "IntelR CoreTM i5-3470S CPU  2.90GHz processor of db-server";
+	 :has_source :13654intel_r__core_t_m_i5_3470_s__c_p_u__2_90_g_hz;
+	 :has_target :5952db_server;
+	 :has_rel_type :processor_of92.
+:20793db_server_has_storage_sda1 rdf:type :Relationship ;
+	 :title "db-server has storage sda1";
+	 :has_source :5952db_server;
+	 :has_target :12955sdb;
+	 :has_rel_type :has_storage93.
+:20893sda1_is_storage_of_db_server rdf:type :Relationship ;
+	 :title "sda1 is storage of db-server";
+	 :has_source :12955sdb;
+	 :has_target :5952db_server;
+	 :has_rel_type :has_storage93.
+:20993db_server_has_storage_sdb rdf:type :Relationship ;
+	 :title "db-server has storage sdb";
+	 :has_source :5952db_server;
+	 :has_target :12955sdb;
+	 :has_rel_type :has_storage93.
+:21093sdb_is_storage_of_db_server rdf:type :Relationship ;
+	 :title "sdb is storage of db-server";
+	 :has_source :12955sdb;
+	 :has_target :5952db_server;
+	 :has_rel_type :has_storage93.
+:21199db_server_has_installed_lxcfs rdf:type :Relationship ;
+	 :title "db-server has installed lxcfs";
+	 :has_source :5952db_server;
+	 :has_target :13958lxcfs;
+	 :has_rel_type :has_installed99.
+:21299lxcfs_installed_on_db_server rdf:type :Relationship ;
+	 :title "lxcfs installed on db-server";
+	 :has_source :13958lxcfs;
+	 :has_target :5952db_server;
+	 :has_rel_type :has_installed99.
+:21399db_server_has_installed_unattended_upgrades rdf:type :Relationship ;
+	 :title "db-server has installed unattended-upgrades";
+	 :has_source :5952db_server;
+	 :has_target :14158unattended_upgrades;
+	 :has_rel_type :has_installed99.
+:21499unattended_upgrades_installed_on_db_server rdf:type :Relationship ;
+	 :title "unattended-upgrades installed on db-server";
+	 :has_source :14158unattended_upgrades;
+	 :has_target :5952db_server;
+	 :has_rel_type :has_installed99.
+:21599db_server_has_installed_systemd rdf:type :Relationship ;
+	 :title "db-server has installed systemd";
+	 :has_source :5952db_server;
+	 :has_target :14058systemd;
+	 :has_rel_type :has_installed99.
+:21699systemd_installed_on_db_server rdf:type :Relationship ;
+	 :title "systemd installed on db-server";
+	 :has_source :14058systemd;
+	 :has_target :5952db_server;
+	 :has_rel_type :has_installed99.
+:21799db_server_has_installed_snmpd rdf:type :Relationship ;
+	 :title "db-server has installed snmpd";
+	 :has_source :5952db_server;
+	 :has_target :14358snmpd;
+	 :has_rel_type :has_installed99.
+:21899snmpd_installed_on_db_server rdf:type :Relationship ;
+	 :title "snmpd installed on db-server";
+	 :has_source :14358snmpd;
+	 :has_target :5952db_server;
+	 :has_rel_type :has_installed99.
+:21989web_server_installed_os__ubuntu_16_04_7__l_t_s rdf:type :Relationship ;
+	 :title "web-server installed os Ubuntu 16.04.7 LTS";
+	 :has_source :6052web_server;
+	 :has_target :13553ubuntu_16_04_7__l_t_s;
+	 :has_rel_type :installed_os89.
+:22090ubuntu_16_04_7__l_t_s_running_os_web_server rdf:type :Relationship ;
+	 :title "Ubuntu 16.04.7 LTS running os web-server";
+	 :has_source :13553ubuntu_16_04_7__l_t_s;
+	 :has_target :6052web_server;
+	 :has_rel_type :running_os90.
+:22191web_server_associated_processor__intel_r__core_t_m_i5_3470_s__c_p_u__2_90_g_hz rdf:type :Relationship ;
+	 :title "web-server associated processor IntelR CoreTM i5-3470S CPU  2.90GHz";
+	 :has_source :6052web_server;
+	 :has_target :13654intel_r__core_t_m_i5_3470_s__c_p_u__2_90_g_hz;
+	 :has_rel_type :associated_processor91.
+:22292intel_r__core_t_m_i5_3470_s__c_p_u__2_90_g_hz_processor_of_web_server rdf:type :Relationship ;
+	 :title "IntelR CoreTM i5-3470S CPU  2.90GHz processor of web-server";
+	 :has_source :13654intel_r__core_t_m_i5_3470_s__c_p_u__2_90_g_hz;
+	 :has_target :6052web_server;
+	 :has_rel_type :processor_of92.
+:22393web_server_has_storage_sdb rdf:type :Relationship ;
+	 :title "web-server has storage sdb";
+	 :has_source :6052web_server;
+	 :has_target :13855sda1;
+	 :has_rel_type :has_storage93.
+:22493sdb_is_storage_of_web_server rdf:type :Relationship ;
+	 :title "sdb is storage of web-server";
+	 :has_source :13855sda1;
+	 :has_target :6052web_server;
+	 :has_rel_type :has_storage93.
+:22593web_server_has_storage_sda1 rdf:type :Relationship ;
+	 :title "web-server has storage sda1";
+	 :has_source :6052web_server;
+	 :has_target :13855sda1;
+	 :has_rel_type :has_storage93.
+:22693sda1_is_storage_of_web_server rdf:type :Relationship ;
+	 :title "sda1 is storage of web-server";
+	 :has_source :13855sda1;
+	 :has_target :6052web_server;
+	 :has_rel_type :has_storage93.
+:22799web_server_has_installed_lxcfs rdf:type :Relationship ;
+	 :title "web-server has installed lxcfs";
+	 :has_source :6052web_server;
+	 :has_target :13958lxcfs;
+	 :has_rel_type :has_installed99.
+:22899lxcfs_installed_on_web_server rdf:type :Relationship ;
+	 :title "lxcfs installed on web-server";
+	 :has_source :13958lxcfs;
+	 :has_target :6052web_server;
+	 :has_rel_type :has_installed99.
+:22999web_server_has_installed_systemd rdf:type :Relationship ;
+	 :title "web-server has installed systemd";
+	 :has_source :6052web_server;
+	 :has_target :14058systemd;
+	 :has_rel_type :has_installed99.
+:23099systemd_installed_on_web_server rdf:type :Relationship ;
+	 :title "systemd installed on web-server";
+	 :has_source :14058systemd;
+	 :has_target :6052web_server;
+	 :has_rel_type :has_installed99.
+:23199web_server_has_installed_unattended_upgrades rdf:type :Relationship ;
+	 :title "web-server has installed unattended-upgrades";
+	 :has_source :6052web_server;
+	 :has_target :14158unattended_upgrades;
+	 :has_rel_type :has_installed99.
+:23299unattended_upgrades_installed_on_web_server rdf:type :Relationship ;
+	 :title "unattended-upgrades installed on web-server";
+	 :has_source :14158unattended_upgrades;
+	 :has_target :6052web_server;
+	 :has_rel_type :has_installed99.
+:23399web_server_has_installed_nginx rdf:type :Relationship ;
+	 :title "web-server has installed nginx";
+	 :has_source :6052web_server;
+	 :has_target :14258nginx;
+	 :has_rel_type :has_installed99.
+:23499nginx_installed_on_web_server rdf:type :Relationship ;
+	 :title "nginx installed on web-server";
+	 :has_source :14258nginx;
+	 :has_target :6052web_server;
+	 :has_rel_type :has_installed99.
+:23599web_server_has_installed_snmpd rdf:type :Relationship ;
+	 :title "web-server has installed snmpd";
+	 :has_source :6052web_server;
+	 :has_target :14358snmpd;
+	 :has_rel_type :has_installed99.
+:23699snmpd_installed_on_web_server rdf:type :Relationship ;
+	 :title "snmpd installed on web-server";
+	 :has_source :14358snmpd;
+	 :has_target :6052web_server;
+	 :has_rel_type :has_installed99.

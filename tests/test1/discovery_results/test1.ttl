@@ -1,0 +1,1975 @@
+
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+@prefix : <http://www.semanticweb.org/cmdb_auto_creation/2020/cmdb#> .
+@base <http://www.semanticweb.org/cmdb_auto_creation/2020/cmdb> .
+
+<http://www.semanticweb.org/cmdb_auto_creation/2020/cmdb#> rdf:type owl:Ontology .
+
+#################################################################
+#    Classes
+#################################################################
+
+###  http://www.semanticweb.org/cmdb_auto_creation/2020/cmdb#ConfigurationItem
+:ConfigurationItem rdf:type owl:Class ;
+    rdfs:label "Configuration Item" ;
+    rdfs:comment "Represents an organization's infrastructure component." .
+
+###  http://www.semanticweb.org/cmdb_auto_creation/2020/cmdb#Relationship
+:Relationship rdf:type owl:Class ;
+    rdfs:label "Relationship" ;
+    rdfs:comment "Represents the relationship between two organization's infrastructure components." .
+
+###  http://www.semanticweb.org/cmdb_auto_creation/2020/cmdb#ConfigurationItemType
+:ConfigurationItemType rdf:type owl:Class ;
+    rdfs:label "Configuration Item Type" ;
+    rdfs:comment "Represents the type of a configuration item." .
+
+###  http://www.semanticweb.org/cmdb_auto_creation/2020/cmdb#RelationshipType
+:RelationshipType rdf:type owl:Class ;
+    rdfs:label "Relationship Type" ;
+    rdfs:comment "Represents the type of a relationship." .
+
+###  http://www.semanticweb.org/cmdb_auto_creation/2020/cmdb#Attribute
+:Attribute rdf:type owl:Class ;
+    rdfs:label "Attribute" ;
+    rdfs:comment "Represents an attribute of a configuration item or relationship." .
+
+#################################################################
+#    Data Properties
+#################################################################
+
+:uuid rdf:type owl:DatatypeProperty ;
+    rdfs:domain :ConfigurationItem ;
+    rdfs:range xsd:string ;
+    rdfs:comment "The universally unique identifier (128-bit number) assigned to the item.".
+
+:serial_number rdf:type owl:DatatypeProperty ;
+    rdfs:domain :ConfigurationItem ;
+    rdfs:range xsd:string ;
+    rdfs:comment "The manufacturer-allocated number used to identify the item.".
+
+:title rdf:type owl:DatatypeProperty ;
+    rdfs:domain :ConfigurationItem ,
+                :Relationship ,
+                :ConfigurationItemType ,
+                :RelationshipType ,
+                :Attribute ; 
+    rdfs:range xsd:string ;
+    rdfs:comment "The label by which the item is known.".
+
+:description rdf:type owl:DatatypeProperty ;
+    rdfs:domain :ConfigurationItem ;
+    rdfs:range xsd:string ;
+    rdfs:comment "The textual description of the item.".
+
+:status rdf:type owl:DatatypeProperty ;
+    rdfs:domain :ConfigurationItem ;
+    rdfs:range xsd:string ;
+    rdfs:comment "The current status value for the operational condition of the item.".
+
+:mac_address rdf:type owl:DatatypeProperty ;
+    rdfs:domain :ConfigurationItem ;
+    rdfs:range xsd:string ;
+    rdfs:comment "The media access control address assigned to the item.".
+
+:value rdf:type owl:DatatypeProperty ;
+    rdfs:domain :Attribute ; 
+    rdfs:range xsd:string ;
+    rdfs:comment "The value of the attribute.".
+
+:has_ipv4 rdf:type owl:DatatypeProperty ;
+    rdfs:domain :ConfigurationItem ; 
+    rdfs:range xsd:string ;
+    rdfs:comment "The associated IPv4 address.".
+
+:os_family rdf:type owl:DatatypeProperty ;
+    rdfs:domain :ConfigurationItem ; 
+    rdfs:range xsd:string ;
+    rdfs:comment "The associated operating system family.".
+
+:has_ipv6 rdf:type owl:DatatypeProperty ;
+    rdfs:domain :ConfigurationItem ; 
+    rdfs:range xsd:string ;
+    rdfs:comment "The associated IPv6 address.".
+
+#################################################################
+#    Object Properties
+#################################################################
+
+:has_ci_type rdf:type owl:ObjectProperty ;
+    rdfs:domain :ConfigurationItem ;
+    rdfs:range :ConfigurationItemType .
+
+:has_rel_type rdf:type owl:ObjectProperty ;
+    rdfs:domain :Relationship ;
+    rdfs:range :RelationshipType .
+
+:has_source rdf:type owl:ObjectProperty ;
+    rdfs:domain :Relationship ;
+    rdfs:range [rdf:type owl:Restriction;
+                owl:onProperty :has_source;
+                owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger;
+                owl:onClass :ConfigurationItem ] .
+
+:has_target rdf:type owl:ObjectProperty ;
+    rdfs:domain :Relationship ;
+    rdfs:range [rdf:type owl:Restriction;
+                owl:onProperty :has_target;
+                owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger;
+                owl:onClass :ConfigurationItem ] .
+
+:has_attribute rdf:type owl:ObjectProperty ;
+    rdfs:domain :Relationship , 
+                :ConfigurationItem ;
+    rdfs:range :Attribute .
+
+#################################################################
+#    Instances
+#################################################################
+
+        :logical__port1 rdf:type :ConfigurationItemType ;
+	 :title "Logical Port".
+:protocol2 rdf:type :ConfigurationItemType ;
+	 :title "Protocol".
+:product3 rdf:type :ConfigurationItemType ;
+	 :title "Product".
+:host10 rdf:type :ConfigurationItemType ;
+	 :title "Host".
+:operating__system11 rdf:type :ConfigurationItemType ;
+	 :title "Operating System".
+:c_p_u12 rdf:type :ConfigurationItemType ;
+	 :title "CPU".
+:g_p_u13 rdf:type :ConfigurationItemType ;
+	 :title "GPU".
+:vendor14 rdf:type :ConfigurationItemType ;
+	 :title "Vendor".
+:location15 rdf:type :ConfigurationItemType ;
+	 :title "Location".
+:r_a_m16 rdf:type :ConfigurationItemType ;
+	 :title "RAM".
+:s_s_d__controller17 rdf:type :ConfigurationItemType ;
+	 :title "SSD Controller".
+:volume19 rdf:type :ConfigurationItemType ;
+	 :title "Volume".
+:application21 rdf:type :ConfigurationItemType ;
+	 :title "Application".
+:hardware__port33 rdf:type :ConfigurationItemType ;
+	 :title "Hardware Port".
+:battery38 rdf:type :ConfigurationItemType ;
+	 :title "Battery".
+:manufacturer39 rdf:type :ConfigurationItemType ;
+	 :title "Manufacturer".
+:charger40 rdf:type :ConfigurationItemType ;
+	 :title "Charger".
+:built_in__microphone41 rdf:type :ConfigurationItemType ;
+	 :title "Built-in Microphone".
+:built_in__output43 rdf:type :ConfigurationItemType ;
+	 :title "Built-in Output".
+:spcardreader45 rdf:type :ConfigurationItemType ;
+	 :title "spcardreader".
+:display46 rdf:type :ConfigurationItemType ;
+	 :title "Display".
+:firewall47 rdf:type :ConfigurationItemType ;
+	 :title "Firewall".
+:wi__fi48 rdf:type :ConfigurationItemType ;
+	 :title "Wi-Fi".
+:bluetooth__p_a_n50 rdf:type :ConfigurationItemType ;
+	 :title "Bluetooth PAN".
+:thunderbolt__bridge52 rdf:type :ConfigurationItemType ;
+	 :title "Thunderbolt Bridge".
+:thunderbolt__ethernet54 rdf:type :ConfigurationItemType ;
+	 :title "Thunderbolt Ethernet".
+:v_p_n__uminho56 rdf:type :ConfigurationItemType ;
+	 :title "VPN Uminho".
+:has_protocol1 rdf:type :RelationshipType ;
+	 :title "has protocol".
+:running_product3 rdf:type :RelationshipType ;
+	 :title "running product".
+:is_running_on_port4 rdf:type :RelationshipType ;
+	 :title "is running on port".
+:port_from5 rdf:type :RelationshipType ;
+	 :title "port from".
+:installed_os19 rdf:type :RelationshipType ;
+	 :title "installed os".
+:running_os20 rdf:type :RelationshipType ;
+	 :title "running os".
+:associated_processor21 rdf:type :RelationshipType ;
+	 :title "associated processor".
+:processor_of22 rdf:type :RelationshipType ;
+	 :title "processor of".
+:has_vendor23 rdf:type :RelationshipType ;
+	 :title "has vendor".
+:located27 rdf:type :RelationshipType ;
+	 :title "located".
+:location_of28 rdf:type :RelationshipType ;
+	 :title "location of".
+:associated_memory29 rdf:type :RelationshipType ;
+	 :title "associated memory".
+:is_component_of30 rdf:type :RelationshipType ;
+	 :title "is component of".
+:has_volume35 rdf:type :RelationshipType ;
+	 :title "has volume".
+:has_storage39 rdf:type :RelationshipType ;
+	 :title "has storage".
+:has_installed45 rdf:type :RelationshipType ;
+	 :title "has installed".
+:has_hardware_port69 rdf:type :RelationshipType ;
+	 :title "has hardware port".
+:port_on_device70 rdf:type :RelationshipType ;
+	 :title "port on device".
+:has_manufacturer79 rdf:type :RelationshipType ;
+	 :title "has manufacturer".
+:has_battery81 rdf:type :RelationshipType ;
+	 :title "has battery".
+:has_charger83 rdf:type :RelationshipType ;
+	 :title "has charger".
+:has__built_in__microphone87 rdf:type :RelationshipType ;
+	 :title "has Built-in Microphone".
+:has__built_in__output91 rdf:type :RelationshipType ;
+	 :title "has Built-in Output".
+:associated_card_reader93 rdf:type :RelationshipType ;
+	 :title "associated card reader".
+:card_reader_of94 rdf:type :RelationshipType ;
+	 :title "card reader of".
+:associated_display95 rdf:type :RelationshipType ;
+	 :title "associated display".
+:display_of96 rdf:type :RelationshipType ;
+	 :title "display of".
+:associated_firewall97 rdf:type :RelationshipType ;
+	 :title "associated firewall".
+:firewall_of98 rdf:type :RelationshipType ;
+	 :title "firewall of".
+:associated_port99 rdf:type :RelationshipType ;
+	 :title "associated port".
+:has_network_service100 rdf:type :RelationshipType ;
+	 :title "has network service".
+:associated_network_service101 rdf:type :RelationshipType ;
+	 :title "associated network service".
+:43ssh rdf:type :ConfigurationItem ;
+	 :title "ssh";
+	 :description "OpenSSH 8.1";
+	 :has_ci_type :product3.
+:1protocol rdf:type :Attribute ;
+	 :title "protocol";
+	 :value "tcp".
+:2cpe rdf:type :Attribute ;
+	 :title "cpe";
+	 :value "cpe:/a:openbsd:openssh:8.1".
+:3product rdf:type :Attribute ;
+	 :title "product";
+	 :value "ssh".
+:2122 rdf:type :ConfigurationItem ;
+	 :title "22";
+	 :status "open";
+	 :has_attribute :1protocol;
+	 :has_attribute :2cpe;
+	 :has_attribute :3product;
+	 :has_ci_type :logical__port1.
+:73tcpwrapped rdf:type :ConfigurationItem ;
+	 :title "tcpwrapped";
+	 :has_ci_type :product3.
+:4protocol rdf:type :Attribute ;
+	 :title "protocol";
+	 :value "tcp".
+:5product rdf:type :Attribute ;
+	 :title "product";
+	 :value "tcpwrapped".
+:511110 rdf:type :ConfigurationItem ;
+	 :title "1110";
+	 :status "open";
+	 :has_attribute :4protocol;
+	 :has_attribute :5product;
+	 :has_ci_type :logical__port1.
+:92tcp rdf:type :ConfigurationItem ;
+	 :title "tcp";
+	 :has_ci_type :protocol2.
+:103fodms rdf:type :ConfigurationItem ;
+	 :title "fodms";
+	 :has_ci_type :product3.
+:6protocol rdf:type :Attribute ;
+	 :title "protocol";
+	 :value "tcp".
+:7product rdf:type :Attribute ;
+	 :title "product";
+	 :value "fodms".
+:817200 rdf:type :ConfigurationItem ;
+	 :title "7200";
+	 :status "open";
+	 :has_attribute :6protocol;
+	 :has_attribute :7product;
+	 :has_ci_type :logical__port1.
+:10os_family rdf:type :Attribute ;
+	 :title "os family";
+	 :value "Mac OS X".
+:12version_number rdf:type :Attribute ;
+	 :title "version number";
+	 :value "10.15.7".
+:13build_version rdf:type :Attribute ;
+	 :title "build version";
+	 :value "19H15".
+:1211mac_o_s_10_15_7_19_h15 rdf:type :ConfigurationItem ;
+	 :title "macOS 10.15.7 19H15";
+	 :has_attribute :10os_family;
+	 :has_attribute :12version_number;
+	 :has_attribute :13build_version;
+	 :has_ci_type :operating__system11.
+:20speed rdf:type :Attribute ;
+	 :title "Speed";
+	 :value "2,2 GHz".
+:24number_of__cores rdf:type :Attribute ;
+	 :title "Number of Cores";
+	 :value "4".
+:26l2__cache rdf:type :Attribute ;
+	 :title "L2 Cache";
+	 :value "256 KB".
+:27l3__cache rdf:type :Attribute ;
+	 :title "L3 Cache";
+	 :value "6 MB".
+:31s_m_c__version rdf:type :Attribute ;
+	 :title "SMC Version";
+	 :value "2.29f24".
+:1312quad__core__intel__core_i7 rdf:type :ConfigurationItem ;
+	 :title "Quad-Core Intel Core i7";
+	 :has_attribute :20speed;
+	 :has_attribute :24number_of__cores;
+	 :has_attribute :26l2__cache;
+	 :has_attribute :27l3__cache;
+	 :has_attribute :31s_m_c__version;
+	 :has_ci_type :c_p_u12.
+:33chipset__model rdf:type :Attribute ;
+	 :title "Chipset Model";
+	 :value "Intel Iris Pro".
+:34bus rdf:type :Attribute ;
+	 :title "Bus";
+	 :value "spdisplays_builtin".
+:35v_r_a_m rdf:type :Attribute ;
+	 :title "VRAM";
+	 :value "1536 MB".
+:36revision__i_d rdf:type :Attribute ;
+	 :title "Revision ID";
+	 :value "0x0008".
+:37v_r_a_m_shared rdf:type :Attribute ;
+	 :title "VRAM shared";
+	 :value "1536 MB".
+:38vendor rdf:type :Attribute ;
+	 :title "vendor";
+	 :value "Intel".
+:1413k_h_w__intel_iris_pro_item rdf:type :ConfigurationItem ;
+	 :title "kHW_IntelIrisProItem";
+	 :has_attribute :33chipset__model;
+	 :has_attribute :34bus;
+	 :has_attribute :35v_r_a_m;
+	 :has_attribute :36revision__i_d;
+	 :has_attribute :37v_r_a_m_shared;
+	 :has_attribute :38vendor;
+	 :has_ci_type :g_p_u13.
+:1514intel rdf:type :ConfigurationItem ;
+	 :title "Intel";
+	 :has_ci_type :vendor14.
+:39country rdf:type :Attribute ;
+	 :title "country";
+	 :value "Portugal".
+:40region rdf:type :Attribute ;
+	 :title "region";
+	 :value "Braga".
+:41city rdf:type :Attribute ;
+	 :title "city";
+	 :value "Barcelos".
+:42zip_code rdf:type :Attribute ;
+	 :title "zip_code";
+	 :value "4750-106".
+:43time_zone rdf:type :Attribute ;
+	 :title "time_zone";
+	 :value "Europe/Lisbon".
+:44latitude rdf:type :Attribute ;
+	 :title "latitude";
+	 :value "41.5388".
+:45longitude rdf:type :Attribute ;
+	 :title "longitude";
+	 :value "-8.6171".
+:1615p_t rdf:type :ConfigurationItem ;
+	 :title "PT";
+	 :has_attribute :39country;
+	 :has_attribute :40region;
+	 :has_attribute :41city;
+	 :has_attribute :42zip_code;
+	 :has_attribute :43time_zone;
+	 :has_attribute :44latitude;
+	 :has_attribute :45longitude;
+	 :has_ci_type :location15.
+:51manufacturer rdf:type :Attribute ;
+	 :title "manufacturer";
+	 :value "0x802C".
+:52part_number rdf:type :Attribute ;
+	 :title "part number";
+	 :value "0x31364B544631473634485A2D314736453120".
+:53size rdf:type :Attribute ;
+	 :title "size";
+	 :value "8 GB".
+:54speed rdf:type :Attribute ;
+	 :title "speed";
+	 :value "1600 MHz".
+:55architecture rdf:type :Attribute ;
+	 :title "architecture";
+	 :value "DDR3".
+:1816b_a_n_k_1_d_i_m_m0 rdf:type :ConfigurationItem ;
+	 :title "BANK 1DIMM0";
+	 :serial_number "-";
+	 :status "ok";
+	 :has_attribute :51manufacturer;
+	 :has_attribute :52part_number;
+	 :has_attribute :53size;
+	 :has_attribute :54speed;
+	 :has_attribute :55architecture;
+	 :has_ci_type :r_a_m16.
+:56bsd_name rdf:type :Attribute ;
+	 :title "bsd name";
+	 :value "disk0".
+:57detachable_drive rdf:type :Attribute ;
+	 :title "detachable drive";
+	 :value "no".
+:58device_model rdf:type :Attribute ;
+	 :title "device model";
+	 :value "APPLE SSD SM0256G".
+:59device_revision rdf:type :Attribute ;
+	 :title "device revision";
+	 :value "BXZ13A0Q".
+:60partition_map_type rdf:type :Attribute ;
+	 :title "partition map type";
+	 :value "guid_partition_map_type".
+:61removable_media rdf:type :Attribute ;
+	 :title "removable media";
+	 :value "no".
+:62size rdf:type :Attribute ;
+	 :title "size";
+	 :value "251 GB".
+:63medium_type rdf:type :Attribute ;
+	 :title "medium type";
+	 :value "Solid State".
+:64ncq rdf:type :Attribute ;
+	 :title "ncq";
+	 :value "Yes".
+:65ncq_depth rdf:type :Attribute ;
+	 :title "ncq depth";
+	 :value "32".
+:66link_speed rdf:type :Attribute ;
+	 :title "link speed";
+	 :value "8.0 GT/s".
+:67link_width rdf:type :Attribute ;
+	 :title "link width";
+	 :value "x4".
+:68physical_interconnect rdf:type :Attribute ;
+	 :title "physical interconnect";
+	 :value "PCI".
+:69port_description rdf:type :Attribute ;
+	 :title "port description";
+	 :value "AHCI Version 1.30 Supported".
+:70product rdf:type :Attribute ;
+	 :title "product";
+	 :value "SSD Controller".
+:71vendor rdf:type :Attribute ;
+	 :title "vendor";
+	 :value "Apple".
+:1917a_p_p_l_e__s_s_d__s_m0256_g rdf:type :ConfigurationItem ;
+	 :title "APPLE SSD SM0256G";
+	 :serial_number "S2Z5NY0H811261";
+	 :has_attribute :56bsd_name;
+	 :has_attribute :57detachable_drive;
+	 :has_attribute :58device_model;
+	 :has_attribute :59device_revision;
+	 :has_attribute :60partition_map_type;
+	 :has_attribute :61removable_media;
+	 :has_attribute :62size;
+	 :has_attribute :63medium_type;
+	 :has_attribute :64ncq;
+	 :has_attribute :65ncq_depth;
+	 :has_attribute :66link_speed;
+	 :has_attribute :67link_width;
+	 :has_attribute :68physical_interconnect;
+	 :has_attribute :69port_description;
+	 :has_attribute :70product;
+	 :has_attribute :71vendor;
+	 :has_ci_type :s_s_d__controller17.
+:79bsd_name rdf:type :Attribute ;
+	 :title "bsd name";
+	 :value "disk1s1".
+:80filesystem rdf:type :Attribute ;
+	 :title "filesystem";
+	 :value "APFS".
+:81free_space rdf:type :Attribute ;
+	 :title "free space";
+	 :value "32606756864".
+:82ignore_ownership rdf:type :Attribute ;
+	 :title "ignore ownership";
+	 :value "no".
+:83mount_point rdf:type :Attribute ;
+	 :title "mount point";
+	 :value "/System/Volumes/Data".
+:84size rdf:type :Attribute ;
+	 :title "size";
+	 :value "250790436864".
+:85writable rdf:type :Attribute ;
+	 :title "writable";
+	 :value "yes".
+:2319macintosh__h_d___dados rdf:type :ConfigurationItem ;
+	 :title "Macintosh HD - dados";
+	 :uuid "94F26D0A-6663-35D5-A73B-22B7BA027440";
+	 :has_attribute :79bsd_name;
+	 :has_attribute :80filesystem;
+	 :has_attribute :81free_space;
+	 :has_attribute :82ignore_ownership;
+	 :has_attribute :83mount_point;
+	 :has_attribute :84size;
+	 :has_attribute :85writable;
+	 :has_ci_type :volume19.
+:86bsd_name rdf:type :Attribute ;
+	 :title "bsd name";
+	 :value "disk1s5".
+:87filesystem rdf:type :Attribute ;
+	 :title "filesystem";
+	 :value "APFS".
+:88free_space rdf:type :Attribute ;
+	 :title "free space";
+	 :value "32606756864".
+:89ignore_ownership rdf:type :Attribute ;
+	 :title "ignore ownership";
+	 :value "no".
+:90mount_point rdf:type :Attribute ;
+	 :title "mount point";
+	 :value "/".
+:91size rdf:type :Attribute ;
+	 :title "size";
+	 :value "250790436864".
+:92writable rdf:type :Attribute ;
+	 :title "writable";
+	 :value "no".
+:2419macintosh__h_d rdf:type :ConfigurationItem ;
+	 :title "Macintosh HD";
+	 :uuid "C4E0DD99-AFBC-41F4-9586-159FE1ED6E52";
+	 :has_attribute :86bsd_name;
+	 :has_attribute :87filesystem;
+	 :has_attribute :88free_space;
+	 :has_attribute :89ignore_ownership;
+	 :has_attribute :90mount_point;
+	 :has_attribute :91size;
+	 :has_attribute :92writable;
+	 :has_ci_type :volume19.
+:93arch_kind rdf:type :Attribute ;
+	 :title "arch kind";
+	 :value "arch_i64".
+:94last_modified rdf:type :Attribute ;
+	 :title "last modified";
+	 :value "2021-03-23T16:55:26Z".
+:95path rdf:type :Attribute ;
+	 :title "path";
+	 :value "/Applications/zoom.us.app".
+:96obtained_from rdf:type :Attribute ;
+	 :title "obtained from";
+	 :value "identified_developer".
+:2521zoom rdf:type :ConfigurationItem ;
+	 :title "zoom";
+	 :description "5.6.0 (536)";
+	 :has_attribute :93arch_kind;
+	 :has_attribute :94last_modified;
+	 :has_attribute :95path;
+	 :has_attribute :96obtained_from;
+	 :has_ci_type :application21.
+:97arch_kind rdf:type :Attribute ;
+	 :title "arch kind";
+	 :value "arch_i64".
+:98last_modified rdf:type :Attribute ;
+	 :title "last modified";
+	 :value "2021-03-04T09:04:54Z".
+:99path rdf:type :Attribute ;
+	 :title "path";
+	 :value "/Applications/Postman.app".
+:100obtained_from rdf:type :Attribute ;
+	 :title "obtained from";
+	 :value "identified_developer".
+:2621postman rdf:type :ConfigurationItem ;
+	 :title "Postman";
+	 :description "8.0.7";
+	 :has_attribute :97arch_kind;
+	 :has_attribute :98last_modified;
+	 :has_attribute :99path;
+	 :has_attribute :100obtained_from;
+	 :has_ci_type :application21.
+:101arch_kind rdf:type :Attribute ;
+	 :title "arch kind";
+	 :value "arch_i64".
+:102info rdf:type :Attribute ;
+	 :title "info";
+	 :value "Adobe Reader X 21.001.20145, ©1984 -2021 Adobe Systems Incorporated. All rights reserved.".
+:103last_modified rdf:type :Attribute ;
+	 :title "last modified";
+	 :value "2021-03-12T19:16:42Z".
+:104path rdf:type :Attribute ;
+	 :title "path";
+	 :value "/Applications/Adobe Acrobat Reader DC.app".
+:105obtained_from rdf:type :Attribute ;
+	 :title "obtained from";
+	 :value "identified_developer".
+:2721adobe__acrobat__reader__d_c rdf:type :ConfigurationItem ;
+	 :title "Adobe Acrobat Reader DC";
+	 :description "21.001.20145";
+	 :has_attribute :101arch_kind;
+	 :has_attribute :102info;
+	 :has_attribute :103last_modified;
+	 :has_attribute :104path;
+	 :has_attribute :105obtained_from;
+	 :has_ci_type :application21.
+:106arch_kind rdf:type :Attribute ;
+	 :title "arch kind";
+	 :value "arch_i64".
+:107last_modified rdf:type :Attribute ;
+	 :title "last modified";
+	 :value "2021-03-05T02:28:15Z".
+:108path rdf:type :Attribute ;
+	 :title "path";
+	 :value "/Applications/iMovie.app".
+:109obtained_from rdf:type :Attribute ;
+	 :title "obtained from";
+	 :value "mac_app_store".
+:2821i_movie rdf:type :ConfigurationItem ;
+	 :title "iMovie";
+	 :description "10.2.3";
+	 :has_attribute :106arch_kind;
+	 :has_attribute :107last_modified;
+	 :has_attribute :108path;
+	 :has_attribute :109obtained_from;
+	 :has_ci_type :application21.
+:110arch_kind rdf:type :Attribute ;
+	 :title "arch kind";
+	 :value "arch_i64".
+:111info rdf:type :Attribute ;
+	 :title "info";
+	 :value "Firefox 86.0.1".
+:112last_modified rdf:type :Attribute ;
+	 :title "last modified";
+	 :value "2021-03-18T23:37:43Z".
+:113path rdf:type :Attribute ;
+	 :title "path";
+	 :value "/Applications/Firefox.app".
+:114obtained_from rdf:type :Attribute ;
+	 :title "obtained from";
+	 :value "identified_developer".
+:2921firefox rdf:type :ConfigurationItem ;
+	 :title "Firefox";
+	 :description "86.0.1";
+	 :has_attribute :110arch_kind;
+	 :has_attribute :111info;
+	 :has_attribute :112last_modified;
+	 :has_attribute :113path;
+	 :has_attribute :114obtained_from;
+	 :has_ci_type :application21.
+:115arch_kind rdf:type :Attribute ;
+	 :title "arch kind";
+	 :value "arch_i32_i64".
+:116info rdf:type :Attribute ;
+	 :title "info";
+	 :value "PyCharm 2020.3.4, build PY-203.7717.65. Copyright JetBrains s.r.o., (c) 2000-2021".
+:117last_modified rdf:type :Attribute ;
+	 :title "last modified";
+	 :value "2021-03-16T10:52:36Z".
+:118path rdf:type :Attribute ;
+	 :title "path";
+	 :value "/Applications/PyCharm.app".
+:119obtained_from rdf:type :Attribute ;
+	 :title "obtained from";
+	 :value "identified_developer".
+:3021py_charm rdf:type :ConfigurationItem ;
+	 :title "PyCharm";
+	 :description "2020.3.4";
+	 :has_attribute :115arch_kind;
+	 :has_attribute :116info;
+	 :has_attribute :117last_modified;
+	 :has_attribute :118path;
+	 :has_attribute :119obtained_from;
+	 :has_ci_type :application21.
+:120arch_kind rdf:type :Attribute ;
+	 :title "arch kind";
+	 :value "arch_i64".
+:121last_modified rdf:type :Attribute ;
+	 :title "last modified";
+	 :value "2021-03-10T21:02:10Z".
+:122path rdf:type :Attribute ;
+	 :title "path";
+	 :value "/Applications/Visual Studio Code.app".
+:123obtained_from rdf:type :Attribute ;
+	 :title "obtained from";
+	 :value "identified_developer".
+:3121visual__studio__code rdf:type :ConfigurationItem ;
+	 :title "Visual Studio Code";
+	 :description "1.54.3";
+	 :has_attribute :120arch_kind;
+	 :has_attribute :121last_modified;
+	 :has_attribute :122path;
+	 :has_attribute :123obtained_from;
+	 :has_ci_type :application21.
+:124arch_kind rdf:type :Attribute ;
+	 :title "arch kind";
+	 :value "arch_i64".
+:125last_modified rdf:type :Attribute ;
+	 :title "last modified";
+	 :value "2021-03-06T02:08:46Z".
+:126path rdf:type :Attribute ;
+	 :title "path";
+	 :value "/Applications/Spotify.app".
+:127obtained_from rdf:type :Attribute ;
+	 :title "obtained from";
+	 :value "identified_developer".
+:3221spotify rdf:type :ConfigurationItem ;
+	 :title "Spotify";
+	 :description "1.1.54.592.gc0b20638";
+	 :has_attribute :124arch_kind;
+	 :has_attribute :125last_modified;
+	 :has_attribute :126path;
+	 :has_attribute :127obtained_from;
+	 :has_ci_type :application21.
+:128arch_kind rdf:type :Attribute ;
+	 :title "arch kind";
+	 :value "arch_i64".
+:129info rdf:type :Attribute ;
+	 :title "info";
+	 :value "Google Chrome 89.0.4389.90, Copyright 2021 Google LLC. All rights reserved.".
+:130last_modified rdf:type :Attribute ;
+	 :title "last modified";
+	 :value "2021-03-12T02:22:49Z".
+:131path rdf:type :Attribute ;
+	 :title "path";
+	 :value "/Applications/Google Chrome.app".
+:132obtained_from rdf:type :Attribute ;
+	 :title "obtained from";
+	 :value "identified_developer".
+:3321google__chrome rdf:type :ConfigurationItem ;
+	 :title "Google Chrome";
+	 :description "89.0.4389.90";
+	 :has_attribute :128arch_kind;
+	 :has_attribute :129info;
+	 :has_attribute :130last_modified;
+	 :has_attribute :131path;
+	 :has_attribute :132obtained_from;
+	 :has_ci_type :application21.
+:133arch_kind rdf:type :Attribute ;
+	 :title "arch kind";
+	 :value "arch_i64".
+:134info rdf:type :Attribute ;
+	 :title "info";
+	 :value "FileZilla Client 3.53.0, Copyright (C) 2004-2021 Tim Kosse, Website: https://filezilla-project.org".
+:135last_modified rdf:type :Attribute ;
+	 :title "last modified";
+	 :value "2021-03-15T08:50:21Z".
+:136path rdf:type :Attribute ;
+	 :title "path";
+	 :value "/Users/Joana/Downloads/FileZilla.app".
+:137obtained_from rdf:type :Attribute ;
+	 :title "obtained from";
+	 :value "identified_developer".
+:3421file_zilla rdf:type :ConfigurationItem ;
+	 :title "FileZilla";
+	 :description "3.53.0";
+	 :has_attribute :133arch_kind;
+	 :has_attribute :134info;
+	 :has_attribute :135last_modified;
+	 :has_attribute :136path;
+	 :has_attribute :137obtained_from;
+	 :has_ci_type :application21.
+:138arch_kind rdf:type :Attribute ;
+	 :title "arch kind";
+	 :value "arch_i64".
+:139last_modified rdf:type :Attribute ;
+	 :title "last modified";
+	 :value "2021-03-19T20:35:18Z".
+:140path rdf:type :Attribute ;
+	 :title "path";
+	 :value "/Library/Apple/System/Library/CoreServices/MRT.app".
+:141obtained_from rdf:type :Attribute ;
+	 :title "obtained from";
+	 :value "apple".
+:3521m_r_t rdf:type :ConfigurationItem ;
+	 :title "MRT";
+	 :description "1.76";
+	 :has_attribute :138arch_kind;
+	 :has_attribute :139last_modified;
+	 :has_attribute :140path;
+	 :has_attribute :141obtained_from;
+	 :has_ci_type :application21.
+:142arch_kind rdf:type :Attribute ;
+	 :title "arch kind";
+	 :value "arch_i64".
+:143last_modified rdf:type :Attribute ;
+	 :title "last modified";
+	 :value "2021-02-24T13:47:59Z".
+:144path rdf:type :Attribute ;
+	 :title "path";
+	 :value "/Applications/Slack.app".
+:145obtained_from rdf:type :Attribute ;
+	 :title "obtained from";
+	 :value "mac_app_store".
+:3621slack rdf:type :ConfigurationItem ;
+	 :title "Slack";
+	 :description "4.13.0";
+	 :has_attribute :142arch_kind;
+	 :has_attribute :143last_modified;
+	 :has_attribute :144path;
+	 :has_attribute :145obtained_from;
+	 :has_ci_type :application21.
+:149interface rdf:type :Attribute ;
+	 :title "interface";
+	 :value "en2".
+:4033thunderbolt_2 rdf:type :ConfigurationItem ;
+	 :title "Thunderbolt 2";
+	 :mac_address "82:17:0a:07:92:c1";
+	 :has_attribute :149interface;
+	 :has_ci_type :hardware__port33.
+:4339d_p rdf:type :ConfigurationItem ;
+	 :title "DP";
+	 :has_ci_type :manufacturer39.
+:166auto__power__off__delay rdf:type :Attribute ;
+	 :title "Auto Power Off Delay";
+	 :value "28800".
+:167auto__power__off__enabled rdf:type :Attribute ;
+	 :title "Auto Power Off Enabled";
+	 :value "0".
+:168dark__wake__background__tasks rdf:type :Attribute ;
+	 :title "Dark Wake Background Tasks";
+	 :value "1".
+:169disk__sleep__timer rdf:type :Attribute ;
+	 :title "Disk Sleep Timer";
+	 :value "10".
+:170display__sleep__timer rdf:type :Attribute ;
+	 :title "Display Sleep Timer";
+	 :value "60".
+:171display__sleep__uses__dim rdf:type :Attribute ;
+	 :title "Display Sleep Uses Dim";
+	 :value "Yes".
+:172g_p_u__switch rdf:type :Attribute ;
+	 :title "GPU Switch";
+	 :value "2".
+:173hibernate__mode rdf:type :Attribute ;
+	 :title "Hibernate Mode";
+	 :value "3".
+:174high__standby__delay rdf:type :Attribute ;
+	 :title "High Standby Delay";
+	 :value "86400".
+:175prioritize__network__reachability__over__sleep rdf:type :Attribute ;
+	 :title "Prioritize Network Reachability Over Sleep";
+	 :value "0".
+:176proximity__dark__wake rdf:type :Attribute ;
+	 :title "Proximity Dark Wake";
+	 :value "1".
+:177standby__battery__threshold rdf:type :Attribute ;
+	 :title "Standby Battery Threshold";
+	 :value "50".
+:178standby__delay rdf:type :Attribute ;
+	 :title "Standby Delay";
+	 :value "10800".
+:179standby__enabled rdf:type :Attribute ;
+	 :title "Standby Enabled";
+	 :value "1".
+:180system__sleep__timer rdf:type :Attribute ;
+	 :title "System Sleep Timer";
+	 :value "0".
+:181t_c_p__keep__alive__pref rdf:type :Attribute ;
+	 :title "TCP Keep Alive Pref";
+	 :value "1".
+:182wake__on__a_c__change rdf:type :Attribute ;
+	 :title "Wake On AC Change";
+	 :value "No".
+:183wake__on__clamshell__open rdf:type :Attribute ;
+	 :title "Wake On Clamshell Open";
+	 :value "Yes".
+:184wake__on__l_a_n rdf:type :Attribute ;
+	 :title "Wake On LAN";
+	 :value "No".
+:203connected rdf:type :Attribute ;
+	 :title "connected";
+	 :value "FALSE".
+:204charging rdf:type :Attribute ;
+	 :title "charging";
+	 :value "FALSE".
+:4440 rdf:type :ConfigurationItem ;
+	 :has_attribute :166auto__power__off__delay;
+	 :has_attribute :167auto__power__off__enabled;
+	 :has_attribute :168dark__wake__background__tasks;
+	 :has_attribute :169disk__sleep__timer;
+	 :has_attribute :170display__sleep__timer;
+	 :has_attribute :171display__sleep__uses__dim;
+	 :has_attribute :172g_p_u__switch;
+	 :has_attribute :173hibernate__mode;
+	 :has_attribute :174high__standby__delay;
+	 :has_attribute :175prioritize__network__reachability__over__sleep;
+	 :has_attribute :176proximity__dark__wake;
+	 :has_attribute :177standby__battery__threshold;
+	 :has_attribute :178standby__delay;
+	 :has_attribute :179standby__enabled;
+	 :has_attribute :180system__sleep__timer;
+	 :has_attribute :181t_c_p__keep__alive__pref;
+	 :has_attribute :182wake__on__a_c__change;
+	 :has_attribute :183wake__on__clamshell__open;
+	 :has_attribute :184wake__on__l_a_n;
+	 :has_attribute :203connected;
+	 :has_attribute :204charging;
+	 :has_ci_type :charger40.
+:151current_capacity rdf:type :Attribute ;
+	 :title "current capacity";
+	 :value "6129".
+:152fully_charged rdf:type :Attribute ;
+	 :title "fully charged";
+	 :value "TRUE".
+:153is_charging rdf:type :Attribute ;
+	 :title "is charging";
+	 :value "FALSE".
+:154max_capacity rdf:type :Attribute ;
+	 :title "max capacity";
+	 :value "6420".
+:155cycle_count rdf:type :Attribute ;
+	 :title "cycle count";
+	 :value "865".
+:156installed rdf:type :Attribute ;
+	 :title "installed";
+	 :value "TRUE".
+:157pack__lot__code rdf:type :Attribute ;
+	 :title "Pack Lot Code";
+	 :value "0000".
+:158p_c_b__lot__code rdf:type :Attribute ;
+	 :title "PCB Lot Code";
+	 :value "0000".
+:159cell_revision rdf:type :Attribute ;
+	 :title "cell revision";
+	 :value "3244".
+:160firmware_version rdf:type :Attribute ;
+	 :title "firmware version";
+	 :value "0702".
+:161hardware_revision rdf:type :Attribute ;
+	 :title "hardware revision";
+	 :value "0001".
+:163manufacturer rdf:type :Attribute ;
+	 :title "manufacturer";
+	 :value "DP".
+:164current_amperage rdf:type :Attribute ;
+	 :title "current amperage";
+	 :value "-2354".
+:165current_voltage rdf:type :Attribute ;
+	 :title "current voltage";
+	 :value "11851".
+:185auto__power__off__delay rdf:type :Attribute ;
+	 :title "Auto Power Off Delay";
+	 :value "0".
+:186auto__power__off__enabled rdf:type :Attribute ;
+	 :title "Auto Power Off Enabled";
+	 :value "0".
+:187dark__wake__background__tasks rdf:type :Attribute ;
+	 :title "Dark Wake Background Tasks";
+	 :value "False".
+:188disk__sleep__timer rdf:type :Attribute ;
+	 :title "Disk Sleep Timer";
+	 :value "10".
+:189display__sleep__timer rdf:type :Attribute ;
+	 :title "Display Sleep Timer";
+	 :value "15".
+:190display__sleep__uses__dim rdf:type :Attribute ;
+	 :title "Display Sleep Uses Dim";
+	 :value "Yes".
+:191g_p_u__switch rdf:type :Attribute ;
+	 :title "GPU Switch";
+	 :value "2".
+:192hibernate__mode rdf:type :Attribute ;
+	 :title "Hibernate Mode";
+	 :value "3".
+:193high__standby__delay rdf:type :Attribute ;
+	 :title "High Standby Delay";
+	 :value "86400".
+:194proximity__dark__wake rdf:type :Attribute ;
+	 :title "Proximity Dark Wake";
+	 :value "0".
+:195reduce__brightness rdf:type :Attribute ;
+	 :title "Reduce Brightness";
+	 :value "Yes".
+:196standby__battery__threshold rdf:type :Attribute ;
+	 :title "Standby Battery Threshold";
+	 :value "50".
+:197standby__delay rdf:type :Attribute ;
+	 :title "Standby Delay";
+	 :value "10800".
+:198standby__enabled rdf:type :Attribute ;
+	 :title "Standby Enabled";
+	 :value "1".
+:199system__sleep__timer rdf:type :Attribute ;
+	 :title "System Sleep Timer";
+	 :value "15".
+:200t_c_p__keep__alive__pref rdf:type :Attribute ;
+	 :title "TCP Keep Alive Pref";
+	 :value "1".
+:201wake__on__a_c__change rdf:type :Attribute ;
+	 :title "Wake On AC Change";
+	 :value "No".
+:202wake__on__clamshell__open rdf:type :Attribute ;
+	 :title "Wake On Clamshell Open";
+	 :value "Yes".
+:4238bq20z451 rdf:type :ConfigurationItem ;
+	 :title "bq20z451";
+	 :serial_number "C016314028XFWLNF6";
+	 :status "Check Battery";
+	 :has_attribute :151current_capacity;
+	 :has_attribute :152fully_charged;
+	 :has_attribute :153is_charging;
+	 :has_attribute :154max_capacity;
+	 :has_attribute :155cycle_count;
+	 :has_attribute :156installed;
+	 :has_attribute :157pack__lot__code;
+	 :has_attribute :158p_c_b__lot__code;
+	 :has_attribute :159cell_revision;
+	 :has_attribute :160firmware_version;
+	 :has_attribute :161hardware_revision;
+	 :has_attribute :163manufacturer;
+	 :has_attribute :164current_amperage;
+	 :has_attribute :165current_voltage;
+	 :has_attribute :185auto__power__off__delay;
+	 :has_attribute :186auto__power__off__enabled;
+	 :has_attribute :187dark__wake__background__tasks;
+	 :has_attribute :188disk__sleep__timer;
+	 :has_attribute :189display__sleep__timer;
+	 :has_attribute :190display__sleep__uses__dim;
+	 :has_attribute :191g_p_u__switch;
+	 :has_attribute :192hibernate__mode;
+	 :has_attribute :193high__standby__delay;
+	 :has_attribute :194proximity__dark__wake;
+	 :has_attribute :195reduce__brightness;
+	 :has_attribute :196standby__battery__threshold;
+	 :has_attribute :197standby__delay;
+	 :has_attribute :198standby__enabled;
+	 :has_attribute :199system__sleep__timer;
+	 :has_attribute :200t_c_p__keep__alive__pref;
+	 :has_attribute :201wake__on__a_c__change;
+	 :has_attribute :202wake__on__clamshell__open;
+	 :has_ci_type :battery38.
+:166auto__power__off__delay rdf:type :Attribute ;
+	 :title "Auto Power Off Delay";
+	 :value "28800".
+:167auto__power__off__enabled rdf:type :Attribute ;
+	 :title "Auto Power Off Enabled";
+	 :value "0".
+:168dark__wake__background__tasks rdf:type :Attribute ;
+	 :title "Dark Wake Background Tasks";
+	 :value "1".
+:169disk__sleep__timer rdf:type :Attribute ;
+	 :title "Disk Sleep Timer";
+	 :value "10".
+:170display__sleep__timer rdf:type :Attribute ;
+	 :title "Display Sleep Timer";
+	 :value "60".
+:171display__sleep__uses__dim rdf:type :Attribute ;
+	 :title "Display Sleep Uses Dim";
+	 :value "Yes".
+:172g_p_u__switch rdf:type :Attribute ;
+	 :title "GPU Switch";
+	 :value "2".
+:173hibernate__mode rdf:type :Attribute ;
+	 :title "Hibernate Mode";
+	 :value "3".
+:174high__standby__delay rdf:type :Attribute ;
+	 :title "High Standby Delay";
+	 :value "86400".
+:175prioritize__network__reachability__over__sleep rdf:type :Attribute ;
+	 :title "Prioritize Network Reachability Over Sleep";
+	 :value "0".
+:176proximity__dark__wake rdf:type :Attribute ;
+	 :title "Proximity Dark Wake";
+	 :value "1".
+:177standby__battery__threshold rdf:type :Attribute ;
+	 :title "Standby Battery Threshold";
+	 :value "50".
+:178standby__delay rdf:type :Attribute ;
+	 :title "Standby Delay";
+	 :value "10800".
+:179standby__enabled rdf:type :Attribute ;
+	 :title "Standby Enabled";
+	 :value "1".
+:180system__sleep__timer rdf:type :Attribute ;
+	 :title "System Sleep Timer";
+	 :value "0".
+:181t_c_p__keep__alive__pref rdf:type :Attribute ;
+	 :title "TCP Keep Alive Pref";
+	 :value "1".
+:182wake__on__a_c__change rdf:type :Attribute ;
+	 :title "Wake On AC Change";
+	 :value "No".
+:183wake__on__clamshell__open rdf:type :Attribute ;
+	 :title "Wake On Clamshell Open";
+	 :value "Yes".
+:184wake__on__l_a_n rdf:type :Attribute ;
+	 :title "Wake On LAN";
+	 :value "No".
+:203connected rdf:type :Attribute ;
+	 :title "connected";
+	 :value "FALSE".
+:204charging rdf:type :Attribute ;
+	 :title "charging";
+	 :value "FALSE".
+:4440 rdf:type :ConfigurationItem ;
+	 :has_attribute :166auto__power__off__delay;
+	 :has_attribute :167auto__power__off__enabled;
+	 :has_attribute :168dark__wake__background__tasks;
+	 :has_attribute :169disk__sleep__timer;
+	 :has_attribute :170display__sleep__timer;
+	 :has_attribute :171display__sleep__uses__dim;
+	 :has_attribute :172g_p_u__switch;
+	 :has_attribute :173hibernate__mode;
+	 :has_attribute :174high__standby__delay;
+	 :has_attribute :175prioritize__network__reachability__over__sleep;
+	 :has_attribute :176proximity__dark__wake;
+	 :has_attribute :177standby__battery__threshold;
+	 :has_attribute :178standby__delay;
+	 :has_attribute :179standby__enabled;
+	 :has_attribute :180system__sleep__timer;
+	 :has_attribute :181t_c_p__keep__alive__pref;
+	 :has_attribute :182wake__on__a_c__change;
+	 :has_attribute :183wake__on__clamshell__open;
+	 :has_attribute :184wake__on__l_a_n;
+	 :has_attribute :203connected;
+	 :has_attribute :204charging;
+	 :has_ci_type :charger40.
+:205default_audio_input_device rdf:type :Attribute ;
+	 :title "default audio input device";
+	 :value "spaudio_yes".
+:206device_input rdf:type :Attribute ;
+	 :title "device input";
+	 :value "2".
+:207srate rdf:type :Attribute ;
+	 :title "srate";
+	 :value "44100".
+:208transport rdf:type :Attribute ;
+	 :title "transport";
+	 :value "coreaudio_device_type_builtin".
+:209input_source rdf:type :Attribute ;
+	 :title "input source";
+	 :value "Internal Microphone".
+:210manufacturer rdf:type :Attribute ;
+	 :title "manufacturer";
+	 :value "Apple Inc.".
+:4541built_in__microphone rdf:type :ConfigurationItem ;
+	 :title "Built-in Microphone";
+	 :has_attribute :205default_audio_input_device;
+	 :has_attribute :206device_input;
+	 :has_attribute :207srate;
+	 :has_attribute :208transport;
+	 :has_attribute :209input_source;
+	 :has_attribute :210manufacturer;
+	 :has_ci_type :built_in__microphone41.
+:211srate rdf:type :Attribute ;
+	 :title "srate";
+	 :value "44100".
+:212transport rdf:type :Attribute ;
+	 :title "transport";
+	 :value "coreaudio_device_type_builtin".
+:213properties rdf:type :Attribute ;
+	 :title "properties";
+	 :value "coreaudio_default_audio_system_device".
+:214default_audio_output_device rdf:type :Attribute ;
+	 :title "default audio output_device";
+	 :value "spaudio_yes".
+:215default_audio_system_device rdf:type :Attribute ;
+	 :title "default audio system device";
+	 :value "spaudio_yes".
+:216device_output rdf:type :Attribute ;
+	 :title "device output";
+	 :value "2".
+:217output_source rdf:type :Attribute ;
+	 :title "output source";
+	 :value "Internal Speakers".
+:218manufacturer rdf:type :Attribute ;
+	 :title "manufacturer";
+	 :value "Apple Inc.".
+:4743built_in__output rdf:type :ConfigurationItem ;
+	 :title "Built-in Output";
+	 :has_attribute :211srate;
+	 :has_attribute :212transport;
+	 :has_attribute :213properties;
+	 :has_attribute :214default_audio_output_device;
+	 :has_attribute :215default_audio_system_device;
+	 :has_attribute :216device_output;
+	 :has_attribute :217output_source;
+	 :has_attribute :218manufacturer;
+	 :has_ci_type :built_in__output43.
+:4839apple__inc_ rdf:type :ConfigurationItem ;
+	 :title "Apple Inc.";
+	 :has_ci_type :manufacturer39.
+:219product_id rdf:type :Attribute ;
+	 :title "product id";
+	 :value "0x8406".
+:220revision_id rdf:type :Attribute ;
+	 :title "revision id";
+	 :value "3.00".
+:221vendor_id rdf:type :Attribute ;
+	 :title "vendor id";
+	 :value "0x05ac".
+:4945spcardreader rdf:type :ConfigurationItem ;
+	 :title "spcardreader";
+	 :serial_number "000000000820";
+	 :has_attribute :219product_id;
+	 :has_attribute :220revision_id;
+	 :has_attribute :221vendor_id;
+	 :has_ci_type :spcardreader45.
+:223pixels rdf:type :Attribute ;
+	 :title "pixels";
+	 :value "2880 x 1800".
+:224year rdf:type :Attribute ;
+	 :title "year";
+	 :value "2015".
+:225resolution rdf:type :Attribute ;
+	 :title "resolution";
+	 :value "1440 x 900".
+:226pixel_resolution rdf:type :Attribute ;
+	 :title "pixel resolution";
+	 :value "spdisplays_2880x1800Retina".
+:227connection_type rdf:type :Attribute ;
+	 :title "connection type";
+	 :value "spdisplays_internal".
+:228depth rdf:type :Attribute ;
+	 :title "depth";
+	 :value "CGSThirtytwoBitColor".
+:229display_type rdf:type :Attribute ;
+	 :title "display type";
+	 :value "spdisplays_built-in_retinaLCD".
+:5046color__l_c_d rdf:type :ConfigurationItem ;
+	 :title "Color LCD";
+	 :has_attribute :223pixels;
+	 :has_attribute :224year;
+	 :has_attribute :225resolution;
+	 :has_attribute :226pixel_resolution;
+	 :has_attribute :227connection_type;
+	 :has_attribute :228depth;
+	 :has_attribute :229display_type;
+	 :has_ci_type :display46.
+:230logging rdf:type :Attribute ;
+	 :title "logging";
+	 :value "Yes".
+:231stealth_mode rdf:type :Attribute ;
+	 :title "stealth mode";
+	 :value "No".
+:232com_apple__web_kit__networking rdf:type :Attribute ;
+	 :title "com.apple.WebKit.Networking";
+	 :value "spfirewall_allow_all".
+:233com_jetbrains_pycharm rdf:type :Attribute ;
+	 :title "com.jetbrains.pycharm";
+	 :value "spfirewall_allow_all".
+:234com_kaspersky_kav_kavd rdf:type :Attribute ;
+	 :title "com.kaspersky.kav.kavd";
+	 :value "spfirewall_allow_all".
+:235com_ontotext_graphdb_free rdf:type :Attribute ;
+	 :title "com.ontotext.graphdb.free";
+	 :value "spfirewall_allow_all".
+:236com_spotify_client rdf:type :Attribute ;
+	 :title "com.spotify.client";
+	 :value "spfirewall_allow_all".
+:237com_valvesoftware_steam rdf:type :Attribute ;
+	 :title "com.valvesoftware.steam";
+	 :value "spfirewall_allow_all".
+:238remote__login____s_s_h rdf:type :Attribute ;
+	 :title "Remote Login - SSH";
+	 :value "spfirewall_allow_all".
+:5147spfirewall_settings rdf:type :ConfigurationItem ;
+	 :title "spfirewall_settings";
+	 :status "spfirewall_globalstate_limit_connections";
+	 :has_attribute :230logging;
+	 :has_attribute :231stealth_mode;
+	 :has_attribute :232com_apple__web_kit__networking;
+	 :has_attribute :233com_jetbrains_pycharm;
+	 :has_attribute :234com_kaspersky_kav_kavd;
+	 :has_attribute :235com_ontotext_graphdb_free;
+	 :has_attribute :236com_spotify_client;
+	 :has_attribute :237com_valvesoftware_steam;
+	 :has_attribute :238remote__login____s_s_h;
+	 :has_ci_type :firewall47.
+:239interface rdf:type :Attribute ;
+	 :title "interface";
+	 :value "en0".
+:5333air_port rdf:type :ConfigurationItem ;
+	 :title "AirPort";
+	 :has_attribute :239interface;
+	 :has_ci_type :hardware__port33.
+:146interface rdf:type :Attribute ;
+	 :title "interface";
+	 :value "en0".
+:5248wi__fi rdf:type :ConfigurationItem ;
+	 :title "Wi-Fi";
+	 :mac_address "c4:b3:01:c0:1a:d3";
+	 :has_attribute :146interface;
+	 :has_ci_type :wi__fi48.
+:240interface rdf:type :Attribute ;
+	 :title "interface";
+	 :value "en3".
+:5533ethernet rdf:type :ConfigurationItem ;
+	 :title "Ethernet";
+	 :has_attribute :240interface;
+	 :has_ci_type :hardware__port33.
+:147interface rdf:type :Attribute ;
+	 :title "interface";
+	 :value "en3".
+:5450bluetooth__p_a_n rdf:type :ConfigurationItem ;
+	 :title "Bluetooth PAN";
+	 :mac_address "c4:b3:01:c0:1a:d4";
+	 :has_attribute :147interface;
+	 :has_ci_type :bluetooth__p_a_n50.
+:241interface rdf:type :Attribute ;
+	 :title "interface";
+	 :value "bridge0".
+:5733ethernet rdf:type :ConfigurationItem ;
+	 :title "Ethernet";
+	 :has_attribute :241interface;
+	 :has_ci_type :hardware__port33.
+:150interface rdf:type :Attribute ;
+	 :title "interface";
+	 :value "bridge0".
+:5652thunderbolt__bridge rdf:type :ConfigurationItem ;
+	 :title "Thunderbolt Bridge";
+	 :mac_address "82:17:0a:07:92:c0";
+	 :has_attribute :150interface;
+	 :has_ci_type :thunderbolt__bridge52.
+:242interface rdf:type :Attribute ;
+	 :title "interface";
+	 :value "en4".
+:5933ethernet rdf:type :ConfigurationItem ;
+	 :title "Ethernet";
+	 :has_attribute :242interface;
+	 :has_ci_type :hardware__port33.
+:5854thunderbolt__ethernet rdf:type :ConfigurationItem ;
+	 :title "Thunderbolt Ethernet";
+	 :has_ci_type :thunderbolt__ethernet54.
+:6133 rdf:type :ConfigurationItem ;
+	 :has_ci_type :hardware__port33.
+:6056v_p_n__uminho rdf:type :ConfigurationItem ;
+	 :title "VPN Uminho";
+	 :has_ci_type :v_p_n__uminho56.
+:8hostname rdf:type :Attribute ;
+	 :title "hostname";
+	 :value "macbookprojoana.local".
+:9os_name rdf:type :Attribute ;
+	 :title "os name";
+	 :value "Mac OS X".
+:11os_version rdf:type :Attribute ;
+	 :title "os version";
+	 :value "10.15.7".
+:14kernel_version rdf:type :Attribute ;
+	 :title "kernel version";
+	 :value "Darwin 19.6.0".
+:16os rdf:type :Attribute ;
+	 :title "os";
+	 :value "macOS 10.15.7 (19H15)".
+:17boot_mode rdf:type :Attribute ;
+	 :title "boot mode";
+	 :value "normal_boot".
+:18time_since_boot rdf:type :Attribute ;
+	 :title "time since boot";
+	 :value "up 1:8:11:46".
+:19c_p_u rdf:type :Attribute ;
+	 :title "CPU";
+	 :value "Quad-Core Intel Core i7".
+:21c_p_u_speed rdf:type :Attribute ;
+	 :title "CPU speed";
+	 :value "2,2 GHz".
+:22c_p_u_frequency rdf:type :Attribute ;
+	 :title "CPU frequency";
+	 :value "2,2".
+:23c_p_u_frequency_unit rdf:type :Attribute ;
+	 :title "CPU frequency unit";
+	 :value "GHz".
+:25c_p_u_cores rdf:type :Attribute ;
+	 :title "CPU cores";
+	 :value "4".
+:28physical_memory rdf:type :Attribute ;
+	 :title "physical memory";
+	 :value "16 GB".
+:29memory_ram rdf:type :Attribute ;
+	 :title "memory ram";
+	 :value "16".
+:30physical_memory_unit rdf:type :Attribute ;
+	 :title "physical memory unit";
+	 :value "GB".
+:32g_p_u rdf:type :Attribute ;
+	 :title "GPU";
+	 :value "kHW_IntelIrisProItem".
+:162battery rdf:type :Attribute ;
+	 :title "battery";
+	 :value "bq20z451".
+:222display rdf:type :Attribute ;
+	 :title "display";
+	 :value "Color LCD".
+:110macbookprojoana rdf:type :ConfigurationItem ;
+	 :title "macbookprojoana";
+	 :uuid "0B793129-B10E-5C77-89DD-4529FEF05AD6";
+	 :serial_number "C02S80K6G8WN";
+	 :description "MacBook Pro MacBook ProMacBook Pro";
+	 :status "up";
+	 :os_family "macOS";
+	 :mac_address "c4:b3:01:c0:1a:d3";
+	 :has_ipv4 "192.168.1.73";
+	 :has_ipv6 "2001:8a0:f576:7000:19c8:36e6:6c25:e634";
+	 :has_ipv6 "2001:8a0:f576:7000:1cac:32c1:d287:1804";
+	 :has_attribute :8hostname;
+	 :has_attribute :9os_name;
+	 :has_attribute :11os_version;
+	 :has_attribute :14kernel_version;
+	 :has_attribute :16os;
+	 :has_attribute :17boot_mode;
+	 :has_attribute :18time_since_boot;
+	 :has_attribute :19c_p_u;
+	 :has_attribute :21c_p_u_speed;
+	 :has_attribute :22c_p_u_frequency;
+	 :has_attribute :23c_p_u_frequency_unit;
+	 :has_attribute :25c_p_u_cores;
+	 :has_attribute :28physical_memory;
+	 :has_attribute :29memory_ram;
+	 :has_attribute :30physical_memory_unit;
+	 :has_attribute :32g_p_u;
+	 :has_attribute :162battery;
+	 :has_attribute :222display;
+	 :has_ci_type :host10.
+:1122_has_protocol_tcp rdf:type :Relationship ;
+	 :title "22 has protocol tcp";
+	 :has_source :2122;
+	 :has_target :92tcp;
+	 :has_rel_type :has_protocol1.
+:21tcp_is_protocol_of_22 rdf:type :Relationship ;
+	 :title "tcp is protocol of 22";
+	 :has_source :92tcp;
+	 :has_target :2122;
+	 :has_rel_type :has_protocol1.
+:3322_running_product_ssh rdf:type :Relationship ;
+	 :title "22 running product ssh";
+	 :has_source :2122;
+	 :has_target :43ssh;
+	 :has_rel_type :running_product3.
+:44ssh_is_running_on_port_22 rdf:type :Relationship ;
+	 :title "ssh is running on port 22";
+	 :has_source :43ssh;
+	 :has_target :2122;
+	 :has_rel_type :is_running_on_port4.
+:5522_port_from_ rdf:type :Relationship ;
+	 :title "22 port from ";
+	 :has_source :2122;
+	 :has_target :110macbookprojoana;
+	 :has_rel_type :port_from5.
+:65_has_port_22 rdf:type :Relationship ;
+	 :title " has port 22";
+	 :has_source :110macbookprojoana;
+	 :has_target :2122;
+	 :has_rel_type :port_from5.
+:711110_has_protocol_tcp rdf:type :Relationship ;
+	 :title "1110 has protocol tcp";
+	 :has_source :511110;
+	 :has_target :92tcp;
+	 :has_rel_type :has_protocol1.
+:81tcp_is_protocol_of_1110 rdf:type :Relationship ;
+	 :title "tcp is protocol of 1110";
+	 :has_source :92tcp;
+	 :has_target :511110;
+	 :has_rel_type :has_protocol1.
+:931110_running_product_tcpwrapped rdf:type :Relationship ;
+	 :title "1110 running product tcpwrapped";
+	 :has_source :511110;
+	 :has_target :73tcpwrapped;
+	 :has_rel_type :running_product3.
+:104tcpwrapped_is_running_on_port_1110 rdf:type :Relationship ;
+	 :title "tcpwrapped is running on port 1110";
+	 :has_source :73tcpwrapped;
+	 :has_target :511110;
+	 :has_rel_type :is_running_on_port4.
+:1151110_port_from_ rdf:type :Relationship ;
+	 :title "1110 port from ";
+	 :has_source :511110;
+	 :has_target :110macbookprojoana;
+	 :has_rel_type :port_from5.
+:125_has_port_1110 rdf:type :Relationship ;
+	 :title " has port 1110";
+	 :has_source :110macbookprojoana;
+	 :has_target :511110;
+	 :has_rel_type :port_from5.
+:1317200_has_protocol_tcp rdf:type :Relationship ;
+	 :title "7200 has protocol tcp";
+	 :has_source :817200;
+	 :has_target :92tcp;
+	 :has_rel_type :has_protocol1.
+:141tcp_is_protocol_of_7200 rdf:type :Relationship ;
+	 :title "tcp is protocol of 7200";
+	 :has_source :92tcp;
+	 :has_target :817200;
+	 :has_rel_type :has_protocol1.
+:1537200_running_product_fodms rdf:type :Relationship ;
+	 :title "7200 running product fodms";
+	 :has_source :817200;
+	 :has_target :103fodms;
+	 :has_rel_type :running_product3.
+:164fodms_is_running_on_port_7200 rdf:type :Relationship ;
+	 :title "fodms is running on port 7200";
+	 :has_source :103fodms;
+	 :has_target :817200;
+	 :has_rel_type :is_running_on_port4.
+:1757200_port_from_ rdf:type :Relationship ;
+	 :title "7200 port from ";
+	 :has_source :817200;
+	 :has_target :110macbookprojoana;
+	 :has_rel_type :port_from5.
+:185_has_port_7200 rdf:type :Relationship ;
+	 :title " has port 7200";
+	 :has_source :110macbookprojoana;
+	 :has_target :817200;
+	 :has_rel_type :port_from5.
+:1919macbookprojoana_installed_os_mac_o_s_10_15_7_19_h15 rdf:type :Relationship ;
+	 :title "macbookprojoana installed os macOS 10.15.7 19H15";
+	 :has_source :110macbookprojoana;
+	 :has_target :1211mac_o_s_10_15_7_19_h15;
+	 :has_rel_type :installed_os19.
+:2020mac_o_s_10_15_7_19_h15_running_os_macbookprojoana rdf:type :Relationship ;
+	 :title "macOS 10.15.7 19H15 running os macbookprojoana";
+	 :has_source :1211mac_o_s_10_15_7_19_h15;
+	 :has_target :110macbookprojoana;
+	 :has_rel_type :running_os20.
+:2121macbookprojoana_associated_processor__quad__core__intel__core_i7 rdf:type :Relationship ;
+	 :title "macbookprojoana associated processor Quad-Core Intel Core i7";
+	 :has_source :110macbookprojoana;
+	 :has_target :1312quad__core__intel__core_i7;
+	 :has_rel_type :associated_processor21.
+:2222quad__core__intel__core_i7_processor_of_macbookprojoana rdf:type :Relationship ;
+	 :title "Quad-Core Intel Core i7 processor of macbookprojoana";
+	 :has_source :1312quad__core__intel__core_i7;
+	 :has_target :110macbookprojoana;
+	 :has_rel_type :processor_of22.
+:2323k_h_w__intel_iris_pro_item_has_vendor__intel rdf:type :Relationship ;
+	 :title "kHW_IntelIrisProItem has vendor Intel";
+	 :has_source :1413k_h_w__intel_iris_pro_item;
+	 :has_target :1514intel;
+	 :has_rel_type :has_vendor23.
+:2423intel_is_vendor_of_k_h_w__intel_iris_pro_item rdf:type :Relationship ;
+	 :title "Intel is vendor of kHW_IntelIrisProItem";
+	 :has_source :1514intel;
+	 :has_target :1413k_h_w__intel_iris_pro_item;
+	 :has_rel_type :has_vendor23.
+:2521macbookprojoana_associated_processor_k_h_w__intel_iris_pro_item rdf:type :Relationship ;
+	 :title "macbookprojoana associated processor kHW_IntelIrisProItem";
+	 :has_source :110macbookprojoana;
+	 :has_target :1413k_h_w__intel_iris_pro_item;
+	 :has_rel_type :associated_processor21.
+:2622k_h_w__intel_iris_pro_item_processor_of_macbookprojoana rdf:type :Relationship ;
+	 :title "kHW_IntelIrisProItem processor of macbookprojoana";
+	 :has_source :1413k_h_w__intel_iris_pro_item;
+	 :has_target :110macbookprojoana;
+	 :has_rel_type :processor_of22.
+:2727macbookprojoana_located__p_t rdf:type :Relationship ;
+	 :title "macbookprojoana located PT";
+	 :has_source :110macbookprojoana;
+	 :has_target :1615p_t;
+	 :has_rel_type :located27.
+:2828p_t_location_of_macbookprojoana rdf:type :Relationship ;
+	 :title "PT location of macbookprojoana";
+	 :has_source :1615p_t;
+	 :has_target :110macbookprojoana;
+	 :has_rel_type :location_of28.
+:3129macbookprojoana_associated_memory__b_a_n_k_1_d_i_m_m0 rdf:type :Relationship ;
+	 :title "macbookprojoana associated memory BANK 1DIMM0";
+	 :has_source :110macbookprojoana;
+	 :has_target :1816b_a_n_k_1_d_i_m_m0;
+	 :has_rel_type :associated_memory29.
+:3230b_a_n_k_1_d_i_m_m0_is_component_of_macbookprojoana rdf:type :Relationship ;
+	 :title "BANK 1DIMM0 is component of macbookprojoana";
+	 :has_source :1816b_a_n_k_1_d_i_m_m0;
+	 :has_target :110macbookprojoana;
+	 :has_rel_type :is_component_of30.
+:3323a_p_p_l_e__s_s_d__s_m0256_g_has_vendor__apple rdf:type :Relationship ;
+	 :title "APPLE SSD SM0256G has vendor Apple";
+	 :has_source :1917a_p_p_l_e__s_s_d__s_m0256_g;
+	 :has_rel_type :has_vendor23.
+:3423apple_is_vendor_of__a_p_p_l_e__s_s_d__s_m0256_g rdf:type :Relationship ;
+	 :title "Apple is vendor of APPLE SSD SM0256G";
+	 :has_target :1917a_p_p_l_e__s_s_d__s_m0256_g;
+	 :has_rel_type :has_vendor23.
+:3535a_p_p_l_e__s_s_d__s_m0256_g_has_volume__e_f_i rdf:type :Relationship ;
+	 :title "APPLE SSD SM0256G has volume EFI";
+	 :has_source :1917a_p_p_l_e__s_s_d__s_m0256_g;
+	 :has_rel_type :has_volume35.
+:3635e_f_i_is_volume_of__a_p_p_l_e__s_s_d__s_m0256_g rdf:type :Relationship ;
+	 :title "EFI is volume of APPLE SSD SM0256G";
+	 :has_target :1917a_p_p_l_e__s_s_d__s_m0256_g;
+	 :has_rel_type :has_volume35.
+:3735a_p_p_l_e__s_s_d__s_m0256_g_has_volume_disk0s2 rdf:type :Relationship ;
+	 :title "APPLE SSD SM0256G has volume disk0s2";
+	 :has_source :1917a_p_p_l_e__s_s_d__s_m0256_g;
+	 :has_rel_type :has_volume35.
+:3835disk0s2_is_volume_of__a_p_p_l_e__s_s_d__s_m0256_g rdf:type :Relationship ;
+	 :title "disk0s2 is volume of APPLE SSD SM0256G";
+	 :has_target :1917a_p_p_l_e__s_s_d__s_m0256_g;
+	 :has_rel_type :has_volume35.
+:3939macbookprojoana_has_storage__a_p_p_l_e__s_s_d__s_m0256_g rdf:type :Relationship ;
+	 :title "macbookprojoana has storage APPLE SSD SM0256G";
+	 :has_source :110macbookprojoana;
+	 :has_target :1917a_p_p_l_e__s_s_d__s_m0256_g;
+	 :has_rel_type :has_storage39.
+:4039a_p_p_l_e__s_s_d__s_m0256_g_is_storage_of_macbookprojoana rdf:type :Relationship ;
+	 :title "APPLE SSD SM0256G is storage of macbookprojoana";
+	 :has_source :1917a_p_p_l_e__s_s_d__s_m0256_g;
+	 :has_target :110macbookprojoana;
+	 :has_rel_type :has_storage39.
+:4135macbookprojoana_has_volume__macintosh__h_d___dados rdf:type :Relationship ;
+	 :title "macbookprojoana has volume Macintosh HD - dados";
+	 :has_source :110macbookprojoana;
+	 :has_target :2319macintosh__h_d___dados;
+	 :has_rel_type :has_volume35.
+:4235macintosh__h_d___dados_is_volume_of_macbookprojoana rdf:type :Relationship ;
+	 :title "Macintosh HD - dados is volume of macbookprojoana";
+	 :has_source :2319macintosh__h_d___dados;
+	 :has_target :110macbookprojoana;
+	 :has_rel_type :has_volume35.
+:4335macbookprojoana_has_volume__macintosh__h_d rdf:type :Relationship ;
+	 :title "macbookprojoana has volume Macintosh HD";
+	 :has_source :110macbookprojoana;
+	 :has_target :2419macintosh__h_d;
+	 :has_rel_type :has_volume35.
+:4435macintosh__h_d_is_volume_of_macbookprojoana rdf:type :Relationship ;
+	 :title "Macintosh HD is volume of macbookprojoana";
+	 :has_source :2419macintosh__h_d;
+	 :has_target :110macbookprojoana;
+	 :has_rel_type :has_volume35.
+:4545macbookprojoana_has_installed_zoom rdf:type :Relationship ;
+	 :title "macbookprojoana has installed zoom";
+	 :has_source :110macbookprojoana;
+	 :has_target :2521zoom;
+	 :has_rel_type :has_installed45.
+:4645zoom_installed_on_macbookprojoana rdf:type :Relationship ;
+	 :title "zoom installed on macbookprojoana";
+	 :has_source :2521zoom;
+	 :has_target :110macbookprojoana;
+	 :has_rel_type :has_installed45.
+:4745macbookprojoana_has_installed__postman rdf:type :Relationship ;
+	 :title "macbookprojoana has installed Postman";
+	 :has_source :110macbookprojoana;
+	 :has_target :2621postman;
+	 :has_rel_type :has_installed45.
+:4845postman_installed_on_macbookprojoana rdf:type :Relationship ;
+	 :title "Postman installed on macbookprojoana";
+	 :has_source :2621postman;
+	 :has_target :110macbookprojoana;
+	 :has_rel_type :has_installed45.
+:4945macbookprojoana_has_installed__adobe__acrobat__reader__d_c rdf:type :Relationship ;
+	 :title "macbookprojoana has installed Adobe Acrobat Reader DC";
+	 :has_source :110macbookprojoana;
+	 :has_target :2721adobe__acrobat__reader__d_c;
+	 :has_rel_type :has_installed45.
+:5045adobe__acrobat__reader__d_c_installed_on_macbookprojoana rdf:type :Relationship ;
+	 :title "Adobe Acrobat Reader DC installed on macbookprojoana";
+	 :has_source :2721adobe__acrobat__reader__d_c;
+	 :has_target :110macbookprojoana;
+	 :has_rel_type :has_installed45.
+:5145macbookprojoana_has_installed_i_movie rdf:type :Relationship ;
+	 :title "macbookprojoana has installed iMovie";
+	 :has_source :110macbookprojoana;
+	 :has_target :2821i_movie;
+	 :has_rel_type :has_installed45.
+:5245i_movie_installed_on_macbookprojoana rdf:type :Relationship ;
+	 :title "iMovie installed on macbookprojoana";
+	 :has_source :2821i_movie;
+	 :has_target :110macbookprojoana;
+	 :has_rel_type :has_installed45.
+:5345macbookprojoana_has_installed__firefox rdf:type :Relationship ;
+	 :title "macbookprojoana has installed Firefox";
+	 :has_source :110macbookprojoana;
+	 :has_target :2921firefox;
+	 :has_rel_type :has_installed45.
+:5445firefox_installed_on_macbookprojoana rdf:type :Relationship ;
+	 :title "Firefox installed on macbookprojoana";
+	 :has_source :2921firefox;
+	 :has_target :110macbookprojoana;
+	 :has_rel_type :has_installed45.
+:5545macbookprojoana_has_installed__py_charm rdf:type :Relationship ;
+	 :title "macbookprojoana has installed PyCharm";
+	 :has_source :110macbookprojoana;
+	 :has_target :3021py_charm;
+	 :has_rel_type :has_installed45.
+:5645py_charm_installed_on_macbookprojoana rdf:type :Relationship ;
+	 :title "PyCharm installed on macbookprojoana";
+	 :has_source :3021py_charm;
+	 :has_target :110macbookprojoana;
+	 :has_rel_type :has_installed45.
+:5745macbookprojoana_has_installed__visual__studio__code rdf:type :Relationship ;
+	 :title "macbookprojoana has installed Visual Studio Code";
+	 :has_source :110macbookprojoana;
+	 :has_target :3121visual__studio__code;
+	 :has_rel_type :has_installed45.
+:5845visual__studio__code_installed_on_macbookprojoana rdf:type :Relationship ;
+	 :title "Visual Studio Code installed on macbookprojoana";
+	 :has_source :3121visual__studio__code;
+	 :has_target :110macbookprojoana;
+	 :has_rel_type :has_installed45.
+:5945macbookprojoana_has_installed__spotify rdf:type :Relationship ;
+	 :title "macbookprojoana has installed Spotify";
+	 :has_source :110macbookprojoana;
+	 :has_target :3221spotify;
+	 :has_rel_type :has_installed45.
+:6045spotify_installed_on_macbookprojoana rdf:type :Relationship ;
+	 :title "Spotify installed on macbookprojoana";
+	 :has_source :3221spotify;
+	 :has_target :110macbookprojoana;
+	 :has_rel_type :has_installed45.
+:6145macbookprojoana_has_installed__google__chrome rdf:type :Relationship ;
+	 :title "macbookprojoana has installed Google Chrome";
+	 :has_source :110macbookprojoana;
+	 :has_target :3321google__chrome;
+	 :has_rel_type :has_installed45.
+:6245google__chrome_installed_on_macbookprojoana rdf:type :Relationship ;
+	 :title "Google Chrome installed on macbookprojoana";
+	 :has_source :3321google__chrome;
+	 :has_target :110macbookprojoana;
+	 :has_rel_type :has_installed45.
+:6345macbookprojoana_has_installed__file_zilla rdf:type :Relationship ;
+	 :title "macbookprojoana has installed FileZilla";
+	 :has_source :110macbookprojoana;
+	 :has_target :3421file_zilla;
+	 :has_rel_type :has_installed45.
+:6445file_zilla_installed_on_macbookprojoana rdf:type :Relationship ;
+	 :title "FileZilla installed on macbookprojoana";
+	 :has_source :3421file_zilla;
+	 :has_target :110macbookprojoana;
+	 :has_rel_type :has_installed45.
+:6545macbookprojoana_has_installed__m_r_t rdf:type :Relationship ;
+	 :title "macbookprojoana has installed MRT";
+	 :has_source :110macbookprojoana;
+	 :has_target :3521m_r_t;
+	 :has_rel_type :has_installed45.
+:6645m_r_t_installed_on_macbookprojoana rdf:type :Relationship ;
+	 :title "MRT installed on macbookprojoana";
+	 :has_source :3521m_r_t;
+	 :has_target :110macbookprojoana;
+	 :has_rel_type :has_installed45.
+:6745macbookprojoana_has_installed__slack rdf:type :Relationship ;
+	 :title "macbookprojoana has installed Slack";
+	 :has_source :110macbookprojoana;
+	 :has_target :3621slack;
+	 :has_rel_type :has_installed45.
+:6845slack_installed_on_macbookprojoana rdf:type :Relationship ;
+	 :title "Slack installed on macbookprojoana";
+	 :has_source :3621slack;
+	 :has_target :110macbookprojoana;
+	 :has_rel_type :has_installed45.
+:6969macbookprojoana_has_hardware_port__wi__fi rdf:type :Relationship ;
+	 :title "macbookprojoana has hardware port Wi-Fi";
+	 :has_source :110macbookprojoana;
+	 :has_target :5248wi__fi;
+	 :has_rel_type :has_hardware_port69.
+:7070wi__fi_port_on_device_macbookprojoana rdf:type :Relationship ;
+	 :title "Wi-Fi port on device macbookprojoana";
+	 :has_source :5248wi__fi;
+	 :has_target :110macbookprojoana;
+	 :has_rel_type :port_on_device70.
+:7169macbookprojoana_has_hardware_port__bluetooth__p_a_n rdf:type :Relationship ;
+	 :title "macbookprojoana has hardware port Bluetooth PAN";
+	 :has_source :110macbookprojoana;
+	 :has_target :5450bluetooth__p_a_n;
+	 :has_rel_type :has_hardware_port69.
+:7270bluetooth__p_a_n_port_on_device_macbookprojoana rdf:type :Relationship ;
+	 :title "Bluetooth PAN port on device macbookprojoana";
+	 :has_source :5450bluetooth__p_a_n;
+	 :has_target :110macbookprojoana;
+	 :has_rel_type :port_on_device70.
+:7569macbookprojoana_has_hardware_port__thunderbolt_2 rdf:type :Relationship ;
+	 :title "macbookprojoana has hardware port Thunderbolt 2";
+	 :has_source :110macbookprojoana;
+	 :has_target :4033thunderbolt_2;
+	 :has_rel_type :has_hardware_port69.
+:7670thunderbolt_2_port_on_device_macbookprojoana rdf:type :Relationship ;
+	 :title "Thunderbolt 2 port on device macbookprojoana";
+	 :has_source :4033thunderbolt_2;
+	 :has_target :110macbookprojoana;
+	 :has_rel_type :port_on_device70.
+:7769macbookprojoana_has_hardware_port__thunderbolt__bridge rdf:type :Relationship ;
+	 :title "macbookprojoana has hardware port Thunderbolt Bridge";
+	 :has_source :110macbookprojoana;
+	 :has_target :5652thunderbolt__bridge;
+	 :has_rel_type :has_hardware_port69.
+:7870thunderbolt__bridge_port_on_device_macbookprojoana rdf:type :Relationship ;
+	 :title "Thunderbolt Bridge port on device macbookprojoana";
+	 :has_source :5652thunderbolt__bridge;
+	 :has_target :110macbookprojoana;
+	 :has_rel_type :port_on_device70.
+:7979bq20z451_has_manufacturer__d_p rdf:type :Relationship ;
+	 :title "bq20z451 has manufacturer DP";
+	 :has_source :4238bq20z451;
+	 :has_target :4339d_p;
+	 :has_rel_type :has_manufacturer79.
+:8079d_p_manufacturer_of_bq20z451 rdf:type :Relationship ;
+	 :title "DP manufacturer of bq20z451";
+	 :has_source :4339d_p;
+	 :has_target :4238bq20z451;
+	 :has_rel_type :has_manufacturer79.
+:8181macbookprojoana_has_battery_bq20z451 rdf:type :Relationship ;
+	 :title "macbookprojoana has battery bq20z451";
+	 :has_source :110macbookprojoana;
+	 :has_target :4238bq20z451;
+	 :has_rel_type :has_battery81.
+:8281bq20z451_battery_of_macbookprojoana rdf:type :Relationship ;
+	 :title "bq20z451 battery of macbookprojoana";
+	 :has_source :4238bq20z451;
+	 :has_target :110macbookprojoana;
+	 :has_rel_type :has_battery81.
+:8383macbookprojoana_has_charger_ rdf:type :Relationship ;
+	 :title "macbookprojoana has charger ";
+	 :has_source :110macbookprojoana;
+	 :has_target :4440;
+	 :has_rel_type :has_charger83.
+:8483_charger_of_macbookprojoana rdf:type :Relationship ;
+	 :title " charger of macbookprojoana";
+	 :has_source :4440;
+	 :has_target :110macbookprojoana;
+	 :has_rel_type :has_charger83.
+:8579built_in__microphone_has_manufacturer__apple__inc_ rdf:type :Relationship ;
+	 :title "Built-in Microphone has manufacturer Apple Inc.";
+	 :has_source :4541built_in__microphone;
+	 :has_target :4839apple__inc_;
+	 :has_rel_type :has_manufacturer79.
+:8679apple__inc__manufacturer_of__built_in__microphone rdf:type :Relationship ;
+	 :title "Apple Inc. manufacturer of Built-in Microphone";
+	 :has_source :4839apple__inc_;
+	 :has_target :4541built_in__microphone;
+	 :has_rel_type :has_manufacturer79.
+:8787macbookprojoana_associated__built_in__microphone__built_in__microphone rdf:type :Relationship ;
+	 :title "macbookprojoana associated Built-in Microphone Built-in Microphone";
+	 :has_source :110macbookprojoana;
+	 :has_target :4541built_in__microphone;
+	 :has_rel_type :has__built_in__microphone87.
+:8887built_in__microphone__built_in__microphone_of_macbookprojoana rdf:type :Relationship ;
+	 :title "Built-in Microphone Built-in Microphone of macbookprojoana";
+	 :has_source :4541built_in__microphone;
+	 :has_target :110macbookprojoana;
+	 :has_rel_type :has__built_in__microphone87.
+:8979built_in__output_has_manufacturer__apple__inc_ rdf:type :Relationship ;
+	 :title "Built-in Output has manufacturer Apple Inc.";
+	 :has_source :4743built_in__output;
+	 :has_target :4839apple__inc_;
+	 :has_rel_type :has_manufacturer79.
+:9079apple__inc__manufacturer_of__built_in__output rdf:type :Relationship ;
+	 :title "Apple Inc. manufacturer of Built-in Output";
+	 :has_source :4839apple__inc_;
+	 :has_target :4743built_in__output;
+	 :has_rel_type :has_manufacturer79.
+:9191macbookprojoana_associated__built_in__output__built_in__output rdf:type :Relationship ;
+	 :title "macbookprojoana associated Built-in Output Built-in Output";
+	 :has_source :110macbookprojoana;
+	 :has_target :4743built_in__output;
+	 :has_rel_type :has__built_in__output91.
+:9291built_in__output__built_in__output_of_macbookprojoana rdf:type :Relationship ;
+	 :title "Built-in Output Built-in Output of macbookprojoana";
+	 :has_source :4743built_in__output;
+	 :has_target :110macbookprojoana;
+	 :has_rel_type :has__built_in__output91.
+:9393macbookprojoana_associated_card_reader_spcardreader rdf:type :Relationship ;
+	 :title "macbookprojoana associated card reader spcardreader";
+	 :has_source :110macbookprojoana;
+	 :has_target :4945spcardreader;
+	 :has_rel_type :associated_card_reader93.
+:9494spcardreader_card_reader_of_macbookprojoana rdf:type :Relationship ;
+	 :title "spcardreader card reader of macbookprojoana";
+	 :has_source :4945spcardreader;
+	 :has_target :110macbookprojoana;
+	 :has_rel_type :card_reader_of94.
+:9595macbookprojoana_associated_display__color__l_c_d rdf:type :Relationship ;
+	 :title "macbookprojoana associated display Color LCD";
+	 :has_source :110macbookprojoana;
+	 :has_target :5046color__l_c_d;
+	 :has_rel_type :associated_display95.
+:9696color__l_c_d_display_of_macbookprojoana rdf:type :Relationship ;
+	 :title "Color LCD display of macbookprojoana";
+	 :has_source :5046color__l_c_d;
+	 :has_target :110macbookprojoana;
+	 :has_rel_type :display_of96.
+:9797macbookprojoana_associated_firewall_spfirewall_settings rdf:type :Relationship ;
+	 :title "macbookprojoana associated firewall spfirewall_settings";
+	 :has_source :110macbookprojoana;
+	 :has_target :5147spfirewall_settings;
+	 :has_rel_type :associated_firewall97.
+:9898spfirewall_settings_firewall_of_macbookprojoana rdf:type :Relationship ;
+	 :title "spfirewall_settings firewall of macbookprojoana";
+	 :has_source :5147spfirewall_settings;
+	 :has_target :110macbookprojoana;
+	 :has_rel_type :firewall_of98.
+:9999wi__fi_associated_port__air_port rdf:type :Relationship ;
+	 :title "Wi-Fi associated port AirPort";
+	 :has_source :5248wi__fi;
+	 :has_target :5333air_port;
+	 :has_rel_type :associated_port99.
+:100100macbookprojoana_has_network_service__wi__fi rdf:type :Relationship ;
+	 :title "macbookprojoana has network service Wi-Fi";
+	 :has_source :110macbookprojoana;
+	 :has_target :5248wi__fi;
+	 :has_rel_type :has_network_service100.
+:101101wi__fi_associated_network_service_macbookprojoana rdf:type :Relationship ;
+	 :title "Wi-Fi associated network service macbookprojoana";
+	 :has_source :5248wi__fi;
+	 :has_target :110macbookprojoana;
+	 :has_rel_type :associated_network_service101.
+:10299bluetooth__p_a_n_associated_port__ethernet rdf:type :Relationship ;
+	 :title "Bluetooth PAN associated port Ethernet";
+	 :has_source :5450bluetooth__p_a_n;
+	 :has_target :5533ethernet;
+	 :has_rel_type :associated_port99.
+:103100macbookprojoana_has_network_service__bluetooth__p_a_n rdf:type :Relationship ;
+	 :title "macbookprojoana has network service Bluetooth PAN";
+	 :has_source :110macbookprojoana;
+	 :has_target :5450bluetooth__p_a_n;
+	 :has_rel_type :has_network_service100.
+:104101bluetooth__p_a_n_associated_network_service_macbookprojoana rdf:type :Relationship ;
+	 :title "Bluetooth PAN associated network service macbookprojoana";
+	 :has_source :5450bluetooth__p_a_n;
+	 :has_target :110macbookprojoana;
+	 :has_rel_type :associated_network_service101.
+:10599thunderbolt__bridge_associated_port__ethernet rdf:type :Relationship ;
+	 :title "Thunderbolt Bridge associated port Ethernet";
+	 :has_source :5652thunderbolt__bridge;
+	 :has_target :5733ethernet;
+	 :has_rel_type :associated_port99.
+:106100macbookprojoana_has_network_service__thunderbolt__bridge rdf:type :Relationship ;
+	 :title "macbookprojoana has network service Thunderbolt Bridge";
+	 :has_source :110macbookprojoana;
+	 :has_target :5652thunderbolt__bridge;
+	 :has_rel_type :has_network_service100.
+:107101thunderbolt__bridge_associated_network_service_macbookprojoana rdf:type :Relationship ;
+	 :title "Thunderbolt Bridge associated network service macbookprojoana";
+	 :has_source :5652thunderbolt__bridge;
+	 :has_target :110macbookprojoana;
+	 :has_rel_type :associated_network_service101.
+:10899thunderbolt__ethernet_associated_port__ethernet rdf:type :Relationship ;
+	 :title "Thunderbolt Ethernet associated port Ethernet";
+	 :has_source :5854thunderbolt__ethernet;
+	 :has_target :5933ethernet;
+	 :has_rel_type :associated_port99.
+:109100macbookprojoana_has_network_service__thunderbolt__ethernet rdf:type :Relationship ;
+	 :title "macbookprojoana has network service Thunderbolt Ethernet";
+	 :has_source :110macbookprojoana;
+	 :has_target :5854thunderbolt__ethernet;
+	 :has_rel_type :has_network_service100.
+:110101thunderbolt__ethernet_associated_network_service_macbookprojoana rdf:type :Relationship ;
+	 :title "Thunderbolt Ethernet associated network service macbookprojoana";
+	 :has_source :5854thunderbolt__ethernet;
+	 :has_target :110macbookprojoana;
+	 :has_rel_type :associated_network_service101.
+:11199v_p_n__uminho_associated_port_ rdf:type :Relationship ;
+	 :title "VPN Uminho associated port ";
+	 :has_source :6056v_p_n__uminho;
+	 :has_target :6133;
+	 :has_rel_type :associated_port99.
+:112100macbookprojoana_has_network_service__v_p_n__uminho rdf:type :Relationship ;
+	 :title "macbookprojoana has network service VPN Uminho";
+	 :has_source :110macbookprojoana;
+	 :has_target :6056v_p_n__uminho;
+	 :has_rel_type :has_network_service100.
+:113101v_p_n__uminho_associated_network_service_macbookprojoana rdf:type :Relationship ;
+	 :title "VPN Uminho associated network service macbookprojoana";
+	 :has_source :6056v_p_n__uminho;
+	 :has_target :110macbookprojoana;
+	 :has_rel_type :associated_network_service101.
+
+
+
+

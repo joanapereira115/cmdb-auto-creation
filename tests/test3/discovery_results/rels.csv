@@ -1,0 +1,237 @@
+title;rel_type;source;target
+switch-of associated processor IntelR CoreTM i5-3470S CPU  2.90GHz;associated processor;switch-of;IntelR CoreTM i5-3470S CPU  2.90GHz
+switch-dc associated processor IntelR CoreTM i5-3470S CPU  2.90GHz;;switch-dc;IntelR CoreTM i5-3470S CPU  2.90GHz
+ubuntu-pc associated processor IntelR CoreTM i5-3470S CPU  2.90GHz;;ubuntu-pc;IntelR CoreTM i5-3470S CPU  2.90GHz
+db-server associated processor IntelR CoreTM i5-3470S CPU  2.90GHz;;db-server;IntelR CoreTM i5-3470S CPU  2.90GHz
+web-server associated processor IntelR CoreTM i5-3470S CPU  2.90GHz;;web-server;IntelR CoreTM i5-3470S CPU  2.90GHz
+router associated processor IntelR CoreTM i5-3470S CPU  2.90GHz;;router;IntelR CoreTM i5-3470S CPU  2.90GHz
+python installed on router;has installed;python;router
+router has installed systemd;;router;systemd
+systemd installed on router;;systemd;router
+router has installed switchd;;router;switchd
+switchd installed on router;;switchd;router
+router has installed portwd;;router;portwd
+portwd installed on router;;portwd;router
+router has installed snmpd;;router;snmpd
+snmpd installed on router;;snmpd;router
+router has installed lldpd;;router;lldpd
+lldpd installed on router;;lldpd;router
+router has installed auditd;;router;auditd
+auditd installed on router;;auditd;router
+switch-of has installed python;;switch-of;python
+python installed on switch-of;;python;switch-of
+switch-of has installed systemd;;switch-of;systemd
+systemd installed on switch-of;;systemd;switch-of
+switch-of has installed switchd;;switch-of;switchd
+switchd installed on switch-of;;switchd;switch-of
+switch-of has installed portwd;;switch-of;portwd
+portwd installed on switch-of;;portwd;switch-of
+switch-of has installed snmpd;;switch-of;snmpd
+snmpd installed on switch-of;;snmpd;switch-of
+switch-of has installed lldpd;;switch-of;lldpd
+lldpd installed on switch-of;;lldpd;switch-of
+switch-of has installed auditd;;switch-of;auditd
+auditd installed on switch-of;;auditd;switch-of
+switch-dc has installed python;;switch-dc;python
+python installed on switch-dc;;python;switch-dc
+switch-dc has installed systemd;;switch-dc;systemd
+systemd installed on switch-dc;;systemd;switch-dc
+switch-dc has installed switchd;;switch-dc;switchd
+switchd installed on switch-dc;;switchd;switch-dc
+switch-dc has installed portwd;;switch-dc;portwd
+portwd installed on switch-dc;;portwd;switch-dc
+switch-dc has installed snmpd;;switch-dc;snmpd
+snmpd installed on switch-dc;;snmpd;switch-dc
+switch-dc has installed lldpd;;switch-dc;lldpd
+lldpd installed on switch-dc;;lldpd;switch-dc
+switch-dc has installed auditd;;switch-dc;auditd
+auditd installed on switch-dc;;auditd;switch-dc
+ubuntu-pc has installed python3;;ubuntu-pc;python3
+python3 installed on ubuntu-pc;;python3;ubuntu-pc
+ubuntu-pc has installed lxcfs;;ubuntu-pc;lxcfs
+lxcfs installed on ubuntu-pc;;lxcfs;ubuntu-pc
+ubuntu-pc has installed systemd;;ubuntu-pc;systemd
+systemd installed on ubuntu-pc;;systemd;ubuntu-pc
+ubuntu-pc has installed irqbalance;;ubuntu-pc;irqbalance
+irqbalance installed on ubuntu-pc;;irqbalance;ubuntu-pc
+db-server has installed lxcfs;;db-server;lxcfs
+lxcfs installed on db-server;;lxcfs;db-server
+db-server has installed unattended-upgrades;;db-server;unattended-upgrades
+unattended-upgrades installed on db-server;;unattended-upgrades;db-server
+db-server has installed systemd;;db-server;systemd
+systemd installed on db-server;;systemd;db-server
+db-server has installed snmpd;;db-server;snmpd
+snmpd installed on db-server;;snmpd;db-server
+web-server has installed lxcfs;;web-server;lxcfs
+lxcfs installed on web-server;;lxcfs;web-server
+web-server has installed systemd;;web-server;systemd
+systemd installed on web-server;;systemd;web-server
+web-server has installed unattended-upgrades;;web-server;unattended-upgrades
+unattended-upgrades installed on web-server;;unattended-upgrades;web-server
+web-server has installed nginx;;web-server;nginx
+nginx installed on web-server;;nginx;web-server
+web-server has installed snmpd;;web-server;snmpd
+snmpd installed on web-server;;snmpd;web-server
+router has installed python;;router;python
+Microsoft Windows 10 Enterprise Evaluation has manufacturer Microsoft Corporation;has manufacturer;Microsoft Windows 10 Enterprise Evaluation;Microsoft Corporation
+Microsoft Corporation manufacturer of Microsoft Windows 10 Enterprise Evaluation;;Microsoft Corporation;Microsoft Windows 10 Enterprise Evaluation
+tcp is protocol of 22;has protocol;tcp;22
+22 has protocol tcp;;22;tcp
+tcp is protocol of 22;;tcp;22
+22 has protocol tcp;;22;tcp
+tcp is protocol of 22;;tcp;22
+22 has protocol tcp;;22;tcp
+tcp is protocol of 22;;tcp;22
+3389 has protocol tcp;;3389;tcp
+tcp is protocol of 3389;;tcp;3389
+22 has protocol tcp;;22;tcp
+tcp is protocol of 22;;tcp;22
+22 has protocol tcp;;22;tcp
+tcp is protocol of 22;;tcp;22
+22 has protocol tcp;;22;tcp
+tcp is protocol of 22;;tcp;22
+80 has protocol tcp;;80;tcp
+tcp is protocol of 80;;tcp;80
+22 has protocol tcp;;22;tcp
+switch-of has storage sda2;has storage;switch-of;sda4
+sda2 is storage of switch-of;;sda4;switch-of
+switch-of has storage sda3;;switch-of;sda4
+sda3 is storage of switch-of;;sda4;switch-of
+switch-of has storage sda4;;switch-of;sda4
+sda4 is storage of switch-of;;sda4;switch-of
+switch-dc has storage sda2;;switch-dc;sda4
+sda2 is storage of switch-dc;;sda4;switch-dc
+switch-dc has storage sda3;;switch-dc;sda4
+sda3 is storage of switch-dc;;sda4;switch-dc
+switch-dc has storage sda4;;switch-dc;sda4
+sda4 is storage of switch-dc;;sda4;switch-dc
+ubuntu-pc has storage sda1;;ubuntu-pc;sda3
+sda1 is storage of ubuntu-pc;;sda3;ubuntu-pc
+ubuntu-pc has storage sda2;;ubuntu-pc;sda3
+sda2 is storage of ubuntu-pc;;sda3;ubuntu-pc
+ubuntu-pc has storage sda3;;ubuntu-pc;sda3
+sda3 is storage of ubuntu-pc;;sda3;ubuntu-pc
+db-server has storage sda1;;db-server;sdb
+sda1 is storage of db-server;;sdb;db-server
+db-server has storage sdb;;db-server;sdb
+sdb is storage of db-server;;sdb;db-server
+web-server has storage sdb;;web-server;sda1
+sdb is storage of web-server;;sda1;web-server
+web-server has storage sda1;;web-server;sda1
+sda1 is storage of web-server;;sda1;web-server
+router has storage sda2;;router;sda4
+sda2 is storage of router;;sda4;router
+router has storage sda3;;router;sda4
+sda3 is storage of router;;sda4;router
+router has storage sda4;;router;sda4
+sda4 is storage of router;;sda4;router
+ has vendor PCS Systemtechnik;has vendor;router;PCS Systemtechnik
+ has vendor Oracle VirtualBox virtual NIC;;switch-of;Oracle VirtualBox virtual NIC
+Oracle VirtualBox virtual NIC is vendor of ;;Oracle VirtualBox virtual NIC;switch-of
+PCS Systemtechnik is vendor of ;;PCS Systemtechnik;router
+ has vendor Oracle VirtualBox virtual NIC;;switch-dc;Oracle VirtualBox virtual NIC
+Oracle VirtualBox virtual NIC is vendor of ;;Oracle VirtualBox virtual NIC;switch-dc
+ has vendor Oracle VirtualBox virtual NIC;;windows-pc;Oracle VirtualBox virtual NIC
+ has vendor PCS Systemtechnik;;switch-of;PCS Systemtechnik
+Oracle VirtualBox virtual NIC is vendor of ;;Oracle VirtualBox virtual NIC;windows-pc
+PCS Systemtechnik is vendor of ;;PCS Systemtechnik;switch-of
+ has vendor Oracle VirtualBox virtual NIC;;db-server;Oracle VirtualBox virtual NIC
+ has vendor PCS Systemtechnik;;switch-dc;PCS Systemtechnik
+Oracle VirtualBox virtual NIC is vendor of ;;Oracle VirtualBox virtual NIC;db-server
+ has vendor Oracle VirtualBox virtual NIC;;web-server;Oracle VirtualBox virtual NIC
+Oracle VirtualBox virtual NIC is vendor of ;;Oracle VirtualBox virtual NIC;web-server
+PCS Systemtechnik is vendor of ;;PCS Systemtechnik;switch-dc
+ has vendor Oracle VirtualBox virtual NIC;;router;Oracle VirtualBox virtual NIC
+Oracle VirtualBox virtual NIC is vendor of ;;Oracle VirtualBox virtual NIC;router
+switch-of installed os Cumulus Linux;installed os;switch-of;Cumulus Linux
+switch-dc installed os Cumulus Linux;;switch-dc;Cumulus Linux
+windows-pc installed os Microsoft Windows 10 Enterprise Evaluation;;windows-pc;Microsoft Windows 10 Enterprise Evaluation
+ubuntu-pc installed os Ubuntu 18.04.5 LTS;;ubuntu-pc;Ubuntu 18.04.5 LTS
+db-server installed os Ubuntu 16.04.7 LTS;;db-server;Ubuntu 16.04.7 LTS
+web-server installed os Ubuntu 16.04.7 LTS;;web-server;Ubuntu 16.04.7 LTS
+router installed os Cumulus Linux;;router;Cumulus Linux
+ssh is running on port 22;is running on port;ssh;22
+ssh is running on port 22;;ssh;22
+ssh is running on port 22;;ssh;22
+ssh is running on port 22;;ssh;22
+ms-wbt-server is running on port 3389;;ms-wbt-server;3389
+ssh is running on port 22;;ssh;22
+ssh is running on port 22;;ssh;22
+ssh is running on port 22;;ssh;22
+http is running on port 80;;http;80
+10.0.2.024 network includes;network includes;10.0.2.024;switch-of
+192.168.10.024 network includes;;192.168.10.024;switch-of
+192.168.10.024 network includes;;192.168.10.024;switch-dc
+192.168.10.024 network includes;;192.168.10.024;ubuntu-pc
+192.168.10.024 network includes;;192.168.10.024;db-server
+192.168.10.024 network includes;;192.168.10.024;web-server
+192.168.10.024 network includes;;192.168.10.024;router
+192.168.10.024 network includes;;192.168.10.024;windows-pc
+part of network 10.0.2.024;part of network;switch-of;10.0.2.024
+part of network 192.168.10.024;;switch-of;192.168.10.024
+part of network 192.168.10.024;;switch-dc;192.168.10.024
+part of network 192.168.10.024;;ubuntu-pc;192.168.10.024
+part of network 192.168.10.024;;db-server;192.168.10.024
+part of network 192.168.10.024;;web-server;192.168.10.024
+part of network 192.168.10.024;;router;192.168.10.024
+part of network 192.168.10.024;;windows-pc;192.168.10.024
+22 port from ;port from;22;router
+ has port 22;;router;22
+22 port from ;;22;switch-of
+ has port 22;;switch-of;22
+22 port from ;;22;switch-dc
+ has port 22;;switch-dc;22
+22 port from ;;22;windows-pc
+ has port 22;;windows-pc;22
+3389 port from ;;3389;windows-pc
+ has port 3389;;windows-pc;3389
+22 port from ;;22;ubuntu-pc
+ has port 22;;ubuntu-pc;22
+22 port from ;;22;db-server
+ has port 22;;db-server;22
+22 port from ;;22;web-server
+ has port 22;;web-server;22
+80 port from ;;80;web-server
+ has port 80;;web-server;80
+IntelR CoreTM i5-3470S CPU  2.90GHz processor of switch-of;processor of;IntelR CoreTM i5-3470S CPU  2.90GHz;switch-of
+IntelR CoreTM i5-3470S CPU  2.90GHz processor of switch-dc;;IntelR CoreTM i5-3470S CPU  2.90GHz;switch-dc
+IntelR CoreTM i5-3470S CPU  2.90GHz processor of ubuntu-pc;;IntelR CoreTM i5-3470S CPU  2.90GHz;ubuntu-pc
+IntelR CoreTM i5-3470S CPU  2.90GHz processor of db-server;;IntelR CoreTM i5-3470S CPU  2.90GHz;db-server
+IntelR CoreTM i5-3470S CPU  2.90GHz processor of web-server;;IntelR CoreTM i5-3470S CPU  2.90GHz;web-server
+IntelR CoreTM i5-3470S CPU  2.90GHz processor of router;;IntelR CoreTM i5-3470S CPU  2.90GHz;router
+AudioEndpointBuilder running on windows-pc;running on;AudioEndpointBuilder;windows-pc
+Audiosrv running on windows-pc;;Audiosrv;windows-pc
+BFE running on windows-pc;;BFE;windows-pc
+BrokerInfrastructure running on windows-pc;;BrokerInfrastructure;windows-pc
+CDPSvc running on windows-pc;;CDPSvc;windows-pc
+CertPropSvc running on windows-pc;;CertPropSvc;windows-pc
+CoreMessagingRegistrar 496 running on windows-pc;;CoreMessagingRegistrar 496;windows-pc
+CryptSvc running on windows-pc;;CryptSvc;windows-pc
+DcomLaunch running on windows-pc;;DcomLaunch;windows-pc
+Dhcp running on windows-pc;;Dhcp;windows-pc
+Cumulus Linux running os switch-of;running os;Cumulus Linux;switch-of
+Cumulus Linux running os switch-dc;;Cumulus Linux;switch-dc
+Microsoft Windows 10 Enterprise Evaluation running os windows-pc;;Microsoft Windows 10 Enterprise Evaluation;windows-pc
+Ubuntu 18.04.5 LTS running os ubuntu-pc;;Ubuntu 18.04.5 LTS;ubuntu-pc
+Ubuntu 16.04.7 LTS running os db-server;;Ubuntu 16.04.7 LTS;db-server
+Ubuntu 16.04.7 LTS running os web-server;;Ubuntu 16.04.7 LTS;web-server
+Cumulus Linux running os router;;Cumulus Linux;router
+22 running product ssh;running product;22;ssh
+22 running product ssh;;22;ssh
+22 running product ssh;;22;ssh
+22 running product ssh;;22;ssh
+3389 running product ms-wbt-server;;3389;ms-wbt-server
+22 running product ssh;;22;ssh
+22 running product ssh;;22;ssh
+22 running product ssh;;22;ssh
+80 running product http;;80;http
+windows-pc running service AudioEndpointBuilder;running service;windows-pc;AudioEndpointBuilder
+windows-pc running service Audiosrv;;windows-pc;Audiosrv
+windows-pc running service BFE;;windows-pc;BFE
+windows-pc running service BrokerInfrastructure;;windows-pc;BrokerInfrastructure
+windows-pc running service CDPSvc;;windows-pc;CDPSvc
+windows-pc running service CertPropSvc;;windows-pc;CertPropSvc
+windows-pc running service CoreMessagingRegistrar 496;;windows-pc;CoreMessagingRegistrar 496
+windows-pc running service CryptSvc;;windows-pc;CryptSvc
+windows-pc running service DcomLaunch;;windows-pc;DcomLaunch
+windows-pc running service Dhcp;;windows-pc;Dhcp

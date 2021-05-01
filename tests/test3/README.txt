@@ -13,7 +13,7 @@ Test Case 3
 	- Virtualbox: 5.2.42_Ubuntur137960
 	- Vagrant: 2.2.14  
 	- GraphDB: 9.3.1
-	- CMDB: iTop 2.7.3-6624
+	- CMDB: i-doit
 - Discovery running on a machine of the infrastructure - ubuntu;
 - Infrastructure characteristics:
 	- router:
@@ -66,5 +66,5 @@ Test Case 3
 - Discovery based on external data - Angry IP Scanner - having knowledge about the addresses 192.168.10.10, 192.168.10.20 and 192.168.10.30;
 - Selected Categories: operating system, processing, storage, software and services;
 - Detailed discovery using machines credentials;
-- Mapping threshold: 0.85;
-- CMDB: iTop access via database and API.
+- Mapping threshold: 0.86;
+- CMDB: i-doit open 1.14.

@@ -1,0 +1,89 @@
+ID;Title;Type;Source;Target
+686810_0_2_024_has_address;10.0.2.024 has address;has address;10.0.2.024;switch of
+7068192_168_10_024_has_address;192.168.10.024 has address;;192.168.10.024;switch of
+7268192_168_10_024_has_address;192.168.10.024 has address;;192.168.10.024;ubuntu personal computer
+7468192_168_10_024_has_address;192.168.10.024 has address;;192.168.10.024;switch dc
+7668192_168_10_024_has_address;192.168.10.024 has address;;192.168.10.024;database server
+7868192_168_10_024_has_address;192.168.10.024 has address;;192.168.10.024;web server
+8068192_168_10_024_has_address;192.168.10.024 has address;;192.168.10.024;router
+8787microsoft_windows_10_enterprise_evaluation_has_manufacturer_microsoft_corporation;microsoft windows 10 enterprise evaluation has manufacturer microsoft corporation;has manufacturer;microsoft windows 10 enterprise evaluation;microsoft corporation
+8887microsoft_corporation_manufacturer_of_microsoft_windows_10_enterprise_evaluation;microsoft corporation manufacturer of microsoft windows 10 enterprise evaluation;;microsoft corporation;microsoft windows 10 enterprise evaluation
+11322_has_protocol_transmission_control_protocol;22 has protocol transmission control protocol;has protocol;22;transmission control protocol
+123transmission_control_protocol_is_protocol_of_22;transmission control protocol is protocol of 22;;transmission control protocol;22
+19322_has_protocol_transmission_control_protocol;22 has protocol transmission control protocol;;22;transmission control protocol
+203transmission_control_protocol_is_protocol_of_22;transmission control protocol is protocol of 22;;transmission control protocol;22
+2533389_has_protocol_transmission_control_protocol;3389 has protocol transmission control protocol;;3389;transmission control protocol
+263transmission_control_protocol_is_protocol_of_3389;transmission control protocol is protocol of 3389;;transmission control protocol;3389
+31322_has_protocol_transmission_control_protocol;22 has protocol transmission control protocol;;22;transmission control protocol
+323transmission_control_protocol_is_protocol_of_22;transmission control protocol is protocol of 22;;transmission control protocol;22
+3322_has_protocol_transmission_control_protocol;22 has protocol transmission control protocol;;22;transmission control protocol
+39322_has_protocol_transmission_control_protocol;22 has protocol transmission control protocol;;22;transmission control protocol
+403transmission_control_protocol_is_protocol_of_22;transmission control protocol is protocol of 22;;transmission control protocol;22
+43transmission_control_protocol_is_protocol_of_22;transmission control protocol is protocol of 22;;transmission control protocol;22
+47322_has_protocol_transmission_control_protocol;22 has protocol transmission control protocol;;22;transmission control protocol
+483transmission_control_protocol_is_protocol_of_22;transmission control protocol is protocol of 22;;transmission control protocol;22
+55322_has_protocol_transmission_control_protocol;22 has protocol transmission control protocol;;22;transmission control protocol
+563transmission_control_protocol_is_protocol_of_22;transmission control protocol is protocol of 22;;transmission control protocol;22
+61380_has_protocol_transmission_control_protocol;80 has protocol transmission control protocol;;80;transmission control protocol
+623transmission_control_protocol_is_protocol_of_80;transmission control protocol is protocol of 80;;transmission control protocol;80
+101oracle_virtual_box_virtual_network_interface_card_is_vendor_of_;oracle virtual box virtual network interface card is vendor of ;has vendor;oracle virtual box virtual network interface card;switch of
+11_has_vendor_oracle_virtual_box_virtual_network_interface_card; has vendor oracle virtual box virtual network interface card;;router;oracle virtual box virtual network interface card
+21oracle_virtual_box_virtual_network_interface_card_is_vendor_of_;oracle virtual box virtual network interface card is vendor of ;;oracle virtual box virtual network interface card;router
+371_has_vendor_oracle_virtual_box_virtual_network_interface_card; has vendor oracle virtual box virtual network interface card;;switch dc;oracle virtual box virtual network interface card
+381oracle_virtual_box_virtual_network_interface_card_is_vendor_of_;oracle virtual box virtual network interface card is vendor of ;;oracle virtual box virtual network interface card;switch dc
+451_has_vendor_oracle_virtual_box_virtual_network_interface_card; has vendor oracle virtual box virtual network interface card;;database server;oracle virtual box virtual network interface card
+461oracle_virtual_box_virtual_network_interface_card_is_vendor_of_;oracle virtual box virtual network interface card is vendor of ;;oracle virtual box virtual network interface card;database server
+531_has_vendor_oracle_virtual_box_virtual_network_interface_card; has vendor oracle virtual box virtual network interface card;;web server;oracle virtual box virtual network interface card
+541oracle_virtual_box_virtual_network_interface_card_is_vendor_of_;oracle virtual box virtual network interface card is vendor of ;;oracle virtual box virtual network interface card;web server
+91_has_vendor_oracle_virtual_box_virtual_network_interface_card; has vendor oracle virtual box virtual network interface card;;switch of;oracle virtual box virtual network interface card
+146secure_shell_is_running_on_port_22;secure shell is running on port 22;is running on port;secure shell;22
+226secure_shell_is_running_on_port_22;secure shell is running on port 22;;secure shell;22
+286ms_wbt_server_is_running_on_port_3389;ms wbt server is running on port 3389;;ms wbt server;3389
+346secure_shell_is_running_on_port_22;secure shell is running on port 22;;secure shell;22
+426secure_shell_is_running_on_port_22;secure shell is running on port 22;;secure shell;22
+506secure_shell_is_running_on_port_22;secure shell is running on port 22;;secure shell;22
+586secure_shell_is_running_on_port_22;secure shell is running on port 22;;secure shell;22
+646hypertext_transfer_protocol_is_running_on_port_80;hypertext transfer protocol is running on port 80;;hypertext transfer protocol;80
+66secure_shell_is_running_on_port_22;secure shell is running on port 22;;secure shell;22
+6767part_of_network_10_0_2_024;part of network 10.0.2.024;part of network;switch of;10.0.2.024
+6967part_of_network_192_168_10_024;part of network 192.168.10.024;;switch of;192.168.10.024
+7167part_of_network_192_168_10_024;part of network 192.168.10.024;;ubuntu personal computer;192.168.10.024
+7367part_of_network_192_168_10_024;part of network 192.168.10.024;;switch dc;192.168.10.024
+7567part_of_network_192_168_10_024;part of network 192.168.10.024;;database server;192.168.10.024
+7767part_of_network_192_168_10_024;part of network 192.168.10.024;;web server;192.168.10.024
+7967part_of_network_192_168_10_024;part of network 192.168.10.024;;router;192.168.10.024
+15722_port_from_;22 port from ;port from;22;switch of
+167_has_port_22; has port 22;;switch of;22
+35722_port_from_;22 port from ;;22;ubuntu personal computer
+367_has_port_22; has port 22;;ubuntu personal computer;22
+43722_port_from_;22 port from ;;22;switch dc
+447_has_port_22; has port 22;;switch dc;22
+51722_port_from_;22 port from ;;22;database server
+527_has_port_22; has port 22;;database server;22
+59722_port_from_;22 port from ;;22;web server
+607_has_port_22; has port 22;;web server;22
+65780_port_from_;80 port from ;;80;web server
+667_has_port_80; has port 80;;web server;80
+7722_port_from_;22 port from ;;22;router
+87_has_port_22; has port 22;;router;22
+8383router_running_operating_system_cumulus_linux;router running operating system cumulus linux;running operating system;router;cumulus linux
+8483cumulus_linux_installed_operating_system_router;cumulus linux installed operating system router;;cumulus linux;router
+8583switch_of_running_operating_system_cumulus_linux;switch of running operating system cumulus linux;;switch of;cumulus linux
+8683cumulus_linux_installed_operating_system_switch_of;cumulus linux installed operating system switch of;;cumulus linux;switch of
+9183ubuntu_personal_computer_running_operating_system_ubuntu;ubuntu personal computer running operating system ubuntu;;ubuntu personal computer;ubuntu
+9283ubuntu_installed_operating_system_ubuntu_personal_computer;ubuntu installed operating system ubuntu personal computer;;ubuntu;ubuntu personal computer
+9383switch_dc_running_operating_system_cumulus_linux;switch dc running operating system cumulus linux;;switch dc;cumulus linux
+9483cumulus_linux_installed_operating_system_switch_dc;cumulus linux installed operating system switch dc;;cumulus linux;switch dc
+9583database_server_running_operating_system_ubuntu;database server running operating system ubuntu;;database server;ubuntu
+9683ubuntu_installed_operating_system_database_server;ubuntu installed operating system database server;;ubuntu;database server
+9783web_server_running_operating_system_ubuntu;web server running operating system ubuntu;;web server;ubuntu
+9883ubuntu_installed_operating_system_web_server;ubuntu installed operating system web server;;ubuntu;web server
+13522_running_product_secure_shell;22 running product secure shell;running product;22;secure shell
+21522_running_product_secure_shell;22 running product secure shell;;22;secure shell
+2753389_running_product_ms_wbt_server;3389 running product ms wbt server;;3389;ms wbt server
+33522_running_product_secure_shell;22 running product secure shell;;22;secure shell
+41522_running_product_secure_shell;22 running product secure shell;;22;secure shell
+49522_running_product_secure_shell;22 running product secure shell;;22;secure shell
+5522_running_product_secure_shell;22 running product secure shell;;22;secure shell
+57522_running_product_secure_shell;22 running product secure shell;;22;secure shell
+63580_running_product_hypertext_transfer_protocol;80 running product hypertext transfer protocol;;80;hypertext transfer protocol

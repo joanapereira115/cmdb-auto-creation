@@ -38,18 +38,13 @@
 
 ? Do you want to import information from an external application/source?  No
 ? Enter the IPv4 address (yyx.yyx.yyx.yyx, where 'yy' is optional), IPv4 range (yyx.yyx.yyx.yyx-zzz, where 'yy' and '-zzz' are optional) or CIDR (yyx.yyx.yyx.yyx/yx, where 'y' is optional) you want to dis
-cover.  192.168.10.10-32
+cover.  192.168.1.88
 
 ? Do you want to specify another IPv4 address or range?  No
 
->>> Exploring packets in the interface lo.
->>> Error sniffing.
+>>> Exploring packets in the interface lo0.
 
->>> Exploring packets in the interface eth0.
->>> Error sniffing.
-
->>> Exploring packets in the interface eth1.
->>> Error sniffing.
+>>> Exploring packets in the interface en0.
 
 ? Enter your vault password:  *********
 
@@ -63,172 +58,37 @@ cover.  192.168.10.10-32
 
 >>> Password added to the vault.
 
-? Do you want to specify another SNMP community string? ("public" is the default)  No
+? Do you want to specify another SNMP community string?  No
 
->>> Checking the availability of the IP address 192.168.10.10...
+>>> Checking the availability of the IP address 192.168.1.88...
 
->>> NMAP discovery in the address 192.168.10.10...
-
->>> Unable to retrieve SNMP information.
-
->>> SNMP discovery in the address 192.168.10.10...
+>>> NMAP discovery in the address 192.168.1.88...
 
 >>> Unable to retrieve SNMP information.
 
-
->>> Unable to retrieve SNMP information.
-
->>> Unable to retrieve SNMP information.
-
->>> Checking the availability of the IP address 192.168.10.11...
->>> Not available via ping.
-
->>> Checking the availability of the IP address 192.168.10.12...
->>> Not available via ping.
-
->>> Checking the availability of the IP address 192.168.10.13...
->>> Not available via ping.
-
->>> Checking the availability of the IP address 192.168.10.14...
->>> Not available via ping.
-
->>> Checking the availability of the IP address 192.168.10.15...
->>> Not available via ping.
-
->>> Checking the availability of the IP address 192.168.10.16...
->>> Not available via ping.
-
->>> Checking the availability of the IP address 192.168.10.17...
->>> Not available via ping.
-
->>> Checking the availability of the IP address 192.168.10.18...
->>> Not available via ping.
-
->>> Checking the availability of the IP address 192.168.10.19...
->>> Not available via ping.
-
->>> Checking the availability of the IP address 192.168.10.20...
-
->>> NMAP discovery in the address 192.168.10.20...
-
->>> Unable to retrieve SNMP information.
-
->>> SNMP discovery in the address 192.168.10.20...
-
->>> Checking the availability of the IP address 192.168.10.21...
-
->>> NMAP discovery in the address 192.168.10.21...
-
->>> Unable to retrieve SNMP information.
-
->>> Unable to retrieve SNMP information.
-
->>> Checking the availability of the IP address 192.168.10.22...
-
->>> NMAP discovery in the address 192.168.10.22...
-
->>> Unable to retrieve SNMP information.
-
->>> SNMP discovery in the address 192.168.10.22...
-
->>> Checking the availability of the IP address 192.168.10.23...
->>> Not available via ping.
-
->>> Checking the availability of the IP address 192.168.10.24...
->>> Not available via ping.
-
->>> Checking the availability of the IP address 192.168.10.25...
->>> Not available via ping.
-
->>> Checking the availability of the IP address 192.168.10.26...
->>> Not available via ping.
-
->>> Checking the availability of the IP address 192.168.10.27...
->>> Not available via ping.
-
->>> Checking the availability of the IP address 192.168.10.28...
->>> Not available via ping.
-
->>> Checking the availability of the IP address 192.168.10.29...
->>> Not available via ping.
-
->>> Checking the availability of the IP address 192.168.10.30...
-
->>> NMAP discovery in the address 192.168.10.30...
-
->>> Unable to retrieve SNMP information.
-
->>> SNMP discovery in the address 192.168.10.30...
-
->>> Checking the availability of the IP address 192.168.10.31...
-
->>> NMAP discovery in the address 192.168.10.31...
-
->>> Unable to retrieve SNMP information.
-
->>> SNMP discovery in the address 192.168.10.31...
-
->>> Checking the availability of the IP address 192.168.10.32...
-
->>> NMAP discovery in the address 192.168.10.32...
-
->>> Unable to retrieve SNMP information.
-
->>> SNMP discovery in the address 192.168.10.32...
+>>> SNMP discovery in the address 192.168.1.88...
 
 >>> Basic discovery ended.
 
-? In which IT infrastructure categories would you want to make a more detailed discovery?  [operating systems]
+? In which IT infrastructure categories would you want to make a more detailed discovery?  done (4 selections)
 
 ? Enter your vault password:  *********
 
 >>> Vault unlocked.
-? Enter the username of the machine with yhe IP address 192.168.10.10:  vagrant
-? Enter the password of the machine with the IP address 192.168.10.10:  *******
+? Enter the username of the machine with yhe IP address 192.168.1.88:  joana
+? Enter the password of the machine with the IP address 192.168.1.88:  ********
 
 >>> Password added to the vault.
-? Enter the username of the machine with yhe IP address 192.168.10.20:  vagrant
-? Enter the password of the machine with the IP address 192.168.10.20:  *******
-
->>> Password added to the vault.
-? Enter the username of the machine with yhe IP address 192.168.10.21:  vagrant
-? Enter the password of the machine with the IP address 192.168.10.21:  *******
-
->>> Password added to the vault.
-? Enter the username of the machine with yhe IP address 192.168.10.22:  vagrant
-? Enter the password of the machine with the IP address 192.168.10.22:  *******
-
->>> Password added to the vault.
-? Enter the username of the machine with yhe IP address 192.168.10.30:  vagrant
-? Enter the password of the machine with the IP address 192.168.10.30:  *******
-
->>> Password added to the vault.
-? Enter the username of the machine with yhe IP address 192.168.10.31:  vagrant
-? Enter the password of the machine with the IP address 192.168.10.31:  *******
-
->>> Password added to the vault.
-? Enter the username of the machine with yhe IP address 192.168.10.32:  vagrant
-? Enter the password of the machine with the IP address 192.168.10.32:  *******
-
->>> Password added to the vault.
->>> Discovery in the Linux machine with the address 192.168.10.10...
-
->>> Discovery in the Linux machine with the address 192.168.10.20...
-
->>> Discovery in the Windows machine with the address 192.168.10.21...
-
->>> Discovery in the Linux machine with the address 192.168.10.22...
-
->>> Discovery in the Linux machine with the address 192.168.10.30...
-
->>> Discovery in the Linux machine with the address 192.168.10.31...
-
->>> Discovery in the Linux machine with the address 192.168.10.32...
+>>> Discovery in the Linux machine with the address 192.168.1.88...
 
 
->>> Make sure that GraphDB is running and that you import the discovered information.
-? Have you imported the file 'cmdb.ttl' stored in the folder 'graphdb-import' to your GraphDB repository?
-  Yes
+? Enter the IP address of the GraphDB server (use format yyx.yyx.yyx.yyx where 'y' is optional):  192.168.1.88
+? Enter the port number where GraphDB is running:  7200
+? Enter the name of the GraphDB repository:  cmdb
+
+>>> Successfully connected.
+
+>>> Data imported into GraphDB.
 
 **********************************************************************
  __  __                _             ___ _                 
@@ -239,51 +99,42 @@ cover.  192.168.10.10-32
 
 **********************************************************************
 
-? Enter the IP address of the GraphDB server (use format yyx.yyx.yyx.yyx where 'y' is optional):  192.168.1.88
-? Enter the port number where GraphDB is running:  7200
-? Enter the name of the GraphDB repository:  cmdb
-
->>> Successfully connected.
 
 >>> Processing GraphDB data model...
 
 >>> The database model was successfully processed.
-? What is the software of the CMDB?  i-doit
-? How to connect to the CMDB?  API
+? What is the software of the CMDB?  iTop
 
->>> Make sure that i-doit is running.
-? Enter the IP address of your CMDB server (use format yyx.yyx.yyx.yyx where 'y' is optional):  192.168.1.88
-? Enter your CMDB username:  admin
-? Enter your CMDB password:  *****
-? Enter your API key:  cmdb-auto
+>>> Make sure that iTop is running.
+? Enter the IP address of your database server (use format yyx.yyx.yyx.yyx where 'y' is optional):  192.168.1.88
+? Enter your database name:  itop
+? Enter your database username:  root
+? Enter your database password:  ********
 
->>> Checking API connection...
+>>> Checking iTop database connection...
 
->>> Successfully connected.
+>>> Successfully connected to the iTop database.
 
->>> Processing i-doit CMDB data model...
+? Enter the url of your iTop CMDB server:  192.168.1.88/itop
+? Enter your iTop username:  itop
+? Enter your iTop password:  *****************
+
+>>> Successfully connected to the iTop API.
+
+>>> Processing iTop CMDB data model...
 
 >>> Executing the model mapper...
 
 >>> Calculating configuration item types similarity...
-? The similarities between 'host' with 'C__OBJTYPE__SERVER' and 'C__OBJTYPE__HOST' are equal. Choose the one to consider.  C__OBJTYPE__HOST
-? The similarities between 'layer 3 network' with 'C__OBJTYPE__LAYER3_NET' and 'C__OBJTYPE__LAYER2_NET' are equal. Choose the one to consider.  C__OBJTYPE__LAYER3_NET
+? The similarities between 'CPU' with 'peripheral' and 'phone' are equal. Choose the one to consider.  peripheral
+? The similarities between 'Application' with 'organization' and 'service' are equal. Choose the one to consider.  service
+? The similarities between 'Product' with 'phone' and 'service' are equal. Choose the one to consider.  service
+? The similarities between 'Product' with 'service' and 'printer' are equal. Choose the one to consider.  service
 
 >>> Calculating relationship types similarity...
-? The similarities between 'port from' with 'C__RELATION_TYPE__NETWORK_PORT' and 'C__RELATION_TYPE__UNIVERSAL_INTERFACE' are equal. Choose the one to consider.  C__RELATION_TYPE__NETWORK_PORT
 
 >>> Calculating configuration item attributes similarity...
-? The similarities between 'architecture' with 'medium' and 'duplex' are equal. Choose the one to consider.  duplex
-? The similarities between 'id' with 'machine id' and 'boot id' are equal. Choose the one to consider.  machine id
-? The similarities between 'boot id' with 'productid' and 'cable' are equal. Choose the one to consider.  productid
-? The similarities between 'has_ipv4' with 'ipv4_address', 'ipv6_scope' and 'ipv6_address' are equal. Choose the one to consider.  ipv4_address
-? The similarities between 'has_ipv6' with 'ipv4_address', 'ipv6_scope' and 'ipv6_address' are equal. Choose the one to consider.  ipv6_address
-? The similarities between 'id' with 'machine id' and 'boot id' are equal. Choose the one to consider.  machine id
-? The similarities between 'boot id' with 'productid' and 'cable' are equal. Choose the one to consider.  productid
-? The similarities between 'has_ipv4' with 'ipv4_address', 'ipv6_scope' and 'ipv6_address' are equal. Choose the one to consider.  ipv4_address
-? The similarities between 'has_ipv6' with 'ipv4_address', 'ipv6_scope' and 'ipv6_address' are equal. Choose the one to consider.  ipv6_address
-? The similarities between 'protocol' with 'status', 'plug_type' and 'comment' are equal. Choose the one to consider.  comment
-? The similarities between 'title' with 'first_name' and 'last_name' are equal. Choose the one to consider.  first_name
+? The similarities between 'osversion_id' with 'has_ipv4' and 'os version' are equal. Choose the one to consider.  os version
 
 >>> Calculating relationship attributes similarity...
 
@@ -291,281 +142,199 @@ cover.  192.168.10.10-32
 CONFIGURATION ITEMS MAPPING
 ===============================================================================================================================================================================
 
-CI in CMDB                    Description                   CI in DB          Description         Similarity Coeficient
-----------------------------  ----------------------------  ----------------  ----------------  -----------------------
-C__OBJTYPE__HOST              Host                          host              host                             1
-C__OBJTYPE__ROUTER            Router                        router            router                           1
-C__OBJTYPE__OPERATING_SYSTEM  Operating System              operating system  operating system                 1
-C__OBJTYPE__APPLIANCE         Appliance                     product           product                          0.75
-C__OBJTYPE__LAYER3_NET        Layer 3-net                   layer 3 network   layer 3 network                  1
-C__OBJTYPE__RM_CONTROLLER     Remote Management Controller  logical port      logical port                     0.588253
-C__OBJTYPE__ORGANIZATION      Organization                  manufacturer      manufacturer                     0.769231
-C__OBJTYPE__PERSON            Persons                       vendor            vendor                           0.666667
-C__OBJTYPE__APPLICATION       Application                   protocol          protocol                         0.615385
+CI in CMDB           Description                  CI in DB          Description                Similarity Coeficient
+-------------------  ---------------------------  ----------------  -----------------------  -----------------------
+server               server                       Host              host                                    1
+software             software                     Operating System  operating system                        0.941176
+peripheral           peripheral                   CPU               central processing unit                 0.888889
+applicationsolution  application solution         Application       application                             0.871378
+sanswitch            storage area network switch  SSD               solid state drive                       0.612052
+logicalinterface     logical interface            Logical Port      logical port                            0.785327
+model                model                        Product           product                                 0.8
+ipphone              internet protocol phone      Protocol          protocol                                0.704343
+person               person                       Vendor            vendor                                  0.666667
 
 **************************************************************************************************
-C__OBJTYPE__HOST Attributes Mapping
+server Attributes Mapping
 **************************************************************************************************
 
-Attribute in CMDB    Description                    Attribute in DB                                    Description                                          Similarity Coeficient
--------------------  -----------------------------  -------------------------------------------------  -------------------------------------------------  -----------------------
-title                Title                          title                                              title                                                             1
-description          Description                    description                                        description                                                       1
-cmdb_status          CMDB status                    cmdb_status                                        configuration management database status                          1
-serial               Serial number                  serial_number                                      serial number                                                     1
-mac                  MAC                            mac_address                                        media access control address                                      0.866025
-application          Application                    operating system                                   operating system                                                  0.842105
-system               Virtualization system          virtualization                                     virtualization                                                    0.837961
-object               Object                         kernel                                             kernel                                                            0.833333
-duplex               Duplex                         architecture                                       architecture                                                      0.823529
-system_drive         System drive                   os_family                                          operating system family                                           0.766736
-operation_expense    Operation expense              customer premises equipment operating system name  customer premises equipment operating system name                 0.731129
-speed_type           Unit                           chassis                                            chassis                                                           0.727273
-id                   ID                             machine id                                         machine id                                                        0.707107
-productid            Product ID                     boot id                                            boot id                                                           0.5
-assigned_version     Version number                 has_ipv6                                           internet protocol version 6                                       0.677148
-assigned_ldevserver  Logical devices (LDEV Server)  has_ipv4                                           internet protocol version 4                                       0.657274
-object_type          Object type                    uuid                                               universally unique identifier                                     0.618472
-service_tag          Service Tag                    icon name                                          icon name                                                         0.499838
-wwn                  Node WWN                       hostname                                           hostname                                                          0.450317
+Attribute in CMDB    Description    Attribute in DB    Description                 Similarity Coeficient
+-------------------  -------------  -----------------  ------------------------  -----------------------
+cpu                  cpu            CPU                central processing unit                  1
+id                   id             Machine ID         machine id                               0.880476
+ram                  ram            Architecture       architecture                             0.526316
+osfamily_id          osfamily_id    Boot ID            boot id                                  0.408248
+osversion_id         osversion_id   os version         operating system version                 0.333333
 
 **************************************************************************************************
-C__OBJTYPE__ROUTER Attributes Mapping
+software Attributes Mapping
 **************************************************************************************************
 
-Attribute in CMDB    Description        Attribute in DB                                    Description                                          Similarity Coeficient
--------------------  -----------------  -------------------------------------------------  -------------------------------------------------  -----------------------
-title                Title              title                                              title                                                             1
-description          Description        description                                        description                                                       1
-cmdb_status          CMDB status        cmdb_status                                        configuration management database status                          1
-serial               Serial number      serial_number                                      serial number                                                     1
-mac                  MAC                mac_address                                        media access control address                                      0.866025
-ipv4_address         IPv4 address       has_ipv4                                           internet protocol version 4                                       0.866025
-ipv6_address         IPv6 address       has_ipv6                                           internet protocol version 6                                       0.866025
-domain               Domain             architecture                                       architecture                                                      0.857143
-application          Application        operating system                                   operating system                                                  0.842105
-object               Object             kernel                                             kernel                                                            0.833333
-operation_expense    Operation expense  customer premises equipment operating system name  customer premises equipment operating system name                 0.731129
-speed_type           Unit               chassis                                            chassis                                                           0.727273
-id                   ID                 machine id                                         machine id                                                        0.707107
-productid            Product ID         boot id                                            boot id                                                           0.5
-wiring_system        Wiring system      os_family                                          operating system family                                           0.662363
-object_type          Object type        uuid                                               universally unique identifier                                     0.618472
-service_tag          Service Tag        icon name                                          icon name                                                         0.499838
-dns_server           DNS Server         virtualization                                     virtualization                                                    0.447887
+Attribute in CMDB    Description    Attribute in DB    Description       Similarity Coeficient
+-------------------  -------------  -----------------  --------------  -----------------------
+vendor               vendor         vendor             vendor                         1
+id                   id             ID                 id                             1
+type                 type           description        description                    0.9
+name                 name           title              title                          0.923077
+version              version        version number     version number                 0.819853
 
 **************************************************************************************************
-C__OBJTYPE__OPERATING_SYSTEM Attributes Mapping
+peripheral Attributes Mapping
 **************************************************************************************************
 
-Attribute in CMDB       Description             Attribute in DB                          Description                                 Similarity Coeficient
-----------------------  ----------------------  ---------------------------------------  ----------------------------------------  -----------------------
-id                      ID                      id                                       id                                                       1
-title                   Title                   title                                    title                                                    1
-description             Description             description                              description                                              1
-cmdb_status             CMDB status             cmdb_status                              configuration management database status                 1
-application_type        Type                    build type                               build type                                               0.788859
-reason                  Access type             mac_address                              media access control address                             0.773953
-common_name             Common Name             pretty name                              pretty name                                              0.771063
-assigned_version        Version number          basic inputoutput system version         basic inputoutput system version                         0.741116
-inventory_no            Inventory number        serial_number                            serial number                                            0.628146
-object                  Installed on            install date                             install date                                             0.725485
-order_no                Order no.               configuration                            configuration                                            0.666667
-changed                 Last change             version id                               version id                                               0.477056
-operation_expense       Operation expense       os_family                                operating system family                                  0.700423
-network_bandwidth_unit  Network bandwidth unit  has_ipv4                                 internet protocol version 4                              0.598869
-network_bandwidth       Network bandwidth       has_ipv6                                 internet protocol version 6                              0.580905
-invoice_no              Invoice no.             product id                               product id                                               0.482563
-assigned_it_service     Service                 customer premises equipment name         customer premises equipment name                         0.657734
-assigned_license_key    Assigned license key    privacy policy uniform resource locator  privacy policy uniform resource locator                  0.584103
-object_type             Object type             uuid                                     universally unique identifier                            0.618472
-variant                 Variant                 version codename                         version codename                                         0.487331
-manual                  Manual file             bug report uniform resource locator      bug report uniform resource locator                      0.56491
-ram_unit                Memory unit             boot device                              boot device                                              0.587864
-cost_unit               Cost unit               home uniform resource locator            home uniform resource locator                            0.527888
-kernel                  Kernel                  ubuntu codename                          ubuntu codename                                          0.481778
+Attribute in CMDB    Description    Attribute in DB    Description      Similarity Coeficient
+-------------------  -------------  -----------------  -------------  -----------------------
+id                   id             Vendor ID          vendor id                     0.876197
 
 **************************************************************************************************
-C__OBJTYPE__APPLIANCE Attributes Mapping
+applicationsolution Attributes Mapping
 **************************************************************************************************
 
-Attribute in CMDB    Description                    Attribute in DB    Description                                 Similarity Coeficient
--------------------  -----------------------------  -----------------  ----------------------------------------  -----------------------
-title                Title                          title              title                                                    1
-description          Description                    description        description                                              1
-cmdb_status          CMDB status                    cmdb_status        configuration management database status                 1
-serial               Serial number                  serial_number      serial number                                            1
-mac                  MAC                            mac_address        media access control address                             0.866025
-system_drive         System drive                   os_family          operating system family                                  0.766736
-assigned_version     Version number                 has_ipv6           internet protocol version 6                              0.677148
-assigned_ldevserver  Logical devices (LDEV Server)  has_ipv4           internet protocol version 4                              0.657274
-object_type          Object type                    uuid               universally unique identifier                            0.618472
+Attribute in CMDB    Description    Attribute in DB    Description      Similarity Coeficient
+-------------------  -------------  -----------------  -------------  -----------------------
+status               status         title              title                         0.833333
+redundancy           redundancy     Architecture       architecture                  0.666667
+id                   id             description        description                   0.444444
 
 **************************************************************************************************
-C__OBJTYPE__LAYER3_NET Attributes Mapping
+sanswitch Attributes Mapping
 **************************************************************************************************
 
-Attribute in CMDB    Description        Attribute in DB    Description                                 Similarity Coeficient
--------------------  -----------------  -----------------  ----------------------------------------  -----------------------
-title                Title              title              title                                                    1
-description          Description        description        description                                              1
-cmdb_status          CMDB status        cmdb_status        configuration management database status                 1
-reason               Access type        mac_address        media access control address                             0.773953
-operation_expense    Operation expense  os_family          operating system family                                  0.700423
-inventory_no         Inventory number   serial_number      serial number                                            0.628146
-object_type          Object type        uuid               universally unique identifier                            0.618472
-dns_server           DNS server         has_ipv4           internet protocol version 4                              0.543003
-gateway              Default Gateway    has_ipv6           internet protocol version 6                              0.531098
+Attribute in CMDB    Description    Attribute in DB    Description      Similarity Coeficient
+-------------------  -------------  -----------------  -------------  -----------------------
+id                   id             PARTUUID           part u u id                   0.904193
 
 **************************************************************************************************
-C__OBJTYPE__RM_CONTROLLER Attributes Mapping
+logicalinterface Attributes Mapping
 **************************************************************************************************
 
-Attribute in CMDB    Description                   Attribute in DB              Description                                 Similarity Coeficient
--------------------  ----------------------------  ---------------------------  ----------------------------------------  -----------------------
-title                Title                         title                        title                                                    1
-description          Description                   description                  description                                              1
-cmdb_status          CMDB status                   cmdb_status                  configuration management database status                 1
-serial               Serial number                 serial_number                serial number                                            1
-event_static         Event                         product                      product                                                  0.909091
-mac                  MAC                           mac_address                  media access control address                             0.866025
-ipv4_address         IPv4 address                  has_ipv4                     internet protocol version 4                              0.866025
-ipv6_address         IPv6 address                  has_ipv6                     internet protocol version 6                              0.866025
-connected_object     Remote Management Controller  os_family                    operating system family                                  0.65618
-itservice            Service                       customer premises equipment  customer premises equipment                              0.652566
-object_type          Object type                   uuid                         universally unique identifier                            0.618472
-comment              Comment                       protocol                     protocol                                                 0.615385
+Attribute in CMDB    Description    Attribute in DB    Description      Similarity Coeficient
+-------------------  -------------  -----------------  -------------  -----------------------
+id                   id             protocol           protocol                           0.5
 
 **************************************************************************************************
-C__OBJTYPE__ORGANIZATION Attributes Mapping
+model Attributes Mapping
 **************************************************************************************************
 
-Attribute in CMDB    Description                     Attribute in DB    Description                                 Similarity Coeficient
--------------------  ------------------------------  -----------------  ----------------------------------------  -----------------------
-title                Title                           title              title                                                    1
-description          Description                     description        description                                              1
-cmdb_status          CMDB status                     cmdb_status        configuration management database status                 1
-reason               Access type                     mac_address        media access control address                             0.773953
-house_no             House number                    serial_number      serial number                                            0.619649
-object_type          Object type                     uuid               universally unique identifier                            0.618472
-address              Additional address information  has_ipv4           internet protocol version 4                              0.513038
-user_name_static     User                            has_ipv6           internet protocol version 6                              0.511102
-itservice            Service                         os_family          operating system family                                  0.537276
+Attribute in CMDB    Description    Attribute in DB    Description      Similarity Coeficient
+-------------------  -------------  -----------------  -------------  -----------------------
+type                 type           description        description                   0.9
+id                   id             title              title                         0.444444
 
 **************************************************************************************************
-C__OBJTYPE__PERSON Attributes Mapping
+ipphone Attributes Mapping
 **************************************************************************************************
 
-Attribute in CMDB    Description        Attribute in DB    Description                                 Similarity Coeficient
--------------------  -----------------  -----------------  ----------------------------------------  -----------------------
-description          Description        description        description                                              1
-cmdb_status          CMDB status        cmdb_status        configuration management database status                 1
-first_name           First name         title              title                                                    0.857143
-reason               Access type        mac_address        media access control address                             0.773953
-object_type          Object type        uuid               universally unique identifier                            0.618472
-custom_4             Custom 4           has_ipv4           internet protocol version 4                              0.516933
-custom_7             Custom 7           has_ipv6           internet protocol version 6                              0.524366
-phone_company        Telephone company  os_family          operating system family                                  0.555022
-personnel_number     Personnel number   serial_number      serial number                                            0.589948
+Attribute in CMDB    Description    Attribute in DB    Description      Similarity Coeficient
+-------------------  -------------  -----------------  -------------  -----------------------
+id                   id             title              title                         0.444444
 
 **************************************************************************************************
-C__OBJTYPE__APPLICATION Attributes Mapping
+person Attributes Mapping
 **************************************************************************************************
 
-Attribute in CMDB       Description             Attribute in DB    Description                                 Similarity Coeficient
-----------------------  ----------------------  -----------------  ----------------------------------------  -----------------------
-title                   Title                   title              title                                                    1
-description             Description             description        description                                              1
-cmdb_status             CMDB status             cmdb_status        configuration management database status                 1
-reason                  Access type             mac_address        media access control address                             0.773953
-assigned_version        Version number          serial_number      serial number                                            0.731057
-operation_expense       Operation expense       os_family          operating system family                                  0.700423
-network_bandwidth_unit  Network bandwidth unit  has_ipv4           internet protocol version 4                              0.598869
-runs_on                 Software runs on        has_ipv6           internet protocol version 6                              0.589094
-object_type             Object type             uuid               universally unique identifier                            0.618472
+Attribute in CMDB    Description    Attribute in DB    Description      Similarity Coeficient
+-------------------  -------------  -----------------  -------------  -----------------------
+first_name           first_name     title              title                         0.857143
 
 
 ===============================================================================================================================================================================
 RELATIONSHIPS MAPPING
 ===============================================================================================================================================================================
 
-Relationship in CMDB                    Description          Relationship in DB        Description                 Similarity Coeficient
---------------------------------------  -------------------  ------------------------  ------------------------  -----------------------
-C__RELATION_TYPE__NETWORK_PORT          Ports                port from                 port                                     1
-C__RELATION_TYPE__IP_ADDRESS            Host address         has address               address                                  0.8298
-C__RELATION_TYPE__OPERATION_SYSTEM      Operating system     running operating system  running operating system                 0.942343
-C__RELATION_TYPE__UNIVERSAL_INTERFACE   Interface            has protocol              protocol                                 0.541849
-C__RELATION_TYPE__ORGANIZATION          Organization         has manufacturer          manufacturer                             0.769231
-C__RELATION_TYPE__NET_CONNECTIONS       Network connections  part of network           part network                             0.817846
-C__RELATION_TYPE__CONTROLLER_FC_PORT    FC port              is running on port        running port                             0.672716
-C__RELATION_TYPE__BACKUP                Backup               has vendor                vendor                                   0.6
-C__RELATION_TYPE__IT_SERVICE_COMPONENT  Service component    running product           running product                          0.55349
+Relationship in CMDB                     Description                               Relationship in DB    Description                   Similarity Coeficient
+---------------------------------------  ----------------------------------------  --------------------  --------------------------  -----------------------
+lnkapplicationsolutiontobusinessprocess  application solution to business process  running product       running product                            0.670362
+lnksoftwareinstancetosoftwarepatch       software instance to software patch       installed os          installed operating system                 0.641549
+lnkconnectablecitonetworkdevice          connect able ci to network device         running os            running operating system                   0.630364
+lnkvirtualdevicetovolume                 virtual device to volume                  associated processor  associated processor                       0.571303
+lnkservertovolume                        server to volume                          is running on port    running port                               0.569121
+lnkdatacenterdevicetosan                 datacenter device to san                  has storage           storage                                    0.590237
+lnkphysicalinterfacetovlan               physical interface to vl an               has protocol          protocol                                   0.491997
+lnkcustomercontracttoservice             customer contract to service              has vendor            vendor                                     0.546705
+lnkapplicationsolutiontofunctionalci     application solution to functional ci     has installed         installed                                  0.410952
+lnkdocumenttosoftware                    document to software                      processor of          processor                                  0.382493
+lnkdocumenttopatch                       document to patch                         port from             port                                       0.371325
 
 **************************************************************************************************
-C__RELATION_TYPE__NETWORK_PORT Attributes Mapping
-**************************************************************************************************
-
-Attribute in CMDB    Description    Attribute in DB    Description      Similarity Coeficient
--------------------  -------------  -----------------  -------------  -----------------------
-title                Title          title              title                                1
-**************************************************************************************************
-C__RELATION_TYPE__IP_ADDRESS Attributes Mapping
+lnkapplicationsolutiontobusinessprocess Attributes Mapping
 **************************************************************************************************
 
 Attribute in CMDB    Description    Attribute in DB    Description      Similarity Coeficient
 -------------------  -------------  -----------------  -------------  -----------------------
-title                Title          title              title                                1
+id                   id             title              title                         0.444444
 **************************************************************************************************
-C__RELATION_TYPE__OPERATION_SYSTEM Attributes Mapping
-**************************************************************************************************
-
-Attribute in CMDB    Description    Attribute in DB    Description      Similarity Coeficient
--------------------  -------------  -----------------  -------------  -----------------------
-title                Title          title              title                                1
-**************************************************************************************************
-C__RELATION_TYPE__UNIVERSAL_INTERFACE Attributes Mapping
+lnksoftwareinstancetosoftwarepatch Attributes Mapping
 **************************************************************************************************
 
 Attribute in CMDB    Description    Attribute in DB    Description      Similarity Coeficient
 -------------------  -------------  -----------------  -------------  -----------------------
-title                Title          title              title                                1
+id                   id             title              title                         0.444444
 **************************************************************************************************
-C__RELATION_TYPE__ORGANIZATION Attributes Mapping
-**************************************************************************************************
-
-Attribute in CMDB    Description    Attribute in DB    Description      Similarity Coeficient
--------------------  -------------  -----------------  -------------  -----------------------
-title                Title          title              title                                1
-**************************************************************************************************
-C__RELATION_TYPE__NET_CONNECTIONS Attributes Mapping
+lnkconnectablecitonetworkdevice Attributes Mapping
 **************************************************************************************************
 
 Attribute in CMDB    Description    Attribute in DB    Description      Similarity Coeficient
 -------------------  -------------  -----------------  -------------  -----------------------
-title                Title          title              title                                1
+id                   id             title              title                         0.444444
 **************************************************************************************************
-C__RELATION_TYPE__CONTROLLER_FC_PORT Attributes Mapping
-**************************************************************************************************
-
-Attribute in CMDB    Description    Attribute in DB    Description      Similarity Coeficient
--------------------  -------------  -----------------  -------------  -----------------------
-title                Title          title              title                                1
-**************************************************************************************************
-C__RELATION_TYPE__BACKUP Attributes Mapping
+lnkvirtualdevicetovolume Attributes Mapping
 **************************************************************************************************
 
 Attribute in CMDB    Description    Attribute in DB    Description      Similarity Coeficient
 -------------------  -------------  -----------------  -------------  -----------------------
-title                Title          title              title                                1
+id                   id             title              title                         0.444444
 **************************************************************************************************
-C__RELATION_TYPE__IT_SERVICE_COMPONENT Attributes Mapping
+lnkservertovolume Attributes Mapping
 **************************************************************************************************
 
 Attribute in CMDB    Description    Attribute in DB    Description      Similarity Coeficient
 -------------------  -------------  -----------------  -------------  -----------------------
-title                Title          title              title                                1
+id                   id             title              title                         0.444444
+**************************************************************************************************
+lnkdatacenterdevicetosan Attributes Mapping
+**************************************************************************************************
 
-? Enter the threshold value that you want to consider (similarities below that value will not be considered):  0.85
+Attribute in CMDB    Description    Attribute in DB    Description      Similarity Coeficient
+-------------------  -------------  -----------------  -------------  -----------------------
+id                   id             title              title                         0.444444
+**************************************************************************************************
+lnkphysicalinterfacetovlan Attributes Mapping
+**************************************************************************************************
+
+Attribute in CMDB    Description    Attribute in DB    Description      Similarity Coeficient
+-------------------  -------------  -----------------  -------------  -----------------------
+id                   id             title              title                         0.444444
+**************************************************************************************************
+lnkcustomercontracttoservice Attributes Mapping
+**************************************************************************************************
+
+Attribute in CMDB    Description    Attribute in DB    Description      Similarity Coeficient
+-------------------  -------------  -----------------  -------------  -----------------------
+id                   id             title              title                         0.444444
+**************************************************************************************************
+lnkapplicationsolutiontofunctionalci Attributes Mapping
+**************************************************************************************************
+
+Attribute in CMDB    Description    Attribute in DB    Description      Similarity Coeficient
+-------------------  -------------  -----------------  -------------  -----------------------
+id                   id             title              title                         0.444444
+**************************************************************************************************
+lnkdocumenttosoftware Attributes Mapping
+**************************************************************************************************
+
+Attribute in CMDB    Description    Attribute in DB    Description      Similarity Coeficient
+-------------------  -------------  -----------------  -------------  -----------------------
+id                   id             title              title                         0.444444
+**************************************************************************************************
+lnkdocumenttopatch Attributes Mapping
+**************************************************************************************************
+
+Attribute in CMDB    Description    Attribute in DB    Description      Similarity Coeficient
+-------------------  -------------  -----------------  -------------  -----------------------
+id                   id             title              title                         0.444444
+
+? Enter the threshold value that you want to consider (similarities below that value will not be considered):  0.8
 
 **********************************************************************
  ___               _      _   _            ___ _                 
@@ -584,45 +353,33 @@ title                Title          title              title                    
 >>> Starting the population of the CMDB...
 
 >>> Creating the configuration items...
->>> Object of type C__OBJTYPE__LAYER3_NET created successfully in the CMDB.
->>> Object of type C__OBJTYPE__LAYER3_NET created successfully in the CMDB.
->>> Object of type C__OBJTYPE__ROUTER created successfully in the CMDB.
->>> Object of type C__OBJTYPE__HOST created successfully in the CMDB.
->>> Object of type C__OBJTYPE__OPERATING_SYSTEM created successfully in the CMDB.
->>> Object of type C__OBJTYPE__HOST created successfully in the CMDB.
 
->>> Error converting string 'debian' to int.
->>> Object of type C__OBJTYPE__OPERATING_SYSTEM created successfully in the CMDB.
->>> Object of type C__OBJTYPE__HOST created successfully in the CMDB.
+>>> Error converting string 'ubuntu' to int.
 
->>> Error converting string 'debian' to int.
->>> Object of type C__OBJTYPE__OPERATING_SYSTEM created successfully in the CMDB.
->>> Object of type C__OBJTYPE__HOST created successfully in the CMDB.
->>> Object of type C__OBJTYPE__HOST created successfully in the CMDB.
+>>> Object of type software created successfully in the CMDB.
 
->>> Error converting string 'debian' to int.
->>> Object of type C__OBJTYPE__OPERATING_SYSTEM created successfully in the CMDB.
->>> Object of type C__OBJTYPE__HOST created successfully in the CMDB.
+>>> Error converting string 'GenuineIntel' to int.
+
+>>> Object of type peripheral created successfully in the CMDB.
+
+>>> Object of type applicationsolution created successfully in the CMDB.
+
+>>> Object of type applicationsolution created successfully in the CMDB.
+
+>>> Object of type applicationsolution created successfully in the CMDB.
+
+>>> Error creating the configuration item of type applicationsolution: Error: Unexpected value for attribute 'status': Value not allowed [None]: issues = {0=>Unexpected value for attribute 'status': Value not allowed [None]}, class = ApplicationSolution, id = 
+
+>>> Error creating the configuration item of type applicationsolution: Error: Unexpected value for attribute 'status': Value not allowed [None]: issues = {0=>Unexpected value for attribute 'status': Value not allowed [None]}, class = ApplicationSolution, id = 
+
+>>> Object of type applicationsolution created successfully in the CMDB.
+
+>>> Error converting string '93b6da13546247df9c2c4e89abccfea3' to int.
+
+>>> Object of type server created successfully in the CMDB.
 
 >>> Creating the relationships...
->>> Object of type C__RELATION_TYPE__OPERATION_SYSTEM created successfully in the CMDB.
->>> Object of type C__RELATION_TYPE__OPERATION_SYSTEM created successfully in the CMDB.
->>> Object of type C__RELATION_TYPE__OPERATION_SYSTEM created successfully in the CMDB.
->>> Object of type C__RELATION_TYPE__OPERATION_SYSTEM created successfully in the CMDB.
->>> Object of type C__RELATION_TYPE__OPERATION_SYSTEM created successfully in the CMDB.
->>> Object of type C__RELATION_TYPE__OPERATION_SYSTEM created successfully in the CMDB.
->>> Object of type C__RELATION_TYPE__OPERATION_SYSTEM created successfully in the CMDB.
->>> Object of type C__RELATION_TYPE__OPERATION_SYSTEM created successfully in the CMDB.
->>> Object of type C__RELATION_TYPE__OPERATION_SYSTEM created successfully in the CMDB.
->>> Object of type C__RELATION_TYPE__OPERATION_SYSTEM created successfully in the CMDB.
->>> Object of type C__RELATION_TYPE__OPERATION_SYSTEM created successfully in the CMDB.
->>> Object of type C__RELATION_TYPE__OPERATION_SYSTEM created successfully in the CMDB.
->>> Object of type C__RELATION_TYPE__OPERATION_SYSTEM created successfully in the CMDB.
->>> Object of type C__RELATION_TYPE__OPERATION_SYSTEM created successfully in the CMDB.
-
->>> Successfully disconnected.
 
 >>> CMDB population completed.
 
 ? Do you want to delete the password vault?  Yes
-
