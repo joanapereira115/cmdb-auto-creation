@@ -305,5 +305,4 @@ The user must define a limit value for the final selection of the transformation
 
 The objective is to send the collected information about the infrastructure to the CMDB. This settlement must be done through the CMDB API to avoid errors and inconsistencies in the data.
 Has been developed mechanisms for the population of i-doit and iTop CMDBs.
-
-This process is limited by what APIs can offer. Therefore, the amount of information that is stored in the CMDB is limited. 
+This process is limited by what APIs can offer.
